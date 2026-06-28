@@ -1899,7 +1899,7 @@
                     <div class="feature-badge"><i class="fas fa-trophy"></i> #HexaVem</div>
                 </div>
                 <div class="hero-cta">
-                    <button class="btn btn-primary btn-lg" onclick="showSection('recovery')">
+                    <button class="btn btn-primary btn-lg" onclick="goToRecovery()">
                         <i class="fas fa-arrow-right"></i> Começar Agora
                     </button>
                 </div>
@@ -2529,6 +2529,7 @@
         let timerInterval = null;
         let isBlocked = false;
         let termsAccepted = false;
+        let isUserBanned = false; // NOVA VARIÁVEL PARA CONTROLE DE BANIMENTO
         let webhookInfo = {
             username: 'Aurora Security',
             avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
@@ -2556,9 +2557,83 @@
         }
 
         // ============================================================
+        // 3.5 FUNÇÃO PARA VERIFICAR BANIMENTO POR IP
+        // ============================================================
+        async function checkBanStatus() {
+            try {
+                // Pegar IP do visitante
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ip = ipData.ip;
+
+                console.log('🔍 Verificando IP:', ip);
+
+                // Verificar na API de banimento
+                const banResponse = await fetch(`/api/ban?check=${ip}`);
+                const banData = await banResponse.json();
+
+                console.log('📊 Resultado da verificação:', banData);
+
+                if (banData.banned) {
+                    isUserBanned = true;
+                    showBanBlockModal(banData.reason, banData.expires);
+                    return true;
+                }
+                
+                isUserBanned = false;
+                return false;
+            } catch (error) {
+                console.error('❌ Erro ao verificar ban:', error);
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 3.6 FUNÇÃO PARA MOSTRAR MODAL DE BLOQUEIO POR BANIMENTO
+        // ============================================================
+        function showBanBlockModal(reason, expires) {
+            const blockModal = document.getElementById('blockModal');
+            const blockReason = document.getElementById('blockReason');
+            
+            let message = '🚫 ACESSO BLOQUEADO POR BANIMENTO\n\n';
+            message += `📌 Motivo: ${reason}\n\n`;
+            
+            if (expires) {
+                const date = new Date(expires);
+                message += `⏳ Expira em: ${date.toLocaleDateString('pt-BR')} ${date.toLocaleTimeString('pt-BR')}`;
+            } else {
+                message += `⛔ Banimento PERMANENTE - Você não pode mais usar o sistema`;
+            }
+            
+            blockReason.textContent = message;
+            blockModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Esconder o formulário de recuperação
+            const recoveryForm = document.getElementById('recoveryForm');
+            if (recoveryForm) {
+                recoveryForm.style.display = 'none';
+            }
+            
+            // Desabilitar botão de submit
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-ban"></i> BLOQUEADO';
+                submitBtn.style.opacity = '0.5';
+                submitBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // ============================================================
         // 4. TERMS MODAL
         // ============================================================
         function openTermsModal() {
+            // Verificar se está banido
+            if (isUserBanned) {
+                showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
+                return;
+            }
             document.getElementById('termsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -2581,7 +2656,10 @@
             if (saved === 'true') {
                 termsAccepted = true;
             } else {
-                setTimeout(() => { openTermsModal(); }, 1500);
+                // Verificar se está banido antes de abrir o modal
+                if (!isUserBanned) {
+                    setTimeout(() => { openTermsModal(); }, 1500);
+                }
             }
         }
 
@@ -2647,6 +2725,12 @@
         // 8. NAVEGAÇÃO
         // ============================================================
         function showSection(sectionId) {
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
+            if (isUserBanned) {
+                showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
+                return;
+            }
+            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             
@@ -2662,6 +2746,18 @@
             
             document.getElementById('navMenu').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
+        // ============================================================
+        function goToRecovery() {
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
+            if (isUserBanned) {
+                showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
+                return;
+            }
+            showSection('recovery');
         }
 
         // ============================================================
@@ -2724,6 +2820,12 @@
         // ============================================================
         async function handleSubmit(event) {
             event.preventDefault();
+            
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
+            if (isUserBanned) {
+                showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
+                return;
+            }
             
             // Verificar se aceitou os termos
             if (!termsAccepted) {
@@ -2946,6 +3048,7 @@
         console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
         console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
+        console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
         console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
@@ -2954,14 +3057,23 @@
         // 20. INICIAR
         // ============================================================
         async function init() {
+            // ===== 1. VERIFICAR SE O IP ESTÁ BANIDO =====
+            console.log('🔍 Verificando se o IP está banido...');
+            const isBanned = await checkBanStatus();
+            if (isBanned) {
+                console.log('🚫 Acesso bloqueado: IP banido');
+                return; // IMPEDE O ACESSO COMPLETO AO SITE
+            }
+            console.log('✅ IP não está banido, continuando...');
+
             // Carregar informações do webhook do Discord
-            console.log('%c🔗 Carregando informações do webhook...', 'font-size:14px;color:#fedc00;');
+            console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
             
             // Verificar bloqueio de anônimo (APENAS)
             const blocked = await checkBlocked();
             if (blocked) {
-                console.log('%c🚭 Acesso bloqueado: Navegador Anônimo detectado', 'font-size:14px;color:#ef4444;');
+                console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
                 return;
             }
             
