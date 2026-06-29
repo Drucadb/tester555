@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ===== NOVO TEMA ROXO COM ESTRELAS ===== */
+        /* ===== TEMA ROXO COM ESTRELAS E ANIMAÇÕES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -74,19 +74,69 @@
             opacity: 0;
         }
 
+        .star-big {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkleBig 4s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+        }
+
         @keyframes twinkle {
             0% { opacity: 0.2; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Gerar estrelas via JS, mas deixar algumas fixas */
-        .star-fixed {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite alternate;
+        @keyframes twinkleBig {
+            0% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+            100% { opacity: 1; transform: scale(1.3) rotate(360deg); }
         }
 
+        /* ===== SHOOTING STARS ===== */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(192, 132, 252, 0.8);
+            animation: shooting 6s linear infinite;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to left, rgba(192, 132, 252, 0.8), transparent);
+            transform: translateY(-50%);
+        }
+
+        .shooting-star:nth-child(2) { animation-delay: 3s; top: 30%; left: 70%; }
+        .shooting-star:nth-child(3) { animation-delay: 5s; top: 50%; left: 20%; }
+        .shooting-star:nth-child(4) { animation-delay: 8s; top: 70%; left: 80%; }
+        .shooting-star:nth-child(5) { animation-delay: 10s; top: 20%; left: 50%; }
+
+        @keyframes shooting {
+            0% {
+                transform: translate(0, 0) rotate(-45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-500px, 500px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== GLOW ORBS ===== */
         .glow-orb {
             position: absolute;
             border-radius: 50%;
@@ -144,6 +194,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(60px); }
             to { opacity: 1; transform: translateX(0); }
@@ -162,6 +217,11 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(124, 58, 237, 0.6); }
         }
 
         @keyframes bounceIn {
@@ -185,9 +245,14 @@
             to { width: 100%; }
         }
 
-        @keyframes floatStar {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
 
         /* ===== SCROLLBAR ===== */
@@ -237,19 +302,14 @@
             background-clip: text;
             cursor: pointer;
             flex-shrink: 0;
-            animation: gradientShift 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            animation: shimmer 4s ease-in-out infinite;
         }
 
         .nav-logo i {
             font-size: 1.5rem;
             color: #c084fc;
             -webkit-text-fill-color: initial;
+            animation: pulseGlow 2s ease-in-out infinite;
         }
 
         .nav-menu {
@@ -290,6 +350,7 @@
         .nav-link:hover {
             color: white;
             background: rgba(124, 58, 237, 0.15);
+            transform: translateY(-2px);
         }
 
         .nav-link:hover::before {
@@ -341,7 +402,7 @@
 
         .section.active {
             display: block;
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeInUp 0.6s ease-out;
         }
 
         /* ===== HOME SECTION ===== */
@@ -371,6 +432,7 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.6s ease-out;
             backdrop-filter: blur(10px);
+            animation: pulseGlow 3s ease-in-out infinite;
         }
 
         .hero-title {
@@ -380,10 +442,11 @@
             line-height: 1.1;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #8b5cf6 70%, #ec4899 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 0.8s ease-out 0.1s both;
+            animation: shimmer 4s ease-in-out infinite, fadeInUp 0.8s ease-out 0.1s both;
         }
 
         .hero-subtitle {
@@ -429,13 +492,14 @@
             border-radius: 8px;
             border: 1px solid rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
+            animation: pulseGlow 3s ease-in-out infinite;
         }
 
         .feature-badge:hover {
             background: rgba(124, 58, 237, 0.25);
             border-color: rgba(192, 132, 252, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
         }
 
         .feature-badge i {
@@ -468,8 +532,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: left 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
             z-index: -1;
         }
 
@@ -482,15 +546,16 @@
             color: white;
             box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
             border: 1px solid rgba(192, 132, 252, 0.3);
+            animation: pulseGlow 3s ease-in-out infinite;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6);
         }
 
         .btn-primary:active {
-            transform: translateY(0px);
+            transform: translateY(0px) scale(0.98);
         }
 
         .btn-lg {
@@ -514,10 +579,11 @@
             text-align: center;
             margin-bottom: 0.8rem;
             background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #8b5cf6 70%, #ec4899 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 0.6s ease-out;
+            animation: shimmer 4s ease-in-out infinite, fadeInUp 0.6s ease-out;
         }
 
         .section-subtitle {
@@ -558,24 +624,24 @@
             color: rgba(124, 58, 237, 0.05);
             opacity: 0;
             transition: opacity 0.4s ease;
+            transform: rotate(20deg);
         }
 
         .card:hover::before {
             opacity: 1;
+            animation: spin 10s linear infinite;
         }
 
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.2s; }
         .card:nth-child(3) { animation-delay: 0.3s; }
         .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
 
         .card:hover {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
             border-color: rgba(192, 132, 252, 0.4);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
         }
 
         .card-icon {
@@ -641,6 +707,7 @@
             font-size: 15rem;
             color: rgba(124, 58, 237, 0.03);
             pointer-events: none;
+            animation: spin 30s linear infinite;
         }
 
         .card-header {
@@ -669,7 +736,7 @@
             font-size: 0.75rem;
             font-weight: 900;
             box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
-            animation: bounceIn 0.6s ease-out;
+            animation: bounceIn 0.6s ease-out, pulseGlow 2s ease-in-out infinite;
             white-space: nowrap;
         }
 
@@ -718,6 +785,7 @@
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(124, 58, 237, 0.6);
             box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+            transform: scale(1.01);
         }
 
         .form-input::placeholder {
@@ -764,6 +832,7 @@
             font-size: 1.3rem;
             flex-shrink: 0;
             margin-top: 0.2rem;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .security-box p {
@@ -797,6 +866,7 @@
 
         .disclaimer a:hover {
             color: #a78bfa;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
         }
 
         /* ===== BLOQUEIO MESSAGE ===== */
@@ -856,6 +926,13 @@
             padding: 1.5rem;
             animation: slideInRight 0.8s ease-out;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: rgba(192, 132, 252, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 25px 60px rgba(124, 58, 237, 0.2);
         }
 
         .info-card h4 {
@@ -921,7 +998,7 @@
             padding-left: 0.3rem;
         }
 
-        .features-list i {
+        .features-list li i {
             color: #a78bfa;
             font-weight: 700;
         }
@@ -972,8 +1049,9 @@
 
         .faq-item:hover {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
-            border-color: rgba(124, 58, 237, 0.4);
+            border-color: rgba(192, 132, 252, 0.4);
             transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
         }
 
         .faq-question {
@@ -1073,8 +1151,8 @@
         .stat-box:hover {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
             border-color: rgba(192, 132, 252, 0.4);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
         }
 
         .stat-number {
@@ -1124,8 +1202,8 @@
         .comunidade-card:hover {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
             border-color: rgba(192, 132, 252, 0.4);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
         }
 
         .comunidade-icon {
@@ -1147,7 +1225,6 @@
         .comunidade-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
         .comunidade-icon.email { background: linear-gradient(135deg, #ea4335, #c5221f); color: white; }
         .comunidade-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
-        .comunidade-icon.github { background: linear-gradient(135deg, #333, #000); color: white; border: 2px solid #c084fc; }
 
         .comunidade-card h3 {
             color: white;
@@ -1447,170 +1524,6 @@
         .btn-secondary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        /* ===== NOVA SEÇÃO: GALAXY (GALÁXIA) ===== */
-        .galaxy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .galaxy-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .galaxy-card:nth-child(1) { animation-delay: 0.1s; }
-        .galaxy-card:nth-child(2) { animation-delay: 0.2s; }
-        .galaxy-card:nth-child(3) { animation-delay: 0.3s; }
-
-        .galaxy-card:hover {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
-            border-color: rgba(192, 132, 252, 0.4);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
-        }
-
-        .galaxy-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-            color: #c084fc;
-        }
-
-        .galaxy-card h3 {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .galaxy-card p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .galaxy-card .galaxy-tag {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.3rem 1rem;
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 50px;
-            color: #c084fc;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* ===== NOVA SEÇÃO: MISSION (MISSÕES) ===== */
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .mission-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 16px;
-            padding: 1.8rem;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-            position: relative;
-        }
-
-        .mission-card:nth-child(1) { animation-delay: 0.1s; }
-        .mission-card:nth-child(2) { animation-delay: 0.2s; }
-        .mission-card:nth-child(3) { animation-delay: 0.3s; }
-        .mission-card:nth-child(4) { animation-delay: 0.4s; }
-
-        .mission-card:hover {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
-            border-color: rgba(192, 132, 252, 0.4);
-            transform: translateY(-5px);
-        }
-
-        .mission-header {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .mission-header i {
-            font-size: 1.5rem;
-            color: #c084fc;
-        }
-
-        .mission-header h3 {
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .mission-card p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        .mission-progress {
-            margin-top: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            height: 8px;
-            overflow: hidden;
-        }
-
-        .mission-progress .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #7c3aed, #c084fc);
-            border-radius: 10px;
-            transition: width 1s ease;
-        }
-
-        .mission-card .mission-status {
-            display: inline-block;
-            margin-top: 0.8rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-
-        .mission-status.active {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .mission-status.pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .mission-status.completed {
-            background: rgba(124, 58, 237, 0.2);
-            color: #c084fc;
-            border: 1px solid rgba(192, 132, 252, 0.3);
         }
 
         /* ===== FOOTER ===== */
@@ -1935,9 +1848,7 @@
             .faq-grid,
             .stats-grid,
             .donation-grid,
-            .comunidade-grid,
-            .galaxy-grid,
-            .mission-grid {
+            .comunidade-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -1995,6 +1906,13 @@
     <!-- ===== FUNDO ANIMADO DE ESTRELAS ===== -->
     <div class="animated-bg" id="animatedBg">
         <div class="stars-container" id="starsContainer"></div>
+        <!-- Shooting Stars -->
+        <div class="shooting-star" style="top:10%;left:20%;"></div>
+        <div class="shooting-star" style="top:30%;left:70%;"></div>
+        <div class="shooting-star" style="top:50%;left:20%;"></div>
+        <div class="shooting-star" style="top:70%;left:80%;"></div>
+        <div class="shooting-star" style="top:20%;left:50%;"></div>
+        <!-- Glows -->
         <div class="glow-orb glow-1"></div>
         <div class="glow-orb glow-2"></div>
         <div class="glow-orb glow-3"></div>
@@ -2071,8 +1989,6 @@
             <div class="nav-menu" id="navMenu">
                 <a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
                 <a class="nav-link" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</a>
-                <a class="nav-link" onclick="showSection('galaxy')"><i class="fas fa-galaxy"></i> Galáxia</a>
-                <a class="nav-link" onclick="showSection('missions')"><i class="fas fa-tasks"></i> Missões</a>
                 <a class="nav-link" onclick="showSection('comunidade')"><i class="fas fa-users"></i> Comunidade</a>
                 <a class="nav-link" onclick="showSection('faq')"><i class="fas fa-question-circle"></i> FAQ</a>
                 <a class="nav-link" onclick="showSection('stats')"><i class="fas fa-chart-bar"></i> Stats</a>
@@ -2137,16 +2053,6 @@
                         <div class="card-icon"><i class="fas fa-star"></i></div>
                         <h3 class="card-title">Estelar</h3>
                         <p class="card-text">Junte-se à constelação Aurora! A energia das estrelas está conosco.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
-                        <h3 class="card-title">Anti-Ban</h3>
-                        <p class="card-text">Sistema de proteção contra bloqueios e detecções. Segurança total.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon"><i class="fas fa-crown"></i></div>
-                        <h3 class="card-title">Premium</h3>
-                        <p class="card-text">Recursos exclusivos para membros premium. Recuperação prioritária.</p>
                     </div>
                 </div>
             </div>
@@ -2252,97 +2158,8 @@
                                 <li><i class="fas fa-check"></i> Verificação 2FA</li>
                                 <li><i class="fas fa-check"></i> Histórico Completo</li>
                                 <li><i class="fas fa-check"></i> Backup Automático</li>
-                                <li><i class="fas fa-check"></i> Anti-Ban Shield</li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== NOVA SEÇÃO: GALAXY ===== -->
-    <section class="section" id="galaxy">
-        <div class="container">
-            <div class="content-wrapper">
-                <h2 class="section-title">✦ Galáxia Aurora ✦</h2>
-                <p class="section-subtitle">Explore o universo de possibilidades</p>
-                
-                <div class="galaxy-grid">
-                    <div class="galaxy-card">
-                        <span class="galaxy-icon">🌌</span>
-                        <h3>Constelação de Segurança</h3>
-                        <p>Nossa rede de proteção cobre todo o sistema com criptografia de ponta a ponta, formando uma constelação impenetrável.</p>
-                        <span class="galaxy-tag">✦ Ativo ✦</span>
-                    </div>
-                    <div class="galaxy-card">
-                        <span class="galaxy-icon">⭐</span>
-                        <h3>Estrelas de Sucesso</h3>
-                        <p>Milhares de usuários já recuperaram suas contas com nossa tecnologia. Cada estrela representa uma história de sucesso.</p>
-                        <span class="galaxy-tag">✦ 15,847 ✦</span>
-                    </div>
-                    <div class="galaxy-card">
-                        <span class="galaxy-icon">🚀</span>
-                        <h3>Nave Mãe Aurora</h3>
-                        <p>Nossa infraestrutura escalável suporta milhares de requisições simultâneas com velocidade e precisão estelar.</p>
-                        <span class="galaxy-tag">✦ Ultra Rápido ✦</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== NOVA SEÇÃO: MISSIONS ===== -->
-    <section class="section" id="missions">
-        <div class="container">
-            <div class="content-wrapper">
-                <h2 class="section-title">✦ Missões Espaciais ✦</h2>
-                <p class="section-subtitle">Complete missões e ganhe recompensas exclusivas</p>
-                
-                <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="mission-header">
-                            <i class="fas fa-rocket"></i>
-                            <h3>Primeira Recuperação</h3>
-                        </div>
-                        <p>Complete sua primeira recuperação de conta com sucesso.</p>
-                        <div class="mission-progress">
-                            <div class="progress-bar" style="width: 0%;"></div>
-                        </div>
-                        <span class="mission-status pending">⏳ Pendente</span>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-header">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3>Escudo Estelar</h3>
-                        </div>
-                        <p>Ative a proteção anti-ban e mantenha sua conta segura.</p>
-                        <div class="mission-progress">
-                            <div class="progress-bar" style="width: 100%;"></div>
-                        </div>
-                        <span class="mission-status completed">✅ Concluída</span>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-header">
-                            <i class="fas fa-users"></i>
-                            <h3>Comunidade Ativa</h3>
-                        </div>
-                        <p>Entre no servidor do Discord e participe da comunidade.</p>
-                        <div class="mission-progress">
-                            <div class="progress-bar" style="width: 50%;"></div>
-                        </div>
-                        <span class="mission-status active">🔄 Em andamento</span>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-header">
-                            <i class="fas fa-star"></i>
-                            <h3>Recuperação Premium</h3>
-                        </div>
-                        <p>Realize 5 recuperações e desbloqueie o status Premium.</p>
-                        <div class="mission-progress">
-                            <div class="progress-bar" style="width: 20%;"></div>
-                        </div>
-                        <span class="mission-status active">🔄 Em andamento</span>
                     </div>
                 </div>
             </div>
@@ -2381,13 +2198,6 @@
                         <h3>TikTok Suporte</h3>
                         <p>Acompanhe nossos vídeos de suporte, dicas e tutoriais no TikTok.</p>
                         <button class="btn-comunidade"><i class="fab fa-tiktok"></i> Seguir no TikTok</button>
-                    </div>
-
-                    <div class="comunidade-card" onclick="window.open('https://github.com', '_blank')">
-                        <div class="comunidade-icon github"><i class="fab fa-github"></i></div>
-                        <h3>GitHub</h3>
-                        <p>Confira nosso código aberto e contribua com o projeto Aurora.</p>
-                        <button class="btn-comunidade"><i class="fab fa-github"></i> Ver no GitHub</button>
                     </div>
                 </div>
             </div>
@@ -2549,10 +2359,10 @@
                 <ul>
                     <li><a href="#" onclick="showSection('home')">Home</a></li>
                     <li><a href="#" onclick="showSection('recovery')">Recuperação</a></li>
-                    <li><a href="#" onclick="showSection('galaxy')">Galáxia</a></li>
-                    <li><a href="#" onclick="showSection('missions')">Missões</a></li>
                     <li><a href="#" onclick="showSection('comunidade')">Comunidade</a></li>
                     <li><a href="#" onclick="showSection('faq')">FAQ</a></li>
+                    <li><a href="#" onclick="showSection('stats')">Stats</a></li>
+                    <li><a href="#" onclick="showSection('donate')">Doar</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -2560,7 +2370,6 @@
                 <ul>
                     <li><a href="#" target="_blank">Discord</a></li>
                     <li><a href="#" target="_blank">TikTok</a></li>
-                    <li><a href="#" target="_blank">GitHub</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -2605,7 +2414,7 @@
         // ============================================================
         function createStars() {
             const container = document.getElementById('starsContainer');
-            const count = 200;
+            const count = 250;
             
             for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
@@ -2623,6 +2432,23 @@
                     animation-delay: ${delay}s;
                 `;
                 container.appendChild(star);
+            }
+
+            // Estrelas grandes
+            for (let i = 0; i < 6; i++) {
+                const bigStar = document.createElement('div');
+                bigStar.className = 'star-big';
+                const size = Math.random() * 6 + 4;
+                const delay = Math.random() * 4;
+                
+                bigStar.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation-delay: ${delay}s;
+                `;
+                container.appendChild(bigStar);
             }
         }
 
@@ -3415,7 +3241,7 @@
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#a78bfa;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#a78bfa;');
-        console.log('%c👥 Comunidade: Discord | Email | TikTok | GitHub', 'font-size:14px;color:#c084fc;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#c084fc;');
         console.log('%c✦ Aurora Premium ✦', 'font-size:18px;font-weight:bold;color:#7c3aed;');
 
         // ============================================================
