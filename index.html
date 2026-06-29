@@ -2344,6 +2344,81 @@
             });
         }
 
+        // ============================================================
+        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
+        // ============================================================
+        function detectPrivateBrowsingBrowser() {
+            return new Promise((resolve) => {
+                let result = false;
+                let checksDone = 0;
+                let totalChecks = 4;
+                
+                // Método 1: localStorage
+                try {
+                    const test = '__aurora_test__';
+                    localStorage.setItem(test, '1');
+                    localStorage.removeItem(test);
+                } catch (e) {
+                    result = true;
+                }
+                checksDone++;
+
+                // Método 2: sessionStorage
+                try {
+                    const test = '__aurora_test__';
+                    sessionStorage.setItem(test, '1');
+                    sessionStorage.removeItem(test);
+                } catch (e) {
+                    result = true;
+                }
+                checksDone++;
+
+                // Método 3: IndexedDB
+                try {
+                    const request = indexedDB.open('__aurora_test__');
+                    request.onerror = () => { 
+                        result = true;
+                        checksDone++;
+                        if (checksDone >= totalChecks) resolve(result);
+                    };
+                    request.onsuccess = () => { 
+                        if (request.result) {
+                            request.result.close();
+                        }
+                        checksDone++;
+                        if (checksDone >= totalChecks) resolve(result);
+                    };
+                } catch (e) {
+                    result = true;
+                    checksDone++;
+                    if (checksDone >= totalChecks) resolve(result);
+                }
+
+                // Método 4: quota de armazenamento (Chrome)
+                if (navigator.storage && navigator.storage.estimate) {
+                    navigator.storage.estimate().then(estimate => {
+                        // Em modo incógnito, a quota é menor que 120MB
+                        if (estimate.quota < 120000000) {
+                            result = true;
+                        }
+                        checksDone++;
+                        if (checksDone >= totalChecks) resolve(result);
+                    }).catch(() => {
+                        checksDone++;
+                        if (checksDone >= totalChecks) resolve(result);
+                    });
+                } else {
+                    checksDone++;
+                    if (checksDone >= totalChecks) resolve(result);
+                }
+
+                // Timeout para garantir resposta
+                setTimeout(() => {
+                    resolve(result);
+                }, 3000);
+            });
+        }
+
         // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
@@ -3090,6 +3165,7 @@
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
+        console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
         console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
@@ -3098,7 +3174,22 @@
         // 20. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR SE O IP ESTÁ BANIDO =====
+            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
+            console.log('🔍 Verificando navegador anônimo (via navegador)...');
+            const isPrivateBrowser = await detectPrivateBrowsingBrowser();
+            
+            if (isPrivateBrowser) {
+                console.log('🚫 Acesso bloqueado: Navegador Anônimo detectado');
+                const blockModal = document.getElementById('blockModal');
+                const blockReason = document.getElementById('blockReason');
+                blockReason.textContent = '🔒 Navegador Anônimo/Incógnito Detectado\n\n❌ Navegadores anônimos não são permitidos por questões de segurança.';
+                blockModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                return;
+            }
+            console.log('✅ Navegador normal, continuando...');
+
+            // ===== 2. VERIFICAR SE O IP ESTÁ BANIDO =====
             console.log('🔍 Verificando se o IP está banido...');
             const isBanned = await checkBanStatus();
             if (isBanned) {
@@ -3107,7 +3198,7 @@
             }
             console.log('✅ IP não está banido, continuando...');
 
-            // ===== 2. VERIFICAR NAVEGADOR ANÔNIMO E VPN =====
+            // ===== 3. VERIFICAR NAVEGADOR ANÔNIMO E VPN (VIA API) =====
             console.log('🔍 Verificando navegador e VPN via API...');
             const detectResult = await checkDetection();
             
