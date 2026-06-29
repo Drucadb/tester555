@@ -1,1 +1,34 @@
-
+{
+    "banned": [
+        {
+            "ip": "",
+            "reason": "Spam",
+            "date": "2026-06-28T10:30:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "",
+            "reason": "Tentativa de invasão",
+            "date": "2026-06-27T15:20:00.000Z",
+            "expires": "2026-12-31T23:59:59.000Z"
+        },
+        {
+            "ip": "",
+            "reason": "Uso de VPN proibido",
+            "date": "2026-06-26T08:45:00.000Z",
+            "expires": "2026-07-26T08:45:00.000Z"
+        },
+        {
+            "ip": "",
+            "reason": "Múltiplas tentativas fracassadas",
+            "date": "2026-06-25T20:10:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "",
+            "reason": "Spam",
+            "date": "2026-06-24T14:00:00.000Z",
+            "expires": "2027-06-24T14:00:00.000Z"
+        }
+    ]
+}
