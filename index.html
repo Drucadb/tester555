@@ -1619,7 +1619,7 @@
         }
 
         .block-modal-overlay.active {
-            display: flex;
+            display: flex !important;
             animation: fadeInUp 0.4s ease-out;
         }
 
@@ -1634,6 +1634,9 @@
             width: 100%;
             text-align: center;
             animation: scaleIn 0.4s ease-out;
+            position: relative;
+            z-index: 10000;
+            pointer-events: auto;
         }
 
         .block-modal-content .block-icon {
@@ -1670,6 +1673,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             margin: 0;
+            white-space: pre-line;
         }
 
         .block-modal-content .btn-retry {
@@ -1785,6 +1789,27 @@
             }
 
             .block-modal-content h2 { font-size: 1.2rem; }
+        }
+
+        /* ===== BLOQUEIO DE CLICK FORA DO MODAL ===== */
+        .block-modal-overlay .block-modal-content {
+            pointer-events: auto;
+        }
+
+        /* Prevenir que o overlay feche ao clicar nele */
+        .block-modal-overlay {
+            pointer-events: none;
+        }
+
+        .block-modal-overlay.active .block-modal-content {
+            pointer-events: auto;
+        }
+
+        /* Garantir que o modal fique sempre visível */
+        .block-modal-overlay.active {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
     </style>
 </head>
@@ -1944,6 +1969,13 @@
                 <h2 class="section-title">Dashboard de Recuperação</h2>
                 <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
                 
+                <!-- ===== ANÚNCIO 1 ===== -->
+                <div style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 728px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
+                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
+                    <script async="async" data-cfasync="false" src="https://pl30126307.effectivecpmnetwork.com/203ae59ba633be29c12fa94ab9b32475/invoke.js"></script>
+                    <div id="container-203ae59ba633be29c12fa94ab9b32475"></div>
+                </div>
+                
                 <div class="recovery-grid">
                     <div class="main-card">
                         <div class="card-header">
@@ -1980,6 +2012,11 @@
                                 <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
                             </div>
 
+                            <!-- ===== ANÚNCIO 2 (dentro do formulário) ===== -->
+                            <div style="text-align: center; margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                <script src="https://pl30126308.effectivecpmnetwork.com/03/77/da/0377da632b137bb0d24c51b465459282.js"></script>
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
                                 <i class="fas fa-lock-open"></i> Iniciar Recuperação
                             </button>
@@ -2001,6 +2038,11 @@
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- ===== ANÚNCIO 3 ===== -->
+                            <div style="text-align: center; margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                <a href="https://www.effectivecpmnetwork.com/auk40ejc9p?key=4f0075cbe9ef09cbfb9dfa33001d4ab3" target="_blank" style="display: block; color: #fedc00; font-size: 0.8rem; text-decoration: none;">📢 Anúncio</a>
                             </div>
 
                             <p class="disclaimer">
@@ -2088,6 +2130,12 @@
             <div class="content-wrapper">
                 <h2 class="section-title">Perguntas Frequentes</h2>
                 <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
+                
+                <!-- ===== ANÚNCIO 4 ===== -->
+                <div style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 728px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
+                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
+                    <script src="https://pl30126310.effectivecpmnetwork.com/e5/c7/7b/e5c77bfc256cd726587fae920572e6cb.js"></script>
+                </div>
                 
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -2185,6 +2233,21 @@
             <div class="content-wrapper">
                 <h2 class="section-title">Apoie o Projeto 🇧🇷</h2>
                 <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
+                
+                <!-- ===== ANÚNCIO 5 ===== -->
+                <div style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 468px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
+                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
+                    <script>
+                        atOptions = {
+                            'key' : 'd66106b228d88ce6185368c118979467',
+                            'format' : 'iframe',
+                            'height' : 60,
+                            'width' : 468,
+                            'params' : {}
+                        };
+                    </script>
+                    <script src="https://www.highperformanceformat.com/d66106b228d88ce6185368c118979467/invoke.js"></script>
+                </div>
                 
                 <div class="donation-grid">
                     <div class="donation-card desativado">
@@ -2432,7 +2495,7 @@
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50
+                    ipData.threat_level > 50 // Alto nível de ameaça
                 ];
 
                 // Retorna true se detectar VPN/Proxy/Tor ou datacenter
@@ -3116,10 +3179,8 @@
             if (event.target === processingModal) processingModal.classList.remove('active');
             if (event.target === successModal) successModal.classList.remove('active');
             if (event.target === termsModal) closeTermsModal();
-            if (event.target === blockModal) {
-                blockModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
+            // REMOVIDO: O bloco abaixo impedia que o modal de bloqueio fosse fechado
+            // Agora apenas o botão "Tentar Novamente" fecha o modal
         });
 
         // ============================================================
@@ -3194,7 +3255,7 @@
             const isBanned = await checkBanStatus();
             if (isBanned) {
                 console.log('🚫 Acesso bloqueado: IP banido');
-                return; // IMPEDE O ACESSO COMPLETO AO SITE
+                return;
             }
             console.log('✅ IP não está banido, continuando...');
 
