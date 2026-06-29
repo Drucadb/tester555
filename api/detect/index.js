@@ -23,11 +23,11 @@ export default async function handler(req, res) {
     
     const ipFinal = ip.split(',')[0].trim();
 
-    // ===== DETECTAR NAVEGADOR ANÔNIMO =====
+    // ===== DETECTAR NAVEGADOR ANÔNIMO VIA HEADERS =====
     const isPrivate = detectPrivateBrowsing(req);
 
-    // ===== DETECTAR VPN/PROXY =====
-    const vpnInfo = await detectVPN(ipFinal);
+    // ===== DETECTAR VPN/PROXY (MÚLTIPLOS MÉTODOS) =====
+    const vpnInfo = await detectVPNMultiMethod(ipFinal, req);
 
     // ===== RESULTADO FINAL =====
     const blocked = isPrivate || vpnInfo.isVPN;
@@ -45,139 +45,123 @@ export default async function handler(req, res) {
     });
 }
 
-// ===== FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO =====
+// ===== FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (MELHORADA) =====
 function detectPrivateBrowsing(req) {
-    // Verificar headers comuns de navegadores anônimos
     const headers = req.headers;
+    const userAgent = headers['user-agent'] || '';
     
-    // Chrome Incognito
-    if (headers['x-chrome-incognito']) {
+    // 1. Verificar headers específicos (alguns navegadores enviam)
+    if (headers['sec-ch-ua'] && headers['sec-ch-ua'].includes('Not_A Brand')) {
         return true;
     }
     
-    // Firefox Private
-    if (headers['x-firefox-private']) {
+    // 2. Verificar se é um bot/headless browser
+    if (userAgent.includes('Headless') || 
+        userAgent.includes('PhantomJS') || 
+        userAgent.includes('Puppeteer')) {
         return true;
     }
     
-    // Safari Private
-    if (headers['x-safari-private']) {
-        return true;
-    }
-    
-    // Edge InPrivate
-    if (headers['x-edge-inprivate']) {
-        return true;
-    }
-    
-    // Opera Private
-    if (headers['x-opera-private']) {
-        return true;
+    // 3. Verificar DNT (Do Not Track) - alguns navegadores anônimos ativam
+    if (headers['dnt'] === '1' && !headers['sec-ch-ua-mobile']) {
+        // Pode ser anônimo, mas não é conclusivo
+        return false; // Não bloquear só por isso
     }
     
     return false;
 }
 
-// ===== FUNÇÃO PARA DETECTAR VPN =====
-async function detectVPN(ip) {
+// ===== FUNÇÃO PARA DETECTAR VPN COM MÚLTIPLOS MÉTODOS =====
+async function detectVPNMultiMethod(ip, req) {
+    const results = {
+        isVPN: false,
+        details: {
+            country: 'Desconhecido',
+            region: 'Desconhecido',
+            city: 'Desconhecido',
+            isp: 'Desconhecido',
+            org: 'Desconhecido',
+            isProxy: false,
+            isDatacenter: false,
+            methods: []
+        }
+    };
+
+    // ===== MÉTODO 1: ip-api.com =====
     try {
-        // Método 1: ip-api.com (gratuito)
-        const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,regionName,city,isp,org,proxy,hosting,query`);
+        const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,regionName,city,isp,org,proxy,hosting,query,mobile,timezone`);
         const data = await response.json();
         
         if (data.status === 'success') {
-            // Verificar indicadores de VPN/Proxy
-            const isProxy = data.proxy === true;
-            const isHosting = data.hosting === true;
+            results.details.country = data.country || 'Desconhecido';
+            results.details.region = data.regionName || 'Desconhecido';
+            results.details.city = data.city || 'Desconhecido';
+            results.details.isp = data.isp || 'Desconhecido';
+            results.details.org = data.org || 'Desconhecido';
+            results.details.isProxy = data.proxy === true;
+            results.details.isDatacenter = data.hosting === true;
+            results.details.methods.push('ip-api.com');
             
-            // Verificar se é um provedor de VPN comum
-            const vpnProviders = ['VPN', 'Proxy', 'Hosting', 'Cloud', 'Data Center', 'Amazon', 'Google Cloud', 'Microsoft Azure', 'DigitalOcean'];
-            const isVPNProvider = vpnProviders.some(provider => 
-                (data.isp && data.isp.includes(provider)) || 
-                (data.org && data.org.includes(provider))
-            );
-            
-            // Verificar se é um IP de datacenter
-            const isDatacenter = isHosting || isVPNProvider;
-            
-            return {
-                isVPN: isProxy || isDatacenter,
-                details: {
-                    country: data.country || 'Desconhecido',
-                    region: data.regionName || 'Desconhecido',
-                    city: data.city || 'Desconhecido',
-                    isp: data.isp || 'Desconhecido',
-                    org: data.org || 'Desconhecido',
-                    isProxy: isProxy,
-                    isDatacenter: isDatacenter
-                }
-            };
+            if (data.proxy || data.hosting) {
+                results.isVPN = true;
+            }
         }
-        
-        // Se a API falhar, tentar método alternativo
-        return await detectVPNAlternative(ip);
-        
-    } catch (error) {
-        console.error('Erro ao detectar VPN:', error);
-        // Fallback: método alternativo
-        return await detectVPNAlternative(ip);
+    } catch (e) {
+        console.warn('ip-api.com falhou:', e.message);
     }
-}
 
-// ===== MÉTODO ALTERNATIVO DE DETECÇÃO DE VPN =====
-async function detectVPNAlternative(ip) {
-    try {
-        // API alternativa: ipapi.co
-        const response = await fetch(`https://ipapi.co/${ip}/json/`);
-        const data = await response.json();
-        
-        if (data && !data.error) {
-            const isProxy = data.proxy === true;
-            const isHosting = data.hosting === true;
-            
-            return {
-                isVPN: isProxy || isHosting,
-                details: {
-                    country: data.country_name || 'Desconhecido',
-                    region: data.region || 'Desconhecido',
-                    city: data.city || 'Desconhecido',
-                    isp: data.org || 'Desconhecido',
-                    org: data.org || 'Desconhecido',
-                    isProxy: isProxy,
-                    isDatacenter: isHosting
-                }
-            };
+    // ===== MÉTODO 2: Verificar IP de datacenter (lista comum) =====
+    const datacenterIPs = [
+        'aws', 'amazon', 'azure', 'google cloud', 'digitalocean', 
+        'linode', 'vultr', 'ovh', 'hetzner', 'cloudflare',
+        'akamai', 'fastly', 'cloudfront', 'heroku', 'vercel'
+    ];
+    
+    const ispLower = (results.details.isp || '').toLowerCase();
+    const orgLower = (results.details.org || '').toLowerCase();
+    
+    for (const dc of datacenterIPs) {
+        if (ispLower.includes(dc) || orgLower.includes(dc)) {
+            results.isVPN = true;
+            results.details.methods.push('datacenter-list');
+            results.details.isDatacenter = true;
+            break;
         }
-        
-        // Se tudo falhar, retornar sem detecção
-        return {
-            isVPN: false,
-            details: {
-                country: 'Desconhecido',
-                region: 'Desconhecido',
-                city: 'Desconhecido',
-                isp: 'Desconhecido',
-                org: 'Desconhecido',
-                isProxy: false,
-                isDatacenter: false
-            },
-            error: 'Não foi possível verificar VPN'
-        };
-        
-    } catch (error) {
-        console.error('Erro na detecção alternativa:', error);
-        return {
-            isVPN: false,
-            details: {
-                country: 'Desconhecido',
-                region: 'Desconhecido',
-                city: 'Desconhecido',
-                isp: 'Desconhecido',
-                org: 'Desconhecido',
-                isProxy: false,
-                isDatacenter: false
-            },
-            error: 'Erro ao verificar VPN'
-        };
     }
+
+    // ===== MÉTODO 3: ipapi.co (fallback) =====
+    if (!results.isVPN) {
+        try {
+            const response = await fetch(`https://ipapi.co/${ip}/json/`);
+            const data = await response.json();
+            
+            if (data && !data.error) {
+                const isProxy = data.proxy === true;
+                const isHosting = data.hosting === true;
+                
+                if (isProxy || isHosting) {
+                    results.isVPN = true;
+                    results.details.methods.push('ipapi.co');
+                }
+            }
+        } catch (e) {
+            console.warn('ipapi.co falhou:', e.message);
+        }
+    }
+
+    // ===== MÉTODO 4: Verificar Cloudflare headers (indica VPN/Proxy) =====
+    const cfHeaders = req.headers['cf-connecting-ip'] || req.headers['cf-ray'];
+    if (cfHeaders) {
+        // Pode ser VPN, mas não é conclusivo
+        results.details.methods.push('cloudflare');
+    }
+
+    // ===== MÉTODO 5: Verificar VPN por localização (múltiplas localizações) =====
+    // Se o IP está em um país diferente do esperado e é de datacenter
+    if (results.details.isDatacenter && results.details.country !== 'Brazil') {
+        results.isVPN = true;
+        results.details.methods.push('vpn-by-location');
+    }
+
+    return results;
 }
