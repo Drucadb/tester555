@@ -2432,7 +2432,7 @@
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50
+                    ipData.threat_level > 50 // Alto nível de ameaça
                 ];
 
                 // Retorna true se detectar VPN/Proxy/Tor ou datacenter
@@ -2604,7 +2604,7 @@
         let timerInterval = null;
         let isBlocked = false;
         let termsAccepted = false;
-        let isUserBanned = false;
+        let isUserBanned = false; // NOVA VARIÁVEL PARA CONTROLE DE BANIMENTO
         let webhookInfo = {
             username: 'Aurora Security',
             avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
