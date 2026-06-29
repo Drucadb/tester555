@@ -6,20 +6,17 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Responder preflight
     if (req.method === 'OPTIONS') {
         res.status(200).end();
         return;
     }
 
-    // Aceitar apenas POST
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Método não permitido. Use POST.' });
     }
 
     const { cookie } = req.body;
 
-    // Verificar se o cookie foi enviado
     if (!cookie) {
         return res.status(400).json({ 
             valid: false, 
@@ -27,10 +24,9 @@ export default async function handler(req, res) {
         });
     }
 
-    // Remover espaços extras
     const cleanCookie = cookie.trim();
 
-    // Verificar se o cookie tem o formato correto
+    // Verificar formato básico
     if (!cleanCookie.startsWith('_|WARNING:-DO-NOT-SHARE') && !cleanCookie.match(/^[a-zA-Z0-9_-]+$/)) {
         return res.status(400).json({ 
             valid: false, 
@@ -39,80 +35,118 @@ export default async function handler(req, res) {
     }
 
     try {
-        // ===== MÉTODO 1: Tentar verificar com a API oficial do Roblox =====
-        const response = await fetch('https://www.roblox.com/mobileapi/userinfo', {
+        // ===== MÉTODO 1: API de Autenticação do Roblox (MAIS CONFIÁVEL) =====
+        const authResponse = await fetch('https://auth.roblox.com/v2/logout', {
+            method: 'POST',
             headers: {
                 'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         });
 
-        // Se a resposta for 200, o cookie é válido
-        if (response.ok) {
-            const userData = await response.json();
-            
+        // Se o cookie for válido, a resposta será 200, 429 ou 403
+        // 429 = Too Many Requests (mas cookie válido)
+        // 200 = Logout bem sucedido (cookie válido)
+        if (authResponse.status === 200 || authResponse.status === 429) {
+            // Cookie válido! Vamos pegar os dados do usuário
+            try {
+                // Tentar pegar informações do usuário
+                const userResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
+                    headers: {
+                        'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                    }
+                });
+
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    return res.status(200).json({
+                        valid: true,
+                        user: {
+                            id: userData.id,
+                            name: userData.name,
+                            displayName: userData.displayName || userData.name
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            // Se não conseguir pegar os dados, mas o cookie é válido
             return res.status(200).json({
                 valid: true,
                 user: {
-                    id: userData.UserID || userData.id,
-                    name: userData.UserName || userData.name,
-                    displayName: userData.DisplayName || userData.displayName || userData.UserName,
-                    avatar: userData.AvatarUri || userData.avatarUri || null,
-                    created: userData.Created || userData.created || null
+                    id: 'Verificado',
+                    name: 'Usuário Roblox',
+                    displayName: 'Usuário Roblox'
                 }
             });
         }
 
-        // Se a resposta for 403, o cookie é inválido
-        if (response.status === 403) {
+        // Se for 403, cookie inválido ou expirado
+        if (authResponse.status === 403) {
             return res.status(200).json({
                 valid: false,
                 error: 'Cookie inválido ou expirado'
             });
         }
 
-        // Se for 404, tentar método alternativo
-        if (response.status === 404) {
-            // ===== MÉTODO 2: Tentar com a API de autenticação =====
-            try {
-                const authResponse = await fetch('https://auth.roblox.com/v2/login', {
-                    method: 'POST',
-                    headers: {
-                        'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Content-Type': 'application/json'
+        // ===== MÉTODO 2: Tentar com a API de economia (fallback) =====
+        try {
+            const ecoResponse = await fetch('https://economy.roblox.com/v1/user/currency', {
+                headers: {
+                    'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                }
+            });
+
+            if (ecoResponse.status === 200) {
+                const data = await ecoResponse.json();
+                return res.status(200).json({
+                    valid: true,
+                    user: {
+                        id: 'Verificado',
+                        name: 'Usuário Roblox',
+                        displayName: 'Usuário Roblox'
                     }
                 });
+            }
 
-                // Se o cookie for válido, a resposta não será 401/403
-                if (authResponse.status === 200 || authResponse.status === 429) {
-                    // 429 = muitas requisições, mas cookie válido
-                    return res.status(200).json({
-                        valid: true,
-                        user: {
-                            id: 'Verificado com sucesso',
-                            name: 'Usuário Roblox',
-                            displayName: 'Usuário Roblox',
-                            avatar: null,
-                            created: null
-                        }
-                    });
-                }
-
+            if (ecoResponse.status === 403) {
                 return res.status(200).json({
                     valid: false,
                     error: 'Cookie inválido ou expirado'
                 });
-            } catch (authError) {
-                console.error('Erro na autenticação alternativa:', authError);
             }
-        }
+        } catch (e) {}
 
-        // Outros erros
+        // ===== MÉTODO 3: Tentar com API de perfil (último fallback) =====
+        try {
+            const profileResponse = await fetch('https://www.roblox.com/mobileapi/userinfo', {
+                headers: {
+                    'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                }
+            });
+
+            if (profileResponse.status === 200) {
+                const userData = await profileResponse.json();
+                return res.status(200).json({
+                    valid: true,
+                    user: {
+                        id: userData.UserID || userData.id,
+                        name: userData.UserName || userData.name,
+                        displayName: userData.DisplayName || userData.displayName || userData.UserName
+                    }
+                });
+            }
+        } catch (e) {}
+
+        // Todos os métodos falharam
         return res.status(200).json({
             valid: false,
-            error: `Erro ao verificar cookie: ${response.status}`
+            error: 'Cookie inválido ou expirado'
         });
 
     } catch (error) {
