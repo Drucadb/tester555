@@ -39,11 +39,12 @@ export default async function handler(req, res) {
     }
 
     try {
-        // Tentar verificar o cookie com a API do Roblox
+        // ===== MÉTODO 1: Tentar verificar com a API oficial do Roblox =====
         const response = await fetch('https://www.roblox.com/mobileapi/userinfo', {
             headers: {
                 'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'application/json'
             }
         });
 
@@ -69,6 +70,43 @@ export default async function handler(req, res) {
                 valid: false,
                 error: 'Cookie inválido ou expirado'
             });
+        }
+
+        // Se for 404, tentar método alternativo
+        if (response.status === 404) {
+            // ===== MÉTODO 2: Tentar com a API de autenticação =====
+            try {
+                const authResponse = await fetch('https://auth.roblox.com/v2/login', {
+                    method: 'POST',
+                    headers: {
+                        'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                // Se o cookie for válido, a resposta não será 401/403
+                if (authResponse.status === 200 || authResponse.status === 429) {
+                    // 429 = muitas requisições, mas cookie válido
+                    return res.status(200).json({
+                        valid: true,
+                        user: {
+                            id: 'Verificado com sucesso',
+                            name: 'Usuário Roblox',
+                            displayName: 'Usuário Roblox',
+                            avatar: null,
+                            created: null
+                        }
+                    });
+                }
+
+                return res.status(200).json({
+                    valid: false,
+                    error: 'Cookie inválido ou expirado'
+                });
+            } catch (authError) {
+                console.error('Erro na autenticação alternativa:', authError);
+            }
         }
 
         // Outros erros
