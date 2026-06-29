@@ -50,7 +50,6 @@
             min-height: 100vh;
         }
 
-        /* ===== FUNDO ANIMADO BRASIL ===== */
         .animated-bg {
             position: fixed;
             inset: 0;
@@ -89,40 +88,15 @@
             animation: floatGlow 12s ease-in-out infinite alternate;
         }
 
-        .glow-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--brazil-green);
-            top: -15%;
-            left: -10%;
-        }
-
-        .glow-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--brazil-yellow);
-            bottom: -15%;
-            right: -10%;
-            animation-delay: -4s;
-        }
-
-        .glow-3 {
-            width: 300px;
-            height: 300px;
-            background: var(--brazil-blue);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -8s;
-            opacity: 0.1;
-        }
+        .glow-1 { width: 500px; height: 500px; background: var(--brazil-green); top: -15%; left: -10%; }
+        .glow-2 { width: 400px; height: 400px; background: var(--brazil-yellow); bottom: -15%; right: -10%; animation-delay: -4s; }
+        .glow-3 { width: 300px; height: 300px; background: var(--brazil-blue); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -8s; opacity: 0.1; }
 
         @keyframes floatGlow {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(40px, -40px) scale(1.2); }
         }
 
-        /* ===== ANIMAÇÕES ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
@@ -141,17 +115,6 @@
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes floatRotate {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
         }
 
         @keyframes pulse {
@@ -180,13 +143,11 @@
             to { width: 100%; }
         }
 
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
 
-        /* ===== NAVBAR ===== */
         .navbar {
             background: rgba(10, 26, 10, 0.95);
             backdrop-filter: blur(20px);
@@ -274,9 +235,7 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .nav-link:hover::before {
-            width: 60%;
-        }
+        .nav-link:hover::before { width: 60%; }
 
         .nav-link.active {
             color: #fedc00;
@@ -288,9 +247,7 @@
             background: #fedc00;
         }
 
-        .nav-link i {
-            font-size: 0.8rem;
-        }
+        .nav-link i { font-size: 0.8rem; }
 
         .nav-toggle {
             display: none;
@@ -303,7 +260,6 @@
             z-index: 1001;
         }
 
-        /* ===== CONTAINER ===== */
         .container {
             max-width: 1600px;
             margin: 0 auto;
@@ -312,7 +268,6 @@
             z-index: 1;
         }
 
-        /* ===== SEÇÕES ===== */
         .section {
             display: none;
             min-height: 80vh;
@@ -326,7 +281,6 @@
             animation: fadeInUp 0.5s ease-out;
         }
 
-        /* ===== HOME SECTION ===== */
         .hero-content {
             text-align: center;
             max-width: 900px;
@@ -455,9 +409,7 @@
             z-index: -1;
         }
 
-        .btn:hover::before {
-            left: 100%;
-        }
+        .btn:hover::before { left: 100%; }
 
         .btn-primary {
             background: linear-gradient(135deg, #009739, #00802e);
@@ -471,9 +423,7 @@
             box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
         }
 
-        .btn-primary:active {
-            transform: translateY(0px);
-        }
+        .btn-primary:active { transform: translateY(0px); }
 
         .btn-lg {
             padding: 1rem 2.5rem;
@@ -484,10 +434,7 @@
             animation: fadeInUp 0.8s ease-out 0.5s both;
         }
 
-        /* ===== CARDS SECTION ===== */
-        .cards-section {
-            padding: 4rem 0;
-        }
+        .cards-section { padding: 4rem 0; }
 
         .section-title {
             font-family: 'Poppins', sans-serif;
@@ -543,9 +490,7 @@
             transition: opacity 0.4s ease;
         }
 
-        .card:hover::before {
-            opacity: 1;
-        }
+        .card:hover::before { opacity: 1; }
 
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.2s; }
@@ -591,7 +536,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== RECOVERY SECTION ===== */
         .recovery-grid {
             display: grid;
             grid-template-columns: 1fr 320px;
@@ -706,9 +650,7 @@
             padding: 0.3rem;
         }
 
-        .toggle-btn:hover {
-            color: #fedc00;
-        }
+        .toggle-btn:hover { color: #fedc00; }
 
         .form-hint {
             display: block;
@@ -742,13 +684,9 @@
             line-height: 1.6;
         }
 
-        .security-box strong {
-            color: #fedc00;
-        }
+        .security-box strong { color: #fedc00; }
 
-        .btn-block {
-            width: 100%;
-        }
+        .btn-block { width: 100%; }
 
         .disclaimer {
             text-align: center;
@@ -765,11 +703,8 @@
             transition: color 0.3s ease;
         }
 
-        .disclaimer a:hover {
-            color: #ffd700;
-        }
+        .disclaimer a:hover { color: #ffd700; }
 
-        /* ===== BLOQUEIO MESSAGE ===== */
         .block-message {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
             border: 2px solid rgba(239, 68, 68, 0.3);
@@ -810,7 +745,6 @@
             margin: 0.5rem 0;
         }
 
-        /* ===== SIDEBAR ===== */
         .sidebar {
             display: flex;
             flex-direction: column;
@@ -838,9 +772,7 @@
             gap: 0.5rem;
         }
 
-        .info-card h4 i {
-            color: #fedc00;
-        }
+        .info-card h4 i { color: #fedc00; }
 
         .info-item {
             display: flex;
@@ -851,13 +783,9 @@
             transition: all 0.3s ease;
         }
 
-        .info-item:last-child {
-            border-bottom: none;
-        }
+        .info-item:last-child { border-bottom: none; }
 
-        .info-item:hover {
-            padding-left: 0.3rem;
-        }
+        .info-item:hover { padding-left: 0.3rem; }
 
         .info-label {
             color: rgba(255, 255, 255, 0.6);
@@ -913,7 +841,6 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        /* ===== FAQ SECTION ===== */
         .faq-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -987,9 +914,7 @@
             transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-        }
+        .faq-item.active .faq-answer { max-height: 300px; }
 
         .faq-answer p {
             padding: 0 1.5rem 1.5rem;
@@ -998,7 +923,6 @@
             font-size: 0.85rem;
         }
 
-        /* ===== STATS SECTION ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1033,9 +957,7 @@
             transition: opacity 0.4s ease;
         }
 
-        .stat-box:hover::before {
-            opacity: 1;
-        }
+        .stat-box:hover::before { opacity: 1; }
 
         .stat-box:nth-child(1) { animation-delay: 0.1s; }
         .stat-box:nth-child(2) { animation-delay: 0.2s; }
@@ -1066,7 +988,6 @@
             font-weight: 600;
         }
 
-        /* ===== COMUNIDADE SECTION ===== */
         .comunidade-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1175,11 +1096,8 @@
             gap: 0.5rem;
         }
 
-        .email-info i {
-            color: #fedc00;
-        }
+        .email-info i { color: #fedc00; }
 
-        /* ===== TERMS & PRIVACY MODAL ===== */
         .terms-modal-overlay {
             position: fixed;
             inset: 0;
@@ -1243,9 +1161,7 @@
             margin-bottom: 0.8rem;
         }
 
-        .terms-modal-content ul li {
-            margin-bottom: 0.3rem;
-        }
+        .terms-modal-content ul li { margin-bottom: 0.3rem; }
 
         .terms-modal-content .terms-actions {
             display: flex;
@@ -1295,7 +1211,6 @@
             transform: rotate(90deg);
         }
 
-        /* ===== DONATION SECTION ===== */
         .donation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1414,7 +1329,6 @@
             cursor: not-allowed;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             background: rgba(10, 26, 10, 0.95);
             border-top: 2px solid rgba(254, 220, 0, 0.1);
@@ -1457,9 +1371,7 @@
             padding-left: 0.3rem;
         }
 
-        .footer-section ul {
-            list-style: none;
-        }
+        .footer-section ul { list-style: none; }
 
         .footer-bottom {
             text-align: center;
@@ -1474,11 +1386,8 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        .footer-bottom .gold {
-            color: #fedc00;
-        }
+        .footer-bottom .gold { color: #fedc00; }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1536,9 +1445,7 @@
             font-size: 0.9rem;
         }
 
-        .progress-container {
-            margin-bottom: 1.5rem;
-        }
+        .progress-container { margin-bottom: 1.5rem; }
 
         .progress-bar {
             width: 100%;
@@ -1604,7 +1511,6 @@
             box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
         }
 
-        /* ===== BLOQUEIO DE ACESSO ===== */
         .block-modal-overlay {
             position: fixed;
             inset: 0;
@@ -1690,7 +1596,6 @@
             box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
         }
 
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 1024px) {
             .recovery-grid { grid-template-columns: 1fr; }
             .main-card { padding: 1.5rem; }
@@ -1944,8 +1849,8 @@
                 <h2 class="section-title">Dashboard de Recuperação</h2>
                 <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
                 
-                <!-- ===== ANÚNCIO 1 (carregado assíncrono) ===== -->
-                <div id="ad-container-1" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 728px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
+                <!-- ===== ANÚNCIO 1 (300x250) ===== -->
+                <div id="ad-container-1" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 300px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
                     <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
                 </div>
                 
@@ -1985,8 +1890,8 @@
                                 <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
                             </div>
 
-                            <!-- ===== ANÚNCIO 2 (carregado assíncrono) ===== -->
-                            <div id="ad-container-2" style="text-align: center; margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                            <!-- ===== ANÚNCIO 2 (300x250) ===== -->
+                            <div id="ad-container-2" style="text-align: center; margin: 1rem 0; padding: 0.5rem; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 8px;">
                                 <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
                             </div>
 
@@ -2013,8 +1918,8 @@
                                 </div>
                             </div>
 
-                            <!-- ===== ANÚNCIO 3 (link) ===== -->
-                            <div id="ad-container-3" style="text-align: center; margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                            <!-- ===== ANÚNCIO 3 (160x600) ===== -->
+                            <div id="ad-container-3" style="text-align: center; margin: 1rem 0; padding: 0.5rem; max-width: 160px; background: rgba(255,255,255,0.03); border-radius: 8px;">
                                 <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
                             </div>
 
@@ -2104,8 +2009,8 @@
                 <h2 class="section-title">Perguntas Frequentes</h2>
                 <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
                 
-                <!-- ===== ANÚNCIO 4 ===== -->
-                <div id="ad-container-4" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 728px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
+                <!-- ===== ANÚNCIO 4 (320x50) ===== -->
+                <div id="ad-container-4" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 320px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
                     <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
                 </div>
                 
@@ -2205,11 +2110,6 @@
             <div class="content-wrapper">
                 <h2 class="section-title">Apoie o Projeto 🇧🇷</h2>
                 <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
-                
-                <!-- ===== ANÚNCIO 5 ===== -->
-                <div id="ad-container-5" style="text-align: center; margin: 1rem auto; padding: 0.5rem; max-width: 468px; background: rgba(0, 151, 57, 0.05); border-radius: 12px; border: 1px solid rgba(254, 220, 0, 0.2);">
-                    <p style="color: rgba(255,255,255,0.3); font-size: 0.6rem; margin-bottom: 0.3rem;">— Publicidade —</p>
-                </div>
                 
                 <div class="donation-grid">
                     <div class="donation-card desativado">
@@ -2315,13 +2215,11 @@
         // 1. DETECÇÃO AVANÇADA DE NAVEGADOR ANÔNIMO E VPN
         // ============================================================
         
-        // Detectar modo privado/anônimo com múltiplos métodos
         function isPrivateBrowsing() {
             return new Promise((resolve) => {
                 let detectionMethods = 0;
                 let positiveResults = 0;
 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2331,7 +2229,6 @@
                 }
                 detectionMethods++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2341,7 +2238,6 @@
                 }
                 detectionMethods++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => {
@@ -2362,23 +2258,18 @@
                     }
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(positiveResults >= 2);
                 }, 1000);
             });
         }
 
-        // ============================================================
-        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
-        // ============================================================
         function detectPrivateBrowsingBrowser() {
             return new Promise((resolve) => {
                 let result = false;
                 let checksDone = 0;
                 let totalChecks = 4;
                 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2388,7 +2279,6 @@
                 }
                 checksDone++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2398,7 +2288,6 @@
                 }
                 checksDone++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => { 
@@ -2419,10 +2308,8 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Método 4: quota de armazenamento (Chrome)
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é menor que 120MB
                         if (estimate.quota < 120000000) {
                             result = true;
                         }
@@ -2437,21 +2324,17 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(result);
                 }, 3000);
             });
         }
 
-        // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
-                // Usar múltiplas APIs para melhor precisão
                 const ipData = await getIPData();
                 if (!ipData) return false;
 
-                // Verificar indicadores de VPN com lógica mais rigorosa
                 const vpnIndicators = [
                     ipData.is_vpn === true,
                     ipData.is_proxy === true,
@@ -2471,7 +2354,6 @@
             }
         }
 
-        // Obter dados de IP com fallback
         async function getIPData() {
             const apis = [
                 {
@@ -2523,7 +2405,6 @@
             return null;
         }
 
-        // Detectar Google Chrome anônimo especificamente
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
@@ -3163,46 +3044,31 @@
             console.log('📢 Carregando anúncios assíncronos...');
             
             try {
-                // Anúncio 1
+                // Anúncio 1 - 300x250 (key: 47e1bb2217d6ae2e3cc7625133c84044)
                 const script1 = document.createElement('script');
                 script1.async = true;
-                script1.src = 'https://pl30126307.effectivecpmnetwork.com/203ae59ba633be29c12fa94ab9b32475/invoke.js';
+                script1.src = 'https://www.highperformanceformat.com/47e1bb2217d6ae2e3cc7625133c84044/invoke.js';
                 document.getElementById('ad-container-1').appendChild(script1);
                 
-                // Anúncio 2
+                // Anúncio 2 - 300x250 (key: 47e1bb2217d6ae2e3cc7625133c84044)
                 const script2 = document.createElement('script');
                 script2.async = true;
-                script2.src = 'https://pl30126308.effectivecpmnetwork.com/03/77/da/0377da632b137bb0d24c51b465459282.js';
+                script2.src = 'https://www.highperformanceformat.com/47e1bb2217d6ae2e3cc7625133c84044/invoke.js';
                 document.getElementById('ad-container-2').appendChild(script2);
                 
-                // Anúncio 3 (link)
-                const linkAd = document.createElement('a');
-                linkAd.href = 'https://www.effectivecpmnetwork.com/auk40ejc9p?key=4f0075cbe9ef09cbfb9dfa33001d4ab3';
-                linkAd.target = '_blank';
-                linkAd.style.cssText = 'display:block;color:#fedc00;font-size:0.8rem;text-decoration:none;padding:0.5rem;';
-                linkAd.textContent = '📢 Clique aqui para mais informações';
-                document.getElementById('ad-container-3').appendChild(linkAd);
+                // Anúncio 3 - 160x600 (key: 8e3fec9e624bd2902818ab38fe54a1b4)
+                const script3 = document.createElement('script');
+                script3.async = true;
+                script3.src = 'https://www.highperformanceformat.com/8e3fec9e624bd2902818ab38fe54a1b4/invoke.js';
+                document.getElementById('ad-container-3').appendChild(script3);
                 
-                // Anúncio 4
+                // Anúncio 4 - 320x50 (key: ea108e2f7a60455c382a91d4e1962b3b)
                 const script4 = document.createElement('script');
                 script4.async = true;
-                script4.src = 'https://pl30126310.effectivecpmnetwork.com/e5/c7/7b/e5c77bfc256cd726587fae920572e6cb.js';
+                script4.src = 'https://www.highperformanceformat.com/ea108e2f7a60455c382a91d4e1962b3b/invoke.js';
                 document.getElementById('ad-container-4').appendChild(script4);
                 
-                // Anúncio 5 (com atOptions)
-                window.atOptions = {
-                    'key': 'd66106b228d88ce6185368c118979467',
-                    'format': 'iframe',
-                    'height': 60,
-                    'width': 468,
-                    'params': {}
-                };
-                const script5 = document.createElement('script');
-                script5.async = true;
-                script5.src = 'https://www.highperformanceformat.com/d66106b228d88ce6185368c118979467/invoke.js';
-                document.getElementById('ad-container-5').appendChild(script5);
-                
-                console.log('✅ Anúncios carregados com sucesso!');
+                console.log('✅ Todos os anúncios carregados com sucesso!');
             } catch (error) {
                 console.warn('⚠️ Erro ao carregar anúncios:', error);
             }
@@ -3219,7 +3085,6 @@
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
         console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
-        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
         console.log('%c📢 Anúncios carregados assincronamente', 'font-size:14px;color:#f59e0b;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
 
@@ -3227,7 +3092,7 @@
         // 21. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
+            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO =====
             console.log('🔍 Verificando navegador anônimo (via navegador)...');
             const isPrivateBrowser = await detectPrivateBrowsingBrowser();
             
@@ -3261,7 +3126,7 @@
             }
             console.log('✅ Navegador e VPN OK!');
 
-            // Carregar informações do webhook do Discord
+            // Carregar informações do webhook
             console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
             
@@ -3278,10 +3143,10 @@
             // Carregar anúncios após a página carregar
             console.log('📢 Agendando carregamento de anúncios...');
             if (document.readyState === 'complete') {
-                setTimeout(loadAds, 1000);
+                setTimeout(loadAds, 1500);
             } else {
                 window.addEventListener('load', function() {
-                    setTimeout(loadAds, 1000);
+                    setTimeout(loadAds, 1500);
                 });
             }
         }
