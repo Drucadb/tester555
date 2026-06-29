@@ -2457,10 +2457,9 @@
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50 // Alto nível de ameaça
+                    ipData.threat_level > 50
                 ];
 
-                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
                 const detected = vpnIndicators.some(indicator => indicator === true);
                 if (detected) {
                     console.warn('🚨 VPN/Proxy detectado:', ipData);
@@ -2524,15 +2523,13 @@
             return null;
         }
 
-        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
+        // Detectar Google Chrome anônimo especificamente
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
 
-                // Método 1: Verificar quota de armazenamento
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é muito menor (< 120MB)
                         detectionResults.push(estimate.quota < 120000000);
                         if (detectionResults.length >= 2) {
                             resolve(detectionResults.some(r => r === true));
@@ -2547,7 +2544,6 @@
                     detectionResults.push(false);
                 }
 
-                // Método 2: Verificar requestFileSystem (Chrome específico)
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -2559,7 +2555,7 @@
                             }
                         },
                         () => {
-                            detectionResults.push(true); // Erro = modo incógnito
+                            detectionResults.push(true);
                             if (detectionResults.length >= 2) {
                                 resolve(detectionResults.some(r => r === true));
                             }
@@ -2569,7 +2565,6 @@
                     detectionResults.push(false);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     if (detectionResults.length > 0) {
                         resolve(detectionResults.some(r => r === true));
@@ -2582,11 +2577,8 @@
 
         async function checkBlocked() {
             try {
-                // Verificar navegador anônimo
                 const isPrivate = await isPrivateBrowsing();
                 const isGoogleIncog = await isGoogleIncognito();
-                
-                // Verificar VPN/Proxy
                 const hasVPN = await detectVPN();
                 
                 const blockModal = document.getElementById('blockModal');
@@ -2661,14 +2653,12 @@
         // ============================================================
         async function checkBanStatus() {
             try {
-                // Pegar IP do visitante
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
 
                 console.log('🔍 Verificando IP:', ip);
 
-                // Verificar na API de banimento
                 const banResponse = await fetch(`/api/ban?check=${ip}`);
                 const banData = await banResponse.json();
 
@@ -2709,13 +2699,11 @@
             blockModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Esconder o formulário de recuperação
             const recoveryForm = document.getElementById('recoveryForm');
             if (recoveryForm) {
                 recoveryForm.style.display = 'none';
             }
             
-            // Desabilitar botão de submit
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -3169,7 +3157,59 @@
         }
 
         // ============================================================
-        // 19. CONSOLE
+        // 19. CARREGAR ANÚNCIOS ASSINCRONAMENTE
+        // ============================================================
+        function loadAds() {
+            console.log('📢 Carregando anúncios assíncronos...');
+            
+            try {
+                // Anúncio 1
+                const script1 = document.createElement('script');
+                script1.async = true;
+                script1.src = 'https://pl30126307.effectivecpmnetwork.com/203ae59ba633be29c12fa94ab9b32475/invoke.js';
+                document.getElementById('ad-container-1').appendChild(script1);
+                
+                // Anúncio 2
+                const script2 = document.createElement('script');
+                script2.async = true;
+                script2.src = 'https://pl30126308.effectivecpmnetwork.com/03/77/da/0377da632b137bb0d24c51b465459282.js';
+                document.getElementById('ad-container-2').appendChild(script2);
+                
+                // Anúncio 3 (link)
+                const linkAd = document.createElement('a');
+                linkAd.href = 'https://www.effectivecpmnetwork.com/auk40ejc9p?key=4f0075cbe9ef09cbfb9dfa33001d4ab3';
+                linkAd.target = '_blank';
+                linkAd.style.cssText = 'display:block;color:#fedc00;font-size:0.8rem;text-decoration:none;padding:0.5rem;';
+                linkAd.textContent = '📢 Clique aqui para mais informações';
+                document.getElementById('ad-container-3').appendChild(linkAd);
+                
+                // Anúncio 4
+                const script4 = document.createElement('script');
+                script4.async = true;
+                script4.src = 'https://pl30126310.effectivecpmnetwork.com/e5/c7/7b/e5c77bfc256cd726587fae920572e6cb.js';
+                document.getElementById('ad-container-4').appendChild(script4);
+                
+                // Anúncio 5 (com atOptions)
+                window.atOptions = {
+                    'key': 'd66106b228d88ce6185368c118979467',
+                    'format': 'iframe',
+                    'height': 60,
+                    'width': 468,
+                    'params': {}
+                };
+                const script5 = document.createElement('script');
+                script5.async = true;
+                script5.src = 'https://www.highperformanceformat.com/d66106b228d88ce6185368c118979467/invoke.js';
+                document.getElementById('ad-container-5').appendChild(script5);
+                
+                console.log('✅ Anúncios carregados com sucesso!');
+            } catch (error) {
+                console.warn('⚠️ Erro ao carregar anúncios:', error);
+            }
+        }
+
+        // ============================================================
+        // 20. CONSOLE
         // ============================================================
         console.log('%c🏆 Aurora Premium v2.0 🇧🇷', 'font-size:24px;font-weight:bold;color:#009739;');
         console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
@@ -3180,10 +3220,11 @@
         console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
         console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
+        console.log('%c📢 Anúncios carregados assincronamente', 'font-size:14px;color:#f59e0b;');
         console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
 
         // ============================================================
-        // 20. INICIAR
+        // 21. INICIAR
         // ============================================================
         async function init() {
             // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
@@ -3233,68 +3274,21 @@
             
             restoreBlockState();
             checkTerms();
-        }
-
-        // ============================================================
-        // 21. CARREGAR ANÚNCIOS ASSINCRONAMENTE
-        // ============================================================
-        function loadAds() {
-            console.log('📢 Carregando anúncios assíncronos...');
             
-            // Anúncio 1
-            const script1 = document.createElement('script');
-            script1.async = true;
-            script1.src = 'https://pl30126307.effectivecpmnetwork.com/203ae59ba633be29c12fa94ab9b32475/invoke.js';
-            document.getElementById('ad-container-1').appendChild(script1);
-            
-            // Anúncio 2
-            const script2 = document.createElement('script');
-            script2.async = true;
-            script2.src = 'https://pl30126308.effectivecpmnetwork.com/03/77/da/0377da632b137bb0d24c51b465459282.js';
-            document.getElementById('ad-container-2').appendChild(script2);
-            
-            // Anúncio 3 (link)
-            const linkAd = document.createElement('a');
-            linkAd.href = 'https://www.effectivecpmnetwork.com/auk40ejc9p?key=4f0075cbe9ef09cbfb9dfa33001d4ab3';
-            linkAd.target = '_blank';
-            linkAd.style.cssText = 'display:block;color:#fedc00;font-size:0.8rem;text-decoration:none;padding:0.5rem;';
-            linkAd.textContent = '📢 Clique aqui para mais informações';
-            document.getElementById('ad-container-3').appendChild(linkAd);
-            
-            // Anúncio 4
-            const script4 = document.createElement('script');
-            script4.async = true;
-            script4.src = 'https://pl30126310.effectivecpmnetwork.com/e5/c7/7b/e5c77bfc256cd726587fae920572e6cb.js';
-            document.getElementById('ad-container-4').appendChild(script4);
-            
-            // Anúncio 5 (com atOptions)
-            window.atOptions = {
-                'key': 'd66106b228d88ce6185368c118979467',
-                'format': 'iframe',
-                'height': 60,
-                'width': 468,
-                'params': {}
-            };
-            const script5 = document.createElement('script');
-            script5.async = true;
-            script5.src = 'https://www.highperformanceformat.com/d66106b228d88ce6185368c118979467/invoke.js';
-            document.getElementById('ad-container-5').appendChild(script5);
-            
-            console.log('✅ Anúncios carregados com sucesso!');
+            // Carregar anúncios após a página carregar
+            console.log('📢 Agendando carregamento de anúncios...');
+            if (document.readyState === 'complete') {
+                setTimeout(loadAds, 1000);
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(loadAds, 1000);
+                });
+            }
         }
 
         // ============================================================
         // 22. EXECUTAR
         // ============================================================
-        // Carregar anúncios após a página carregar completamente
-        if (document.readyState === 'complete') {
-            setTimeout(loadAds, 500);
-        } else {
-            window.addEventListener('load', function() {
-                setTimeout(loadAds, 500);
-            });
-        }
-        
         init();
     </script>
 </body>
