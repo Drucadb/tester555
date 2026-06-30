@@ -1,34 +1,82 @@
 {
     "banned": [
         {
-            "ip": "",
+            "ip": "177.155.221.199",
             "reason": "Spam",
             "date": "2026-06-28T10:30:00.000Z",
             "expires": null
         },
         {
-            "ip": "",
+            "ip": "187.84.249.232",
             "reason": "Tentativa de invasão",
             "date": "2026-06-27T15:20:00.000Z",
             "expires": "2026-12-31T23:59:59.000Z"
         },
         {
-            "ip": "",
+            "ip": "190.124.191.235",
             "reason": "Uso de VPN proibido",
             "date": "2026-06-26T08:45:00.000Z",
             "expires": "2026-07-26T08:45:00.000Z"
         },
         {
-            "ip": "",
+            "ip": "177.221.124.75",
             "reason": "Múltiplas tentativas fracassadas",
             "date": "2026-06-25T20:10:00.000Z",
             "expires": null
         },
         {
-            "ip": "",
+            "ip": "179.125.157.123",
             "reason": "Spam",
             "date": "2026-06-24T14:00:00.000Z",
             "expires": "2027-06-24T14:00:00.000Z"
+        },
+        {
+            "ip": "164.163.249.4",
+            "reason": "Múltiplas tentativas fracassadas",
+            "date": "2026-06-25T20:10:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "187.19.88.217",
+            "reason": "Spam",
+            "date": "2026-06-28T23:58:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "179.125.244.85",
+            "reason": "Conta com 0 dias de criada",
+            "date": "2026-06-29T15:20:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "200.124.65.162",
+            "reason": "Spam",
+            "date": "2026-06-29T17:43:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "186.26.81.247",
+            "reason": "Spam",
+            "date": "2026-06-29T18:32:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "177.200.62.156",
+            "reason": "Spam",
+            "date": "2026-06-29T18:32:00.000Z",
+            "expires": null
+        },
+        {
+            "ip": "179.108.61.200",
+            "reason": "Spam",
+            "date": "2026-06-29T18:32:00.000Z",
+            "expires": null
+        },
+          {
+            "ip": "187.84.181.121",
+            "reason": "TOMAR NO SEU CU ARROBADO",
+            "date": "2026-06-29T18:32:00.000Z",
+            "expires": null
         }
     ]
 }
