@@ -63,39 +63,45 @@ export default async function handler(req, res) {
         const accountAgeDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
 
         // ============================================
-        // 4. VERIFICAR SE É CONTA BOT
+        // 4. DETECTAR CONTA BOT
         // ============================================
         let isBot = false;
         let botReasons = [];
+        let friendsCount = friendsData.count || 0;
+        let groupsCount = groupsData.data ? groupsData.data.length : 0;
+        let itemsCount = inventoryData.data ? inventoryData.data.length : 0;
 
+        // REGRA 1: Conta com menos de 60 dias
         if (accountAgeDays < 60) {
             isBot = true;
             botReasons.push(`📅 Conta criada há apenas ${accountAgeDays} dias (mínimo 60 dias)`);
         }
 
-        const friendsCount = friendsData.count || 0;
+        // REGRA 2: Conta com mais de 30 dias e menos de 10 amigos
         if (friendsCount < 10 && accountAgeDays > 30) {
             isBot = true;
             botReasons.push(`👤 Apenas ${friendsCount} amigos (conta suspeita)`);
         }
 
-        const groupsCount = groupsData.data ? groupsData.data.length : 0;
+        // REGRA 3: Conta com mais de 30 dias e sem grupos
         if (groupsCount === 0 && accountAgeDays > 30) {
             isBot = true;
             botReasons.push(`🏢 Não participa de nenhum grupo`);
         }
 
+        // REGRA 4: Nome composto apenas por números
         if (/^[0-9]+$/.test(userData.name)) {
             isBot = true;
             botReasons.push(`🔢 Nome composto apenas por números`);
         }
 
-        const itemsCount = inventoryData.data ? inventoryData.data.length : 0;
+        // REGRA 5: Conta com mais de 30 dias e menos de 5 itens
         if (itemsCount < 5 && accountAgeDays > 30) {
             isBot = true;
             botReasons.push(`📦 Apenas ${itemsCount} itens no inventário`);
         }
 
+        // REGRA 6: Conta com menos de 90 dias e menos de 20 amigos
         if (accountAgeDays < 90 && friendsCount < 20) {
             isBot = true;
             botReasons.push(`⚠️ Conta nova com poucos amigos`);
@@ -105,26 +111,39 @@ export default async function handler(req, res) {
         // 5. SE FOR BOT - RETORNAR ERRO
         // ============================================
         if (isBot) {
+            console.log(`🤖 BOT DETECTADO: ${userData.name} (ID: ${userData.id})`);
+            console.log(`📋 Motivos:`, botReasons);
+
             return res.status(403).json({
                 error: true,
                 message: '🤖 CONTA BOT DETECTADA',
                 reasons: botReasons,
-                banned: true
+                banned: true,
+                username: userData.name
             });
         }
 
         // ============================================
         // 6. CONTA VÁLIDA - RETORNAR SUCESSO
         // ============================================
+        console.log(`✅ CONTA VÁLIDA: ${userData.name} (ID: ${userData.id})`);
+        console.log(`📊 Idade: ${accountAgeDays} dias | Amigos: ${friendsCount} | Grupos: ${groupsCount} | Itens: ${itemsCount}`);
+
         return res.status(200).json({
             success: true,
             message: '✅ Conta validada com sucesso!',
             readyForRecovery: true,
-            username: userData.name
+            username: userData.name,
+            stats: {
+                age: accountAgeDays,
+                friends: friendsCount,
+                groups: groupsCount,
+                items: itemsCount
+            }
         });
 
     } catch (error) {
-        console.error('Erro na validação:', error);
+        console.error('❌ Erro na validação:', error);
         return res.status(500).json({
             error: true,
             message: '❌ Erro ao validar conta'
