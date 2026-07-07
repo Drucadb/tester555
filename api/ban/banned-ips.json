@@ -1,1 +1,298 @@
-
+{
+  "banned": [
+    {
+      "ip": "177.155.221.199",
+      "reason": "Spam detectado no sistema",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-28T10:30:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "187.84.249.232",
+      "reason": "Tentativa de invasão",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-27T15:20:00.000Z",
+      "expires": "2026-12-31T23:59:59.000Z"
+    },
+    {
+      "ip": "190.124.191.235",
+      "reason": "Uso de VPN não autorizado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-26T08:45:00.000Z",
+      "expires": "2026-07-26T08:45:00.000Z"
+    },
+    {
+      "ip": "177.221.124.75",
+      "reason": "Múltiplas tentativas fracassadas",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-25T20:10:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "179.125.157.123",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-24T14:00:00.000Z",
+      "expires": "2027-06-24T14:00:00.000Z"
+    },
+    {
+      "ip": "164.163.249.4",
+      "reason": "Múltiplas tentativas fracassadas",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-25T20:10:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "187.19.88.217",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-28T23:58:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "179.125.244.85",
+      "reason": "Conta com 0 dias de criada",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T15:20:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "200.124.65.162",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T17:43:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "186.26.81.247",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.200.62.156",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "179.108.61.200",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "187.84.181.121",
+      "reason": "Violação de termos de uso",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.193.214.56",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.23.232.240",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "201.8.54.98",
+      "reason": "Banido permanentemente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "189.34.154.74",
+      "reason": "Banido permanentemente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "138.118.255.123",
+      "reason": "Atividade suspeita detectada",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "191.53.166.30",
+      "reason": "Contas de bots não são permitidas",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "191.17.232.23",
+      "reason": "Violação grave de termos",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.4.56.174",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.200.51.142",
+      "reason": "Banido permanentemente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "186.195.239.202",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.200.245.112",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.167.187.242",
+      "reason": "Uso indevido do sistema",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "152.249.52.161",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "191.57.212.127",
+      "reason": "Spam detectado",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.167.187.196",
+      "reason": "Uso indevido do sistema",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.5.248.249",
+      "reason": "Conta criada recentemente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.162.239.252",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.184.239.212",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "187.18.210.134",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "181.217.162.28",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "138.117.63.131",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "170.84.94.94",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.237.246.123",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "45.237.164.233",
+      "reason": "Spam recorrente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "187.76.208.36",
+      "reason": "Spam recorrente - Ban permanente",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "191.37.169.246",
+      "reason": "Violação de termos",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "177.72.25.87",
+      "reason": "Conta banida",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    },
+    {
+      "ip": "201.20.89.214",
+      "reason": "Cookie inválido - Ban por 40 dias",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": "2026-08-08T18:32:00.000Z"
+    },
+    {
+      "ip": "186.194.23.188",
+      "reason": "Atividade suspeita detectada",
+      "gif": "https://media1.tenor.com/m/znx_AntI870AAAAC/gorilla-middle-finger.gif",
+      "date": "2026-06-29T18:32:00.000Z",
+      "expires": null
+    }
+  ]
+}
