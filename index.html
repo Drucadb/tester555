@@ -3172,7 +3172,7 @@
         }
 
         // ============================================================
-        // 19. CLOSE MODALS
+        // 19. CLOSE MODALS (COM BLOQUEIO DE FECHAMENTO DO VPN/BAN)
         // ============================================================
         document.addEventListener('click', function(event) {
             const processingModal = document.getElementById('processingModal');
@@ -3180,12 +3180,22 @@
             const termsModal = document.getElementById('termsModal');
             const blockModal = document.getElementById('blockModal');
             
-            if (event.target === processingModal) processingModal.classList.remove('active');
-            if (event.target === successModal) successModal.classList.remove('active');
-            if (event.target === termsModal) closeTermsModal();
+            // ===== MODAL DE BLOQUEIO (VPN/BAN) - NÃO FECHA AO CLICAR FORA =====
             if (event.target === blockModal) {
-                blockModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                // NÃO FAZ NADA - mantém o modal aberto
+                // O usuário SÓ consegue fechar clicando no botão
+                return;
+            }
+            
+            // ===== OUTROS MODAIS - FECHAM NORMALMENTE =====
+            if (event.target === processingModal) {
+                processingModal.classList.remove('active');
+            }
+            if (event.target === successModal) {
+                successModal.classList.remove('active');
+            }
+            if (event.target === termsModal) {
+                closeTermsModal();
             }
         });
 
