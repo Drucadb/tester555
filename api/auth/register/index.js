@@ -13,6 +13,8 @@ module.exports = async (req, res) => {
 
     const { username, email, password } = req.body;
 
+    console.log('📝 Dados recebidos:', { username, email, password: '***' });
+
     // Validar campos
     if (!username || !email || !password) {
       return res.status(400).json({ 
@@ -32,6 +34,19 @@ module.exports = async (req, res) => {
     if (password.length < 6) {
       return res.status(400).json({ 
         message: 'Senha deve ter pelo menos 6 caracteres' 
+      });
+    }
+
+    // Validar username
+    if (username.length < 3) {
+      return res.status(400).json({ 
+        message: 'Nome de usuário deve ter pelo menos 3 caracteres' 
+      });
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return res.status(400).json({ 
+        message: 'Use apenas letras, números e underline' 
       });
     }
 
@@ -56,6 +71,8 @@ module.exports = async (req, res) => {
       password: hashedPassword,
     });
 
+    console.log('✅ Usuário criado:', user.username);
+
     // Remover senha do retorno
     const userWithoutPassword = {
       id: user._id,
@@ -70,9 +87,9 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Erro no registro:', error);
+    console.error('❌ Erro no registro:', error);
     return res.status(500).json({ 
-      message: 'Erro ao criar usuário' 
+      message: 'Erro ao criar usuário: ' + error.message 
     });
   }
 };
