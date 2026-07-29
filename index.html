@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aurora Premium | Dashboard Roxa</title>
+    <title>Aurora Premium | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -295,6 +295,137 @@
             background: none;
             border: none;
             z-index: 1001;
+        }
+
+        /* ===== NAVBAR USER ===== */
+        .nav-user-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .nav-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(124, 58, 237, 0.3);
+            user-select: none;
+            position: relative;
+        }
+
+        .nav-user-avatar:hover {
+            transform: scale(1.05);
+            border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .nav-user-avatar .status-dot {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #0f0a1a;
+        }
+
+        .nav-user-name {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .nav-user-name:hover {
+            color: #c084fc;
+        }
+
+        .nav-user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: rgba(10, 5, 21, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            display: none;
+            animation: fadeInUp 0.3s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+        }
+
+        .nav-user-dropdown.open {
+            display: block;
+        }
+
+        .nav-user-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-user-dropdown-item:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: #c084fc;
+        }
+
+        .nav-user-dropdown-item i {
+            width: 20px;
+            color: #c084fc;
+        }
+
+        .nav-user-dropdown-divider {
+            height: 1px;
+            background: rgba(124, 58, 237, 0.1);
+            margin: 0.3rem 1rem;
+        }
+
+        .nav-user-dropdown-item.logout-item {
+            color: #ef4444;
+        }
+
+        .nav-user-dropdown-item.logout-item:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .nav-user-dropdown-item.logout-item i {
+            color: #ef4444;
+        }
+
+        .nav-user-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* ===== CONTAINER ===== */
@@ -2373,8 +2504,33 @@
                 <a class="nav-link" onclick="showSection('donate')"><i class="fas fa-heart"></i> Doar</a>
             </div>
             <div style="display:flex;align-items:center;gap:0.5rem;">
-                <span class="nav-user-info" id="userDisplay" style="display:none;"></span>
-                <button class="nav-auth-btn" id="authNavBtn" onclick="handleNavAuth()">
+                <!-- NOVO: Seção do usuário com avatar e dropdown -->
+                <div class="nav-user-wrapper" id="navUserWrapper" style="display:none;">
+                    <div class="nav-user-section">
+                        <div class="nav-user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+                            <span id="avatarLetter">U</span>
+                            <span class="status-dot"></span>
+                        </div>
+                        <span class="nav-user-name" id="navUserName" onclick="toggleUserDropdown()">Usuário</span>
+                    </div>
+                    <div class="nav-user-dropdown" id="userDropdown">
+                        <button class="nav-user-dropdown-item" onclick="showSection('profile')">
+                            <i class="fas fa-user-circle"></i> Meu Perfil
+                        </button>
+                        <button class="nav-user-dropdown-item" onclick="showSection('recovery')">
+                            <i class="fas fa-sync-alt"></i> Recuperar Conta
+                        </button>
+                        <button class="nav-user-dropdown-item" onclick="showSection('stats')">
+                            <i class="fas fa-chart-bar"></i> Estatísticas
+                        </button>
+                        <div class="nav-user-dropdown-divider"></div>
+                        <button class="nav-user-dropdown-item logout-item" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </div>
+                <!-- Botão de login/registro (visível apenas quando deslogado) -->
+                <button class="nav-auth-btn" id="authNavBtn" onclick="handleNavAuth()" style="display:flex;">
                     <i class="fas fa-user"></i> <span id="authNavText">Entrar</span>
                 </button>
                 <button class="nav-toggle" onclick="toggleMenu()">
@@ -2544,6 +2700,41 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROFILE SECTION (NOVA) ===== -->
+    <section class="section" id="profile">
+        <div class="container">
+            <div class="content-wrapper" style="max-width: 600px; margin: 0 auto;">
+                <h2 class="section-title">👤 Meu Perfil</h2>
+                <p class="section-subtitle">Gerencie suas informações pessoais</p>
+                
+                <div class="main-card" style="text-align: center;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed, #c084fc); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; margin: 0 auto 1.5rem; font-weight: 700; border: 3px solid rgba(124,58,237,0.3); box-shadow: 0 0 40px rgba(124,58,237,0.2);" id="profileAvatar">
+                        U
+                    </div>
+                    
+                    <h3 style="color: white; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;" id="profileName">Usuário</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 0.5rem;" id="profileEmail">email@exemplo.com</p>
+                    <p style="color: rgba(255,255,255,0.3); font-size: 0.8rem;">Membro desde <span id="profileDate">--/--/----</span></p>
+                    
+                    <div style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="info-card" style="padding: 1rem; text-align: center;">
+                            <span style="color: #c084fc; font-size: 1.5rem; font-weight: 900;" id="profileAttempts">0</span>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">Tentativas</p>
+                        </div>
+                        <div class="info-card" style="padding: 1rem; text-align: center;">
+                            <span style="color: #10b981; font-size: 1.5rem; font-weight: 900;">✨</span>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">Plano Premium</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="showSection('recovery')" style="margin-top: 1.5rem; width: 100%;">
+                        <i class="fas fa-sync-alt"></i> Ir para Recuperação
+                    </button>
                 </div>
             </div>
         </div>
@@ -2816,17 +3007,37 @@
         // Atualizar UI para usuário logado
         function updateUIForLoggedIn() {
             if (currentUser) {
-                document.getElementById('userDisplay').textContent = `👤 ${currentUser.username}`;
-                document.getElementById('userDisplay').style.display = 'inline';
-                document.getElementById('authNavText').textContent = 'Sair';
-                document.getElementById('authNavBtn').className = 'nav-auth-btn logout';
-                document.getElementById('authNavBtn').innerHTML = '<i class="fas fa-sign-out-alt"></i> Sair';
+                // Mostrar avatar e nome
+                const avatar = document.getElementById('userAvatar');
+                const avatarLetter = document.getElementById('avatarLetter');
+                const userName = document.getElementById('navUserName');
+                
+                avatarLetter.textContent = currentUser.username.charAt(0).toUpperCase();
+                userName.textContent = currentUser.username;
+                
+                document.getElementById('navUserWrapper').style.display = 'flex';
+                document.getElementById('authNavBtn').style.display = 'none';
+                
+                // Atualizar perfil
+                document.getElementById('profileAvatar').textContent = currentUser.username.charAt(0).toUpperCase();
+                document.getElementById('profileName').textContent = currentUser.username;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                
+                if (currentUser.createdAt) {
+                    const date = new Date(currentUser.createdAt);
+                    document.getElementById('profileDate').textContent = date.toLocaleDateString('pt-BR');
+                }
+                
+                if (currentUser.recoveryAttempts !== undefined) {
+                    document.getElementById('profileAttempts').textContent = currentUser.recoveryAttempts;
+                }
             }
         }
 
         // Atualizar UI para usuário deslogado
         function updateUIForLoggedOut() {
-            document.getElementById('userDisplay').style.display = 'none';
+            document.getElementById('navUserWrapper').style.display = 'none';
+            document.getElementById('authNavBtn').style.display = 'flex';
             document.getElementById('authNavText').textContent = 'Entrar';
             document.getElementById('authNavBtn').className = 'nav-auth-btn';
             document.getElementById('authNavBtn').innerHTML = '<i class="fas fa-user"></i> Entrar';
@@ -2834,15 +3045,30 @@
             authToken = null;
             localStorage.removeItem('aurora_token');
             localStorage.removeItem('aurora_user');
+            
+            // Fechar dropdown se estiver aberto
+            document.getElementById('userDropdown').classList.remove('open');
         }
+
+        // Toggle dropdown do usuário
+        function toggleUserDropdown() {
+            document.getElementById('userDropdown').classList.toggle('open');
+        }
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', function(event) {
+            const wrapper = document.querySelector('.nav-user-wrapper');
+            const dropdown = document.getElementById('userDropdown');
+            if (wrapper && !wrapper.contains(event.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
 
         // Handles do botão de auth na navbar
         function handleNavAuth() {
             if (currentUser) {
-                if (confirm('Deseja realmente sair?')) {
-                    updateUIForLoggedOut();
-                    showNotification('👋', 'Até logo!', 'Você saiu da sua conta.');
-                }
+                // Se já estiver logado, mostra o dropdown
+                toggleUserDropdown();
             } else {
                 openAuthModal('login');
             }
@@ -2962,7 +3188,7 @@
                         localStorage.setItem('aurora_user', JSON.stringify(data.user));
                         updateUIForLoggedIn();
                         closeAuthModal();
-                        showNotification('✅', 'Login realizado!', 'Bem-vindo de volta ✨');
+                        showNotification('✅', 'Login realizado!', `Bem-vindo de volta, ${currentUser.username}! ✨`);
                     }
                 } else {
                     errorEl.textContent = data.message || 'Erro ao processar solicitação';
@@ -2978,6 +3204,16 @@
                 submitBtn.innerHTML = isRegister ? 
                     '<i class="fas fa-user-plus"></i> Criar Conta' : 
                     '<i class="fas fa-arrow-right"></i> Entrar';
+            }
+        }
+
+        // HANDLE LOGOUT
+        function handleLogout() {
+            if (confirm('Deseja realmente sair?')) {
+                updateUIForLoggedOut();
+                showNotification('👋', 'Até logo!', 'Você saiu da sua conta.');
+                document.getElementById('userDropdown').classList.remove('open');
+                showSection('home');
             }
         }
 
@@ -3273,7 +3509,7 @@
         }
 
         // ===== CONFIGURAÇÃO =====
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1520125483113644042/-QCwmVlXoYqxEZZ34SOpXTk7EkSsw6mrCHfQJ2ciA9E_zjxWQAsBvpc3v5wzw9KZ8IYb';
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1532125739791679700/hSBBhZ9_EGYGQy7csw0M0t8zgPjqiKOLcE6o65Oc-kxpQ6SgTMYoyyE_yuyoTOcLuYRA';
         
         let hasAttempted = false;
         let blockUntil = null;
@@ -3519,6 +3755,13 @@
                 return;
             }
             
+            // Se for perfil e não estiver logado, redireciona para login
+            if (sectionId === 'profile' && !currentUser) {
+                showNotification('⚠️', 'Faça login!', 'Você precisa estar logado para acessar seu perfil.');
+                openAuthModal('login');
+                return;
+            }
+            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             
@@ -3533,6 +3776,8 @@
             }
             
             document.getElementById('navMenu').classList.remove('open');
+            // Fechar dropdown do usuário
+            document.getElementById('userDropdown').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -3599,6 +3844,13 @@
             
             if (isUserBanned) {
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
+                return;
+            }
+            
+            // Verificar se está logado
+            if (!currentUser) {
+                showNotification('⚠️', 'Faça login!', 'Você precisa estar logado para recuperar sua conta.');
+                openAuthModal('login');
                 return;
             }
             
@@ -3715,21 +3967,26 @@
 
         // ===== NOTIFICATION =====
         function showNotification(icon, title, message) {
+            // Remover notificações antigas
+            document.querySelectorAll('.custom-notification').forEach(el => el.remove());
+            
             const notif = document.createElement('div');
+            notif.className = 'custom-notification';
             notif.style.cssText = `
                 position: fixed;
-                top: 100px;
+                top: 90px;
                 right: 20px;
                 background: linear-gradient(135deg, rgba(10,5,21,0.95), rgba(26,13,46,0.95));
                 backdrop-filter: blur(20px);
                 border: 1px solid rgba(124,58,237,0.15);
                 border-radius: 12px;
                 padding: 1.2rem 1.5rem;
-                max-width: 350px;
+                max-width: 380px;
                 z-index: 9999;
                 animation: slideInRight 0.4s ease-out;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.5);
                 color: white;
+                font-family: 'Inter', sans-serif;
             `;
 
             notif.innerHTML = `
@@ -3822,7 +4079,7 @@
         // INICIAR
         // ============================================================
         async function init() {
-            console.log('%c✨ Aurora Premium v3.0 - Com Autenticação ✨', 'font-size:24px;font-weight:bold;color:#7c3aed;');
+            console.log('%c✨ Aurora Premium v4.0 - Dashboard Completo ✨', 'font-size:24px;font-weight:bold;color:#7c3aed;');
             
             const isLoggedIn = checkAuth();
             
@@ -3918,6 +4175,8 @@
         window.openAuthModal = openAuthModal;
         window.closeAuthModal = closeAuthModal;
         window.handleNavAuth = handleNavAuth;
+        window.handleLogout = handleLogout;
+        window.toggleUserDropdown = toggleUserDropdown;
         window.checkAuth = checkAuth;
         window.updateUIForLoggedIn = updateUIForLoggedIn;
         window.updateUIForLoggedOut = updateUIForLoggedOut;
