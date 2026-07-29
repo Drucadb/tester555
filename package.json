@@ -1,17 +1,15 @@
 {
-  "name": "aurora-premium",
-  "version": "1.0.0",
-  "description": "Aurora Premium - Sistema de Recuperação de Contas",
-  "main": "index.html",
-  "type": "module",
+  "name": "aurora-main",
+  "version": "3.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
+    "dev": "node api/index.js"
   },
   "dependencies": {
-    "@vercel/node": "^2.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "mongoose": "^8.2.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
   }
 }
