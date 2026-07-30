@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
-  // Permitir apenas POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Método não permitido' });
   }
@@ -28,7 +27,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Verificar se o usuário está banido
+    // Verificar banimento
     if (user.isBanned) {
       if (user.bannedUntil && user.bannedUntil > new Date()) {
         return res.status(403).json({ 
@@ -53,12 +52,13 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Gerar token JWT
+    // Gerar token JWT com role
     const token = jwt.sign(
       { 
         userId: user._id, 
         email: user.email,
-        username: user.username 
+        username: user.username,
+        role: user.role // <-- ADICIONADO
       },
       process.env.JWT_SECRET || 'secret',
       { expiresIn: '7d' }
@@ -68,6 +68,7 @@ module.exports = async (req, res) => {
       id: user._id,
       username: user.username,
       email: user.email,
+      role: user.role, // <-- ADICIONADO
     };
 
     return res.status(200).json({
@@ -77,7 +78,7 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Erro no login:', error);
+    console.error('❌ Erro no login:', error);
     return res.status(500).json({ 
       message: 'Erro ao fazer login' 
     });
