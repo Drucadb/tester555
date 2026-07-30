@@ -1,6 +1,6 @@
-const connectDB = require('../../../lib/db');
-const User = require('../../../models/User');
-const Invite = require('../../../models/Invite');
+const connectDB = require('../../lib/db');
+const User = require('../../models/User');
+const Invite = require('../../models/Invite');
 const jwt = require('jsonwebtoken');
 
 async function verifyAuth(req) {
@@ -27,6 +27,19 @@ async function verifyAuth(req) {
 }
 
 module.exports = async (req, res) => {
+  // CORS para Vercel
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Método não permitido' });
   }
@@ -42,7 +55,7 @@ module.exports = async (req, res) => {
     const { maxUses = 10, expiresIn = null } = req.body;
     const user = auth.user;
 
-    // Verificar limite de convites (opcional)
+    // Verificar limite de convites
     const userInvites = await Invite.countDocuments({ 
       creator: user._id,
       isActive: true
@@ -60,7 +73,7 @@ module.exports = async (req, res) => {
     let attempts = 0;
     
     while (exists && attempts < 10) {
-      code = Invite.generateCode();
+      code = Math.random().toString(36).substring(2, 8).toUpperCase();
       const existing = await Invite.findOne({ code });
       if (!existing) exists = false;
       attempts++;
@@ -76,7 +89,7 @@ module.exports = async (req, res) => {
     const invite = await Invite.create({
       code,
       creator: user._id,
-      maxUses,
+      maxUses: parseInt(maxUses),
       expiresAt: expiresIn ? new Date(Date.now() + expiresIn) : null,
       rewards: {
         creator: {
@@ -87,11 +100,6 @@ module.exports = async (req, res) => {
           recoveryAttempts: 3
         }
       }
-    });
-
-    // Atualizar usuário
-    await User.findByIdAndUpdate(user._id, {
-      $inc: { recoveryAttempts: 1 }
     });
 
     return res.status(201).json({
