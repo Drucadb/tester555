@@ -12,14 +12,12 @@ module.exports = async (req, res) => {
 
     const { username, email, password } = req.body;
 
-    // Validar campos
     if (!username || !email || !password) {
       return res.status(400).json({ 
         message: 'Todos os campos são obrigatórios' 
       });
     }
 
-    // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ 
@@ -27,14 +25,12 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Validar senha
     if (password.length < 6) {
       return res.status(400).json({ 
         message: 'Senha deve ter pelo menos 6 caracteres' 
       });
     }
 
-    // Verificar se usuário já existe
     const existingUser = await User.findOne({ 
       $or: [{ email: email.toLowerCase() }, { username }] 
     });
@@ -45,14 +41,23 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Hash da senha
+    // ===== REGRA: Admin se for o primeiro OU se chamar "admin" =====
+    const userCount = await User.countDocuments();
+    const isAdmin = userCount === 0 || username.toLowerCase() === 'admin';
+    
+    const role = isAdmin ? 'admin' : 'user';
+    
+    let adminMessage = '';
+    if (isAdmin) {
+      if (username.toLowerCase() === 'admin') {
+        adminMessage = '👑 Você se registrou como ADMINISTRADOR!';
+      } else if (userCount === 0) {
+        adminMessage = '👑 Primeiro usuário do sistema! Você é ADMINISTRADOR!';
+      }
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Verificar se é o PRIMEIRO usuário (vira admin)
-    const userCount = await User.countDocuments();
-    const role = userCount === 0 ? 'admin' : 'user';
-
-    // Criar usuário
     const user = await User.create({
       username,
       email: email.toLowerCase(),
@@ -60,12 +65,6 @@ module.exports = async (req, res) => {
       role,
     });
 
-    // Se for o primeiro usuário, mostrar mensagem especial
-    const message = role === 'admin' 
-      ? '🎉 Conta ADMIN criada com sucesso! Você é o administrador do sistema.'
-      : 'Usuário criado com sucesso! ✨';
-
-    // Remover senha do retorno
     const userWithoutPassword = {
       id: user._id,
       username: user.username,
@@ -75,7 +74,7 @@ module.exports = async (req, res) => {
     };
 
     return res.status(201).json({
-      message,
+      message: adminMessage || 'Usuário criado com sucesso! ✨',
       user: userWithoutPassword,
       isAdmin: role === 'admin',
     });
