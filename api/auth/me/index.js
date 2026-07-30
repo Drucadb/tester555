@@ -3,13 +3,11 @@ const connectDB = require('../../../lib/db');
 const User = require('../../../models/User');
 
 module.exports = async (req, res) => {
-  // Permitir apenas GET
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Método não permitido' });
   }
 
   try {
-    // Pegar token do header
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'Token não fornecido' });
@@ -17,7 +15,6 @@ module.exports = async (req, res) => {
 
     const token = authHeader.split(' ')[1];
     
-    // Verificar token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
     
     await connectDB();
@@ -33,6 +30,7 @@ module.exports = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        role: user.role,
         recoveryAttempts: user.recoveryAttempts,
         isBanned: user.isBanned,
         createdAt: user.createdAt,
@@ -46,7 +44,7 @@ module.exports = async (req, res) => {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ message: 'Token expirado' });
     }
-    console.error('Erro ao verificar usuário:', error);
+    console.error('❌ Erro ao verificar usuário:', error);
     return res.status(500).json({ message: 'Erro ao verificar usuário' });
   }
 };
