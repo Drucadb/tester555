@@ -1217,7 +1217,7 @@
 
     <script>
         // ============================================================
-        // SISTEMA COMPLETO - AURORA v11 COM CONVITES + CHAT
+        // SISTEMA COMPLETO - AURORA v12 COM CHAT CORRIGIDO
         // ============================================================
         
         let authMode = 'login';
@@ -1228,6 +1228,7 @@
         let adminSearchQuery = '';
         let chatInterval = null;
         let inviteInterval = null;
+        let lastMessageCount = 0;
 
         // ============================================================
         // UI HELPERS
@@ -1262,6 +1263,26 @@
 
         function isAdmin() {
             return currentUser && currentUser.role === 'admin';
+        }
+
+        function playNotificationSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.1;
+                oscillator.start();
+                setTimeout(() => {
+                    oscillator.frequency.value = 1000;
+                    setTimeout(() => {
+                        oscillator.stop();
+                    }, 150);
+                }, 150);
+            } catch(e) {}
         }
 
         // ============================================================
@@ -1788,7 +1809,6 @@
                 const data = await response.json();
                 const container = document.getElementById('invitesList');
 
-                // Atualizar estatísticas
                 if (data.stats) {
                     document.getElementById('totalInvites').textContent = data.stats.total || 0;
                     document.getElementById('activeInvites').textContent = data.stats.active || 0;
@@ -1866,7 +1886,7 @@
         }
 
         // ============================================================
-        // CHAT FUNCTIONS
+        // CHAT FUNCTIONS - VERSÃO CORRIGIDA
         // ============================================================
 
         async function sendMessage() {
@@ -1898,11 +1918,14 @@
 
                 if (response.ok) {
                     input.value = '';
-                    loadChatMessages();
+                    await loadChatMessages();
+                    const container = document.getElementById('chatMessages');
+                    container.scrollTop = container.scrollHeight;
                 } else {
                     showNotification('❌', 'Erro!', data.message || 'Falha ao enviar mensagem');
                 }
             } catch (error) {
+                console.error('Erro ao enviar:', error);
                 showNotification('❌', 'Erro!', 'Falha ao enviar mensagem');
             } finally {
                 sendBtn.disabled = false;
@@ -1917,7 +1940,7 @@
                 });
 
                 if (!response.ok) {
-                    if (response.status === 403) {
+                    if (response.status === 403 || response.status === 401) {
                         document.getElementById('chatMessages').innerHTML = `
                             <div style="text-align:center;color:var(--text-muted);padding:2rem;">
                                 <i class="fas fa-lock" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>
@@ -1931,41 +1954,65 @@
 
                 const data = await response.json();
                 const container = document.getElementById('chatMessages');
+                const oldMessageCount = container.children.length;
                 
                 if (data.messages && data.messages.length > 0) {
                     let html = '';
-                    data.messages.forEach(msg => {
+                    let lastSenderId = null;
+                    
+                    data.messages.forEach((msg, index) => {
                         const isOwn = msg.sender._id === currentUser?.id;
                         const isAdmin = msg.sender.role === 'admin';
-                        const time = new Date(msg.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        const time = new Date(msg.createdAt).toLocaleTimeString('pt-BR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        });
+                        
+                        const showSender = index === 0 || msg.sender._id !== data.messages[index-1]?.sender?._id;
                         
                         html += `
                             <div class="chat-message ${isOwn ? 'own' : ''}">
                                 <div class="bubble">
-                                    <div class="sender ${isAdmin ? 'admin' : ''}">
-                                        ${isAdmin ? '👑 ' : ''}${msg.sender.username}
-                                    </div>
+                                    ${showSender ? `
+                                        <div class="sender ${isAdmin ? 'admin' : ''}">
+                                            ${isAdmin ? '👑 ' : ''}${msg.sender.username}
+                                            ${isAdmin ? '<span style="color:#fbbf24;font-size:0.6rem;margin-left:0.3rem;">● Online</span>' : ''}
+                                        </div>
+                                    ` : ''}
                                     <p style="color:var(--text-primary);font-size:0.85rem;margin:0;word-wrap:break-word;">${msg.message}</p>
                                     <div class="time">${time}</div>
                                 </div>
                             </div>
                         `;
+                        lastSenderId = msg.sender._id;
                     });
                     container.innerHTML = html;
                     container.scrollTop = container.scrollHeight;
+                    
+                    // Tocar som se tiver mensagem nova
+                    if (oldMessageCount > 0 && data.messages.length > oldMessageCount) {
+                        playNotificationSound();
+                        document.title = '💬 Nova mensagem! - Aurora';
+                        setTimeout(() => {
+                            document.title = 'Aurora | Recovery Platform';
+                        }, 3000);
+                    }
                 } else {
                     container.innerHTML = `
-                        <div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:1rem;">
-                            <i class="fas fa-comment" style="display:block;font-size:1.5rem;margin-bottom:0.5rem;"></i>
-                            Nenhuma mensagem ainda. Envie uma mensagem!
+                        <div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:1.5rem;">
+                            <i class="fas fa-comment" style="display:block;font-size:2rem;margin-bottom:0.5rem;color:var(--text-muted);"></i>
+                            Nenhuma mensagem ainda.<br>
+                            <span style="font-size:0.7rem;">Envie uma mensagem para começar!</span>
                         </div>
                     `;
                 }
             } catch (error) {
                 console.error('Erro ao carregar mensagens:', error);
                 document.getElementById('chatMessages').innerHTML = `
-                    <div style="text-align:center;color:#ef4444;padding:1rem;">
-                        Erro ao carregar mensagens
+                    <div style="text-align:center;color:#ef4444;padding:1.5rem;">
+                        <i class="fas fa-exclamation-circle" style="font-size:1.5rem;display:block;margin-bottom:0.5rem;"></i>
+                        Erro ao carregar mensagens<br>
+                        <span style="font-size:0.7rem;color:var(--text-muted);">Tente recarregar a página</span>
                     </div>
                 `;
             }
@@ -1980,7 +2027,7 @@
                 if (document.getElementById('chat').classList.contains('active')) {
                     loadChatMessages();
                 }
-            }, 5000);
+            }, 3000);
         }
 
         function startInvitePolling() {
@@ -2329,7 +2376,6 @@
             document.getElementById('dropdownMenu').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Iniciar polling para páginas específicas
             if (id === 'admin') {
                 loadAdminStats();
                 loadAdminUsers();
@@ -2551,7 +2597,7 @@
         // ============================================================
         
         async function init() {
-            console.log('%c✦ Aurora v11 - Convites + Chat ✦', 'font-size:22px;font-weight:bold;color:#9d6aff;');
+            console.log('%c✦ Aurora v12 - Chat Corrigido ✦', 'font-size:22px;font-weight:bold;color:#9d6aff;');
             
             const logged = checkAuth();
             if (logged) {

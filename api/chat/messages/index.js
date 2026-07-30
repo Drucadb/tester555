@@ -44,11 +44,12 @@ module.exports = async (req, res) => {
 
       const query = { room };
       
-      // Se não for admin, só ver mensagens que enviou
+      // Se não for admin, vê mensagens do usuário + respostas de admin
       if (!isAdmin) {
         query.$or = [
           { sender: user._id },
-          { receiver: user._id }
+          { receiver: user._id },
+          { receiver: null, sender: { $ne: user._id } } // Mensagens públicas
         ];
       }
 
@@ -80,9 +81,9 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Se for admin, pode responder diretamente
+      // Se for admin e tiver receiverId, envia mensagem privada
       let receiver = null;
-      if (receiverId) {
+      if (receiverId && isAdmin) {
         receiver = await User.findById(receiverId);
         if (!receiver) {
           return res.status(404).json({ 
@@ -91,6 +92,7 @@ module.exports = async (req, res) => {
         }
       }
 
+      // Se for admin e não tiver receiverId, mensagem pública
       const chatMessage = await ChatMessage.create({
         sender: user._id,
         receiver: receiverId || null,
@@ -100,27 +102,61 @@ module.exports = async (req, res) => {
         read: false
       });
 
-      // Criar notificação para admin se for mensagem de usuário
-      if (!isAdmin) {
+      // --- NOTIFICAR O RECEPTOR (SE FOR ADMIN RESPONDENDO) ---
+      if (isAdmin && receiverId) {
+        // O usuário que mandou a mensagem original vai receber a resposta
+        // O receptor é o usuário que o admin está respondendo
+        // A notificação vai para o usuário que enviou a mensagem original
         try {
-          await fetch(`${process.env.NEXTAUTH_URL}/api/chat/notify`, {
+          await fetch(`${process.env.NEXTAUTH_URL || 'https://tester555.vercel.app'}/api/chat/notify`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              userId: user._id,
+              userId: receiverId,
               username: user.username,
               message: message.trim(),
-              chatId: chatMessage._id
+              chatId: chatMessage._id,
+              isAdmin: true
             })
           });
-        } catch (e) {}
+        } catch (e) {
+          console.log('Notificação não enviada:', e.message);
+        }
       }
+
+      // --- NOTIFICAR ADMIN (SE FOR USUÁRIO NORMAL) ---
+      if (!isAdmin) {
+        try {
+          // Buscar todos os admins para notificar
+          const admins = await User.find({ role: 'admin' }).select('_id');
+          
+          for (const admin of admins) {
+            await fetch(`${process.env.NEXTAUTH_URL || 'https://tester555.vercel.app'}/api/chat/notify`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: admin._id,
+                username: user.username,
+                message: message.trim(),
+                chatId: chatMessage._id,
+                isAdmin: false,
+                fromUser: user._id
+              })
+            });
+          }
+        } catch (e) {
+          console.log('Notificação não enviada:', e.message);
+        }
+      }
+
+      // Buscar a mensagem completa para retornar
+      const fullMessage = await ChatMessage.findById(chatMessage._id)
+        .populate('sender', 'username email role')
+        .populate('receiver', 'username email role');
 
       return res.status(201).json({
         message: 'Mensagem enviada! ✨',
-        chatMessage: await ChatMessage.findById(chatMessage._id)
-          .populate('sender', 'username email role')
-          .populate('receiver', 'username email role')
+        chatMessage: fullMessage
       });
     }
 
@@ -142,7 +178,8 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Verificar permissão
+      // Admin pode marcar qualquer mensagem como lida
+      // Usuário só pode marcar as próprias mensagens
       if (!isAdmin && chatMessage.sender.toString() !== user._id.toString()) {
         return res.status(403).json({ 
           message: 'Acesso negado' 
