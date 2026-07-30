@@ -3,7 +3,6 @@ const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
 
 module.exports = async (req, res) => {
-  // Permitir apenas POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Método não permitido' });
   }
@@ -12,8 +11,6 @@ module.exports = async (req, res) => {
     await connectDB();
 
     const { username, email, password } = req.body;
-
-    console.log('📝 Dados recebidos:', { username, email, password: '***' });
 
     // Validar campos
     if (!username || !email || !password) {
@@ -37,19 +34,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Validar username
-    if (username.length < 3) {
-      return res.status(400).json({ 
-        message: 'Nome de usuário deve ter pelo menos 3 caracteres' 
-      });
-    }
-
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      return res.status(400).json({ 
-        message: 'Use apenas letras, números e underline' 
-      });
-    }
-
     // Verificar se usuário já existe
     const existingUser = await User.findOne({ 
       $or: [{ email: email.toLowerCase() }, { username }] 
@@ -64,32 +48,42 @@ module.exports = async (req, res) => {
     // Hash da senha
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    // Verificar se é o PRIMEIRO usuário (vira admin)
+    const userCount = await User.countDocuments();
+    const role = userCount === 0 ? 'admin' : 'user';
+
     // Criar usuário
     const user = await User.create({
       username,
       email: email.toLowerCase(),
       password: hashedPassword,
+      role,
     });
 
-    console.log('✅ Usuário criado:', user.username);
+    // Se for o primeiro usuário, mostrar mensagem especial
+    const message = role === 'admin' 
+      ? '🎉 Conta ADMIN criada com sucesso! Você é o administrador do sistema.'
+      : 'Usuário criado com sucesso! ✨';
 
     // Remover senha do retorno
     const userWithoutPassword = {
       id: user._id,
       username: user.username,
       email: user.email,
+      role: user.role,
       createdAt: user.createdAt,
     };
 
     return res.status(201).json({
-      message: 'Usuário criado com sucesso! ✨',
-      user: userWithoutPassword
+      message,
+      user: userWithoutPassword,
+      isAdmin: role === 'admin',
     });
 
   } catch (error) {
     console.error('❌ Erro no registro:', error);
     return res.status(500).json({ 
-      message: 'Erro ao criar usuário: ' + error.message 
+      message: 'Erro ao criar usuário' 
     });
   }
 };
