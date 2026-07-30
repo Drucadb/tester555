@@ -1,5 +1,6 @@
-const connectDB = require('../../../lib/db');
-const Invite = require('../../../models/Invite');
+const connectDB = require('../../lib/db');
+const User = require('../../models/User');
+const Invite = require('../../models/Invite');
 const jwt = require('jsonwebtoken');
 
 async function verifyAuth(req) {
@@ -13,13 +14,32 @@ async function verifyAuth(req) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
     await connectDB();
-    return { userId: decoded.userId };
+    const user = await User.findById(decoded.userId);
+    
+    if (!user) {
+      return { error: 'Usuário não encontrado', status: 404 };
+    }
+    
+    return { user };
   } catch (error) {
     return { error: 'Token inválido', status: 401 };
   }
 }
 
 module.exports = async (req, res) => {
+  // CORS para Vercel
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Método não permitido' });
   }
@@ -32,14 +52,18 @@ module.exports = async (req, res) => {
   try {
     await connectDB();
 
+    const user = auth.user;
+
+    // Buscar convites do usuário
     const invites = await Invite.find({ 
-      creator: auth.userId 
+      creator: user._id 
     }).sort({ createdAt: -1 });
 
+    // Estatísticas
     const stats = {
       total: invites.length,
       active: invites.filter(i => i.isActive).length,
-      totalUses: invites.reduce((sum, i) => sum + i.uses, 0)
+      totalUses: invites.reduce((acc, i) => acc + i.uses, 0)
     };
 
     return res.status(200).json({
