@@ -382,6 +382,45 @@
         .footer-bottom i { color:var(--accent-3); }
         .footer-bottom .aurora { color:var(--accent-3); font-weight:700; }
 
+        /* ===== ESTILOS DE CONVITES ===== */
+        .invite-container { max-width:800px; margin:0 auto; }
+        .invite-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius); padding:2rem; margin-bottom:1.5rem; }
+        .invite-code {
+            font-family:'Space Grotesk',monospace; font-size:2rem; font-weight:700;
+            background:rgba(108,59,247,0.1); padding:0.5rem 1rem; border-radius:8px;
+            text-align:center; letter-spacing:4px; color:var(--accent-3);
+            border:2px dashed rgba(108,59,247,0.2);
+        }
+        .invite-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1rem; margin:1.5rem 0; }
+        .invite-stat { text-align:center; padding:0.8rem; background:rgba(255,255,255,0.02); border-radius:8px; }
+        .invite-stat .num { font-size:1.5rem; font-weight:700; color:var(--text-primary); display:block; }
+        .invite-stat .label { font-size:0.7rem; color:var(--text-muted); }
+        .invite-list-item {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:0.8rem; border-bottom:1px solid var(--border-color);
+        }
+        .invite-list-item:last-child { border-bottom:none; }
+        .copy-btn {
+            background:rgba(255,255,255,0.05); border:1px solid var(--border-color);
+            color:var(--text-secondary); padding:0.3rem 0.8rem; border-radius:6px;
+            cursor:pointer; font-size:0.8rem; transition:all 0.3s ease;
+        }
+        .copy-btn:hover { background:rgba(108,59,247,0.1); color:var(--accent-3); }
+        .share-buttons { display:flex; gap:0.5rem; margin-top:1rem; flex-wrap:wrap; }
+        .share-btn {
+            padding:0.4rem 1rem; border:none; border-radius:8px; font-weight:600;
+            font-size:0.8rem; cursor:pointer; transition:all 0.3s ease;
+            font-family:'Inter',sans-serif; color:white; flex:1; min-width:80px;
+            display:flex; align-items:center; justify-content:center; gap:0.3rem;
+        }
+        .share-btn.discord { background:#5865F2; }
+        .share-btn.whatsapp { background:#25D366; }
+        .share-btn.twitter { background:#1DA1F2; }
+        .share-btn.copy { background:#7c3aed; }
+        .share-btn:hover { transform:translateY(-2px); opacity:0.9; }
+        .empty-state { text-align:center; padding:3rem 1rem; color:var(--text-muted); }
+        .empty-state i { font-size:3rem; display:block; margin-bottom:1rem; color:var(--text-muted); }
+
         /* RESPONSIVO */
         @media (max-width:1024px) { .dash-grid { grid-template-columns:1fr; } }
         @media (max-width:768px) {
@@ -402,6 +441,8 @@
             .faq-grid { grid-template-columns:1fr; }
             .community-grid { grid-template-columns:1fr; }
             .footer-grid { grid-template-columns:1fr 1fr; gap:1.5rem; }
+            .invite-code { font-size:1.5rem; }
+            .share-buttons .share-btn { min-width:60px; font-size:0.7rem; padding:0.3rem 0.6rem; }
         }
         @media (max-width:480px) {
             .hero-title { font-size:2.5rem; }
@@ -416,6 +457,8 @@
             .block-gif { max-width:140px; }
             .users-table { font-size:0.7rem; }
             .users-table th, .users-table td { padding:0.4rem 0.5rem; }
+            .invite-code { font-size:1.2rem; letter-spacing:2px; }
+            .invite-stats { grid-template-columns:1fr 1fr; }
         }
     </style>
 </head>
@@ -554,9 +597,9 @@
                 <button class="nav-link" onclick="showSection('features')"><i class="fas fa-rocket"></i> Recursos</button>
                 <button class="nav-link" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Painel</button>
                 <button class="nav-link" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</button>
+                <button class="nav-link" onclick="showSection('convites')"><i class="fas fa-gift"></i> Convites</button>
                 <button class="nav-link" onclick="showSection('community')"><i class="fas fa-users"></i> Comunidade</button>
                 <button class="nav-link" onclick="showSection('faq')"><i class="fas fa-question-circle"></i> FAQ</button>
-                <!-- BOTÃO ADMIN - SEMPRE VISÍVEL MAS OCULTO POR PADRÃO -->
                 <button class="nav-link admin-link" id="adminNavBtn" onclick="showSection('admin')" style="display:none;">
                     <i class="fas fa-shield-alt"></i> 👑 Admin
                 </button>
@@ -572,7 +615,7 @@
                         <button class="dropdown-item" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i> Painel</button>
                         <button class="dropdown-item" onclick="showSection('profile')"><i class="fas fa-user-circle"></i> Perfil</button>
                         <button class="dropdown-item" onclick="showSection('recovery')"><i class="fas fa-sync-alt"></i> Recuperar</button>
-                        <!-- BOTÃO ADMIN NO DROPDOWN -->
+                        <button class="dropdown-item" onclick="showSection('convites')"><i class="fas fa-gift"></i> Convites</button>
                         <button class="dropdown-item admin-drop" id="adminDropdownBtn" onclick="showSection('admin')" style="display:none;">
                             <i class="fas fa-shield-alt"></i> 👑 Admin
                         </button>
@@ -851,6 +894,67 @@
         </div>
     </section>
 
+    <!-- ===== CONVITES ===== -->
+    <section class="section" id="convites">
+        <div class="container">
+            <div class="invite-container">
+                <div class="section-header">
+                    <h2>🎁 Convites</h2>
+                    <p>Convide amigos e ganhe recompensas!</p>
+                </div>
+
+                <!-- Criar Convite -->
+                <div class="invite-card">
+                    <h3 style="color:var(--text-primary);margin-bottom:0.5rem;">Criar Novo Convite</h3>
+                    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.5rem;">
+                        Cada convite que você cria dá benefícios para você e para quem usar!
+                    </p>
+                    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                        <div class="form-group" style="flex:1;min-width:150px;">
+                            <label style="color:var(--text-secondary);font-size:0.8rem;">Usos máximos</label>
+                            <input type="number" id="maxUses" class="input-field" value="10" min="1" max="50">
+                        </div>
+                        <div class="form-group" style="flex:1;min-width:150px;">
+                            <label style="color:var(--text-secondary);font-size:0.8rem;">Dias para expirar</label>
+                            <input type="number" id="expiresDays" class="input-field" placeholder="Deixe vazio para nunca expirar" min="1">
+                        </div>
+                        <button class="btn btn-primary" onclick="createInvite()" style="align-self:flex-end;margin-bottom:1.2rem;">
+                            <i class="fas fa-plus"></i> Criar Convite
+                        </button>
+                    </div>
+                    <div id="createResult" style="margin-top:1rem;display:none;"></div>
+                </div>
+
+                <!-- Convites Ativos -->
+                <div class="invite-card">
+                    <h3 style="color:var(--text-primary);margin-bottom:0.5rem;">📋 Seus Convites</h3>
+                    <div id="invitesList">
+                        <p style="color:var(--text-muted);text-align:center;padding:1rem;">Carregando...</p>
+                    </div>
+                </div>
+
+                <!-- Estatísticas -->
+                <div class="invite-card">
+                    <h3 style="color:var(--text-primary);margin-bottom:0.5rem;">📊 Estatísticas</h3>
+                    <div class="invite-stats">
+                        <div class="invite-stat">
+                            <span class="num" id="totalInvites">0</span>
+                            <span class="label">Total de Convites</span>
+                        </div>
+                        <div class="invite-stat">
+                            <span class="num" id="activeInvites">0</span>
+                            <span class="label">Convites Ativos</span>
+                        </div>
+                        <div class="invite-stat">
+                            <span class="num" id="totalInviteUses">0</span>
+                            <span class="label">Usos Totais</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== COMMUNITY ===== -->
     <section class="section" id="community">
         <div class="container">
@@ -999,6 +1103,7 @@
                         <li><a href="#" onclick="showSection('features')">Recursos</a></li>
                         <li><a href="#" onclick="showSection('dashboard')">Painel</a></li>
                         <li><a href="#" onclick="showSection('recovery')">Recuperação</a></li>
+                        <li><a href="#" onclick="showSection('convites')">Convites</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -1023,7 +1128,7 @@
 
     <script>
         // ============================================================
-        // SISTEMA COMPLETO - AURORA v10 COM ADMIN FIX
+        // SISTEMA COMPLETO - AURORA COM CONVITES
         // ============================================================
         
         let authMode = 'login';
@@ -1032,6 +1137,8 @@
         let adminPage = 1;
         let adminTotalPages = 1;
         let adminSearchQuery = '';
+        let banCheckInterval = null;
+        let inviteInterval = null;
 
         // ============================================================
         // UI HELPERS
@@ -1066,6 +1173,42 @@
 
         function isAdmin() {
             return currentUser && currentUser.role === 'admin';
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA DESCONECTAR USUÁRIO BANIDO
+        // ============================================================
+        
+        function forceLogoutAndBan(reason, expires, gif) {
+            localStorage.removeItem('aurora_token');
+            localStorage.removeItem('aurora_user');
+            localStorage.removeItem('aurora_terms_accepted');
+            
+            currentUser = null;
+            authToken = null;
+            
+            document.getElementById('navUserWrap').style.display = 'none';
+            document.getElementById('authNavBtn').style.display = 'flex';
+            document.getElementById('authNavText').textContent = 'Entrar';
+            document.getElementById('adminNavBtn').style.display = 'none';
+            document.getElementById('adminDropdownBtn').style.display = 'none';
+            document.getElementById('dropdownMenu').classList.remove('open');
+            
+            if (banCheckInterval) {
+                clearInterval(banCheckInterval);
+                banCheckInterval = null;
+            }
+            if (inviteInterval) {
+                clearInterval(inviteInterval);
+                inviteInterval = null;
+            }
+            
+            showBanModal(reason, expires, gif);
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('home').classList.add('active');
+            
+            showNotification('🚫', 'Você foi banido!', reason || 'Atividade suspeita detectada.');
         }
 
         // ============================================================
@@ -1107,21 +1250,15 @@
                     document.getElementById('dashMember').textContent = date.toLocaleDateString('pt-BR');
                 }
 
-                // ===== MOSTRAR BOTÕES DE ADMIN SE FOR ADMIN =====
                 const isAdminUser = isAdmin();
-                console.log('👑 Usuário é admin?', isAdminUser);
-                console.log('👤 Role do usuário:', currentUser.role);
-                
                 if (isAdminUser) {
                     document.getElementById('adminNavBtn').style.display = 'flex';
                     document.getElementById('adminDropdownBtn').style.display = 'flex';
                     document.getElementById('navUserName').textContent = currentUser.username + ' 👑';
                     document.getElementById('profileName').textContent = currentUser.username + ' 👑';
-                    console.log('✅ Botões Admin ativados!');
                 } else {
                     document.getElementById('adminNavBtn').style.display = 'none';
                     document.getElementById('adminDropdownBtn').style.display = 'none';
-                    console.log('❌ Botões Admin ocultos (não é admin)');
                 }
             }
         }
@@ -1138,6 +1275,14 @@
             document.getElementById('dropdownMenu').classList.remove('open');
             document.getElementById('adminNavBtn').style.display = 'none';
             document.getElementById('adminDropdownBtn').style.display = 'none';
+            if (banCheckInterval) {
+                clearInterval(banCheckInterval);
+                banCheckInterval = null;
+            }
+            if (inviteInterval) {
+                clearInterval(inviteInterval);
+                inviteInterval = null;
+            }
         }
 
         function toggleDropdown() {
@@ -1489,6 +1634,203 @@
         }
 
         // ============================================================
+        // CONVITES FUNCTIONS
+        // ============================================================
+
+        async function createInvite() {
+            const maxUses = document.getElementById('maxUses').value || 10;
+            const expiresDays = document.getElementById('expiresDays').value;
+            const resultDiv = document.getElementById('createResult');
+            
+            const body = { maxUses: parseInt(maxUses) };
+            if (expiresDays) {
+                body.expiresIn = parseInt(expiresDays) * 24 * 60 * 60 * 1000;
+            }
+
+            try {
+                const response = await fetch('/api/invites/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = `
+                        <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:1rem;text-align:center;">
+                            <div style="font-size:2rem;margin-bottom:0.5rem;">🎉</div>
+                            <p style="color:var(--text-primary);font-weight:700;">Convite criado com sucesso!</p>
+                            <div class="invite-code" style="margin:0.5rem auto;">${data.invite.code}</div>
+                            <p style="color:var(--text-muted);font-size:0.8rem;">
+                                <i class="fas fa-link"></i> 
+                                <span id="inviteLink">${data.invite.link}</span>
+                            </p>
+                            <div class="share-buttons">
+                                <button class="share-btn discord" onclick="shareInvite('discord', '${data.invite.link}', '${data.invite.code}')">
+                                    <i class="fab fa-discord"></i> Discord
+                                </button>
+                                <button class="share-btn whatsapp" onclick="shareInvite('whatsapp', '${data.invite.link}', '${data.invite.code}')">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </button>
+                                <button class="share-btn twitter" onclick="shareInvite('twitter', '${data.invite.link}', '${data.invite.code}')">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button class="share-btn copy" onclick="copyInviteLink('${data.invite.link}')">
+                                    <i class="fas fa-copy"></i> Copiar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    loadInvites();
+                } else {
+                    resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = `
+                        <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:1rem;text-align:center;color:#fca5a5;">
+                            ${data.message || 'Erro ao criar convite'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('❌', 'Erro!', 'Falha ao criar convite');
+            }
+        }
+
+        function shareInvite(platform, link, code) {
+            const text = `🎁 Convidei você para o Aurora Premium! Use meu código: ${code}\n🔗 ${link}`;
+            let url = '';
+            switch(platform) {
+                case 'discord':
+                    navigator.clipboard.writeText(text);
+                    showNotification('✅', 'Copiado!', 'Texto copiado para colar no Discord');
+                    return;
+                case 'whatsapp':
+                    url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                    break;
+                case 'twitter':
+                    url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+                    break;
+            }
+            window.open(url, '_blank');
+        }
+
+        function copyInviteLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                showNotification('✅', 'Copiado!', 'Link do convite copiado para a área de transferência');
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = link;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showNotification('✅', 'Copiado!', 'Link do convite copiado');
+            });
+        }
+
+        async function loadInvites() {
+            try {
+                const response = await fetch('/api/invites/list', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const data = await response.json();
+                const container = document.getElementById('invitesList');
+
+                if (data.stats) {
+                    document.getElementById('totalInvites').textContent = data.stats.total || 0;
+                    document.getElementById('activeInvites').textContent = data.stats.active || 0;
+                    document.getElementById('totalInviteUses').textContent = data.stats.totalUses || 0;
+                }
+
+                if (data.invites && data.invites.length > 0) {
+                    let html = '';
+                    data.invites.forEach(invite => {
+                        const expires = invite.expiresAt ? new Date(invite.expiresAt).toLocaleDateString('pt-BR') : 'Nunca';
+                        const status = invite.isActive ? 'Ativo' : 'Inativo';
+                        const statusColor = invite.isActive ? '#22c55e' : '#ef4444';
+                        
+                        html += `
+                            <div class="invite-list-item">
+                                <div>
+                                    <div style="font-family:'Space Grotesk',monospace;font-weight:700;color:var(--accent-3);">${invite.code}</div>
+                                    <div style="font-size:0.7rem;color:var(--text-muted);">
+                                        ${invite.usedBy.length}/${invite.maxUses} usos • Expira: ${expires} • <span style="color:${statusColor};">${status}</span>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:0.5rem;">
+                                    <button class="copy-btn" onclick="copyInviteLink('${window.location.origin}/convite?code=${invite.code}')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    ${invite.isActive ? `<button class="copy-btn" style="color:#ef4444;" onclick="deactivateInvite('${invite.code}')">
+                                        <i class="fas fa-ban"></i>
+                                    </button>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-gift"></i>
+                            <p>Você ainda não tem convites</p>
+                            <p style="font-size:0.8rem;">Crie seu primeiro convite acima!</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar convites:', error);
+                document.getElementById('invitesList').innerHTML = `
+                    <p style="color:#ef4444;text-align:center;padding:1rem;">Erro ao carregar convites</p>
+                `;
+            }
+        }
+
+        async function deactivateInvite(code) {
+            if (!confirm('Deseja desativar este convite?')) return;
+            
+            try {
+                const response = await fetch('/api/invites/deactivate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ code })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showNotification('✅', 'Convite desativado!', 'O convite foi desativado com sucesso.');
+                    loadInvites();
+                } else {
+                    showNotification('❌', 'Erro!', data.message);
+                }
+            } catch (error) {
+                showNotification('❌', 'Erro!', 'Falha ao desativar convite');
+            }
+        }
+
+        function startInvitePolling() {
+            if (inviteInterval) {
+                clearInterval(inviteInterval);
+            }
+            loadInvites();
+            inviteInterval = setInterval(() => {
+                if (document.getElementById('convites')?.classList.contains('active')) {
+                    loadInvites();
+                }
+            }, 30000);
+        }
+
+        // ============================================================
         // DETECÇÃO DE NAVEGADOR ANÔNIMO
         // ============================================================
         
@@ -1598,6 +1940,33 @@
         }
 
         // ============================================================
+        // VERIFICAÇÃO PERIÓDICA DE BANIMENTO
+        // ============================================================
+        
+        function startBanPolling() {
+            if (banCheckInterval) {
+                clearInterval(banCheckInterval);
+            }
+            banCheckInterval = setInterval(async () => {
+                if (currentUser && authToken) {
+                    try {
+                        const response = await fetch('/api/ban/check', {
+                            headers: { 'Authorization': `Bearer ${authToken}` }
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.banned) {
+                            forceLogoutAndBan(data.reason, data.expires, data.gif);
+                        }
+                    } catch (e) {
+                        // Erro silencioso
+                    }
+                }
+            }, 10000);
+        }
+
+        // ============================================================
         // CONFIG
         // ============================================================
         
@@ -1663,18 +2032,29 @@
 
         async function checkBanStatus() {
             try {
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                const banRes = await fetch(`/api/ban?check=${ipData.ip}`);
-                const banData = await banRes.json();
-                if (banData.banned) {
+                if (!authToken) return false;
+                
+                const response = await fetch('/api/ban/check', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const data = await response.json();
+                
+                if (data.banned) {
                     isUserBanned = true;
-                    showBanModal(banData.reason, banData.expires, banData.gif);
+                    if (currentUser) {
+                        forceLogoutAndBan(data.reason, data.expires, data.gif);
+                    } else {
+                        showBanModal(data.reason, data.expires, data.gif);
+                    }
                     return true;
                 }
                 isUserBanned = false;
                 return false;
-            } catch { return false; }
+            } catch (error) {
+                console.error('Erro ao verificar banimento:', error);
+                return false;
+            }
         }
 
         function openTerms() {
@@ -1784,7 +2164,7 @@
                 return;
             }
             
-            const protectedSections = ['dashboard', 'profile', 'recovery', 'admin'];
+            const protectedSections = ['dashboard', 'profile', 'recovery', 'admin', 'convites'];
             if (protectedSections.includes(id) && !currentUser) {
                 showNotification('⚠️', 'Faça login!', 'Você precisa estar logado para acessar esta página.');
                 openAuth('login');
@@ -1814,6 +2194,9 @@
             if (id === 'admin') {
                 loadAdminStats();
                 loadAdminUsers();
+            }
+            if (id === 'convites') {
+                startInvitePolling();
             }
         }
 
@@ -2026,7 +2409,7 @@
         // ============================================================
         
         async function init() {
-            console.log('%c✦ Aurora v10 - Admin Fix ✦', 'font-size:22px;font-weight:bold;color:#9d6aff;');
+            console.log('%c✦ Aurora - Sistema Completo ✦', 'font-size:22px;font-weight:bold;color:#9d6aff;');
             
             const logged = checkAuth();
             if (logged) {
@@ -2062,10 +2445,10 @@
 
             console.log('🔍 Verificando banimento...');
             if (await checkBanStatus()) {
-                console.log('🚫 IP banido');
+                console.log('🚫 Usuário banido');
                 return;
             }
-            console.log('✅ IP liberado');
+            console.log('✅ Usuário liberado');
 
             console.log('🔍 Verificando VPN...');
             const detect = await checkDetection();
@@ -2083,6 +2466,9 @@
 
             restoreBlockState();
             checkTerms();
+            
+            startBanPolling();
+            
             console.log('✅ Aurora iniciado!');
             console.log('👤 Usuário:', currentUser ? currentUser.username : 'Não logado');
             if (isAdmin()) {
@@ -2117,6 +2503,12 @@
         window.searchUsers = searchUsers;
         window.banUser = banUser;
         window.unbanUser = unbanUser;
+        window.createInvite = createInvite;
+        window.loadInvites = loadInvites;
+        window.copyInviteLink = copyInviteLink;
+        window.shareInvite = shareInvite;
+        window.deactivateInvite = deactivateInvite;
+        window.startInvitePolling = startInvitePolling;
 
         // ============================================================
         // EXECUTAR
